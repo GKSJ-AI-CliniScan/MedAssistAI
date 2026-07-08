@@ -1,7 +1,21 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
 class Settings:
-    APP_NAME = "MedAssistAI Backend"
-    APP_VERSION = "1.0.0"
-    DEBUG = True
+    APP_NAME = os.getenv("APP_NAME")
+    APP_VERSION = os.getenv("APP_VERSION")
+    DEBUG = os.getenv("DEBUG") == "True"
+
+    DATABASE_URL = os.getenv("DATABASE_URL")
+
+    SECRET_KEY = os.getenv("SECRET_KEY")
+    ALGORITHM = os.getenv("ALGORITHM")
+    ACCESS_TOKEN_EXPIRE_MINUTES = int(
+        os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")
+    )
 
 
 settings = Settings()
