@@ -1,255 +1,112 @@
 # 🩺 MedAssistAI
 
-MedAssistAI is an AI-powered disease prediction system that predicts possible diseases based on a patient's symptoms using Machine Learning. The project consists of a **Next.js frontend** and a **FastAPI backend** that serves the trained machine learning model.
+MedAssistAI is an AI-powered disease prediction system that predicts possible diseases based on a patient's symptoms using Machine Learning. The project combines a **Next.js frontend** with a **FastAPI backend** powered by a trained **Random Forest** model.
 
 ---
 
 ## 🚀 Features
 
 - Symptom-based disease prediction
-- Random Forest Machine Learning model
 - Top 3 disease predictions with confidence scores
-- Disease description
-- Recommended precautions
+- Disease descriptions and precautions
 - FastAPI REST API
 - Modern Next.js frontend
-- Responsive UI generated using Stitch
+- Responsive UI
 
 ---
 
-## 🛠 Tech Stack
+## 🛠️ Tech Stack
 
-### Frontend
+**Frontend**
 - Next.js
-- React
+- React.js
 - Tailwind CSS
 
-### Backend
+**Backend**
 - FastAPI
 - Python
+- Scikit-learn
 - Pandas
 - NumPy
-- Scikit-learn
-- Joblib
-- Uvicorn
 
 ---
 
 ## 📂 Project Structure
 
-```
+```text
 MED-ASSIST-AI/
 │
-├── app/                           # Next.js App Router
-│
-├── public/                        # Static assets
-│
-├── python_ai/                     # AI Backend
-│   │
+├── app/                  # Next.js Frontend
+├── public/
+├── python_ai/
 │   ├── datasets/
-│   │   ├── final_master_dataset_41_diseases.csv
-│   │   ├── symptom_Description.csv
-│   │   └── symptom_precaution.csv
-│   │
 │   ├── models/
-│   │   ├── disease_prediction_model.pkl
-│   │   ├── feature_columns.pkl
-│   │   └── label_encoder.pkl
-│   │
-│   ├── .venv/                     # Python Virtual Environment
-│   ├── __pycache__/
-│   ├── main.py                    # FastAPI Server
+│   ├── main.py
 │   └── requirements.txt
 │
-├── .next/                         # Next.js Build Files
-├── node_modules/                  # Node Dependencies
-│
-├── .gitignore
-├── AGENTS.md
-├── CLAUDE.md
-├── eslint.config.mjs
-├── favicon.jpeg
-├── jsconfig.json
-├── LICENSE
-├── next.config.mjs
 ├── package.json
-├── package-lock.json
-├── postcss.config.mjs
 └── README.md
 ```
 
 ---
 
-## 📊 Machine Learning Pipeline
+## ⚙️ Setup
 
-The disease prediction model was developed using the following workflow:
-
-- Dataset collection from multiple sources
-- Dataset preprocessing
-- Dataset merging
-- Data filtering and cleaning
-- Feature engineering
-- Model training
-- Model evaluation
-- Model selection
-- Model serialization using Joblib
-- FastAPI deployment
-
----
-
-## ⚙️ Installation
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/GKSJ-AI-CliniScan/MedAssistAI.git
-
-cd MedAssistAI
-```
-
----
-
-
-
-Create a virtual environment (recommended).
-
-### Windows
-
-```bash
-python -m venv venv
-
-venv\Scripts\activate
-```
-
-### Linux / macOS
-
-```bash
-python3 -m venv venv
-
-source venv/bin/activate
-```
-
-Install dependencies.
-
-```bash
-pip install -r requirements.txt
-```
-
-Run the FastAPI server.
-
-```bash
-uvicorn main:app --reload
-```
-
-The backend server will start at:
-
-```
-http://127.0.0.1:8000
-```
-
----
-
-## 💻 Frontend Setup (Next.js)
-
-Navigate to the frontend directory.
-
-```bash
-cd frontend
-```
-
-Install dependencies.
-
-```bash
-npm install
-```
-
-Start the development server.
-
-```bash
-npm run dev
-```
-
-Open your browser:
-
-```
-http://localhost:3000
-```
-
----
-
-## ▶️ Running the Complete Project
-
-### Terminal 1 (Backend)
+### Backend
 
 ```bash
 cd python_ai
 
+python -m venv .venv
+
+# Windows
 .\.venv\Scripts\Activate.ps1
+
+pip install -r requirements.txt
 
 uvicorn main:app --reload
 ```
 
-### Terminal 2 (Frontend)
+### Frontend
 
 ```bash
-
 npm install
 
 npm run dev
 ```
 
-Now open:
+---
 
-```
-Frontend
-http://localhost:3000
+## 🌐 API
 
-Backend
-http://127.0.0.1:8000
-
-```
+- Backend: http://127.0.0.1:8000
+- API Docs: http://127.0.0.1:8000/docs
+- Frontend: http://localhost:3000
 
 ---
 
-## 📁 Model Files
+## 📈 Current Status
 
-The backend loads the following serialized files:
+✅ Machine Learning model completed
 
-```
-models/
-│
-├── disease_prediction_model.pkl
-├── label_encoder.pkl
-└── feature_columns.pkl
-```
+✅ FastAPI backend completed
+
+✅ Next.js project initialized
+
+✅ UI templates prepared
+
+🚧 Frontend development in progress
 
 ---
 
-## 📈 Current Progress
-
-- ✅ Dataset collection
-- ✅ Dataset preprocessing
-- ✅ Dataset merging
-- ✅ Data filtering
-- ✅ Feature engineering
-- ✅ Machine Learning model training
-- ✅ Model evaluation
-- ✅ Best model selection
-- ✅ Model serialization
-- ✅ FastAPI backend
-- ✅ REST API endpoints
-- ✅ Next.js project setup
-- ✅ UI templates using Stitch
-
-### 🚧 Upcoming Features
+## 🚀 Upcoming Features
 
 - User authentication
-- Patient history
+- Patient profile
 - Doctor dashboard
 - Report generation
-- Database integration
-- Deployment
-- Chatbot support
+- MongoDB integration
+
 
 ---
 
@@ -257,9 +114,4 @@ models/
 
 **Team 5**
 
-**Project:** MedAssistAI
-
-AI-Based Medical Symptom Analysis & Disease Prediction System
-
----
-
+**Project:** MedAssistAI – AI-Based Medical Symptom Analysis & Disease Prediction System
