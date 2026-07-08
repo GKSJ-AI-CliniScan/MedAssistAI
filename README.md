@@ -102,20 +102,14 @@ The disease prediction model was developed using the following workflow:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/MedAssistAI.git
+git clone https://github.com/GKSJ-AI-CliniScan/MedAssistAI.git
 
 cd MedAssistAI
 ```
 
 ---
 
-## 📦 Backend Setup (FastAPI)
 
-Navigate to the backend directory.
-
-```bash
-cd backend
-```
 
 Create a virtual environment (recommended).
 
@@ -198,7 +192,6 @@ uvicorn main:app --reload
 ### Terminal 2 (Frontend)
 
 ```bash
-cd frontend
 
 npm install
 
@@ -214,85 +207,6 @@ http://localhost:3000
 Backend
 http://127.0.0.1:8000
 
-```
-
----
-
-## 📡 API Endpoints
-
-### Home
-
-```
-GET /
-```
-
-Returns API status.
-
----
-
-### Health Check
-
-```
-GET /health
-```
-
-Returns server health information.
-
----
-
-### Disease Prediction
-
-```
-POST /predict
-```
-
-Example Request
-
-```json
-{
-  "data": {
-    "age_group": 2,
-    "gender": 1,
-    "fever": 1,
-    "cough": 1,
-    "headache": 1
-  }
-}
-```
-
-Example Response
-
-```json
-{
-  "predicted_disease": "Common Cold",
-  "confidence": 91.45,
-  "confidence_level": "High",
-  "selected_symptoms": [
-    "fever",
-    "cough",
-    "headache"
-  ],
-  "description": "...",
-  "precautions": [
-    "...",
-    "...",
-    "..."
-  ],
-  "top_predictions": [
-    {
-      "disease": "Common Cold",
-      "probability": 91.45
-    },
-    {
-      "disease": "Influenza",
-      "probability": 6.81
-    },
-    {
-      "disease": "COVID-19",
-      "probability": 1.74
-    }
-  ]
-}
 ```
 
 ---
@@ -333,7 +247,6 @@ models/
 - Patient history
 - Doctor dashboard
 - Report generation
-- PDF export
 - Database integration
 - Deployment
 - Chatbot support
