@@ -17,7 +17,7 @@ def create_user(db: Session, user: UserRegister):
         )
 
     db_user = User(
-        fullname=user.name,
+        fullname=user.fullname,
         email=user.email,
         password=hash_password(user.password),
         role="patient"

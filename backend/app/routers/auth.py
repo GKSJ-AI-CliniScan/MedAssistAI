@@ -12,10 +12,9 @@ router = APIRouter(
 )
 
 
-@router.post("/register")
+@router.post("/register", status_code=201)
 def register(user: UserRegister, db: Session = Depends(get_db)):
     new_user = create_user(db, user)
-
     return {
         "message": "User Registered Successfully",
         "user": {
@@ -27,18 +26,12 @@ def register(user: UserRegister, db: Session = Depends(get_db)):
     }
 
 
-@router.post("/login")
+@router.post("/login", status_code=200)
 def login(user: UserLogin, db: Session = Depends(get_db)):
-
     db_user = authenticate_user(db, user)
-
     access_token = create_access_token(
-        data={
-            "sub": db_user.email,
-            "role": db_user.role
-        }
+        data={"id": db_user.id, "sub": db_user.email, "role": db_user.role}
     )
-
     return {
         "message": "Login Successful",
         "access_token": access_token,
