@@ -1,0 +1,34 @@
+import pandas as pd
+
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import cross_val_score
+from sklearn.preprocessing import LabelEncoder
+
+# Load Dataset
+df = pd.read_csv("datasets/Training_NoDuplicates.csv")
+# You can also use Training_Clean.csv
+
+# Features and Target
+X = df.drop("prognosis", axis=1)
+y = df["prognosis"]
+
+# Encode Labels
+label_encoder = LabelEncoder()
+y_encoded = label_encoder.fit_transform(y)
+
+# Random Forest Model
+model = RandomForestClassifier(
+    n_estimators=200,
+    random_state=42
+)
+
+# 5-Fold Cross Validation
+scores = cross_val_score(model, X, y_encoded, cv=5)
+
+print("=" * 60)
+print("5-FOLD CROSS VALIDATION")
+print("=" * 60)
+
+print("Scores :", scores)
+print("Average Accuracy :", scores.mean() * 100)
+print("Standard Deviation :", scores.std())
