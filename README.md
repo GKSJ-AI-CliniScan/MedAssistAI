@@ -1,16 +1,20 @@
-🩺 MedAssistAI
+# 🩺 MedAssistAI
 
- AI-Based Medical Symptom Analysis & Disease Prediction System
+# AI-Based Medical Symptom Analysis & Disease Prediction System
 
 MedAssistAI is an AI-powered healthcare application that predicts possible diseases based on user symptoms using Machine Learning. The application combines a Random Forest Classifier with a FastAPI backend to provide disease predictions along with healthcare recommendations such as disease descriptions, precautions, diet plans, medications, and workout suggestions.
 
 The project is designed with a modular architecture, making it scalable, maintainable, and easy to integrate with modern web applications.
 
-📌 Project Overview
+---
+
+# 📌 Project Overview
 
 Healthcare diagnosis often requires expert consultation, which may not always be immediately available. MedAssistAI assists users by analyzing symptoms and predicting the most probable disease using Machine Learning. Along with prediction, the system provides essential healthcare recommendations to improve awareness before consulting a medical professional.
 
-🎯 Objectives
+---
+
+# 🎯 Objectives
 
 - Predict diseases from user symptoms using Machine Learning.
 - Provide healthcare recommendations.
@@ -19,7 +23,9 @@ Healthcare diagnosis often requires expert consultation, which may not always be
 - Develop REST APIs for frontend integration.
 - Create a user-friendly healthcare assistance platform.
 
-✨ Features
+---
+
+# ✨ Features
 
 - Symptom-Based Disease Prediction
 - Machine Learning Powered Diagnosis
@@ -36,31 +42,36 @@ Healthcare diagnosis often requires expert consultation, which may not always be
 - FastAPI REST APIs
 - Interactive Swagger Documentation
 
-🛠️ Technology Stack
+---
 
-Programming Language
+# 🛠️ Technology Stack
+
+## Programming Language
 - Python
 
-Machine Learning
+## Machine Learning
 - Scikit-learn
 - Random Forest Classifier
 - Pandas
 - NumPy
 
-Backend
+## Backend
 - FastAPI
 - Uvicorn
 
-Frontend
+## Frontend
 - Next.js
 - React.js
 
-Version Control
+## Version Control
 - Git
 - GitHub
 
- 📂 Project Structure
+---
 
+# 📂 Project Structure
+
+```text
 MedAssistAI/
 │
 ├── backend/
@@ -86,8 +97,11 @@ MedAssistAI/
 │
 ├── README.md
 └── LICENSE
+```
 
- 📊 Dataset
+---
+
+# 📊 Dataset
 
 The project utilizes healthcare datasets containing disease-related information.
 
@@ -100,7 +114,9 @@ The datasets include:
 - Medication Information
 - Workout Recommendations
 
-🧹 Data Preprocessing
+---
+
+# 🧹 Data Preprocessing
 
 To improve the quality of the Machine Learning model, the dataset undergoes preprocessing before training.
 
@@ -115,8 +131,11 @@ The preprocessing steps include:
 
 These steps ensure that the training data is clean, consistent, and suitable for building an accurate prediction model.
 
- 🤖 Machine Learning Workflow
+---
 
+# 🤖 Machine Learning Workflow
+
+```text
 Dataset Collection
         │
         ▼
@@ -145,8 +164,11 @@ FastAPI Integration
         │
         ▼
 Disease Recommendation API
+```
 
-📈 Model Evaluation
+---
+
+# 📈 Model Evaluation
 
 The Machine Learning model was evaluated using multiple performance metrics.
 
@@ -161,27 +183,39 @@ Evaluation metrics include:
 
 These metrics help validate the reliability and consistency of the prediction model.
 
+---
 
-🌐 Backend Development
+# 🌐 Backend Development
 
 The backend is implemented using FastAPI.
 
 The trained Machine Learning model is integrated into REST APIs that provide healthcare recommendations based on predicted diseases.
 
-🔗 API Endpoints
+---
 
-Home Endpoint
+# 🔗 API Endpoints
 
+## Home Endpoint
+
+```
 GET /
+```
 
 Returns a welcome message indicating that the backend service is running successfully.
 
-Disease Recommendation Endpoint
+---
 
+## Disease Recommendation Endpoint
+
+```
 GET /recommendation/{disease}
+```
 
 Example:
+
+```
 GET /recommendation/Diabetes
+```
 
 Returns:
 
@@ -192,23 +226,27 @@ Returns:
 - Medication Suggestions
 - Workout Recommendations
 
-⚙️ Installation & Setup
+---
 
-Clone Repository
+# ⚙️ Installation & Setup
 
-bash
+## Clone Repository
+
+```bash
 git clone https://github.com/GKSJ-AI-CliniScan/MedAssistAI.git
+```
 
-Backend Setup
+## Backend Setup
 
-bash
+```bash
 cd backend
 
 pip install -r requirements.txt
 
 uvicorn main:app --reload
+```
 
-Frontend Setup
+## Frontend Setup
 
 ```bash
 npm install
@@ -216,20 +254,33 @@ npm install
 npm run dev
 ```
 
-🧪 API Testing
+---
+
+# 🧪 API Testing
 
 After starting the backend server, the API can be tested using Swagger UI.
 
 Backend Server
+
+```
 http://127.0.0.1:8000
+```
 
 Swagger Documentation
+
+```
 http://127.0.0.1:8000/docs
+```
 
 Frontend
-http://localhost:3000
 
-📌 Milestone 1 Progress
+```
+http://localhost:3000
+```
+
+---
+
+# 📌 Milestone 1 Progress
 
 The following tasks have been successfully completed:
 
@@ -248,7 +299,9 @@ The following tasks have been successfully completed:
 - ✅ Swagger API Testing
 - ✅ GitHub Version Control
 
- 🚀 Future Enhancements
+---
+
+# 🚀 Future Enhancements
 
 - Integrate multiple healthcare datasets.
 - Improve prediction accuracy using larger datasets.
@@ -260,19 +313,25 @@ The following tasks have been successfully completed:
 - Deploy the application on cloud platforms.
 - Develop a mobile application.
 
-👨‍💻 Team
+---
 
-Project Name: MedAssistAI
+# 👨‍💻 Team
 
-Domain: Artificial Intelligence & Healthcare
+**Project Name:** MedAssistAI
 
-Team: GKSJ-AI-CliniScan (Team 5)
+**Domain:** Artificial Intelligence & Healthcare
 
-📄 License
+**Team:** GKSJ-AI-CliniScan (Team 5)
+
+---
+
+# 📄 License
 
 This project is licensed under the MIT License.
 
-🙏 Acknowledgements
+---
+
+# 🙏 Acknowledgements
 
 This project was developed using open-source technologies and libraries, including:
 
