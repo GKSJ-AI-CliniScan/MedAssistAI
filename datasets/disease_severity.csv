@@ -1,0 +1,42 @@
+Disease,Severity_Category,Severity_Weight
+Drug Reaction,Moderate,20
+Malaria,Serious,30
+Allergy,Mild,10
+Hypothyroidism,Moderate,20
+Psoriasis,Moderate,20
+GERD,Moderate,20
+Chronic cholestasis,Severe,35
+hepatitis A,Serious,30
+Osteoarthristis,Moderate,20
+(vertigo) Paroymsal Positional Vertigo,Moderate,20
+Hypoglycemia,Serious,30
+Acne,Mild,10
+Diabetes,Serious,30
+Impetigo,Mild,10
+Hypertension,Moderate,20
+Peptic ulcer diseae,Moderate,20
+Dimorphic hemorrhoids(piles),Moderate,20
+Common Cold,Mild,10
+Chicken pox,Moderate,20
+Cervical spondylosis,Moderate,20
+Hyperthyroidism,Moderate,20
+Urinary tract infection,Moderate,20
+Varicose veins,Moderate,20
+AIDS,Severe,35
+Paralysis (brain hemorrhage),Critical,40
+Typhoid,Serious,30
+Hepatitis B,Severe,35
+Fungal infection,Mild,10
+Hepatitis C,Severe,35
+Migraine,Moderate,20
+Bronchial Asthma,Serious,30
+Alcoholic hepatitis,Severe,35
+Jaundice,Moderate,20
+Hepatitis E,Serious,30
+Dengue,Severe,35
+Hepatitis D,Severe,35
+Heart attack,Critical,40
+Pneumonia,Severe,35
+Arthritis,Moderate,20
+Gastroenteritis,Moderate,20
+Tuberculosis,Severe,35
