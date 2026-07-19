@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
+import RiskPieChart from "../../components/charts/RiskPieChart";
+import PredictionLineChart from "../../components/charts/PredictionLineChart";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -156,20 +158,25 @@ const chartOptions = {
 
         </div>
 
-        {/* Disease Prediction Chart */}
+        <div className="grid lg:grid-cols-2 gap-8 mt-10">
 
-        <div className="mt-10 bg-white rounded-3xl shadow-lg p-8">
+  <div className="bg-white rounded-3xl shadow-lg p-8">
 
-          <h2 className="text-2xl font-bold mb-6">
-            Disease Prediction Analytics
-          </h2>
+    <h2 className="text-2xl font-bold mb-6">
+      Disease Prediction Analytics
+    </h2>
 
-          <Bar
-            data={chartData}
-            options={chartOptions}
-          />
+    <Bar
+      data={chartData}
+      options={chartOptions}
+    />
 
-        </div>
+  </div>
+
+  <RiskPieChart />
+
+</div>
+<PredictionLineChart />
 
       </div>
     </Layout>
