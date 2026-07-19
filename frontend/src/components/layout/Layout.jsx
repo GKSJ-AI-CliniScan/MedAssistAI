@@ -1,6 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Layout({ children }) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("role");
+
+  navigate("/login");
+};
+
   return (
     <div className="min-h-screen bg-slate-100 flex">
 
@@ -45,7 +54,16 @@ function Layout({ children }) {
 
         </ul>
 
-      </div>
+        <div className="mt-10">
+          <button
+            onClick={handleLogout}
+            className="w-full bg-red-600 hover:bg-red-700 p-3 rounded-xl text-white"
+          >
+            🚪 Logout
+          </button>
+        </div>
+
+        </div>
 
       {/* Page Content */}
       <div className="flex-1 p-10">

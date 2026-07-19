@@ -1,0 +1,513 @@
+[
+  {
+    "_id": "6a4a73844eb998fb1bf2bb5a",
+    "patient_id": "patient_user_id",
+    "symptoms": [
+      "anxiety and nervousness",
+      "depression",
+      "dizziness",
+      "insomnia"
+    ],
+    "predicted_diseases": [
+      {
+        "disease": "spinocerebellar ataxia",
+        "probability": 0.2163
+      },
+      {
+        "disease": "somatization disorder",
+        "probability": 0.215
+      },
+      {
+        "disease": "drug withdrawal",
+        "probability": 0.1992
+      },
+      {
+        "disease": "conversion disorder",
+        "probability": 0.1921
+      },
+      {
+        "disease": "poisoning due to anticonvulsants",
+        "probability": 0.1774
+      }
+    ],
+    "risk_level": "low",
+    "risk_score": 41.49,
+    "recommendations": [
+      "\ud83c\udfe0 Rest and stay well hydrated. Monitor your symptoms over the next 24-48 hours.",
+      "\ud83e\ude7a If symptoms persist or worsen, please consult a doctor."
+    ],
+    "created_at": "2026-07-05 15:08:52.908803"
+  },
+  {
+    "_id": "6a4a74032ec1f223d9522285",
+    "patient_id": "patient_user_id",
+    "symptoms": [
+      "anxiety and nervousness",
+      "depression",
+      "dizziness",
+      "insomnia",
+      "chest tightness",
+      "breathing fast"
+    ],
+    "predicted_diseases": [
+      {
+        "disease": "panic disorder",
+        "probability": 0.2541
+      },
+      {
+        "disease": "drug withdrawal",
+        "probability": 0.1977
+      },
+      {
+        "disease": "somatization disorder",
+        "probability": 0.1875
+      },
+      {
+        "disease": "acute stress reaction",
+        "probability": 0.1844
+      },
+      {
+        "disease": "adjustment reaction",
+        "probability": 0.1763
+      }
+    ],
+    "risk_level": "medium",
+    "risk_score": 47.62,
+    "recommendations": [
+      "\ud83d\udcc5 Schedule an appointment with a primary care physician for further diagnostic testing.",
+      "\u26a0\ufe0f Monitor symptoms closely and avoid strenuous activities.",
+      "\ud83d\udca1 Practice slow, deep breathing exercises and grounding techniques."
+    ],
+    "created_at": "2026-07-05 15:10:59.940257"
+  },
+  {
+    "_id": "6a4a74231626a34fd047b514",
+    "patient_id": "patient_user_id",
+    "symptoms": [
+      "anxiety and nervousness",
+      "depression",
+      "dizziness",
+      "insomnia",
+      "chest tightness",
+      "breathing fast"
+    ],
+    "predicted_diseases": [
+      {
+        "disease": "panic disorder",
+        "probability": 0.2541
+      },
+      {
+        "disease": "drug withdrawal",
+        "probability": 0.1977
+      },
+      {
+        "disease": "somatization disorder",
+        "probability": 0.1875
+      },
+      {
+        "disease": "acute stress reaction",
+        "probability": 0.1844
+      },
+      {
+        "disease": "adjustment reaction",
+        "probability": 0.1763
+      }
+    ],
+    "risk_level": "medium",
+    "risk_score": 47.62,
+    "recommendations": [
+      "\ud83d\udcc5 Schedule an appointment with a primary care physician for further diagnostic testing.",
+      "\u26a0\ufe0f Monitor symptoms closely and avoid strenuous activities.",
+      "\ud83d\udca1 Practice slow, deep breathing exercises and grounding techniques."
+    ],
+    "created_at": "2026-07-05 15:11:31.110672"
+  },
+  {
+    "_id": "6a51fa7cbf8fe09e8442b1a6",
+    "patient_id": "patient_user_id",
+    "symptoms": [
+      "anxiety and nervousness",
+      "depression",
+      "dizziness",
+      "insomnia",
+      "chest tightness",
+      "breathing fast"
+    ],
+    "predicted_diseases": [
+      {
+        "disease": "panic disorder",
+        "probability": 0.2541
+      },
+      {
+        "disease": "drug withdrawal",
+        "probability": 0.1977
+      },
+      {
+        "disease": "somatization disorder",
+        "probability": 0.1875
+      },
+      {
+        "disease": "acute stress reaction",
+        "probability": 0.1844
+      },
+      {
+        "disease": "adjustment reaction",
+        "probability": 0.1763
+      }
+    ],
+    "risk_level": "medium",
+    "risk_score": 47.62,
+    "recommendations": [
+      "\ud83d\udcc5 Schedule an appointment with a primary care physician for further diagnostic testing.",
+      "\u26a0\ufe0f Monitor symptoms closely and avoid strenuous activities.",
+      "\ud83d\udca1 Practice slow, deep breathing exercises and grounding techniques."
+    ],
+    "created_at": "2026-07-11 08:10:36.395197"
+  },
+  {
+    "_id": "6a5b3d752b6b5c4623ada43a",
+    "patient_id": "6a5b2e9f2b6b5c4623ada438",
+    "symptoms": [
+      "fever",
+      "cough"
+    ],
+    "predicted_diseases": [
+      {
+        "disease": "hyperhidrosis",
+        "probability": 0.2064
+      },
+      {
+        "disease": "chickenpox",
+        "probability": 0.2049
+      },
+      {
+        "disease": "meningitis",
+        "probability": 0.1977
+      },
+      {
+        "disease": "mononucleosis",
+        "probability": 0.1965
+      },
+      {
+        "disease": "lymphadenitis",
+        "probability": 0.1945
+      }
+    ],
+    "risk_level": "low",
+    "risk_score": 31.19,
+    "recommendations": [
+      "\ud83c\udfe0 Rest and stay well hydrated. Monitor your symptoms over the next 24-48 hours.",
+      "\ud83e\ude7a If symptoms persist or worsen, please consult a doctor."
+    ],
+    "created_at": "2026-07-18 08:46:45.941558",
+    "id": "6a5b3d752b6b5c4623ada43a"
+  },
+  {
+    "_id": "6a5b3f342b6b5c4623ada43b",
+    "patient_id": "6a5b2e9f2b6b5c4623ada438",
+    "symptoms": [
+      "fever",
+      "cough"
+    ],
+    "predicted_diseases": [
+      {
+        "disease": "hyperhidrosis",
+        "probability": 0.2064
+      },
+      {
+        "disease": "chickenpox",
+        "probability": 0.2049
+      },
+      {
+        "disease": "meningitis",
+        "probability": 0.1977
+      },
+      {
+        "disease": "mononucleosis",
+        "probability": 0.1965
+      },
+      {
+        "disease": "lymphadenitis",
+        "probability": 0.1945
+      }
+    ],
+    "risk_level": "low",
+    "risk_score": 31.19,
+    "recommendations": [
+      "\ud83c\udfe0 Rest and stay well hydrated. Monitor your symptoms over the next 24-48 hours.",
+      "\ud83e\ude7a If symptoms persist or worsen, please consult a doctor."
+    ],
+    "created_at": "2026-07-18 08:54:12.138091",
+    "id": "6a5b3f342b6b5c4623ada43b"
+  },
+  {
+    "_id": "6a5b41112b6b5c4623ada43c",
+    "patient_id": "6a5b2e9f2b6b5c4623ada438",
+    "symptoms": [
+      "cough",
+      "fever"
+    ],
+    "predicted_diseases": [
+      {
+        "disease": "hyperhidrosis",
+        "probability": 0.2064
+      },
+      {
+        "disease": "chickenpox",
+        "probability": 0.2049
+      },
+      {
+        "disease": "meningitis",
+        "probability": 0.1977
+      },
+      {
+        "disease": "mononucleosis",
+        "probability": 0.1965
+      },
+      {
+        "disease": "lymphadenitis",
+        "probability": 0.1945
+      }
+    ],
+    "risk_level": "low",
+    "risk_score": 31.19,
+    "recommendations": [
+      "\ud83c\udfe0 Rest and stay well hydrated. Monitor your symptoms over the next 24-48 hours.",
+      "\ud83e\ude7a If symptoms persist or worsen, please consult a doctor."
+    ],
+    "created_at": "2026-07-18 09:02:09.010458",
+    "id": "6a5b41112b6b5c4623ada43c"
+  },
+  {
+    "_id": "6a5b45ea2b6b5c4623ada43d",
+    "patient_id": "6a5b2e9f2b6b5c4623ada438",
+    "symptoms": [
+      "cough",
+      "fever"
+    ],
+    "predicted_diseases": [
+      {
+        "disease": "hyperhidrosis",
+        "probability": 0.2064
+      },
+      {
+        "disease": "chickenpox",
+        "probability": 0.2049
+      },
+      {
+        "disease": "meningitis",
+        "probability": 0.1977
+      },
+      {
+        "disease": "mononucleosis",
+        "probability": 0.1965
+      },
+      {
+        "disease": "lymphadenitis",
+        "probability": 0.1945
+      }
+    ],
+    "risk_level": "low",
+    "risk_score": 31.19,
+    "recommendations": [
+      "\ud83c\udfe0 Rest and stay well hydrated. Monitor your symptoms over the next 24-48 hours.",
+      "\ud83e\ude7a If symptoms persist or worsen, please consult a doctor."
+    ],
+    "created_at": "2026-07-18 09:22:50.685833",
+    "id": "6a5b45ea2b6b5c4623ada43d"
+  },
+  {
+    "_id": "6a5b46232b6b5c4623ada43e",
+    "patient_id": "6a5b2e9f2b6b5c4623ada438",
+    "symptoms": [
+      "abdominal distention",
+      "ankle pain",
+      "arm pain",
+      "burning chest pain",
+      "joint pain",
+      "pain in eye"
+    ],
+    "predicted_diseases": [
+      {
+        "disease": "sjogren syndrome",
+        "probability": 0.2255
+      },
+      {
+        "disease": "lateral epicondylitis (tennis elbow)",
+        "probability": 0.2169
+      },
+      {
+        "disease": "tendinitis",
+        "probability": 0.1996
+      },
+      {
+        "disease": "injury of the ankle",
+        "probability": 0.1829
+      },
+      {
+        "disease": "mononeuritis",
+        "probability": 0.1751
+      }
+    ],
+    "risk_level": "medium",
+    "risk_score": 46.77,
+    "recommendations": [
+      "\ud83d\udcc5 Schedule an appointment with a primary care physician for further diagnostic testing.",
+      "\u26a0\ufe0f Monitor symptoms closely and avoid strenuous activities."
+    ],
+    "created_at": "2026-07-18 09:23:47.327559",
+    "id": "6a5b46232b6b5c4623ada43e"
+  },
+  {
+    "_id": "6a5b47c02b6b5c4623ada43f",
+    "patient_id": "6a5b2e9f2b6b5c4623ada438",
+    "symptoms": [
+      "obsessions and compulsions",
+      "nasal congestion"
+    ],
+    "predicted_diseases": [
+      {
+        "disease": "trichinosis",
+        "probability": 0.2174
+      },
+      {
+        "disease": "cholesteatoma",
+        "probability": 0.2054
+      },
+      {
+        "disease": "lice",
+        "probability": 0.1965
+      },
+      {
+        "disease": "lactose intolerance",
+        "probability": 0.1916
+      },
+      {
+        "disease": "tracheitis",
+        "probability": 0.1891
+      }
+    ],
+    "risk_level": "low",
+    "risk_score": 31.52,
+    "recommendations": [
+      "\ud83c\udfe0 Rest and stay well hydrated. Monitor your symptoms over the next 24-48 hours.",
+      "\ud83e\ude7a If symptoms persist or worsen, please consult a doctor."
+    ],
+    "created_at": "2026-07-18 09:30:40.287115",
+    "id": "6a5b47c02b6b5c4623ada43f"
+  },
+  {
+    "_id": "6a5c7e47cb50395653aad1d0",
+    "patient_id": "6a5b2e9f2b6b5c4623ada438",
+    "symptoms": [
+      "too little hair"
+    ],
+    "predicted_diseases": [
+      {
+        "disease": "hypothyroidism",
+        "probability": 0.2099
+      },
+      {
+        "disease": "onychomycosis",
+        "probability": 0.2054
+      },
+      {
+        "disease": "fungal infection of the skin",
+        "probability": 0.2016
+      },
+      {
+        "disease": "seborrheic dermatitis",
+        "probability": 0.1916
+      },
+      {
+        "disease": "alopecia",
+        "probability": 0.1915
+      }
+    ],
+    "risk_level": "low",
+    "risk_score": 26.3,
+    "recommendations": [
+      "\ud83c\udfe0 Rest and stay well hydrated. Monitor your symptoms over the next 24-48 hours.",
+      "\ud83e\ude7a If symptoms persist or worsen, please consult a doctor."
+    ],
+    "created_at": "2026-07-19 07:35:35.469663",
+    "id": "6a5c7e47cb50395653aad1d0"
+  },
+  {
+    "_id": "6a5cb0fe2f80c10fde97ad01",
+    "patient_id": "6a5b2e9f2b6b5c4623ada438",
+    "symptoms": [
+      "abdominal distention",
+      "apnea",
+      "arm cramps or spasms",
+      "weakness"
+    ],
+    "predicted_diseases": [
+      {
+        "disease": "poisoning due to antihypertensives",
+        "probability": 0.221
+      },
+      {
+        "disease": "hirsutism",
+        "probability": 0.2037
+      },
+      {
+        "disease": "hemiplegia",
+        "probability": 0.1956
+      },
+      {
+        "disease": "hypercalcemia",
+        "probability": 0.1937
+      },
+      {
+        "disease": "hyperosmotic hyperketotic state",
+        "probability": 0.186
+      }
+    ],
+    "risk_level": "high",
+    "risk_score": 81.63,
+    "recommendations": [
+      "\ud83d\udea8 EMERGENCY ALERT: Please seek immediate medical attention or go to the nearest emergency room.",
+      "Critical symptoms noted: apnea."
+    ],
+    "created_at": "2026-07-19 11:11:58.413520",
+    "id": "6a5cb0fe2f80c10fde97ad01"
+  },
+  {
+    "_id": "6a5cb2d62f80c10fde97ad02",
+    "patient_id": "6a5b2e9f2b6b5c4623ada438",
+    "symptoms": [
+      "fever",
+      "feeling cold"
+    ],
+    "predicted_diseases": [
+      {
+        "disease": "kidney disease due to longstanding hypertension",
+        "probability": 0.242
+      },
+      {
+        "disease": "hypernatremia",
+        "probability": 0.2245
+      },
+      {
+        "disease": "tonsillar hypertrophy",
+        "probability": 0.1836
+      },
+      {
+        "disease": "chronic kidney disease",
+        "probability": 0.1752
+      },
+      {
+        "disease": "scarlet fever",
+        "probability": 0.1747
+      }
+    ],
+    "risk_level": "low",
+    "risk_score": 32.26,
+    "recommendations": [
+      "\ud83c\udfe0 Rest and stay well hydrated. Monitor your symptoms over the next 24-48 hours.",
+      "\ud83e\ude7a If symptoms persist or worsen, please consult a doctor."
+    ],
+    "created_at": "2026-07-19 11:19:50.153971"
+  }
+]

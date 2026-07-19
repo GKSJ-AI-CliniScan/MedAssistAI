@@ -1,28 +1,39 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
+import api from "../../services/api";
+import toast from "react-hot-toast";
+
 function Reports() {
-  const reports = [
-    {
-      id: 1,
-      date: "07 July 2026",
-      disease: "Influenza",
-      confidence: "92%",
-      severity: "Medium",
-    },
-    {
-      id: 2,
-      date: "05 July 2026",
-      disease: "Migraine",
-      confidence: "89%",
-      severity: "Low",
-    },
-    {
-      id: 3,
-      date: "02 July 2026",
-      disease: "COVID-19",
-      confidence: "96%",
-      severity: "High",
-    },
-  ];
+  const [reports, setReports] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    loadReports();
+  }, []);
+
+  const loadReports = async () => {
+    try {
+      setLoading(true);
+
+      const token = localStorage.getItem("token");
+
+      const response = await api.get("/api/history", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(response.data);
+      setReports(response.data);
+    } catch (error) {
+      console.log(error);
+      toast.error("Unable to load reports.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Layout>
@@ -31,41 +42,77 @@ function Reports() {
       </h1>
 
       <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
+        {loading ? (
+          <div className="bg-white rounded-3xl shadow-lg p-10 text-center text-gray-500">
+            Loading reports...
+          </div>
+        ) : (
 
-        <table className="w-full">
+          <div className="overflow-x-auto">
 
-          <thead className="bg-blue-600 text-white">
+            <table className="w-full">
 
-            <tr>
-              <th className="p-4 text-left">Date</th>
-              <th className="p-4 text-left">Disease</th>
-              <th className="p-4 text-left">Confidence</th>
-              <th className="p-4 text-left">Severity</th>
-            </tr>
+              <thead className="bg-blue-600 text-white">
+                <tr>
+                  <th className="p-4 text-left">Date</th>
+                  <th className="p-4 text-left">Top Disease</th>
+                  <th className="p-4 text-left">Probability</th>
+                  <th className="p-4 text-left">Risk</th>
+                </tr>
+              </thead>
 
-          </thead>
+              <tbody>
 
-          <tbody>
+                {reports.map((report) => (
+                  <tr
+  key={report.id}
+  onClick={() =>
+    navigate("/prediction-details", {
+      state: { report },
+    })
+  }
+  className="border-b hover:bg-slate-100 cursor-pointer"
+>
+  <td className="p-4">
+    {new Date(report.created_at).toLocaleString()}
+  </td>
 
-            {reports.map((report) => (
+  <td className="p-4">
+    {report.predicted_diseases?.[0]?.disease || "N/A"}
+  </td>
 
-              <tr
-                key={report.id}
-                className="border-b hover:bg-slate-50"
-              >
-                <td className="p-4">{report.date}</td>
-                <td className="p-4">{report.disease}</td>
-                <td className="p-4">{report.confidence}</td>
-                <td className="p-4">{report.severity}</td>
-              </tr>
+  <td className="p-4">
+    {report.predicted_diseases?.[0]
+      ? `${(report.predicted_diseases[0].probability * 100).toFixed(2)}%`
+      : "N/A"}
+  </td>
 
-            ))}
+  <td className="p-4 capitalize">
+    {report.risk_level}
+  </td>
+</tr>
+                ))}
 
-          </tbody>
+                {reports.length === 0 && (
+                  <tr>
+                    <td
+                      colSpan="4"
+                      className="p-8 text-center text-gray-500"
+                    >
+                      No health reports available.
+                    </td>
+                  </tr>
+                )}
 
-        </table>
+              </tbody>
 
+            </table>
+
+          </div>
+
+        )}
       </div>
+
     </Layout>
   );
 }
