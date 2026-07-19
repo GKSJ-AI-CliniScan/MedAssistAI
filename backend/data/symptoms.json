@@ -1,0 +1,2264 @@
+[
+  {
+    "key": "anxiety and nervousness",
+    "display_name": "Anxiety and nervousness",
+    "category": "Mental Health",
+    "_id": "6a4a734755a6eb6b78ec78c3"
+  },
+  {
+    "key": "depression",
+    "display_name": "Depression",
+    "category": "Mental Health",
+    "_id": "6a4a734755a6eb6b78ec78c4"
+  },
+  {
+    "key": "shortness of breath",
+    "display_name": "Shortness of breath",
+    "category": "Pulmonology",
+    "_id": "6a4a734755a6eb6b78ec78c5"
+  },
+  {
+    "key": "depressive or psychotic symptoms",
+    "display_name": "Depressive or psychotic symptoms",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec78c6"
+  },
+  {
+    "key": "sharp chest pain",
+    "display_name": "Sharp chest pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec78c7"
+  },
+  {
+    "key": "dizziness",
+    "display_name": "Dizziness",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec78c8"
+  },
+  {
+    "key": "insomnia",
+    "display_name": "Insomnia",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec78c9"
+  },
+  {
+    "key": "abnormal involuntary movements",
+    "display_name": "Abnormal involuntary movements",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec78ca"
+  },
+  {
+    "key": "chest tightness",
+    "display_name": "Chest tightness",
+    "category": "Cardiology",
+    "_id": "6a4a734755a6eb6b78ec78cb"
+  },
+  {
+    "key": "palpitations",
+    "display_name": "Palpitations",
+    "category": "Cardiology",
+    "_id": "6a4a734755a6eb6b78ec78cc"
+  },
+  {
+    "key": "irregular heartbeat",
+    "display_name": "Irregular heartbeat",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec78cd"
+  },
+  {
+    "key": "breathing fast",
+    "display_name": "Breathing fast",
+    "category": "Pulmonology",
+    "_id": "6a4a734755a6eb6b78ec78ce"
+  },
+  {
+    "key": "hoarse voice",
+    "display_name": "Hoarse voice",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec78cf"
+  },
+  {
+    "key": "sore throat",
+    "display_name": "Sore throat",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec78d0"
+  },
+  {
+    "key": "difficulty speaking",
+    "display_name": "Difficulty speaking",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec78d1"
+  },
+  {
+    "key": "cough",
+    "display_name": "Cough",
+    "category": "Pulmonology",
+    "_id": "6a4a734755a6eb6b78ec78d2"
+  },
+  {
+    "key": "nasal congestion",
+    "display_name": "Nasal congestion",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec78d3"
+  },
+  {
+    "key": "throat swelling",
+    "display_name": "Throat swelling",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec78d4"
+  },
+  {
+    "key": "diminished hearing",
+    "display_name": "Diminished hearing",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec78d5"
+  },
+  {
+    "key": "lump in throat",
+    "display_name": "Lump in throat",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec78d6"
+  },
+  {
+    "key": "throat feels tight",
+    "display_name": "Throat feels tight",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec78d7"
+  },
+  {
+    "key": "difficulty in swallowing",
+    "display_name": "Difficulty in swallowing",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec78d8"
+  },
+  {
+    "key": "skin swelling",
+    "display_name": "Skin swelling",
+    "category": "Dermatology",
+    "_id": "6a4a734755a6eb6b78ec78d9"
+  },
+  {
+    "key": "retention of urine",
+    "display_name": "Retention of urine",
+    "category": "Urology",
+    "_id": "6a4a734755a6eb6b78ec78da"
+  },
+  {
+    "key": "groin mass",
+    "display_name": "Groin mass",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec78db"
+  },
+  {
+    "key": "leg pain",
+    "display_name": "Leg pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec78dc"
+  },
+  {
+    "key": "hip pain",
+    "display_name": "Hip pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec78dd"
+  },
+  {
+    "key": "suprapubic pain",
+    "display_name": "Suprapubic pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec78de"
+  },
+  {
+    "key": "blood in stool",
+    "display_name": "Blood in stool",
+    "category": "Gastroenterology",
+    "_id": "6a4a734755a6eb6b78ec78df"
+  },
+  {
+    "key": "lack of growth",
+    "display_name": "Lack of growth",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec78e0"
+  },
+  {
+    "key": "emotional symptoms",
+    "display_name": "Emotional symptoms",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec78e1"
+  },
+  {
+    "key": "elbow weakness",
+    "display_name": "Elbow weakness",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec78e2"
+  },
+  {
+    "key": "back weakness",
+    "display_name": "Back weakness",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec78e3"
+  },
+  {
+    "key": "pus in sputum",
+    "display_name": "Pus in sputum",
+    "category": "Pulmonology",
+    "_id": "6a4a734755a6eb6b78ec78e4"
+  },
+  {
+    "key": "symptoms of the scrotum and testes",
+    "display_name": "Symptoms of the scrotum and testes",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec78e5"
+  },
+  {
+    "key": "swelling of scrotum",
+    "display_name": "Swelling of scrotum",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec78e6"
+  },
+  {
+    "key": "pain in testicles",
+    "display_name": "Pain in testicles",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec78e7"
+  },
+  {
+    "key": "flatulence",
+    "display_name": "Flatulence",
+    "category": "Gastroenterology",
+    "_id": "6a4a734755a6eb6b78ec78e8"
+  },
+  {
+    "key": "pus draining from ear",
+    "display_name": "Pus draining from ear",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec78e9"
+  },
+  {
+    "key": "jaundice",
+    "display_name": "Jaundice",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec78ea"
+  },
+  {
+    "key": "mass in scrotum",
+    "display_name": "Mass in scrotum",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec78eb"
+  },
+  {
+    "key": "white discharge from eye",
+    "display_name": "White discharge from eye",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec78ec"
+  },
+  {
+    "key": "irritable infant",
+    "display_name": "Irritable infant",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec78ed"
+  },
+  {
+    "key": "abusing alcohol",
+    "display_name": "Abusing alcohol",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec78ee"
+  },
+  {
+    "key": "fainting",
+    "display_name": "Fainting",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec78ef"
+  },
+  {
+    "key": "hostile behavior",
+    "display_name": "Hostile behavior",
+    "category": "Mental Health",
+    "_id": "6a4a734755a6eb6b78ec78f0"
+  },
+  {
+    "key": "drug abuse",
+    "display_name": "Drug abuse",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec78f1"
+  },
+  {
+    "key": "sharp abdominal pain",
+    "display_name": "Sharp abdominal pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec78f2"
+  },
+  {
+    "key": "feeling ill",
+    "display_name": "Feeling ill",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec78f3"
+  },
+  {
+    "key": "vomiting",
+    "display_name": "Vomiting",
+    "category": "Gastroenterology",
+    "_id": "6a4a734755a6eb6b78ec78f4"
+  },
+  {
+    "key": "headache",
+    "display_name": "Headache",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec78f5"
+  },
+  {
+    "key": "nausea",
+    "display_name": "Nausea",
+    "category": "Gastroenterology",
+    "_id": "6a4a734755a6eb6b78ec78f6"
+  },
+  {
+    "key": "diarrhea",
+    "display_name": "Diarrhea",
+    "category": "Gastroenterology",
+    "_id": "6a4a734755a6eb6b78ec78f7"
+  },
+  {
+    "key": "vaginal itching",
+    "display_name": "Vaginal itching",
+    "category": "Gynecology",
+    "_id": "6a4a734755a6eb6b78ec78f8"
+  },
+  {
+    "key": "vaginal dryness",
+    "display_name": "Vaginal dryness",
+    "category": "Gynecology",
+    "_id": "6a4a734755a6eb6b78ec78f9"
+  },
+  {
+    "key": "painful urination",
+    "display_name": "Painful urination",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec78fa"
+  },
+  {
+    "key": "involuntary urination",
+    "display_name": "Involuntary urination",
+    "category": "Urology",
+    "_id": "6a4a734755a6eb6b78ec78fb"
+  },
+  {
+    "key": "pain during intercourse",
+    "display_name": "Pain during intercourse",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec78fc"
+  },
+  {
+    "key": "frequent urination",
+    "display_name": "Frequent urination",
+    "category": "Urology",
+    "_id": "6a4a734755a6eb6b78ec78fd"
+  },
+  {
+    "key": "lower abdominal pain",
+    "display_name": "Lower abdominal pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec78fe"
+  },
+  {
+    "key": "vaginal discharge",
+    "display_name": "Vaginal discharge",
+    "category": "Gynecology",
+    "_id": "6a4a734755a6eb6b78ec78ff"
+  },
+  {
+    "key": "blood in urine",
+    "display_name": "Blood in urine",
+    "category": "Urology",
+    "_id": "6a4a734755a6eb6b78ec7900"
+  },
+  {
+    "key": "hot flashes",
+    "display_name": "Hot flashes",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7901"
+  },
+  {
+    "key": "intermenstrual bleeding",
+    "display_name": "Intermenstrual bleeding",
+    "category": "Gynecology",
+    "_id": "6a4a734755a6eb6b78ec7902"
+  },
+  {
+    "key": "hand or finger pain",
+    "display_name": "Hand or finger pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7903"
+  },
+  {
+    "key": "wrist pain",
+    "display_name": "Wrist pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7904"
+  },
+  {
+    "key": "hand or finger swelling",
+    "display_name": "Hand or finger swelling",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7905"
+  },
+  {
+    "key": "arm pain",
+    "display_name": "Arm pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7906"
+  },
+  {
+    "key": "wrist swelling",
+    "display_name": "Wrist swelling",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7907"
+  },
+  {
+    "key": "arm stiffness or tightness",
+    "display_name": "Arm stiffness or tightness",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7908"
+  },
+  {
+    "key": "arm swelling",
+    "display_name": "Arm swelling",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7909"
+  },
+  {
+    "key": "hand or finger stiffness or tightness",
+    "display_name": "Hand or finger stiffness or tightness",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec790a"
+  },
+  {
+    "key": "wrist stiffness or tightness",
+    "display_name": "Wrist stiffness or tightness",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec790b"
+  },
+  {
+    "key": "lip swelling",
+    "display_name": "Lip swelling",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec790c"
+  },
+  {
+    "key": "toothache",
+    "display_name": "Toothache",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec790d"
+  },
+  {
+    "key": "abnormal appearing skin",
+    "display_name": "Abnormal appearing skin",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec790e"
+  },
+  {
+    "key": "skin lesion",
+    "display_name": "Skin lesion",
+    "category": "Dermatology",
+    "_id": "6a4a734755a6eb6b78ec790f"
+  },
+  {
+    "key": "acne or pimples",
+    "display_name": "Acne or pimples",
+    "category": "Dermatology",
+    "_id": "6a4a734755a6eb6b78ec7910"
+  },
+  {
+    "key": "dry lips",
+    "display_name": "Dry lips",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7911"
+  },
+  {
+    "key": "facial pain",
+    "display_name": "Facial pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7912"
+  },
+  {
+    "key": "mouth ulcer",
+    "display_name": "Mouth ulcer",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7913"
+  },
+  {
+    "key": "skin growth",
+    "display_name": "Skin growth",
+    "category": "Dermatology",
+    "_id": "6a4a734755a6eb6b78ec7914"
+  },
+  {
+    "key": "eye deviation",
+    "display_name": "Eye deviation",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec7915"
+  },
+  {
+    "key": "diminished vision",
+    "display_name": "Diminished vision",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec7916"
+  },
+  {
+    "key": "double vision",
+    "display_name": "Double vision",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec7917"
+  },
+  {
+    "key": "cross-eyed",
+    "display_name": "Cross-eyed",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec7918"
+  },
+  {
+    "key": "symptoms of eye",
+    "display_name": "Symptoms of eye",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec7919"
+  },
+  {
+    "key": "pain in eye",
+    "display_name": "Pain in eye",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec791a"
+  },
+  {
+    "key": "eye moves abnormally",
+    "display_name": "Eye moves abnormally",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec791b"
+  },
+  {
+    "key": "abnormal movement of eyelid",
+    "display_name": "Abnormal movement of eyelid",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec791c"
+  },
+  {
+    "key": "foreign body sensation in eye",
+    "display_name": "Foreign body sensation in eye",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec791d"
+  },
+  {
+    "key": "irregular appearing scalp",
+    "display_name": "Irregular appearing scalp",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec791e"
+  },
+  {
+    "key": "swollen lymph nodes",
+    "display_name": "Swollen lymph nodes",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec791f"
+  },
+  {
+    "key": "back pain",
+    "display_name": "Back pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7920"
+  },
+  {
+    "key": "neck pain",
+    "display_name": "Neck pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7921"
+  },
+  {
+    "key": "low back pain",
+    "display_name": "Low back pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7922"
+  },
+  {
+    "key": "pain of the anus",
+    "display_name": "Pain of the anus",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7923"
+  },
+  {
+    "key": "pain during pregnancy",
+    "display_name": "Pain during pregnancy",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7924"
+  },
+  {
+    "key": "pelvic pain",
+    "display_name": "Pelvic pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7925"
+  },
+  {
+    "key": "impotence",
+    "display_name": "Impotence",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7926"
+  },
+  {
+    "key": "infant spitting up",
+    "display_name": "Infant spitting up",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7927"
+  },
+  {
+    "key": "vomiting blood",
+    "display_name": "Vomiting blood",
+    "category": "Gastroenterology",
+    "_id": "6a4a734755a6eb6b78ec7928"
+  },
+  {
+    "key": "regurgitation",
+    "display_name": "Regurgitation",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7929"
+  },
+  {
+    "key": "burning abdominal pain",
+    "display_name": "Burning abdominal pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec792a"
+  },
+  {
+    "key": "restlessness",
+    "display_name": "Restlessness",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec792b"
+  },
+  {
+    "key": "symptoms of infants",
+    "display_name": "Symptoms of infants",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec792c"
+  },
+  {
+    "key": "wheezing",
+    "display_name": "Wheezing",
+    "category": "Pulmonology",
+    "_id": "6a4a734755a6eb6b78ec792d"
+  },
+  {
+    "key": "peripheral edema",
+    "display_name": "Peripheral edema",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec792e"
+  },
+  {
+    "key": "neck mass",
+    "display_name": "Neck mass",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec792f"
+  },
+  {
+    "key": "ear pain",
+    "display_name": "Ear pain",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec7930"
+  },
+  {
+    "key": "jaw swelling",
+    "display_name": "Jaw swelling",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7931"
+  },
+  {
+    "key": "mouth dryness",
+    "display_name": "Mouth dryness",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7932"
+  },
+  {
+    "key": "neck swelling",
+    "display_name": "Neck swelling",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7933"
+  },
+  {
+    "key": "knee pain",
+    "display_name": "Knee pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7934"
+  },
+  {
+    "key": "foot or toe pain",
+    "display_name": "Foot or toe pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7935"
+  },
+  {
+    "key": "bowlegged or knock-kneed",
+    "display_name": "Bowlegged or knock-kneed",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7936"
+  },
+  {
+    "key": "ankle pain",
+    "display_name": "Ankle pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7937"
+  },
+  {
+    "key": "bones are painful",
+    "display_name": "Bones are painful",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7938"
+  },
+  {
+    "key": "knee weakness",
+    "display_name": "Knee weakness",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7939"
+  },
+  {
+    "key": "elbow pain",
+    "display_name": "Elbow pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec793a"
+  },
+  {
+    "key": "knee swelling",
+    "display_name": "Knee swelling",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec793b"
+  },
+  {
+    "key": "skin moles",
+    "display_name": "Skin moles",
+    "category": "Dermatology",
+    "_id": "6a4a734755a6eb6b78ec793c"
+  },
+  {
+    "key": "knee lump or mass",
+    "display_name": "Knee lump or mass",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec793d"
+  },
+  {
+    "key": "weight gain",
+    "display_name": "Weight gain",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec793e"
+  },
+  {
+    "key": "problems with movement",
+    "display_name": "Problems with movement",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec793f"
+  },
+  {
+    "key": "knee stiffness or tightness",
+    "display_name": "Knee stiffness or tightness",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7940"
+  },
+  {
+    "key": "leg swelling",
+    "display_name": "Leg swelling",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7941"
+  },
+  {
+    "key": "foot or toe swelling",
+    "display_name": "Foot or toe swelling",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7942"
+  },
+  {
+    "key": "heartburn",
+    "display_name": "Heartburn",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec7943"
+  },
+  {
+    "key": "smoking problems",
+    "display_name": "Smoking problems",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7944"
+  },
+  {
+    "key": "muscle pain",
+    "display_name": "Muscle pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7945"
+  },
+  {
+    "key": "infant feeding problem",
+    "display_name": "Infant feeding problem",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7946"
+  },
+  {
+    "key": "recent weight loss",
+    "display_name": "Recent weight loss",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7947"
+  },
+  {
+    "key": "problems with shape or size of breast",
+    "display_name": "Problems with shape or size of breast",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7948"
+  },
+  {
+    "key": "underweight",
+    "display_name": "Underweight",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7949"
+  },
+  {
+    "key": "difficulty eating",
+    "display_name": "Difficulty eating",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec794a"
+  },
+  {
+    "key": "scanty menstrual flow",
+    "display_name": "Scanty menstrual flow",
+    "category": "Gynecology",
+    "_id": "6a4a734755a6eb6b78ec794b"
+  },
+  {
+    "key": "vaginal pain",
+    "display_name": "Vaginal pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec794c"
+  },
+  {
+    "key": "vaginal redness",
+    "display_name": "Vaginal redness",
+    "category": "Gynecology",
+    "_id": "6a4a734755a6eb6b78ec794d"
+  },
+  {
+    "key": "vulvar irritation",
+    "display_name": "Vulvar irritation",
+    "category": "Gynecology",
+    "_id": "6a4a734755a6eb6b78ec794e"
+  },
+  {
+    "key": "weakness",
+    "display_name": "Weakness",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec794f"
+  },
+  {
+    "key": "decreased heart rate",
+    "display_name": "Decreased heart rate",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec7950"
+  },
+  {
+    "key": "increased heart rate",
+    "display_name": "Increased heart rate",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec7951"
+  },
+  {
+    "key": "bleeding or discharge from nipple",
+    "display_name": "Bleeding or discharge from nipple",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7952"
+  },
+  {
+    "key": "ringing in ear",
+    "display_name": "Ringing in ear",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec7953"
+  },
+  {
+    "key": "plugged feeling in ear",
+    "display_name": "Plugged feeling in ear",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec7954"
+  },
+  {
+    "key": "itchy ear(s)",
+    "display_name": "Itchy ear(s)",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec7955"
+  },
+  {
+    "key": "frontal headache",
+    "display_name": "Frontal headache",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7956"
+  },
+  {
+    "key": "fluid in ear",
+    "display_name": "Fluid in ear",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec7957"
+  },
+  {
+    "key": "neck stiffness or tightness",
+    "display_name": "Neck stiffness or tightness",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7958"
+  },
+  {
+    "key": "spots or clouds in vision",
+    "display_name": "Spots or clouds in vision",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec7959"
+  },
+  {
+    "key": "eye redness",
+    "display_name": "Eye redness",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec795a"
+  },
+  {
+    "key": "lacrimation",
+    "display_name": "Lacrimation",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec795b"
+  },
+  {
+    "key": "itchiness of eye",
+    "display_name": "Itchiness of eye",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec795c"
+  },
+  {
+    "key": "blindness",
+    "display_name": "Blindness",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec795d"
+  },
+  {
+    "key": "eye burns or stings",
+    "display_name": "Eye burns or stings",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec795e"
+  },
+  {
+    "key": "itchy eyelid",
+    "display_name": "Itchy eyelid",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec795f"
+  },
+  {
+    "key": "feeling cold",
+    "display_name": "Feeling cold",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7960"
+  },
+  {
+    "key": "decreased appetite",
+    "display_name": "Decreased appetite",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7961"
+  },
+  {
+    "key": "excessive appetite",
+    "display_name": "Excessive appetite",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7962"
+  },
+  {
+    "key": "excessive anger",
+    "display_name": "Excessive anger",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7963"
+  },
+  {
+    "key": "loss of sensation",
+    "display_name": "Loss of sensation",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7964"
+  },
+  {
+    "key": "focal weakness",
+    "display_name": "Focal weakness",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7965"
+  },
+  {
+    "key": "slurring words",
+    "display_name": "Slurring words",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7966"
+  },
+  {
+    "key": "symptoms of the face",
+    "display_name": "Symptoms of the face",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7967"
+  },
+  {
+    "key": "disturbance of memory",
+    "display_name": "Disturbance of memory",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7968"
+  },
+  {
+    "key": "paresthesia",
+    "display_name": "Paresthesia",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7969"
+  },
+  {
+    "key": "side pain",
+    "display_name": "Side pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec796a"
+  },
+  {
+    "key": "fever",
+    "display_name": "Fever",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec796b"
+  },
+  {
+    "key": "shoulder pain",
+    "display_name": "Shoulder pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec796c"
+  },
+  {
+    "key": "shoulder stiffness or tightness",
+    "display_name": "Shoulder stiffness or tightness",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec796d"
+  },
+  {
+    "key": "shoulder weakness",
+    "display_name": "Shoulder weakness",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec796e"
+  },
+  {
+    "key": "arm cramps or spasms",
+    "display_name": "Arm cramps or spasms",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec796f"
+  },
+  {
+    "key": "shoulder swelling",
+    "display_name": "Shoulder swelling",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7970"
+  },
+  {
+    "key": "tongue lesions",
+    "display_name": "Tongue lesions",
+    "category": "Dermatology",
+    "_id": "6a4a734755a6eb6b78ec7971"
+  },
+  {
+    "key": "leg cramps or spasms",
+    "display_name": "Leg cramps or spasms",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7972"
+  },
+  {
+    "key": "abnormal appearing tongue",
+    "display_name": "Abnormal appearing tongue",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec7973"
+  },
+  {
+    "key": "ache all over",
+    "display_name": "Ache all over",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7974"
+  },
+  {
+    "key": "lower body pain",
+    "display_name": "Lower body pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7975"
+  },
+  {
+    "key": "problems during pregnancy",
+    "display_name": "Problems during pregnancy",
+    "category": "Gynecology",
+    "_id": "6a4a734755a6eb6b78ec7976"
+  },
+  {
+    "key": "spotting or bleeding during pregnancy",
+    "display_name": "Spotting or bleeding during pregnancy",
+    "category": "Gynecology",
+    "_id": "6a4a734755a6eb6b78ec7977"
+  },
+  {
+    "key": "cramps and spasms",
+    "display_name": "Cramps and spasms",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7978"
+  },
+  {
+    "key": "upper abdominal pain",
+    "display_name": "Upper abdominal pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7979"
+  },
+  {
+    "key": "stomach bloating",
+    "display_name": "Stomach bloating",
+    "category": "Gastroenterology",
+    "_id": "6a4a734755a6eb6b78ec797a"
+  },
+  {
+    "key": "changes in stool appearance",
+    "display_name": "Changes in stool appearance",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec797b"
+  },
+  {
+    "key": "unusual color or odor to urine",
+    "display_name": "Unusual color or odor to urine",
+    "category": "Urology",
+    "_id": "6a4a734755a6eb6b78ec797c"
+  },
+  {
+    "key": "kidney mass",
+    "display_name": "Kidney mass",
+    "category": "Urology",
+    "_id": "6a4a734755a6eb6b78ec797d"
+  },
+  {
+    "key": "swollen abdomen",
+    "display_name": "Swollen abdomen",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec797e"
+  },
+  {
+    "key": "symptoms of prostate",
+    "display_name": "Symptoms of prostate",
+    "category": "Urology",
+    "_id": "6a4a734755a6eb6b78ec797f"
+  },
+  {
+    "key": "leg stiffness or tightness",
+    "display_name": "Leg stiffness or tightness",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7980"
+  },
+  {
+    "key": "difficulty breathing",
+    "display_name": "Difficulty breathing",
+    "category": "Pulmonology",
+    "_id": "6a4a734755a6eb6b78ec7981"
+  },
+  {
+    "key": "rib pain",
+    "display_name": "Rib pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7982"
+  },
+  {
+    "key": "joint pain",
+    "display_name": "Joint pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7983"
+  },
+  {
+    "key": "muscle stiffness or tightness",
+    "display_name": "Muscle stiffness or tightness",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7984"
+  },
+  {
+    "key": "pallor",
+    "display_name": "Pallor",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7985"
+  },
+  {
+    "key": "hand or finger lump or mass",
+    "display_name": "Hand or finger lump or mass",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7986"
+  },
+  {
+    "key": "chills",
+    "display_name": "Chills",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7987"
+  },
+  {
+    "key": "groin pain",
+    "display_name": "Groin pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7988"
+  },
+  {
+    "key": "fatigue",
+    "display_name": "Fatigue",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7989"
+  },
+  {
+    "key": "abdominal distention",
+    "display_name": "Abdominal distention",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec798a"
+  },
+  {
+    "key": "regurgitation.1",
+    "display_name": "Regurgitation.1",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec798b"
+  },
+  {
+    "key": "symptoms of the kidneys",
+    "display_name": "Symptoms of the kidneys",
+    "category": "Urology",
+    "_id": "6a4a734755a6eb6b78ec798c"
+  },
+  {
+    "key": "melena",
+    "display_name": "Melena",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec798d"
+  },
+  {
+    "key": "flushing",
+    "display_name": "Flushing",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec798e"
+  },
+  {
+    "key": "coughing up sputum",
+    "display_name": "Coughing up sputum",
+    "category": "Pulmonology",
+    "_id": "6a4a734755a6eb6b78ec798f"
+  },
+  {
+    "key": "seizures",
+    "display_name": "Seizures",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7990"
+  },
+  {
+    "key": "delusions or hallucinations",
+    "display_name": "Delusions or hallucinations",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7991"
+  },
+  {
+    "key": "shoulder cramps or spasms",
+    "display_name": "Shoulder cramps or spasms",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7992"
+  },
+  {
+    "key": "joint stiffness or tightness",
+    "display_name": "Joint stiffness or tightness",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7993"
+  },
+  {
+    "key": "pain or soreness of breast",
+    "display_name": "Pain or soreness of breast",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7994"
+  },
+  {
+    "key": "excessive urination at night",
+    "display_name": "Excessive urination at night",
+    "category": "Urology",
+    "_id": "6a4a734755a6eb6b78ec7995"
+  },
+  {
+    "key": "bleeding from eye",
+    "display_name": "Bleeding from eye",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec7996"
+  },
+  {
+    "key": "rectal bleeding",
+    "display_name": "Rectal bleeding",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7997"
+  },
+  {
+    "key": "constipation",
+    "display_name": "Constipation",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7998"
+  },
+  {
+    "key": "temper problems",
+    "display_name": "Temper problems",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7999"
+  },
+  {
+    "key": "coryza",
+    "display_name": "Coryza",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec799a"
+  },
+  {
+    "key": "wrist weakness",
+    "display_name": "Wrist weakness",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec799b"
+  },
+  {
+    "key": "eye strain",
+    "display_name": "Eye strain",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec799c"
+  },
+  {
+    "key": "hemoptysis",
+    "display_name": "Hemoptysis",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec799d"
+  },
+  {
+    "key": "lymphedema",
+    "display_name": "Lymphedema",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec799e"
+  },
+  {
+    "key": "skin on leg or foot looks infected",
+    "display_name": "Skin on leg or foot looks infected",
+    "category": "Dermatology",
+    "_id": "6a4a734755a6eb6b78ec799f"
+  },
+  {
+    "key": "allergic reaction",
+    "display_name": "Allergic reaction",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79a0"
+  },
+  {
+    "key": "congestion in chest",
+    "display_name": "Congestion in chest",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79a1"
+  },
+  {
+    "key": "muscle swelling",
+    "display_name": "Muscle swelling",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec79a2"
+  },
+  {
+    "key": "pus in urine",
+    "display_name": "Pus in urine",
+    "category": "Urology",
+    "_id": "6a4a734755a6eb6b78ec79a3"
+  },
+  {
+    "key": "abnormal size or shape of ear",
+    "display_name": "Abnormal size or shape of ear",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec79a4"
+  },
+  {
+    "key": "low back weakness",
+    "display_name": "Low back weakness",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec79a5"
+  },
+  {
+    "key": "sleepiness",
+    "display_name": "Sleepiness",
+    "category": "Mental Health",
+    "_id": "6a4a734755a6eb6b78ec79a6"
+  },
+  {
+    "key": "apnea",
+    "display_name": "Apnea",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79a7"
+  },
+  {
+    "key": "abnormal breathing sounds",
+    "display_name": "Abnormal breathing sounds",
+    "category": "Pulmonology",
+    "_id": "6a4a734755a6eb6b78ec79a8"
+  },
+  {
+    "key": "excessive growth",
+    "display_name": "Excessive growth",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79a9"
+  },
+  {
+    "key": "elbow cramps or spasms",
+    "display_name": "Elbow cramps or spasms",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec79aa"
+  },
+  {
+    "key": "feeling hot and cold",
+    "display_name": "Feeling hot and cold",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79ab"
+  },
+  {
+    "key": "blood clots during menstrual periods",
+    "display_name": "Blood clots during menstrual periods",
+    "category": "Gynecology",
+    "_id": "6a4a734755a6eb6b78ec79ac"
+  },
+  {
+    "key": "absence of menstruation",
+    "display_name": "Absence of menstruation",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79ad"
+  },
+  {
+    "key": "pulling at ears",
+    "display_name": "Pulling at ears",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec79ae"
+  },
+  {
+    "key": "gum pain",
+    "display_name": "Gum pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec79af"
+  },
+  {
+    "key": "redness in ear",
+    "display_name": "Redness in ear",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec79b0"
+  },
+  {
+    "key": "fluid retention",
+    "display_name": "Fluid retention",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79b1"
+  },
+  {
+    "key": "flu-like syndrome",
+    "display_name": "Flu-like syndrome",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79b2"
+  },
+  {
+    "key": "sinus congestion",
+    "display_name": "Sinus congestion",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec79b3"
+  },
+  {
+    "key": "painful sinuses",
+    "display_name": "Painful sinuses",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec79b4"
+  },
+  {
+    "key": "fears and phobias",
+    "display_name": "Fears and phobias",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec79b5"
+  },
+  {
+    "key": "recent pregnancy",
+    "display_name": "Recent pregnancy",
+    "category": "Gynecology",
+    "_id": "6a4a734755a6eb6b78ec79b6"
+  },
+  {
+    "key": "uterine contractions",
+    "display_name": "Uterine contractions",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79b7"
+  },
+  {
+    "key": "burning chest pain",
+    "display_name": "Burning chest pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec79b8"
+  },
+  {
+    "key": "back cramps or spasms",
+    "display_name": "Back cramps or spasms",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec79b9"
+  },
+  {
+    "key": "stiffness all over",
+    "display_name": "Stiffness all over",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79ba"
+  },
+  {
+    "key": "muscle cramps, contractures, or spasms",
+    "display_name": "Muscle cramps, contractures, or spasms",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec79bb"
+  },
+  {
+    "key": "low back cramps or spasms",
+    "display_name": "Low back cramps or spasms",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec79bc"
+  },
+  {
+    "key": "back mass or lump",
+    "display_name": "Back mass or lump",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec79bd"
+  },
+  {
+    "key": "nosebleed",
+    "display_name": "Nosebleed",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec79be"
+  },
+  {
+    "key": "long menstrual periods",
+    "display_name": "Long menstrual periods",
+    "category": "Gynecology",
+    "_id": "6a4a734755a6eb6b78ec79bf"
+  },
+  {
+    "key": "heavy menstrual flow",
+    "display_name": "Heavy menstrual flow",
+    "category": "Gynecology",
+    "_id": "6a4a734755a6eb6b78ec79c0"
+  },
+  {
+    "key": "unpredictable menstruation",
+    "display_name": "Unpredictable menstruation",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79c1"
+  },
+  {
+    "key": "painful menstruation",
+    "display_name": "Painful menstruation",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec79c2"
+  },
+  {
+    "key": "infertility",
+    "display_name": "Infertility",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79c3"
+  },
+  {
+    "key": "frequent menstruation",
+    "display_name": "Frequent menstruation",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79c4"
+  },
+  {
+    "key": "sweating",
+    "display_name": "Sweating",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79c5"
+  },
+  {
+    "key": "mass on eyelid",
+    "display_name": "Mass on eyelid",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec79c6"
+  },
+  {
+    "key": "swollen eye",
+    "display_name": "Swollen eye",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec79c7"
+  },
+  {
+    "key": "eyelid swelling",
+    "display_name": "Eyelid swelling",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec79c8"
+  },
+  {
+    "key": "eyelid lesion or rash",
+    "display_name": "Eyelid lesion or rash",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec79c9"
+  },
+  {
+    "key": "unwanted hair",
+    "display_name": "Unwanted hair",
+    "category": "Dermatology",
+    "_id": "6a4a734755a6eb6b78ec79ca"
+  },
+  {
+    "key": "symptoms of bladder",
+    "display_name": "Symptoms of bladder",
+    "category": "Urology",
+    "_id": "6a4a734755a6eb6b78ec79cb"
+  },
+  {
+    "key": "irregular appearing nails",
+    "display_name": "Irregular appearing nails",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec79cc"
+  },
+  {
+    "key": "itching of skin",
+    "display_name": "Itching of skin",
+    "category": "Dermatology",
+    "_id": "6a4a734755a6eb6b78ec79cd"
+  },
+  {
+    "key": "hurts to breath",
+    "display_name": "Hurts to breath",
+    "category": "Pulmonology",
+    "_id": "6a4a734755a6eb6b78ec79ce"
+  },
+  {
+    "key": "nailbiting",
+    "display_name": "Nailbiting",
+    "category": "Dermatology",
+    "_id": "6a4a734755a6eb6b78ec79cf"
+  },
+  {
+    "key": "skin dryness, peeling, scaliness, or roughness",
+    "display_name": "Skin dryness, peeling, scaliness, or roughness",
+    "category": "Dermatology",
+    "_id": "6a4a734755a6eb6b78ec79d0"
+  },
+  {
+    "key": "skin on arm or hand looks infected",
+    "display_name": "Skin on arm or hand looks infected",
+    "category": "Dermatology",
+    "_id": "6a4a734755a6eb6b78ec79d1"
+  },
+  {
+    "key": "skin irritation",
+    "display_name": "Skin irritation",
+    "category": "Dermatology",
+    "_id": "6a4a734755a6eb6b78ec79d2"
+  },
+  {
+    "key": "itchy scalp",
+    "display_name": "Itchy scalp",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79d3"
+  },
+  {
+    "key": "hip swelling",
+    "display_name": "Hip swelling",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79d4"
+  },
+  {
+    "key": "incontinence of stool",
+    "display_name": "Incontinence of stool",
+    "category": "Gastroenterology",
+    "_id": "6a4a734755a6eb6b78ec79d5"
+  },
+  {
+    "key": "foot or toe cramps or spasms",
+    "display_name": "Foot or toe cramps or spasms",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79d6"
+  },
+  {
+    "key": "warts",
+    "display_name": "Warts",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79d7"
+  },
+  {
+    "key": "bumps on penis",
+    "display_name": "Bumps on penis",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79d8"
+  },
+  {
+    "key": "too little hair",
+    "display_name": "Too little hair",
+    "category": "Dermatology",
+    "_id": "6a4a734755a6eb6b78ec79d9"
+  },
+  {
+    "key": "foot or toe lump or mass",
+    "display_name": "Foot or toe lump or mass",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79da"
+  },
+  {
+    "key": "skin rash",
+    "display_name": "Skin rash",
+    "category": "Dermatology",
+    "_id": "6a4a734755a6eb6b78ec79db"
+  },
+  {
+    "key": "mass or swelling around the anus",
+    "display_name": "Mass or swelling around the anus",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79dc"
+  },
+  {
+    "key": "low back swelling",
+    "display_name": "Low back swelling",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec79dd"
+  },
+  {
+    "key": "ankle swelling",
+    "display_name": "Ankle swelling",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79de"
+  },
+  {
+    "key": "hip lump or mass",
+    "display_name": "Hip lump or mass",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79df"
+  },
+  {
+    "key": "drainage in throat",
+    "display_name": "Drainage in throat",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec79e0"
+  },
+  {
+    "key": "dry or flaky scalp",
+    "display_name": "Dry or flaky scalp",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79e1"
+  },
+  {
+    "key": "premenstrual tension or irritability",
+    "display_name": "Premenstrual tension or irritability",
+    "category": "Gynecology",
+    "_id": "6a4a734755a6eb6b78ec79e2"
+  },
+  {
+    "key": "feeling hot",
+    "display_name": "Feeling hot",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79e3"
+  },
+  {
+    "key": "feet turned in",
+    "display_name": "Feet turned in",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79e4"
+  },
+  {
+    "key": "foot or toe stiffness or tightness",
+    "display_name": "Foot or toe stiffness or tightness",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79e5"
+  },
+  {
+    "key": "pelvic pressure",
+    "display_name": "Pelvic pressure",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79e6"
+  },
+  {
+    "key": "elbow swelling",
+    "display_name": "Elbow swelling",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec79e7"
+  },
+  {
+    "key": "elbow stiffness or tightness",
+    "display_name": "Elbow stiffness or tightness",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec79e8"
+  },
+  {
+    "key": "early or late onset of menopause",
+    "display_name": "Early or late onset of menopause",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec79e9"
+  },
+  {
+    "key": "mass on ear",
+    "display_name": "Mass on ear",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec79ea"
+  },
+  {
+    "key": "bleeding from ear",
+    "display_name": "Bleeding from ear",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec79eb"
+  },
+  {
+    "key": "hand or finger weakness",
+    "display_name": "Hand or finger weakness",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79ec"
+  },
+  {
+    "key": "low self-esteem",
+    "display_name": "Low self-esteem",
+    "category": "Mental Health",
+    "_id": "6a4a734755a6eb6b78ec79ed"
+  },
+  {
+    "key": "throat irritation",
+    "display_name": "Throat irritation",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec79ee"
+  },
+  {
+    "key": "itching of the anus",
+    "display_name": "Itching of the anus",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79ef"
+  },
+  {
+    "key": "swollen or red tonsils",
+    "display_name": "Swollen or red tonsils",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec79f0"
+  },
+  {
+    "key": "irregular belly button",
+    "display_name": "Irregular belly button",
+    "category": "Gastroenterology",
+    "_id": "6a4a734755a6eb6b78ec79f1"
+  },
+  {
+    "key": "swollen tongue",
+    "display_name": "Swollen tongue",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79f2"
+  },
+  {
+    "key": "lip sore",
+    "display_name": "Lip sore",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec79f3"
+  },
+  {
+    "key": "vulvar sore",
+    "display_name": "Vulvar sore",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec79f4"
+  },
+  {
+    "key": "hip stiffness or tightness",
+    "display_name": "Hip stiffness or tightness",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79f5"
+  },
+  {
+    "key": "mouth pain",
+    "display_name": "Mouth pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec79f6"
+  },
+  {
+    "key": "arm weakness",
+    "display_name": "Arm weakness",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79f7"
+  },
+  {
+    "key": "leg lump or mass",
+    "display_name": "Leg lump or mass",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79f8"
+  },
+  {
+    "key": "disturbance of smell or taste",
+    "display_name": "Disturbance of smell or taste",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79f9"
+  },
+  {
+    "key": "discharge in stools",
+    "display_name": "Discharge in stools",
+    "category": "Gastroenterology",
+    "_id": "6a4a734755a6eb6b78ec79fa"
+  },
+  {
+    "key": "penis pain",
+    "display_name": "Penis pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec79fb"
+  },
+  {
+    "key": "loss of sex drive",
+    "display_name": "Loss of sex drive",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79fc"
+  },
+  {
+    "key": "obsessions and compulsions",
+    "display_name": "Obsessions and compulsions",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec79fd"
+  },
+  {
+    "key": "antisocial behavior",
+    "display_name": "Antisocial behavior",
+    "category": "Mental Health",
+    "_id": "6a4a734755a6eb6b78ec79fe"
+  },
+  {
+    "key": "neck cramps or spasms",
+    "display_name": "Neck cramps or spasms",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec79ff"
+  },
+  {
+    "key": "pupils unequal",
+    "display_name": "Pupils unequal",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a00"
+  },
+  {
+    "key": "poor circulation",
+    "display_name": "Poor circulation",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a01"
+  },
+  {
+    "key": "thirst",
+    "display_name": "Thirst",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a02"
+  },
+  {
+    "key": "sleepwalking",
+    "display_name": "Sleepwalking",
+    "category": "Mental Health",
+    "_id": "6a4a734755a6eb6b78ec7a03"
+  },
+  {
+    "key": "skin oiliness",
+    "display_name": "Skin oiliness",
+    "category": "Dermatology",
+    "_id": "6a4a734755a6eb6b78ec7a04"
+  },
+  {
+    "key": "sneezing",
+    "display_name": "Sneezing",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a05"
+  },
+  {
+    "key": "bladder mass",
+    "display_name": "Bladder mass",
+    "category": "Urology",
+    "_id": "6a4a734755a6eb6b78ec7a06"
+  },
+  {
+    "key": "knee cramps or spasms",
+    "display_name": "Knee cramps or spasms",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7a07"
+  },
+  {
+    "key": "premature ejaculation",
+    "display_name": "Premature ejaculation",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a08"
+  },
+  {
+    "key": "leg weakness",
+    "display_name": "Leg weakness",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a09"
+  },
+  {
+    "key": "posture problems",
+    "display_name": "Posture problems",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a0a"
+  },
+  {
+    "key": "bleeding in mouth",
+    "display_name": "Bleeding in mouth",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a0b"
+  },
+  {
+    "key": "tongue bleeding",
+    "display_name": "Tongue bleeding",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a0c"
+  },
+  {
+    "key": "change in skin mole size or color",
+    "display_name": "Change in skin mole size or color",
+    "category": "Dermatology",
+    "_id": "6a4a734755a6eb6b78ec7a0d"
+  },
+  {
+    "key": "penis redness",
+    "display_name": "Penis redness",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a0e"
+  },
+  {
+    "key": "penile discharge",
+    "display_name": "Penile discharge",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a0f"
+  },
+  {
+    "key": "shoulder lump or mass",
+    "display_name": "Shoulder lump or mass",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7a10"
+  },
+  {
+    "key": "polyuria",
+    "display_name": "Polyuria",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a11"
+  },
+  {
+    "key": "cloudy eye",
+    "display_name": "Cloudy eye",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec7a12"
+  },
+  {
+    "key": "hysterical behavior",
+    "display_name": "Hysterical behavior",
+    "category": "Mental Health",
+    "_id": "6a4a734755a6eb6b78ec7a13"
+  },
+  {
+    "key": "arm lump or mass",
+    "display_name": "Arm lump or mass",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a14"
+  },
+  {
+    "key": "nightmares",
+    "display_name": "Nightmares",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a15"
+  },
+  {
+    "key": "bleeding gums",
+    "display_name": "Bleeding gums",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a16"
+  },
+  {
+    "key": "pain in gums",
+    "display_name": "Pain in gums",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7a17"
+  },
+  {
+    "key": "bedwetting",
+    "display_name": "Bedwetting",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a18"
+  },
+  {
+    "key": "diaper rash",
+    "display_name": "Diaper rash",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a19"
+  },
+  {
+    "key": "lump or mass of breast",
+    "display_name": "Lump or mass of breast",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a1a"
+  },
+  {
+    "key": "vaginal bleeding after menopause",
+    "display_name": "Vaginal bleeding after menopause",
+    "category": "Gynecology",
+    "_id": "6a4a734755a6eb6b78ec7a1b"
+  },
+  {
+    "key": "infrequent menstruation",
+    "display_name": "Infrequent menstruation",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a1c"
+  },
+  {
+    "key": "mass on vulva",
+    "display_name": "Mass on vulva",
+    "category": "Gynecology",
+    "_id": "6a4a734755a6eb6b78ec7a1d"
+  },
+  {
+    "key": "jaw pain",
+    "display_name": "Jaw pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7a1e"
+  },
+  {
+    "key": "itching of scrotum",
+    "display_name": "Itching of scrotum",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a1f"
+  },
+  {
+    "key": "postpartum problems of the breast",
+    "display_name": "Postpartum problems of the breast",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a20"
+  },
+  {
+    "key": "eyelid retracted",
+    "display_name": "Eyelid retracted",
+    "category": "Ophthalmology",
+    "_id": "6a4a734755a6eb6b78ec7a21"
+  },
+  {
+    "key": "hesitancy",
+    "display_name": "Hesitancy",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a22"
+  },
+  {
+    "key": "elbow lump or mass",
+    "display_name": "Elbow lump or mass",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7a23"
+  },
+  {
+    "key": "muscle weakness",
+    "display_name": "Muscle weakness",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7a24"
+  },
+  {
+    "key": "throat redness",
+    "display_name": "Throat redness",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec7a25"
+  },
+  {
+    "key": "joint swelling",
+    "display_name": "Joint swelling",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7a26"
+  },
+  {
+    "key": "tongue pain",
+    "display_name": "Tongue pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7a27"
+  },
+  {
+    "key": "redness in or around nose",
+    "display_name": "Redness in or around nose",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec7a28"
+  },
+  {
+    "key": "wrinkles on skin",
+    "display_name": "Wrinkles on skin",
+    "category": "Dermatology",
+    "_id": "6a4a734755a6eb6b78ec7a29"
+  },
+  {
+    "key": "foot or toe weakness",
+    "display_name": "Foot or toe weakness",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a2a"
+  },
+  {
+    "key": "hand or finger cramps or spasms",
+    "display_name": "Hand or finger cramps or spasms",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a2b"
+  },
+  {
+    "key": "back stiffness or tightness",
+    "display_name": "Back stiffness or tightness",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7a2c"
+  },
+  {
+    "key": "wrist lump or mass",
+    "display_name": "Wrist lump or mass",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7a2d"
+  },
+  {
+    "key": "skin pain",
+    "display_name": "Skin pain",
+    "category": "Pain & Discomfort",
+    "_id": "6a4a734755a6eb6b78ec7a2e"
+  },
+  {
+    "key": "low back stiffness or tightness",
+    "display_name": "Low back stiffness or tightness",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7a2f"
+  },
+  {
+    "key": "low urine output",
+    "display_name": "Low urine output",
+    "category": "Urology",
+    "_id": "6a4a734755a6eb6b78ec7a30"
+  },
+  {
+    "key": "skin on head or neck looks infected",
+    "display_name": "Skin on head or neck looks infected",
+    "category": "Dermatology",
+    "_id": "6a4a734755a6eb6b78ec7a31"
+  },
+  {
+    "key": "stuttering or stammering",
+    "display_name": "Stuttering or stammering",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a32"
+  },
+  {
+    "key": "problems with orgasm",
+    "display_name": "Problems with orgasm",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a33"
+  },
+  {
+    "key": "nose deformity",
+    "display_name": "Nose deformity",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec7a34"
+  },
+  {
+    "key": "lump over jaw",
+    "display_name": "Lump over jaw",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a35"
+  },
+  {
+    "key": "sore in nose",
+    "display_name": "Sore in nose",
+    "category": "ENT",
+    "_id": "6a4a734755a6eb6b78ec7a36"
+  },
+  {
+    "key": "hip weakness",
+    "display_name": "Hip weakness",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a37"
+  },
+  {
+    "key": "back swelling",
+    "display_name": "Back swelling",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7a38"
+  },
+  {
+    "key": "ankle stiffness or tightness",
+    "display_name": "Ankle stiffness or tightness",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a39"
+  },
+  {
+    "key": "ankle weakness",
+    "display_name": "Ankle weakness",
+    "category": "General",
+    "_id": "6a4a734755a6eb6b78ec7a3a"
+  },
+  {
+    "key": "neck weakness",
+    "display_name": "Neck weakness",
+    "category": "Musculoskeletal",
+    "_id": "6a4a734755a6eb6b78ec7a3b"
+  }
+]

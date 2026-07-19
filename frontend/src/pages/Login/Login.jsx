@@ -1,11 +1,57 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import api from "../../services/api";
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    // Backend API will be connected later
-    navigate("/dashboard");
+  const handleLogin = async () => {
+    if (!email.trim() || !password.trim()) {
+      alert("Please fill all fields.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const formData = new URLSearchParams();
+        formData.append("username", email);
+        formData.append("password", password);
+
+        const response = await api.post(
+          "/api/auth/login",
+          formData,
+          {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+          }
+        );
+
+      console.log(response.data);
+
+      // Store login information
+      localStorage.setItem("token", response.data.access_token);
+      localStorage.setItem("role", response.data.role);
+
+      alert("Login Successful!");
+
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Full error:", error);
+
+      if (error.response) {
+        console.log("Backend Response:", error.response.data);
+        alert(JSON.stringify(error.response.data, null, 2));
+      } else {
+        alert("Cannot connect to backend.");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -23,20 +69,25 @@ function Login() {
         <input
           type="email"
           placeholder="Email Address"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           className="w-full border rounded-xl p-3 mb-4"
         />
 
         <input
           type="password"
           placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           className="w-full border rounded-xl p-3 mb-6"
         />
 
         <button
           onClick={handleLogin}
-          className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700"
+          disabled={loading}
+          className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 disabled:bg-gray-400"
         >
-          Login
+          {loading ? "Logging in..." : "Login"}
         </button>
 
         <p className="text-center mt-6 text-gray-600">

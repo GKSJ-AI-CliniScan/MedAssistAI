@@ -4,26 +4,32 @@ import Layout from "../../components/layout/Layout";
 function Prediction() {
   const location = useLocation();
 
-  const symptoms = location.state?.symptoms || [];
+  const result = location.state?.result;
+  console.log("Prediction State:", location.state);
+  console.log("Prediction Result:", result);
 
-  const prediction = location.state?.prediction || {
-    disease: "Influenza",
-    confidence: "92%",
-    severity: "Medium",
-    recommendation: [
-      "Drink plenty of water",
-      "Take proper rest",
-      "Consult a physician if symptoms continue",
-    ],
-  };
+  if (!result) {
+    return (
+      <Layout>
+        <div className="bg-white rounded-3xl shadow-xl p-10">
+          <h1 className="text-3xl font-bold">No Prediction Found</h1>
+          <p className="mt-4 text-gray-500">
+            Please go back and analyze your symptoms first.
+          </p>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
-      <div className="max-w-4xl bg-white rounded-3xl shadow-xl p-10">
+      <div className="max-w-5xl bg-white rounded-3xl shadow-xl p-10">
 
         <h1 className="text-4xl font-bold mb-8">
           AI Disease Prediction
         </h1>
+
+        {/* Symptoms */}
 
         <div className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">
@@ -31,58 +37,86 @@ function Prediction() {
           </h2>
 
           <ul className="list-disc ml-6">
-            {symptoms.map((item) => (
-              <li key={item}>{item}</li>
+            {result.symptoms.map((symptom) => (
+              <li key={symptom}>{symptom}</li>
             ))}
           </ul>
         </div>
 
         <hr className="my-8" />
 
-        <div className="space-y-5">
+        {/* Diseases */}
 
-          <div>
-            <h3 className="font-bold text-xl">
-              Possible Disease
+        <div className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">
+            Predicted Diseases
+          </h2>
+
+          <div className="space-y-4">
+            {result.predicted_diseases.map((item, index) => (
+              <div
+                key={index}
+                className="border rounded-xl p-4"
+              >
+                <h3 className="text-xl font-bold text-blue-600">
+                  {item.disease}
+                </h3>
+
+                <p>
+                  Probability:
+                  <span className="font-semibold ml-2">
+                    {(item.probability * 100).toFixed(2)}%
+                  </span>
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <hr className="my-8" />
+
+        {/* Risk */}
+
+        <div className="grid md:grid-cols-2 gap-6">
+
+          <div className="border rounded-xl p-5">
+            <h3 className="text-xl font-bold">
+              Risk Level
             </h3>
 
-            <p className="text-blue-600 text-2xl">
-              {prediction.disease}
+            <p className="text-red-600 text-2xl">
+              {result.risk_level || "N/A"}
             </p>
           </div>
 
-          <div>
-            <h3 className="font-bold text-xl">
-              Confidence
+          <div className="border rounded-xl p-5">
+            <h3 className="text-xl font-bold">
+              Risk Score
             </h3>
 
-            <p className="text-green-600">
-              {prediction.confidence}
+            <p className="text-green-600 text-2xl">
+              {result.risk_score || "N/A"}
             </p>
           </div>
 
-          <div>
-            <h3 className="font-bold text-xl">
-              Severity
-            </h3>
+        </div>
 
-            <p className="text-orange-500">
-              {prediction.severity}
-            </p>
-          </div>
+        <hr className="my-8" />
 
-          <div>
-            <h3 className="font-bold text-xl mb-3">
-              Recommendation
-            </h3>
+        {/* Recommendations */}
 
-            <ul className="list-disc ml-6">
-              {prediction.recommendation.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
+        <div>
+          <h2 className="text-2xl font-semibold mb-4">
+            AI Recommendations
+          </h2>
 
+          <ul className="list-disc ml-6 space-y-2">
+            {result.recommendations.map((item, index) => (
+              <li key={index}>
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
 
       </div>
