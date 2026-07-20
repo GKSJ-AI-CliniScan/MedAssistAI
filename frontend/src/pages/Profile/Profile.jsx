@@ -39,7 +39,6 @@ function Profile() {
 
       setProfile(response.data);
     } catch (error) {
-      console.log(error);
       toast.error("Unable to load profile.");
     }
   };
@@ -74,7 +73,9 @@ function Profile() {
             <img
               src={
                 image ||
-                "https://ui-avatars.com/api/?name=Patient&background=2563eb&color=fff"
+                `https://ui-avatars.com/api/?name=${
+                  profile.first_name || "Patient"
+                }+${profile.last_name || ""}&background=2563eb&color=fff`
               }
               alt="Profile"
               className="w-32 h-32 rounded-full object-cover border-4 border-blue-600"
@@ -108,6 +109,36 @@ function Profile() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
+
+          <div>
+            <label className="font-semibold">First Name</label>
+            <input
+              value={profile.first_name || ""}
+              readOnly={!editing}
+              onChange={(e) =>
+                setProfile({
+                  ...profile,
+                  first_name: e.target.value,
+                })
+              }
+              className="w-full mt-2 border rounded-xl p-3"
+            />
+          </div>
+
+          <div>
+            <label className="font-semibold">Last Name</label>
+            <input
+              value={profile.last_name || ""}
+              readOnly={!editing}
+              onChange={(e) =>
+                setProfile({
+                  ...profile,
+                  last_name: e.target.value,
+                })
+              }
+              className="w-full mt-2 border rounded-xl p-3"
+            />
+          </div>
 
           <div>
             <label className="font-semibold">Date of Birth</label>
@@ -187,7 +218,6 @@ function Profile() {
 
                 toast.success("Profile Updated Successfully!");
               } catch (error) {
-                console.log(error);
                 toast.error("Update failed.");
               } finally {
                 setLoading(false);
