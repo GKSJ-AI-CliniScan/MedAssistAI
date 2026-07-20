@@ -113,7 +113,22 @@ function Profile() {
               className="hidden"
             />
 
+
           </div>
+
+          {image && (
+            <button
+              onClick={() => {
+                const imageKey = `profileImage_${profile.user_id}`;
+                localStorage.removeItem(imageKey);
+                setImage(null);
+                toast.success("Profile photo removed!");
+              }}
+              className="text-red-600 hover:text-red-700 text-sm font-medium"
+            >
+              🗑️ Remove Photo
+            </button>
+          )}
 
           <h1 className="text-3xl font-bold">
             {profile.first_name} {profile.last_name}
@@ -160,23 +175,24 @@ function Profile() {
           <div>
             <label className="font-semibold">Date of Birth</label>
             <input
+              type="date"
+              value={profile.date_of_birth || ""}
+              readOnly={!editing}
               onChange={(e) =>
                 setProfile({
                   ...profile,
                   date_of_birth: e.target.value,
                 })
               }
-              value={profile.date_of_birth || ""}
-              readOnly={!editing}
               className="w-full mt-2 border rounded-xl p-3"
             />
           </div>
 
           <div>
             <label className="font-semibold">Gender</label>
-            <input
-              value={profile.gender}
-              readOnly={!editing}
+            <select
+              value={profile.gender || ""}
+              disabled={!editing}
               onChange={(e) =>
                 setProfile({
                   ...profile,
@@ -184,12 +200,19 @@ function Profile() {
                 })
               }
               className="w-full mt-2 border rounded-xl p-3"
-            />
+            >
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
 
           <div>
             <label className="font-semibold">Height</label>
             <input
+              type="number"
+              min="0"
               value={profile.height || ""}
               readOnly={!editing}
               onChange={(e) =>
@@ -205,6 +228,8 @@ function Profile() {
           <div>
             <label className="font-semibold">Weight</label>
             <input
+              type="number"
+              min="0"
               value={profile.weight || ""}
               readOnly={!editing}
               onChange={(e) =>
@@ -226,6 +251,19 @@ function Profile() {
                 setLoading(true);
 
                 const token = localStorage.getItem("token");
+
+                if (
+                  !profile.first_name ||
+                  !profile.last_name ||
+                  !profile.date_of_birth ||
+                  !profile.gender ||
+                  !profile.height ||
+                  !profile.weight
+                ) {
+                  toast.error("Please complete all required fields.");
+                  setLoading(false);
+                  return;
+                }
 
                 await api.put("/api/profile", profile, {
                   headers: {
