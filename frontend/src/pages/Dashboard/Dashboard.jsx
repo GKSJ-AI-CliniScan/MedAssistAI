@@ -36,32 +36,46 @@ function Dashboard() {
   }, []);
 
   const loadDashboard = async () => {
-  try {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token");
 
-    const [profileResponse, reportsResponse] = await Promise.all([
-      api.get("/api/profile", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }),
-      api.get("/api/history", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }),
-    ]);
+      const [profileResponse, reportsResponse] = await Promise.all([
+        api.get("/api/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }),
+        api.get("/api/history", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }),
+      ]);
 
-    setProfile(profileResponse.data);
-    setReports(reportsResponse.data);
-  } catch (error) {
-    toast.error("Unable to load dashboard.");
-  } finally {
-    setLoading(false);
-  }
-};
+      setProfile(profileResponse.data);
+      setReports(reportsResponse.data);
+    } catch (error) {
+      toast.error("Unable to load dashboard.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const requiredFields = [
+    profile.first_name,
+    profile.last_name,
+    profile.date_of_birth,
+    profile.gender,
+    profile.height,
+    profile.weight,
+  ];
+
+  const completedFields = requiredFields.filter(Boolean).length;
+  const profileCompletion = Math.round(
+    (completedFields / requiredFields.length) * 100
+  );
 
   const cards = [
     {
@@ -85,10 +99,7 @@ function Dashboard() {
     },
     {
       title: "Profile",
-      value:
-        profile.first_name
-          ? "Complete"
-          : "Incomplete",
+      value: `${profileCompletion}%`,
       icon: "👤",
     },
   ];
@@ -143,19 +154,19 @@ function Dashboard() {
   };
 
   if (loading) {
-  return (
-    <Layout>
-      <div className="flex items-center justify-center h-[70vh]">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600 text-lg">
-            Loading Dashboard...
-          </p>
+    return (
+      <Layout>
+        <div className="flex items-center justify-center h-[70vh]">
+          <div className="text-center">
+            <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-600 text-lg">
+              Loading Dashboard...
+            </p>
+          </div>
         </div>
-      </div>
-    </Layout>
-  );
-}
+      </Layout>
+    );
+  }
 
   return (
     <Layout>

@@ -4,9 +4,16 @@ import toast from "react-hot-toast";
 import api from "../../services/api";
 
 function Profile() {
-  const [image, setImage] = useState(
-    localStorage.getItem("profileImage") || null
-  );
+  const token = localStorage.getItem("token");
+
+  let imageKey = "profileImage";
+
+  if (token) {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    imageKey = `profileImage_${payload.id || payload.sub}`;
+  }
+
+  const [image, setImage] = useState(null);
 
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -38,6 +45,15 @@ function Profile() {
       });
 
       setProfile(response.data);
+
+      const imageKey = `profileImage_${response.data.user_id}`;
+      const savedImage = localStorage.getItem(imageKey);
+
+      if (savedImage) {
+        setImage(savedImage);
+      } else {
+        setImage(null);
+      }
     } catch (error) {
       toast.error("Unable to load profile.");
     }
@@ -53,8 +69,10 @@ function Profile() {
     reader.onload = () => {
       setImage(reader.result);
 
+      const imageKey = `profileImage_${profile.user_id}`;
+
       localStorage.setItem(
-        "profileImage",
+        imageKey,
         reader.result
       );
     };
@@ -73,8 +91,7 @@ function Profile() {
             <img
               src={
                 image ||
-                `https://ui-avatars.com/api/?name=${
-                  profile.first_name || "Patient"
+                `https://ui-avatars.com/api/?name=${profile.first_name || "Patient"
                 }+${profile.last_name || ""}&background=2563eb&color=fff`
               }
               alt="Profile"
