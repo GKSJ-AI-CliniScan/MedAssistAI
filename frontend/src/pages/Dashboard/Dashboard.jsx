@@ -98,10 +98,10 @@ function Dashboard() {
       icon: "🩺",
     },
     {
-      title: "Profile",
-      value: `${profileCompletion}%`,
-      icon: "👤",
-    },
+  title: "Profile Completion",
+  value: `${profileCompletion}%`,
+  icon: "👤",
+},
   ];
 
 
@@ -153,6 +153,15 @@ function Dashboard() {
     },
   };
 
+  const hour = new Date().getHours();
+
+const greeting =
+  hour < 12
+    ? "Good Morning"
+    : hour < 17
+      ? "Good Afternoon"
+      : "Good Evening";
+
   if (loading) {
     return (
       <Layout>
@@ -181,8 +190,8 @@ function Dashboard() {
 
           <div>
             <h1 className="text-4xl font-bold">
-              Welcome Back, {profile.first_name || "Patient"} 👋
-            </h1>
+  {greeting}, {profile.first_name || "Patient"} 👋
+</h1>
 
             <p className="text-gray-500 mt-2">
               AI Healthcare Dashboard
@@ -255,9 +264,17 @@ function Dashboard() {
                   </li>
                 ))
               ) : (
-                <p className="text-gray-500">
-                  No recent activity.
-                </p>
+                <div className="text-center py-6">
+  <div className="text-4xl">🩺</div>
+
+  <p className="font-semibold mt-2">
+    No Predictions Yet
+  </p>
+
+  <p className="text-gray-500 text-sm">
+    Complete a symptom check to generate your first report.
+  </p>
+</div>
               )}
             </ul>
 

@@ -72,14 +72,15 @@
     "user_id": "6a5e0a29fe61405c37221f72",
     "first_name": "kuldeep",
     "last_name": "marella",
-    "date_of_birth": null,
-    "gender": null,
+    "date_of_birth": "2006-07-26",
+    "gender": "Male",
     "blood_type": null,
-    "height": null,
-    "weight": null,
+    "height": 168.0,
+    "weight": 59.0,
     "allergies": [],
     "medical_conditions": [],
     "created_at": "2026-07-20 11:44:41.907901",
-    "updated_at": "2026-07-20 11:44:41.907902"
+    "updated_at": "2026-07-20 12:35:01.231561",
+    "id": "6a5e0a29fe61405c37221f73"
   }
 ]
