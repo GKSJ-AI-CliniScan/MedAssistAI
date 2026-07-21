@@ -1,0 +1,58 @@
+[
+  {
+    "_id": "admin_user_id",
+    "email": "admin@medassist.ai",
+    "hashed_password": "ea6b8f5ed46532f98b480edfb6519826:b5a6bcc552de881f8794454854bd1ce440776655ec0b016d9155bcc07976fc3d",
+    "role": "admin",
+    "created_at": "2026-07-05 15:08:04.344567",
+    "updated_at": "2026-07-05 15:08:04.344604"
+  },
+  {
+    "_id": "doctor_user_id",
+    "email": "doctor@medassist.ai",
+    "hashed_password": "e0eedef37e24a5234bff28cafc2d88e4:c1b7739d0ebe438c965eef33e8d60670c2949b8199bbbe09c9285ce586fe5635",
+    "role": "doctor",
+    "created_at": "2026-07-05 15:08:04.344626",
+    "updated_at": "2026-07-05 15:08:04.344642"
+  },
+  {
+    "_id": "patient_user_id",
+    "email": "patient@medassist.ai",
+    "hashed_password": "72133a1d3e3c261e1dcdcbf1a1e9bc1c:be04389289bef0f36885c6663439f998c4e32fef41f29448ee3d84cbf688e128",
+    "role": "patient",
+    "created_at": "2026-07-05 15:08:04.344660",
+    "updated_at": "2026-07-05 15:08:04.344675"
+  },
+  {
+    "_id": "6a51fcf83fba0d63c60a6e4f",
+    "email": "anbuarasanko6@gmail.com",
+    "hashed_password": "dc92bee99f3ab881c5bfc502f6f34022:73ee02e3aad4c43d9dd7b8225f1dcbb62f1c8ad852f0952b2dad07000e51a9a4",
+    "role": "patient",
+    "created_at": "2026-07-11 08:21:12.882435",
+    "updated_at": "2026-07-11 08:21:12.882446"
+  },
+  {
+    "_id": "6a5b2e9f2b6b5c4623ada438",
+    "email": "basith786@gmail.com",
+    "hashed_password": "322a5838ffbe0aafe319f2d8607d2510:9a223ab2b27a4c32d9d7a6f24151a8cd9b970d0f5c99bf3d5ce58d1a9b22297a",
+    "role": "patient",
+    "created_at": "2026-07-18 07:43:27.344442",
+    "updated_at": "2026-07-18 07:43:27.344447"
+  },
+  {
+    "_id": "6a5dd045a534127af4c9af13",
+    "email": "akanksha.m@gmail.com",
+    "hashed_password": "7a2ef50b626410aedf0640e0f4757783:ed1596007028038e1f7bdfc465463c003ea1fd5b045335bb50426093e68ad966",
+    "role": "patient",
+    "created_at": "2026-07-20 07:37:41.643433",
+    "updated_at": "2026-07-20 07:37:41.643438"
+  },
+  {
+    "_id": "6a5e0a29fe61405c37221f72",
+    "email": "kuldeepmarella123@gmail.com",
+    "hashed_password": "405ed65ffbbeb8c4d1c4dc5e161f15bb:e8932cec89bf892c486e964b901a4c324cdce1973742785d33762f6466324a53",
+    "role": "patient",
+    "created_at": "2026-07-20 11:44:41.906740",
+    "updated_at": "2026-07-20 11:44:41.906743"
+  }
+]
