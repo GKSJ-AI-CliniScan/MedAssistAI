@@ -65,12 +65,12 @@ MedAssist AI: Medical Symptom Analysis & Disease Prediction System
 
 | Model | Accuracy |
 |---|---|
-| Decision Tree | ~73–74% |
+| Decision Tree | 73.88% |
 | Random Forest (100 Trees) | 80.38% |
 | Random Forest (200 Trees) | **80.77%** |
 | XGBoost | 76.77% |
 | Gradient Boosting | 4.57% |
-| LightGBM | Very Low |
+| LightGBM | 0.5% |
 
 ### Final Model Selection
 
@@ -80,7 +80,7 @@ MedAssist AI: Medical Symptom Analysis & Disease Prediction System
 - **Top-3 Accuracy:** 93.62%
 - **Top-5 Accuracy:** 96.72%
 
-The Random Forest model will be used for integration into the MedAssist AI disease prediction system.
+The selected Random Forest model will be used for integration into the MedAssist AI disease prediction system.
 
 ### Machine Learning Documentation
 - Added Machine Learning Model Evaluation Report.
@@ -88,7 +88,9 @@ The Random Forest model will be used for integration into the MedAssist AI disea
 - Documented the performance comparison of all five machine learning models.
 - Documented the final Random Forest model selection and Top-K accuracy results.
 
+---
 
 ## Milestone Status
+
 - **Milestone 1:** Completed
 - **Milestone 2:** Completed
