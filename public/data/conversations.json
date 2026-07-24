@@ -1,0 +1,127 @@
+[
+  {
+    "id": "conv-1784871254190",
+    "title": "Generate PDF medical summary",
+    "preview": "Generate PDF medical summary",
+    "timestamp": "2026-07-24T05:35:34.544Z",
+    "messageCount": 7,
+    "starred": false,
+    "pinned": false,
+    "archived": false
+  },
+  {
+    "id": "conv-1784871181294",
+    "title": "Generate PDF medical summary",
+    "preview": "Generate PDF medical summary",
+    "timestamp": "2026-07-24T05:33:22.327Z",
+    "messageCount": 3,
+    "starred": false,
+    "pinned": false,
+    "archived": false
+  },
+  {
+    "id": "conv-1784870842264",
+    "title": "can you add images and charts in pdf generation..i...",
+    "preview": "can you add images and charts in pdf generation..in topic of surgery",
+    "timestamp": "2026-07-24T05:29:09.912Z",
+    "messageCount": 5,
+    "starred": false,
+    "pinned": false,
+    "archived": false
+  },
+  {
+    "id": "conv-1784870470159",
+    "title": "generate the full description pdf on surgery topic...",
+    "preview": "generate the full description pdf on surgery topic ..",
+    "timestamp": "2026-07-24T05:27:06.440Z",
+    "messageCount": 7,
+    "starred": false,
+    "pinned": false,
+    "archived": false
+  },
+  {
+    "id": "conv-1784869712765",
+    "title": "Lab report summary",
+    "preview": "Lab report summary",
+    "timestamp": "2026-07-24T05:20:48.559Z",
+    "messageCount": 5,
+    "starred": false,
+    "pinned": false,
+    "archived": false
+  },
+  {
+    "id": "conv-1784868987384",
+    "title": "Disease risk prediction",
+    "preview": "Disease risk prediction",
+    "timestamp": "2026-07-24T04:56:54.795Z",
+    "messageCount": 5,
+    "starred": false,
+    "pinned": false,
+    "archived": false
+  },
+  {
+    "id": "conv-1784868592120",
+    "title": "generate any image",
+    "preview": "generate any image",
+    "timestamp": "2026-07-24T05:36:47.133Z",
+    "messageCount": 3,
+    "starred": false,
+    "pinned": false,
+    "archived": false
+  },
+  {
+    "id": "conv-cust-101",
+    "title": "Symptom Triage: Recurrent Migraine & Visual Aura",
+    "preview": "Based on the visual aura and throbbing unilateral pain, here are clinical recommendations...",
+    "timestamp": "2026-07-24T04:57:28.693Z",
+    "messageCount": 4,
+    "starred": false,
+    "pinned": false,
+    "archived": false,
+    "customer": "Sarah Jenkins"
+  },
+  {
+    "id": "conv-cust-102",
+    "title": "Lab Report Review: Lipid Panel & Fasting Glucose",
+    "preview": "Your Fasting Blood Sugar (118 mg/dL) indicates prediabetes range. Recommended diet adjustments...",
+    "timestamp": "2026-07-24T05:00:24.136Z",
+    "messageCount": 3,
+    "starred": false,
+    "pinned": false,
+    "archived": false,
+    "customer": "Robert Chen"
+  },
+  {
+    "id": "conv-cust-103",
+    "title": "Drug Conflict Check: Metformin & Lisinopril",
+    "preview": "No major direct contraindication detected between Metformin and Lisinopril. Monitor renal function...",
+    "timestamp": "2026-07-23T16:45:00.000Z",
+    "messageCount": 3,
+    "starred": false,
+    "pinned": false,
+    "archived": false,
+    "customer": "Maria Garcia"
+  },
+  {
+    "id": "conv-cust-104",
+    "title": "Pediatric Triage: Infant High Fever & Skin Rash",
+    "preview": "Red flag symptoms: If fever exceeds 102°F (38.9°C) with lethargy, seek emergency pediatric care...",
+    "timestamp": "2026-07-22T14:10:00.000Z",
+    "messageCount": 3,
+    "starred": false,
+    "pinned": false,
+    "archived": false,
+    "customer": "David Miller"
+  },
+  {
+    "id": "conv-cust-105",
+    "title": "Hypertension & DASH Diet Protocol Guidelines",
+    "preview": "Reducing sodium intake to under 1,500mg daily combined with potassium-rich foods...",
+    "timestamp": "2026-07-20T11:20:00.000Z",
+    "messageCount": 2,
+    "starred": false,
+    "pinned": false,
+    "archived": false,
+    "customer": "Elena Rostova"
+  }
+]

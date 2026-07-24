@@ -1,0 +1,522 @@
+{
+  "conv-cust-101": [
+    {
+      "id": "msg-101-1",
+      "role": "bot",
+      "content": "Hello Sarah! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "msg-101-2",
+      "role": "user",
+      "content": "I have been experiencing a throbbing headache on the right side of my head for 3 hours, preceded by flickering zig-zag lights in my vision. Is this a migraine?"
+    },
+    {
+      "id": "msg-101-3",
+      "role": "bot",
+      "reasoning": "Symptom Pattern Matching:\n- Unilateral throbbing pain (Right hemisphere)\n- Scintillating scotoma (Visual aura: flickering zig-zag lines, 20-30 min duration)\n- Onset duration: 3 hours\n- Diagnostic Differential: Classic Migraine with Aura (ICD-10: G43.1)\n- Red Flag Exclusions: No sudden thunderclap onset, no neurological deficit or stiff neck.",
+      "content": "Based on your clinical presentation, your symptoms strongly align with a **Classic Migraine with Visual Aura**.\n\n### Key Clinical Features Identified:\n1. **Visual Aura**: The flickering zig-zag lights (scintillating scotoma) are a classic neurological pre-migraine aura phenomenon.\n2. **Unilateral Throbbing Pain**: Pulsating headache concentrated on one side of the head.\n\n--- \n\n### 🛡️ Recommended Immediate Steps:\n- **Rest in a Dark, Quiet Room**: Sensory deprivation reduces cortical hyper-excitability.\n- **Hydration & Cold Compress**: Apply an ice pack to your forehead or back of the neck.\n- **Over-the-Counter Relief**: NSAIDs (such as Ibuprofen 400mg or Naproxen) taken early during the headache phase are most effective.\n\n⚠️ **Emergency Red Flags**: Seek immediate medical care if you experience a sudden 'thunderclap' headache, difficulty speaking, muscle weakness, or high fever.",
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "latencyMs": 1420
+      }
+    },
+    {
+      "id": "msg-101-4",
+      "role": "user",
+      "content": "What warning signs require immediate emergency care?"
+    }
+  ],
+  "conv-cust-102": [
+    {
+      "id": "msg-102-1",
+      "role": "bot",
+      "content": "Hello Robert! I'm **MedAssist AI**. Please share your lab results or upload your blood test PDF for analysis.",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 95
+      }
+    },
+    {
+      "id": "msg-102-2",
+      "role": "user",
+      "content": "Here are my lab test results: Fasting Blood Glucose is 118 mg/dL, HbA1c is 5.9%, Total Cholesterol is 215 mg/dL, LDL is 135 mg/dL, HDL is 42 mg/dL."
+    },
+    {
+      "id": "msg-102-3",
+      "role": "bot",
+      "reasoning": "Biomarker Assessment:\n- Fasting Glucose: 118 mg/dL (Normal: <100, Prediabetes: 100-125, Diabetes: >=126)\n- HbA1c: 5.9% (Normal: <5.7%, Prediabetes: 5.7%-6.4%)\n- Total Cholesterol: 215 mg/dL (Desirable: <200, Borderline High: 200-239)\n- LDL: 135 mg/dL (Borderline High: 130-159)\n- HDL: 42 mg/dL (Acceptable: >40)",
+      "content": "Here is an executive clinical summary of your lab panel:\n\n### 📊 Glycemic Profile (Fasting Glucose & HbA1c)\n- **Fasting Glucose (118 mg/dL)** & **HbA1c (5.9%)**: Both values fall within the **Prediabetes** range. This indicates early insulin resistance, but it is **highly reversible** with targeted diet and exercise.\n\n### 🫀 Lipid Profile (Cholesterol)\n- **Total Cholesterol (215 mg/dL)** & **LDL (135 mg/dL)**: Slightly elevated (Borderline High).\n- **HDL (42 mg/dL)**: Within acceptable range.\n\n---\n\n### 🥗 Actionable Next Steps:\n1. **Dietary Strategy**: Adopt a Mediterranean-style low-glycemic diet rich in soluble fiber and lean proteins.\n2. **Physical Activity**: Aim for 150 minutes of moderate aerobic exercise per week.\n3. **Follow-Up**: Repeat fasting glucose & lipid panel in 3 to 6 months.",
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "latencyMs": 1510
+      }
+    }
+  ],
+  "conv-cust-103": [
+    {
+      "id": "msg-103-1",
+      "role": "bot",
+      "content": "Hello Maria! Welcome to MedAssist AI. How can I review your medications today?",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 105
+      }
+    },
+    {
+      "id": "msg-103-2",
+      "role": "user",
+      "content": "Is it safe to take Metformin 500mg together with Lisinopril 10mg daily?"
+    },
+    {
+      "id": "msg-103-3",
+      "role": "bot",
+      "reasoning": "Pharmacological Interaction Analysis:\n- Metformin (Biguanide for Type 2 Diabetes)\n- Lisinopril (ACE Inhibitor for Hypertension)\n- Direct Chemical Interaction: Low Risk / Compatible\n- Synergistic Benefit: Lisinopril offers renal protection (nephroprotective) in diabetic patients.\n- Precaution: Monitor eGFR and renal function periodically to ensure Metformin excretion.",
+      "content": "### 💊 Medication Compatibility Assessment\n\n**Metformin (500mg)** and **Lisinopril (10mg)** are **safe to take together** and are very commonly co-prescribed for patients managing both elevated blood sugar and blood pressure.\n\n### Clinical Benefits:\n- **Renal Protection**: Lisinopril helps protect kidney blood vessels from diabetic damage.\n- **No Direct Adverse Drug Interaction**: They do not interfere with each other's metabolic absorption.\n\n---\n\n### ⚡ Precautions to Note:\n- **Stay Hydrated**: Dehydration can increase the risk of rare Metformin side effects.\n- **Routine Lab Work**: Ensure your doctor performs routine blood tests (Kidney function / eGFR and Serum Potassium).",
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "latencyMs": 1380
+      }
+    }
+  ],
+  "conv-cust-104": [
+    {
+      "id": "msg-104-1",
+      "role": "bot",
+      "content": "Hello David! I'm **MedAssist AI**. How can I help with your pediatric inquiry today?",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 90
+      }
+    },
+    {
+      "id": "msg-104-2",
+      "role": "user",
+      "content": "My 14-month-old infant has a fever of 101.4°F and fine red spots on their torso. What should I check?"
+    },
+    {
+      "id": "msg-104-3",
+      "role": "bot",
+      "reasoning": "Pediatric Triage Protocol:\n- Age: 14 months (Infant/Toddler)\n- Fever: 101.4°F (38.5°C) - Moderate pediatric fever\n- Rash: Fine maculopapular red spots on trunk\n- Differential: Viral Exanthem (Roseola, Fifth Disease, Enterovirus), Streptococcal infection.\n- Red Flag Check: Glass test (non-blanching petechiae vs blanching rash).",
+      "content": "### 👶 Pediatric Clinical Guidance for Fever & Rash\n\nA fever of 101.4°F with a rash in a 14-month-old is common in viral infections (such as Roseola infantum or enterovirus), but requires careful monitoring.\n\n### 🚨 Crucial Check — The Glass Test:\nPress the side of a clear drinking glass firmly against the red spots:\n- **If the spots fade/blanch under pressure**: This is typical of common viral rashes.\n- **If the spots DO NOT fade (non-blanching/petechiae)**: ⚠️ Seek **immediate emergency medical evaluation**.\n\n---\n\n### 📋 Care Guidelines:\n- **Hydration**: Offer frequent fluids (breast milk, water, or oral rehydration solutions).\n- **Fever Reducers**: Consult your pediatrician for appropriate dose of infant Paracetamol/Acetaminophen.",
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "latencyMs": 1620
+      }
+    }
+  ],
+  "conv-cust-105": [
+    {
+      "id": "msg-105-1",
+      "role": "user",
+      "content": "What are the core dietary rules for managing Stage 1 Hypertension without medication?"
+    },
+    {
+      "id": "msg-105-2",
+      "role": "bot",
+      "reasoning": "DASH Diet & Clinical Guidelines for Blood Pressure:\n- Target Sodium: <1500 mg/day\n- Potassium intake enhancement\n- Magnesium and Calcium balancing",
+      "content": "### 🫀 DASH Diet & Lifestyle Protocol for Stage 1 Hypertension\n\n1. **Sodium Restriction**: Limit daily sodium intake to **< 1,500 mg** (approx. 2/3 teaspoon of salt).\n2. **Potassium Enhancement**: Consume potassium-rich foods (bananas, spinach, sweet potatoes, avocados) to help kidneys excrete excess sodium.\n3. **DASH Pattern**: Emphasize fruits, vegetables, whole grains, and lean poultry while avoiding ultra-processed foods.",
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "latencyMs": 1290
+      }
+    }
+  ],
+  "conv-1784868592120": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1784868592106",
+      "role": "user",
+      "content": "generate any image"
+    },
+    {
+      "id": "bot-1784868593265",
+      "role": "bot",
+      "content": "I am an AI and not a substitute for professional medical advice. As per your request, I can generate a medical image. However, please note that the image will be a simple representation and not a real medical image.\n\n![Medical Illustration: Human Body](/api/generate-medical-image?prompt=human body)\n\nPlease let me know if you have any specific questions or topics you'd like to discuss. I'm here to provide helpful and evidence-based information.\n\nFor more information on human health, you can visit the [CDC website](https://www.cdc.gov/) or the [WHO website](https://www.who.int/).",
+      "isStreaming": false,
+      "reasoning": "To provide a more accurate response, I would need to know the specific context or topic you are interested in. If you have any symptoms or health concerns, I can try to provide more tailored information and guidance.",
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-07-24T04:49:53.261Z"
+      }
+    }
+  ],
+  "conv-1784868987384": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1784868987371",
+      "role": "user",
+      "content": "Disease risk prediction"
+    },
+    {
+      "id": "bot-1784868989005",
+      "role": "bot",
+      "content": "**Disease Risk Prediction**\n==========================\n\nI can provide you with general information about disease risk prediction. However, please note that I am an AI and not a substitute for professional medical advice.\n\n### How Disease Risk Prediction Works\n\nDisease risk prediction involves analyzing various factors, such as:\n\n* **Genetic information**: Family medical history and genetic testing\n* **Lifestyle factors**: Diet, exercise, smoking, and alcohol consumption\n* **Medical history**: Previous illnesses, surgeries, and medications\n* **Health metrics**: Blood pressure, BMI, blood glucose levels, and lipid profiles\n\nBy analyzing these factors, healthcare professionals can estimate an individual's risk of developing certain diseases, such as:\n\n* **Cardiovascular disease**\n* **Diabetes**\n* **Cancer**\n* **Neurodegenerative diseases**\n\n### Using MedAssist Platform for Disease Prediction\n\nThe MedAssist platform offers a disease prediction module that uses AI algorithms to analyze your health metrics and provide personalized risk assessments. To use this feature:\n\n1. Navigate to the **Disease Prediction** section in your dashboard\n2. Fill out your current health metrics, such as blood pressure, BMI, and blood glucose levels\n3. Review your risk assessment report, which will highlight potential health risks and provide recommendations for improvement\n\n### Important Notes\n\n* Disease risk prediction is not a guarantee of developing a disease, but rather an estimate based on available data\n* Regular health check-ups and screenings are essential for maintaining good health and detecting potential issues early\n* If you have concerns about your health, consult with a healthcare professional for personalized advice\n\nFor more information on disease risk prediction, you can visit:\n[Centers for Disease Control and Prevention (CDC)](https://www.cdc.gov/)\n[National Institutes of Health (NIH)](https://www.nih.gov/)",
+      "isStreaming": false,
+      "reasoning": "To provide accurate disease risk prediction, it's essential to consider multiple factors, including genetic information, lifestyle factors, medical history, and health metrics. The MedAssist platform's disease prediction module can help identify potential health risks, but it's crucial to consult with a healthcare professional for personalized advice and guidance.",
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-07-24T04:56:29.000Z"
+      }
+    },
+    {
+      "id": "usr-1784869012276",
+      "role": "user",
+      "content": "generate the pdf on above desciption.."
+    },
+    {
+      "id": "bot-1784869013679",
+      "role": "bot",
+      "content": "I'm not capable of directly generating PDF files. However, I can provide you with a structured text that you can use to create a PDF document.\n\n**Disease Risk Prediction**\n==========================\n\n### Introduction\n\nDisease risk prediction involves analyzing various factors, such as genetic information, lifestyle factors, medical history, and health metrics, to estimate an individual's risk of developing certain diseases.\n\n### How Disease Risk Prediction Works\n\nDisease risk prediction involves the following steps:\n\n1. **Data Collection**: Gathering information about an individual's genetic, lifestyle, medical, and health metrics.\n2. **Data Analysis**: Analyzing the collected data using AI algorithms and statistical models to identify patterns and correlations.\n3. **Risk Assessment**: Estimating the individual's risk of developing certain diseases based on the analyzed data.\n4. **Recommendations**: Providing personalized recommendations for reducing the risk of developing diseases.\n\n### Factors Used in Disease Risk Prediction\n\nThe following factors are used in disease risk prediction:\n\n* **Genetic Information**: Family medical history and genetic testing\n* **Lifestyle Factors**: Diet, exercise, smoking, and alcohol consumption\n* **Medical History**: Previous illnesses, surgeries, and medications\n* **Health Metrics**: Blood pressure, BMI, blood glucose levels, and lipid profiles\n\n### Diseases Predicted\n\nDisease risk prediction can be used to estimate the risk of developing the following diseases:\n\n* **Cardiovascular Disease**\n* **Diabetes**\n* **Cancer**\n* **Neurodegenerative Diseases**\n\n### Using MedAssist Platform for Disease Prediction\n\nThe MedAssist platform offers a disease prediction module that uses AI algorithms to analyze an individual's health metrics and provide personalized risk assessments. To use this feature:\n\n1. Navigate to the **Disease Prediction** section in your dashboard\n2. Fill out your current health metrics, such as blood pressure, BMI, and blood glucose levels\n3. Review your risk assessment report, which will highlight potential health risks and provide recommendations for improvement\n\n### Important Notes\n\n* Disease risk prediction is not a guarantee of developing a disease, but rather an estimate based on available data\n* Regular health check-ups and screenings are essential for maintaining good health and detecting potential issues early\n* If you have concerns about your health, consult with a healthcare professional for personalized advice\n\n### References\n\nFor more information on disease risk prediction, you can visit:\n[Centers for Disease Control and Prevention (CDC)](https://www.cdc.gov/)\n[National Institutes of Health (NIH)](https://www.nih.gov/)\n\nYou can copy and paste this text into a document editor, such as Microsoft Word or Google Docs, and then save it as a PDF file.\n\n**Please note that I am an AI and not a substitute for professional medical advice. If you have concerns about your health, consult with a healthcare professional for personalized advice.**",
+      "isStreaming": false,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-07-24T04:56:53.676Z"
+      }
+    }
+  ],
+  "conv-1784866333997": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1784867020883",
+      "role": "user",
+      "content": "How long do these symptoms typically last?"
+    },
+    {
+      "id": "bot-1784867022138",
+      "role": "bot",
+      "content": "I am an AI and not a substitute for professional medical advice. \n\nThe duration of symptoms can vary greatly depending on the specific condition. Here are some general guidelines based on common symptoms:\n\n* **Headache**: Most headaches resolve on their own within a few hours to a few days. However, some headaches like migraines can last from 4 to 72 hours.\n* **Fever**: Fevers typically last for 3-5 days, but can persist for up to 7-10 days in some cases.\n* **Fatigue**: Fatigue can last from a few days to several weeks or even months, depending on the underlying cause.\n\nIt's essential to note that if your symptoms persist, worsen, or are accompanied by other concerning signs, you should consult a healthcare professional for proper evaluation and guidance.\n\nFor more information, you can visit:\n[CDC](https://www.cdc.gov/) or \n[NIH MedlinePlus](https://medlineplus.gov/)",
+      "isStreaming": false,
+      "reasoning": "To provide a more accurate answer, I would need to know the specific symptoms and conditions you are experiencing. Please provide more details so I can offer a more tailored response.",
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-07-24T04:23:42.136Z"
+      }
+    },
+    {
+      "id": "usr-1784868139710",
+      "role": "user",
+      "content": "What home remedies can help manage these symptoms?"
+    },
+    {
+      "id": "bot-1784868141401",
+      "role": "bot",
+      "content": "I am an AI and not a substitute for professional medical advice. \n\nHere are some home remedies that may help manage common symptoms:\n\n### Headache\n* **Stay hydrated**: Drink plenty of water to help your body replenish fluids and electrolytes.\n* **Rest**: Lie down in a quiet, dark room to reduce stress and alleviate pain.\n* **Over-the-counter pain relievers**: Take medications like acetaminophen or ibuprofen as directed to help alleviate headache pain.\n* **Cold or warm compresses**: Apply a cold or warm compress to the forehead, neck, or shoulders to help relax muscles and improve blood flow.\n\n### Fever\n* **Stay hydrated**: Drink plenty of fluids, such as water, clear broths, or electrolyte-rich beverages like coconut water or sports drinks.\n* **Rest**: Get plenty of rest to help your body fight off the underlying infection.\n* **Fever-reducing medication**: Take over-the-counter medications like acetaminophen or ibuprofen as directed to help reduce fever.\n* **Cool compresses**: Apply a cool, damp cloth to the forehead, armpits, or neck to help lower body temperature.\n\n### Fatigue\n* **Get enough sleep**: Aim for 7-9 hours of sleep per night to help your body recharge.\n* **Exercise regularly**: Engage in moderate-intensity physical activity, like brisk walking, to help boost energy levels.\n* **Eat a balanced diet**: Focus on whole, nutrient-dense foods like fruits, vegetables, whole grains, lean proteins, and healthy fats.\n* **Manage stress**: Practice stress-reducing techniques like meditation, deep breathing, or yoga to help alleviate fatigue.\n\nRemember to always consult with a healthcare professional if your symptoms persist, worsen, or are severe.\n\nFor more information, you can visit:\n[NIH MedlinePlus](https://medlineplus.gov/) or \n[CDC](https://www.cdc.gov/)",
+      "isStreaming": false,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-07-24T04:42:21.393Z"
+      }
+    }
+  ],
+  "conv-1784869712765": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1784869712749",
+      "role": "user",
+      "content": "Lab report summary"
+    },
+    {
+      "id": "bot-1784869714507",
+      "role": "bot",
+      "content": "**Lab Report Summary**\nI can provide a general outline of what a lab report summary might include. However, please note that I'm an AI and not a substitute for professional medical advice.\n\nA typical lab report summary may contain the following information:\n* **Patient Information**: Name, date of birth, and medical record number\n* **Test Results**: List of tests performed, including blood work, urinalysis, or imaging studies\n* **Normal Ranges**: Reference values for each test to help interpret results\n* **Abnormal Results**: Highlighted values that fall outside the normal range\n* **Clinical Correlation**: Brief explanation of what the results might indicate\n\nTo get a detailed and accurate summary, I recommend consulting a healthcare professional who can review your specific lab report and provide personalized guidance.\n\nFor more information on understanding lab reports, you can visit:\n[NIH MedlinePlus: Laboratory Tests](https://medlineplus.gov/labtests/)\n[CDC: Laboratory Testing](https://www.cdc.gov/labtesting/index.html)\n\n\n\nPlease let me know if you have any specific questions or concerns about your lab report. I'll do my best to provide general guidance and support.",
+      "isStreaming": false,
+      "reasoning": "To analyze a lab report, I would consider the patient's medical history, symptoms, and current health status. I would also look for any abnormal results that may require immediate attention. However, this is a general approach and may vary depending on the individual case.",
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-07-24T05:08:34.500Z"
+      }
+    },
+    {
+      "id": "usr-1784869730465",
+      "role": "user",
+      "content": "generate the pdf ono above description.."
+    },
+    {
+      "id": "bot-1784869731749",
+      "role": "bot",
+      "content": "I'm not capable of directly generating PDF files. However, I can provide you with a sample template based on the lab report summary description I provided earlier.\n\nHere's a sample template in Markdown format:\n```markdown\n# Lab Report Summary\n## Patient Information\n* Name: [Insert Name]\n* Date of Birth: [Insert Date of Birth]\n* Medical Record Number: [Insert Medical Record Number]\n\n## Test Results\n| Test | Result | Normal Range |\n| --- | --- | --- |\n| [Insert Test 1] | [Insert Result 1] | [Insert Normal Range 1] |\n| [Insert Test 2] | [Insert Result 2] | [Insert Normal Range 2] |\n| ... | ... | ... |\n\n## Abnormal Results\n* [Insert Abnormal Result 1]\n* [Insert Abnormal Result 2]\n* ...\n\n## Clinical Correlation\n[Insert Clinical Correlation]\n\n## Recommendations\n[Insert Recommendations]\n```\nYou can copy and paste this template into a Markdown editor or a word processor like Microsoft Word, and then save it as a PDF file.\n\nIf you need to generate a PDF file programmatically, you can use libraries like `pdfkit` or `wkhtmltopdf` depending on your programming language of choice.\n\nPlease note that this is just a sample template, and you should consult with a healthcare professional to ensure that the content is accurate and relevant to your specific needs.\n\nFor more information on generating PDF files, you can visit:\n[WKHtmlToPdf](https://wkhtmltopdf.org/)\n[PDFKit](https://pdfkit.org/)\n\nI hope this helps! Let me know if you have any further questions.",
+      "isStreaming": false,
+      "showPdfCard": true,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-07-24T05:08:51.747Z"
+      }
+    }
+  ],
+  "conv-1784870470159": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1784870470144",
+      "role": "user",
+      "content": "generate the full description pdf on surgery topic .."
+    },
+    {
+      "id": "err-1784870472560",
+      "role": "bot",
+      "content": "⚠️ **Auto-Recovery Notice**: Connection issue detected. The system auto-recovered, please retry."
+    },
+    {
+      "id": "usr-1784870532408",
+      "role": "user",
+      "content": "generate the full description pdf on surgery topic .."
+    },
+    {
+      "id": "bot-1784870534822",
+      "role": "bot",
+      "content": "I am an AI and not a substitute for professional medical advice. \n\n### Surgery Overview\nSurgery is a medical specialty that involves the use of manual or instrumental techniques to repair, remove, or manipulate damaged or diseased tissues and organs. It is a broad field that encompasses various subspecialties, including:\n\n* **General Surgery**: deals with a wide range of surgical procedures, such as appendectomies, hernia repairs, and gallbladder removals.\n* **Cardiothoracic Surgery**: focuses on surgical procedures related to the heart, lungs, and chest cavity.\n* **Neurosurgery**: involves surgical procedures related to the brain, spine, and nervous system.\n* **Plastic Surgery**: deals with reconstructive and cosmetic surgical procedures, such as skin grafts, facelifts, and breast augmentations.\n\n### Types of Surgery\nThere are several types of surgery, including:\n\n* **Elective Surgery**: scheduled surgical procedures that are not emergency-related, such as cosmetic surgery or joint replacement.\n* **Emergency Surgery**: urgent surgical procedures that require immediate attention, such as appendectomies or trauma-related surgeries.\n* **Minimally Invasive Surgery**: surgical procedures that use small incisions and specialized instruments to minimize tissue damage and promote faster recovery.\n* **Robotic Surgery**: uses robotic systems to assist surgeons during surgical procedures, enhancing precision and dexterity.\n\n### Surgical Procedures\nSome common surgical procedures include:\n\n* **Appendectomy**: removal of the appendix.\n* **Cholecystectomy**: removal of the gallbladder.\n* **Herniorrhaphy**: repair of a hernia.\n* **Mastectomy**: removal of one or both breasts.\n* **Craniotomy**: surgical procedure that involves temporarily removing a portion of the skull to access the brain.\n\n### Pre-Surgical Preparation\nBefore undergoing surgery, patients typically undergo:\n\n* **Medical Evaluation**: a thorough medical examination to assess overall health and identify potential risks.\n* **Imaging Tests**: diagnostic tests, such as X-rays, CT scans, or MRI scans, to visualize the affected area.\n* **Laboratory Tests**: blood tests and other laboratory tests to assess blood chemistry, blood count, and other vital signs.\n* **Medication Management**: review and adjustment of medications to minimize potential interactions or complications.\n\n### Post-Surgical Care\nAfter surgery, patients typically require:\n\n* **Pain Management**: medication and other therapies to manage pain and discomfort.\n* **Wound Care**: dressing changes, wound cleaning, and monitoring for signs of infection.\n* **Physical Therapy**: exercises and rehabilitation to promote healing, strength, and mobility.\n* **Follow-up Care**: scheduled appointments with the surgeon to monitor progress and address concerns.\n\nFor more information on surgery, please visit:\n* [American College of Surgeons](https://www.facs.org/)\n* [National Institute of Diabetes and Digestive and Kidney Diseases](https://www.niddk.nih.gov/)",
+      "isStreaming": false,
+      "reasoning": "To provide a comprehensive understanding of surgery, it's essential to consider the various subspecialties, types of surgery, and surgical procedures. Additionally, pre-surgical preparation, post-surgical care, and follow-up care are crucial aspects of the surgical process. By understanding these components, patients can make informed decisions about their care and work collaboratively with their healthcare team to achieve optimal outcomes.",
+      "showPdfCard": true,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-07-24T05:22:14.819Z"
+      }
+    },
+    {
+      "id": "usr-1784870564525",
+      "role": "user",
+      "content": "can you add images and charts in pdf generation.."
+    },
+    {
+      "id": "bot-1784870566183",
+      "role": "bot",
+      "content": "I am an AI and not a substitute for professional medical advice.\n\n### Surgery Overview\nSurgery is a medical specialty that involves the use of manual or instrumental techniques to repair, remove, or manipulate damaged or diseased tissues and organs. It is a broad field that encompasses various subspecialties, including:\n\n* **General Surgery**: deals with a wide range of surgical procedures, such as appendectomies, hernia repairs, and gallbladder removals.\n* **Cardiothoracic Surgery**: focuses on surgical procedures related to the heart, lungs, and chest cavity.\n* **Neurosurgery**: involves surgical procedures related to the brain, spine, and nervous system.\n* **Plastic Surgery**: deals with reconstructive and cosmetic surgical procedures, such as skin grafts, facelifts, and breast augmentations.\n\n### Types of Surgery\nThere are several types of surgery, including:\n\n* **Elective Surgery**: scheduled surgical procedures that are not emergency-related, such as cosmetic surgery or joint replacement.\n* **Emergency Surgery**: urgent surgical procedures that require immediate attention, such as appendectomies or trauma-related surgeries.\n* **Minimally Invasive Surgery**: surgical procedures that use small incisions and specialized instruments to minimize tissue damage and promote faster recovery.\n* **Robotic Surgery**: uses robotic systems to assist surgeons during surgical procedures, enhancing precision and dexterity.\n\n### Surgical Procedures\nSome common surgical procedures include:\n\n* **Appendectomy**: removal of the appendix.\n* **Cholecystectomy**: removal of the gallbladder.\n* **Herniorrhaphy**: repair of a hernia.\n* **Mastectomy**: removal of one or both breasts.\n* **Craniotomy**: surgical procedure that involves temporarily removing a portion of the skull to access the brain.\n\n### Pre-Surgical Preparation\nBefore undergoing surgery, patients typically undergo:\n\n* **Medical Evaluation**: a thorough medical examination to assess overall health and identify potential risks.\n* **Imaging Tests**: diagnostic tests, such as X-rays, CT scans, or MRI scans, to visualize the affected area.\n* **Laboratory Tests**: blood tests and other laboratory tests to assess blood chemistry, blood count, and other vital signs.\n* **Medication Management**: review and adjustment of medications to minimize potential interactions or complications.\n\n### Post-Surgical Care\nAfter surgery, patients typically require:\n\n* **Pain Management**: medication and other therapies to manage pain and discomfort.\n* **Wound Care**: dressing changes, wound cleaning, and monitoring for signs of infection.\n* **Physical Therapy**: exercises and rehabilitation to promote healing, strength, and mobility.\n* **Follow-up Care**: scheduled appointments with the surgeon to monitor progress and address concerns.\n\n### Surgical Site Infection Prevention\nTo prevent surgical site infections, it is essential to:\n![Medical Illustration: Surgical Site Infection Prevention](/api/generate-medical-image?prompt=surgical-site-infection-prevention)\n* Practice good hand hygiene\n* Use sterile equipment and supplies\n* Maintain a clean and sterile surgical environment\n* Administer prophylactic antibiotics as needed\n\n### Wound Closure Techniques\nThere are several wound closure techniques, including:\n![Medical Illustration: Wound Closure Techniques](/api/generate-medical-image?prompt=wound-closure-techniques)\n* Sutures\n* Staples\n* Adhesives\n* Tapes\n\nFor more information on surgery, please visit:\n* [American College of Surgeons](https://www.facs.org/)\n* [National Institute of Diabetes and Digestive and Kidney Diseases](https://www.niddk.nih.gov/)\n\nPlease note that the images and charts are for illustrative purposes only and should not be used for diagnostic or treatment purposes.\n\n### Clinical Analysis\n<thinking>\nTo analyze the clinical aspects",
+      "isStreaming": false,
+      "showPdfCard": true,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-07-24T05:22:46.180Z"
+      }
+    }
+  ],
+  "conv-1784870842264": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1784870842249",
+      "role": "user",
+      "content": "can you add images and charts in pdf generation..in topic of surgery"
+    },
+    {
+      "id": "bot-1784870844309",
+      "role": "bot",
+      "content": "**I am an AI assistant, not a doctor. Always consult a healthcare professional for medical advice.**\n\nRegarding your question about adding images and charts in PDF generation for the topic of surgery, I can provide some general information. \n\n### Surgical Procedures\nSurgery is a medical specialty that involves the use of manual or instrumental techniques to repair or remove damaged or diseased tissues and organs. There are various types of surgical procedures, including:\n* **Elective surgery**: Planned procedures, such as cosmetic surgery or joint replacement.\n* **Emergency surgery**: Unplanned procedures, such as appendectomies or trauma surgery.\n* **Minimally invasive surgery**: Procedures that use small incisions and specialized instruments, such as laparoscopy or arthroscopy.\n\n### Adding Images and Charts to PDF Generation\nTo add images and charts to a PDF document about surgery, you can use various tools and software, such as:\n* **Adobe Acrobat**: A popular PDF editor that allows you to add images, charts, and other multimedia content to your document.\n* **Microsoft PowerPoint**: A presentation software that can be used to create slides with images and charts, which can then be exported as a PDF.\n* **Graphing software**: Specialized software, such as GraphPad or SigmaPlot, that can be used to create custom charts and graphs for your PDF document.\n\nSome examples of images and charts that can be added to a PDF document about surgery include:\n* **Anatomical illustrations**: Diagrams that show the location and structure of organs and tissues.\n* **Surgical procedure diagrams**: Step-by-step illustrations of surgical techniques and procedures.\n* **Pre- and post-operative images**: Photographs or scans that show the patient's condition before and after surgery.\n* **Data charts**: Graphs that display patient outcomes, such as survival rates or complication rates.\n\nFor more information on surgical procedures and techniques, you can visit the following websites:\n[NIH MedlinePlus: Surgery](https://medlineplus.gov/surgery.html)\n[CDC: Surgical Site Infection](https://www.cdc.gov/hai/ssi/index.html)",
+      "isStreaming": false,
+      "reasoning": "To generate a PDF document with images and charts about surgery, it's essential to consider the target audience and purpose of the document. For example, a document intended for medical professionals may require more technical language and detailed illustrations, while a document for patients may require simpler language and more visual aids. Additionally, it's crucial to ensure that any images or charts used are accurate, up-to-date, and relevant to the topic.",
+      "showPdfCard": true,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-07-24T05:27:24.305Z"
+      }
+    },
+    {
+      "id": "usr-1784870893025",
+      "role": "user",
+      "content": "add images in the pdf of surgery"
+    },
+    {
+      "id": "bot-1784870894581",
+      "role": "bot",
+      "content": "**I am an AI assistant, not a doctor. Always consult a healthcare professional for medical advice.**\n\nRegarding your request to add images to a PDF document about surgery, I can provide some general information. \n\n### Surgical Procedures\nSurgery is a medical specialty that involves the use of manual or instrumental techniques to repair or remove damaged or diseased tissues and organs. There are various types of surgical procedures, including:\n* **Elective surgery**: Planned procedures, such as cosmetic surgery or joint replacement.\n* **Emergency surgery**: Unplanned procedures, such as appendectomies or trauma surgery.\n* **Minimally invasive surgery**: Procedures that use small incisions and specialized instruments, such as laparoscopy or arthroscopy.\n\n### Adding Images to a PDF Document\nTo add images to a PDF document about surgery, you can use various tools and software, such as:\n* **Adobe Acrobat**: A popular PDF editor that allows you to add images, charts, and other multimedia content to your document.\n* **Microsoft PowerPoint**: A presentation software that can be used to create slides with images and charts, which can then be exported as a PDF.\n* **Graphing software**: Specialized software, such as GraphPad or SigmaPlot, that can be used to create custom charts and graphs for your PDF document.\n\nSome examples of images that can be added to a PDF document about surgery include:\n* **Anatomical illustrations**: Diagrams that show the location and structure of organs and tissues.\n* **Surgical procedure diagrams**: Step-by-step illustrations of surgical techniques and procedures.\n* **Pre- and post-operative images**: Photographs or scans that show the patient's condition before and after surgery.\n* **Data charts**: Graphs that display patient outcomes, such as survival rates or complication rates.\n\nSince you asked to add images, I will provide a sample image for illustration purposes. \n![Medical Illustration: Surgical Procedure](/api/generate-medical-image?prompt=surgical-procedure)\n\nFor more information on surgical procedures and techniques, you can visit the following websites:\n[NIH MedlinePlus: Surgery](https://medlineplus.gov/surgery.html)\n[CDC: Surgical Site Infection](https://www.cdc.gov/hai/ssi/index.html)\n\nPlease note that the image provided is for illustration purposes only and should not be used for medical diagnosis or treatment.",
+      "isStreaming": false,
+      "reasoning": "To determine the best course of action for adding images to a PDF document about surgery, we should consider the following factors:\n* The type of surgical procedure being described\n* The level of detail required for the images\n* The software and tools available for creating and editing the PDF document\n* The intended audience for the document and their level of medical knowledge",
+      "showPdfCard": true,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-07-24T05:28:14.577Z"
+      }
+    }
+  ],
+  "conv-1784871181294": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1784871181282",
+      "role": "user",
+      "content": "Generate PDF medical summary"
+    },
+    {
+      "id": "err-1784871181976",
+      "role": "bot",
+      "content": "⚠️ **Auto-Recovery Notice**: Connection issue detected. The system auto-recovered, please retry."
+    }
+  ],
+  "conv-1784871254190": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1784871254181",
+      "role": "user",
+      "content": "Generate PDF medical summary"
+    },
+    {
+      "id": "bot-1784871255662",
+      "role": "bot",
+      "content": "**I am an AI assistant, not a doctor. Always consult a healthcare professional for medical advice.**\n\nTo generate a PDF medical summary, I'll need some information from you. Please provide the following details:\n\n* Your medical history (any previous illnesses, surgeries, or hospitalizations)\n* Current symptoms or health concerns\n* List of medications you're currently taking\n* Any recent lab test results or medical reports\n\nOnce I have this information, I can help you create a comprehensive PDF medical summary.\n\n**Please note that this summary is for informational purposes only and should not be considered a substitute for professional medical advice.**\n\nYou can also upload your medical documents or lab reports to our platform by navigating to the 'Reports' section in your dashboard.\n\nFor more information on how to use our platform, you can visit the [CDC website](https://www.cdc.gov/) or the [NIH MedlinePlus website](https://medlineplus.gov/).\n\n\n\nLet me know if you have any questions or if there's anything else I can help you with.",
+      "isStreaming": false,
+      "reasoning": "To generate an accurate medical summary, I will need to analyze the patient's medical history, current symptoms, and any recent lab test results. I will also need to consider any potential drug interactions or allergies. Once I have all the necessary information, I can create a comprehensive PDF medical summary that includes the patient's medical history, current health status, and any recommended treatments or follow-up appointments.",
+      "showPdfCard": true,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-07-24T05:34:15.656Z"
+      }
+    },
+    {
+      "id": "usr-1784871322033",
+      "role": "user",
+      "content": "create a flow chart"
+    },
+    {
+      "id": "bot-1784871324020",
+      "role": "bot",
+      "content": "MedAssist AI Auto-Recovery Warning: Our AI network is currently experiencing heavy load. Please try again shortly or check common symptom guidance below.",
+      "isStreaming": false,
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "local-dataset-fallback",
+        "recovered": true,
+        "timestamp": "2026-07-24T05:35:24.016Z"
+      }
+    },
+    {
+      "id": "usr-1784871332469",
+      "role": "user",
+      "content": "create a flow chart"
+    },
+    {
+      "id": "bot-1784871334382",
+      "role": "bot",
+      "content": "MedAssist AI Auto-Recovery Warning: Our AI network is currently experiencing heavy load. Please try again shortly or check common symptom guidance below.",
+      "isStreaming": false,
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "local-dataset-fallback",
+        "recovered": true,
+        "timestamp": "2026-07-24T05:35:34.379Z"
+      }
+    }
+  ],
+  "conv-1784868152543": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1784868152534",
+      "role": "user",
+      "content": "Disease risk prediction"
+    },
+    {
+      "id": "bot-1784868154139",
+      "role": "bot",
+      "content": "**Disease Risk Prediction**\n==========================\n\nI can provide you with general information about disease risk prediction. However, please note that I am an AI and not a substitute for professional medical advice.\n\n### How Disease Risk Prediction Works\n\nDisease risk prediction involves analyzing various factors, such as:\n\n* **Genetic information**: Family medical history, genetic testing, and genetic predisposition\n* **Health metrics**: Blood pressure, BMI, blood glucose levels, and lipid profiles\n* **Lifestyle factors**: Diet, physical activity, smoking status, and alcohol consumption\n* **Medical history**: Previous illnesses, surgeries, and medications\n\nBy analyzing these factors, disease risk prediction models can estimate an individual's likelihood of developing a specific disease.\n\n### Types of Disease Risk Prediction\n\nThere are several types of disease risk prediction, including:\n\n* **Cardiovascular disease risk prediction**: Estimates the risk of developing heart disease, stroke, or peripheral artery disease\n* **Diabetes risk prediction**: Estimates the risk of developing type 2 diabetes\n* **Cancer risk prediction**: Estimates the risk of developing specific types of cancer, such as breast, colon, or lung cancer\n\n### Limitations and Considerations\n\nWhile disease risk prediction can be a useful tool, it is essential to consider the following limitations:\n\n* **Predictive accuracy**: Disease risk prediction models are not 100% accurate and may not account for all relevant factors\n* **Individual variability**: Disease risk can vary significantly between individuals, even with similar risk factors\n* **Lifestyle modifications**: Disease risk prediction should not be used as a substitute for lifestyle modifications and preventive measures\n\n### Official Guidelines and Resources\n\nFor more information on disease risk prediction, please visit:\n\n* [Centers for Disease Control and Prevention (CDC)](https://www.cdc.gov/)\n* [National Institutes of Health (NIH)](https://www.nih.gov/)\n\n\n\nPlease consult a healthcare professional for personalized disease risk assessment and guidance.",
+      "isStreaming": false,
+      "reasoning": "To provide a more accurate disease risk prediction, I would need to analyze individual-specific data, such as medical history, lifestyle factors, and health metrics. However, as a general AI model, I can provide information on disease risk prediction and direct users to official resources for more information.",
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-07-24T04:42:34.135Z"
+      }
+    },
+    {
+      "id": "usr-1784871413590",
+      "role": "user",
+      "content": "create a flow chart"
+    },
+    {
+      "id": "bot-1784871415547",
+      "role": "bot",
+      "content": "MedAssist AI Auto-Recovery Warning: Our AI network is currently experiencing heavy load. Please try again shortly or check common symptom guidance below.",
+      "isStreaming": false,
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "local-dataset-fallback",
+        "recovered": true,
+        "timestamp": "2026-07-24T05:36:55.543Z"
+      }
+    }
+  ]
+}
