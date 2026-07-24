@@ -3,7 +3,7 @@ import joblib
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import ExtraTreesClassifier
 
 from sklearn.metrics import (
     accuracy_score,
@@ -12,7 +12,7 @@ from sklearn.metrics import (
 )
 
 print("=" * 60)
-print("Training Random Forest...")
+print("Training Extra Trees...")
 print("=" * 60)
 
 # =====================================
@@ -21,7 +21,7 @@ print("=" * 60)
 
 df = pd.read_csv("datasets/Final_Augmented_Clean.csv")
 
-# Reduce dataset size to avoid MemoryError
+# Use a sample to avoid MemoryError
 df = df.sample(n=10000, random_state=42)
 
 # =====================================
@@ -32,7 +32,7 @@ X = df.drop("diseases", axis=1)
 y = df["diseases"]
 
 # =====================================
-# Encode Labels
+# Label Encoding
 # =====================================
 
 encoder = LabelEncoder()
@@ -50,10 +50,10 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # =====================================
-# Random Forest Model
+# Extra Trees Model
 # =====================================
 
-model = RandomForestClassifier(
+model = ExtraTreesClassifier(
     n_estimators=30,
     max_depth=15,
     random_state=42,
@@ -79,7 +79,7 @@ y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 
 print("\n================================================")
-print("RANDOM FOREST RESULTS")
+print("EXTRA TREES RESULTS")
 print("================================================")
 
 print(f"Accuracy : {accuracy * 100:.2f}%")
@@ -94,7 +94,7 @@ print(confusion_matrix(y_test, y_pred))
 # Save Model
 # =====================================
 
-joblib.dump(model, "backend/random_forest_model.pkl")
-joblib.dump(encoder, "backend/random_forest_label_encoder.pkl")
+joblib.dump(model, "backend/extra_tree_model.pkl")
+joblib.dump(encoder, "backend/extra_tree_label_encoder.pkl")
 
-print("\nRandom Forest Model Saved Successfully!")
+print("\nExtra Trees Model Saved Successfully!")

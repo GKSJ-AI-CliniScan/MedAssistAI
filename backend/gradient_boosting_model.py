@@ -3,7 +3,7 @@ import joblib
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import GradientBoostingClassifier
 
 from sklearn.metrics import (
     accuracy_score,
@@ -12,7 +12,7 @@ from sklearn.metrics import (
 )
 
 print("=" * 60)
-print("Training Random Forest...")
+print("Training Gradient Boosting...")
 print("=" * 60)
 
 # =====================================
@@ -21,7 +21,7 @@ print("=" * 60)
 
 df = pd.read_csv("datasets/Final_Augmented_Clean.csv")
 
-# Reduce dataset size to avoid MemoryError
+# Reduce dataset size
 df = df.sample(n=10000, random_state=42)
 
 # =====================================
@@ -32,7 +32,7 @@ X = df.drop("diseases", axis=1)
 y = df["diseases"]
 
 # =====================================
-# Encode Labels
+# Label Encoding
 # =====================================
 
 encoder = LabelEncoder()
@@ -50,14 +50,14 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # =====================================
-# Random Forest Model
+# Gradient Boosting Model
 # =====================================
 
-model = RandomForestClassifier(
-    n_estimators=30,
-    max_depth=15,
-    random_state=42,
-    n_jobs=1
+model = GradientBoostingClassifier(
+    n_estimators=50,
+    learning_rate=0.1,
+    max_depth=3,
+    random_state=42
 )
 
 # =====================================
@@ -79,7 +79,7 @@ y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 
 print("\n================================================")
-print("RANDOM FOREST RESULTS")
+print("GRADIENT BOOSTING RESULTS")
 print("================================================")
 
 print(f"Accuracy : {accuracy * 100:.2f}%")
@@ -94,7 +94,7 @@ print(confusion_matrix(y_test, y_pred))
 # Save Model
 # =====================================
 
-joblib.dump(model, "backend/random_forest_model.pkl")
-joblib.dump(encoder, "backend/random_forest_label_encoder.pkl")
+joblib.dump(model, "backend/gradient_boosting_model.pkl")
+joblib.dump(encoder, "backend/gradient_boosting_label_encoder.pkl")
 
-print("\nRandom Forest Model Saved Successfully!")
+print("\nGradient Boosting Model Saved Successfully!")

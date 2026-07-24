@@ -1,16 +1,16 @@
 import pandas as pd
 
-# Load dataset
-df = pd.read_csv("datasets/Training_Clean.csv")
+# Load the new dataset
+df = pd.read_csv("datasets/Final_Augmented_dataset_Diseases_and_Symptoms.csv")
 
 print("Original rows:", len(df))
 
-# Remove duplicates
+# Remove duplicate rows
 df = df.drop_duplicates()
 
 print("Rows after removing duplicates:", len(df))
 
-# Save new dataset
-df.to_csv("datasets/Training_NoDuplicates.csv", index=False)
+# Save the cleaned dataset
+df.to_csv("datasets/Final_Augmented_Clean.csv", index=False)
 
-print("New dataset saved successfully.")
+print("New cleaned dataset saved successfully.")
