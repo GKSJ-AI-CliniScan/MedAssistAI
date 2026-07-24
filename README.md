@@ -37,5 +37,58 @@ MedAssist AI: Medical Symptom Analysis & Disease Prediction System
 - HTML/CSS
 - Next.js
 
+---
+
+# Milestone 2 Submission
+
+## Machine Learning Model Development
+
+### Dataset Preparation
+- Used the cleaned Dataset 2 as the source dataset for machine learning development.
+- Analyzed disease class distribution and identified severely underrepresented rare disease classes.
+- Created `dataset2_training.csv` by removing extremely rare disease classes and applying stratified sampling.
+- Prepared a manageable and representative dataset containing approximately 60,000 samples, 377 symptom features, and 658 disease classes.
+- Performed an 80:20 train-test split for model training and evaluation.
+
+### Machine Learning Models
+- Built and evaluated five classification models:
+  - Decision Tree Classifier
+  - Random Forest Classifier
+  - XGBoost Classifier
+  - Gradient Boosting Classifier
+  - LightGBM Classifier
+- Compared the performance of all models based on classification accuracy.
+- Evaluated Random Forest using Top-1, Top-3, and Top-5 accuracy.
+- Tested Random Forest with 100 and 200 trees.
+
+### Model Performance
+
+| Model | Accuracy |
+|---|---|
+| Decision Tree | ~73–74% |
+| Random Forest (100 Trees) | 80.38% |
+| Random Forest (200 Trees) | **80.77%** |
+| XGBoost | 76.77% |
+| Gradient Boosting | 4.57% |
+| LightGBM | Very Low |
+
+### Final Model Selection
+
+**Random Forest Classifier with 200 Trees** was selected as the final machine learning model for MedAssist AI because it achieved the highest confirmed Top-1 accuracy among all five evaluated models.
+
+- **Top-1 Accuracy:** 80.77%
+- **Top-3 Accuracy:** 93.62%
+- **Top-5 Accuracy:** 96.72%
+
+The Random Forest model will be used for integration into the MedAssist AI disease prediction system.
+
+### Machine Learning Documentation
+- Added Machine Learning Model Evaluation Report.
+- Documented dataset preparation and rare disease class handling.
+- Documented the performance comparison of all five machine learning models.
+- Documented the final Random Forest model selection and Top-K accuracy results.
+
+
 ## Milestone Status
-Milestone 1 Completed
+- **Milestone 1:** Completed
+- **Milestone 2:** Completed
