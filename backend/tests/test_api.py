@@ -101,7 +101,13 @@ def test_symptom_check_consultation():
     response = client.post(
         "/api/history/check",
         headers=headers,
-        json={"symptoms": symptoms_to_check}
+        json={
+            "symptoms": symptoms_to_check,
+            "age": 30,
+            "gender": "Male",
+            "height": 175.0,
+            "weight": 70.0
+        }
     )
     assert response.status_code == 201
     result = response.json()

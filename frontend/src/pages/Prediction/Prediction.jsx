@@ -29,6 +29,52 @@ function Prediction() {
           AI Disease Prediction
         </h1>
 
+        {/* Patient Details */}
+
+<div className="grid md:grid-cols-4 gap-4 mb-8">
+
+  <div className="bg-blue-50 rounded-2xl p-5">
+    <h3 className="text-gray-500 font-semibold mb-2">
+      Age
+    </h3>
+
+    <p className="text-2xl font-bold text-slate-800">
+      {result.age} years
+    </p>
+  </div>
+
+  <div className="bg-purple-50 rounded-2xl p-5">
+    <h3 className="text-gray-500 font-semibold mb-2">
+      Gender
+    </h3>
+
+    <p className="text-2xl font-bold text-slate-800">
+      {result.gender}
+    </p>
+  </div>
+
+  <div className="bg-green-50 rounded-2xl p-5">
+    <h3 className="text-gray-500 font-semibold mb-2">
+      Height
+    </h3>
+
+    <p className="text-2xl font-bold text-slate-800">
+      {result.height} cm
+    </p>
+  </div>
+
+  <div className="bg-yellow-50 rounded-2xl p-5">
+    <h3 className="text-gray-500 font-semibold mb-2">
+      Weight
+    </h3>
+
+    <p className="text-2xl font-bold text-slate-800">
+      {result.weight} kg
+    </p>
+  </div>
+
+</div>
+
         {/* Symptoms */}
 
         <div className="mb-8">
