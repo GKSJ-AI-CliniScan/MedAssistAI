@@ -1,41 +1,62 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+venv/
+.venv/
+env/
+ENV/
+.next/
+dist/
+frontend/dist/
+MedAssistAI/
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+# Python cache & build
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# testing
-/coverage
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.nox/
+.tox/
 
-# next.js
-/.next/
-/out/
 
-# production
-/build
+# Local databases & logs
+*.db
+*.sqlite
+*.sqlite3
+*.log
+backend/reports/*.pdf
+backend/reports/*.txt
 
-# misc
+# Environment variables
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE & OS
 .DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
-.env*
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+Thumbs.db
+.vscode/
+.idea/

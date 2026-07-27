@@ -1,36 +1,176 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏥 MedAssist AI
+### Medical Symptom Analysis & Disease Prediction System
 
-## Getting Started
+A production-quality, full-stack AI Healthcare Platform built with **React**, **FastAPI**, **PostgreSQL**, **Redis**, and **Machine Learning**.
 
-First, run the development server:
+---
+
+## 📋 Features
+
+| Feature | Description |
+|---|---|
+| 🔐 Authentication | JWT Access + Refresh Tokens, bcrypt, RBAC (Patient/Doctor/Admin) |
+| 🩺 Symptom Analysis | 102 searchable symptoms with body-part filtering |
+| 🤖 Disease Prediction | AI engine predicting Top 5 diseases with confidence scores |
+| ⚠️ Risk Assessment | Multi-factor risk scoring (BP, BMI, Sugar, Smoking, Age) |
+| 💊 Recommendations | Personalized lifestyle, diet, exercise, and medication guidance |
+| 📄 PDF Reports | Downloadable clinical AI diagnostic summary reports |
+| 📊 Analytics | Monthly trends, disease distribution, health score tracking |
+| 🔔 Notifications | Real-time alerts for analysis results and emergencies |
+
+---
+
+## 🏗️ Tech Stack
+
+**Frontend:** React, TailwindCSS, Framer Motion, Chart.js, Axios, React Router v6
+
+**Backend:** Python 3.12, FastAPI, Pydantic V2, SQLAlchemy, Alembic
+
+**Database:** PostgreSQL (production), SQLite (development fallback)
+
+**Cache:** Redis
+
+**ML:** Scikit-learn / XGBoost compatible engine with rule-based fallback
+
+**Reports:** ReportLab PDF generation
+
+**Infrastructure:** Docker, Docker Compose, Nginx
+
+---
+
+## 🚀 Quick Start
+
+### Option 1: Docker Compose (Recommended)
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Start all services (PostgreSQL + Redis + Backend + Frontend)
+docker compose up --build
+
+# Frontend: http://localhost:80
+# Backend API: http://localhost:8000/api
+# API Docs: http://localhost:8000/api/docs
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Option 2: Local Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### Backend
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cd backend
 
-## Learn More
+# Create virtual environment
+python -m venv venv
+venv\Scripts\activate  # Windows
+# source venv/bin/activate  # Linux/Mac
 
-To learn more about Next.js, take a look at the following resources:
+# Install dependencies
+pip install -r requirements.txt
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Copy environment template
+copy .env.example .env
+# Edit .env with your database credentials
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Run backend (SQLite auto-fallback if no PostgreSQL)
+python run.py
+# OR
+uvicorn app.main:app --reload --port 8000
+```
 
-## Deploy on Vercel
+#### Frontend
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+# Install dependencies
+npm install
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Start development server
+npm run dev
+
+# Open http://localhost:5173
+```
+
+---
+
+## 🧪 Running Tests
+
+```bash
+cd backend
+pytest tests/ -v
+```
+
+The test suite uses SQLite in-memory database — no external services required.
+
+---
+
+## 🌐 API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/auth/register` | User registration |
+| POST | `/api/auth/login` | User login |
+| POST | `/api/auth/refresh` | Refresh access token |
+| GET | `/api/patients/me` | Get patient profile |
+| PUT | `/api/patients/me` | Update patient profile |
+| GET | `/api/symptoms/` | List all 102 symptoms |
+| POST | `/api/predictions/analyze` | Run full AI analysis |
+| GET | `/api/predictions/history` | Prediction history |
+| POST | `/api/reports/generate/{id}` | Generate PDF report |
+| GET | `/api/reports/{id}/download` | Download PDF |
+| GET | `/api/dashboard/stats` | Dashboard statistics |
+| GET | `/api/dashboard/analytics` | Analytics data |
+| GET | `/api/notifications/` | Notifications list |
+| GET | `/api/health` | Health check |
+
+**Full Swagger docs:** `http://localhost:8000/api/docs`
+
+---
+
+## 📁 Project Structure
+
+```
+MedAssist-AI/
+├── backend/
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── deps.py              # JWT auth dependency
+│   │   │   └── routers/             # All API routers
+│   │   ├── core/
+│   │   │   ├── config.py            # Settings
+│   │   │   ├── database.py          # SQLAlchemy engine
+│   │   │   └── security.py          # JWT + bcrypt
+│   │   ├── ml/
+│   │   │   ├── predictor.py         # Disease prediction engine
+│   │   │   ├── risk_engine.py       # Risk assessment engine
+│   │   │   └── recommendation_engine.py  # Treatment recommendations
+│   │   ├── models/                  # SQLAlchemy ORM models (12 tables)
+│   │   ├── repositories/            # Data access layer
+│   │   ├── schemas/                 # Pydantic schemas
+│   │   ├── services/
+│   │   │   └── report_generator.py  # ReportLab PDF generator
+│   │   └── main.py                  # FastAPI application
+│   ├── tests/
+│   │   └── test_main.py             # Comprehensive Pytest suite
+│   ├── requirements.txt
+│   ├── Dockerfile.backend
+│   └── .env.example
+├── src/
+│   ├── services/
+│   │   ├── api.js                   # Axios client (JWT + auto-refresh)
+│   │   ├── authService.js           # Auth service
+│   │   ├── patientService.js        # Patient profile service
+│   │   └── medicalService.js        # Medical services
+│   └── pages/                       # All React pages
+├── docker-compose.yml
+├── Dockerfile.frontend
+├── nginx.conf
+└── .env
+```
+
+---
+
+## ⚕️ Medical Disclaimer
+
+This application is for educational and preliminary screening purposes only. It does NOT constitute medical advice, diagnosis, or treatment. Always consult a licensed physician.
+
+---
+
+© 2024 MedAssist AI – Powered by Artificial Intelligence
