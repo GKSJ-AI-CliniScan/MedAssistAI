@@ -18,8 +18,7 @@ from sklearn.linear_model import LogisticRegression
 # Load Dataset
 # =====================================
 
-df = pd.read_csv("datasets/Final_Augmented_Clean.csv")
-
+df = pd.read_csv("datasets/filtered_240_disease_dataset.csv")
 # Reduced sample size to avoid MemoryError
 df = df.sample(n=10000, random_state=42)
 

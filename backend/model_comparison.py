@@ -20,7 +20,7 @@ print("="*70)
 
 
 # Load dataset
-df = pd.read_csv("datasets/Final_Augmented_Clean.csv")
+df = pd.read_csv("datasets/filtered_240_disease_dataset.csv")
 df = df.sample(n=10000, random_state=42)
 # Split features and target
 X = df.drop("diseases", axis=1)

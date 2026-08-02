@@ -19,8 +19,7 @@ print("="*60)
 
 
 # Load dataset
-df = pd.read_csv("datasets/Final_Augmented_Clean.csv")
-
+df = pd.read_csv("datasets/filtered_240_disease_dataset.csv")
 # Separate features and target
 X = df.drop("diseases", axis=1)
 y = df["diseases"]
@@ -91,13 +90,12 @@ print(
 # Save model
 joblib.dump(
     model,
-    "decision_tree_model.pkl"
+    "backend/decision_tree_model.pkl"
 )
 
 joblib.dump(
     encoder,
-    "decision_tree_label_encoder.pkl"
+    "backend/decision_tree_label_encoder.pkl"
 )
-
 
 print("\nDecision Tree Model Saved Successfully!")

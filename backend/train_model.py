@@ -19,8 +19,7 @@ print("=" * 60)
 # Load Dataset
 # =====================================
 
-df = pd.read_csv("datasets/Final_Augmented_Clean.csv")
-
+df = pd.read_csv("datasets/filtered_240_disease_dataset.csv")
 # Reduce dataset size to avoid MemoryError
 df = df.sample(n=10000, random_state=42)
 

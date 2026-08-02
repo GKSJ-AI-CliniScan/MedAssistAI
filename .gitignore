@@ -1,0 +1,11 @@
+# Machine Learning models
+*.pkl
+
+# Datasets
+datasets/*.csv
+
+# CatBoost files
+catboost_info/
+
+# VS Code
+.vscode/
