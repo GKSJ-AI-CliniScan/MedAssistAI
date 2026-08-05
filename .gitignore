@@ -17,3 +17,18 @@ backend/venv/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Model artifacts (optional)
+# Uncomment if you DON'T want to push the trained model
+# app/models/*.pkl
+
+# Test cache
+.pytest_cache/
+
+# Coverage
+.coverage
+htmlcov/
+backend/app/datasets/BRFSS2024.csv

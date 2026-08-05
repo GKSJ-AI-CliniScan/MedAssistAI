@@ -1,174 +1,156 @@
-DISEASE_SEVERITY = {
-    # --- High: life-threatening, organ-damaging, or needs emergency/urgent care ---
-    "heart attack": "High",
-    "stroke": "High",
-    "sepsis": "High",
-    "pneumonia": "High",
-    "gastrointestinal hemorrhage": "High",
-    "acute pancreatitis": "High",
-    "cholecystitis": "High",
-    "sickle cell crisis": "High",
-    "spontaneous abortion": "High",
-    "hyperemesis gravidarum": "High",
-    "diverticulitis": "High",
-    "abdominal aortic aneurysm": "High",
-    "appendicitis": "High",
-    "pulmonary embolism": "High",
-    "pneumothorax": "High",
-    "diabetic ketoacidosis": "High",
-    "acute kidney injury": "High",
+"""
+Machine Learning Risk Assessment Service Module.
 
-    # --- Medium: needs medical attention, can worsen without treatment ---
-    "acute bronchitis": "Medium",
-    "bronchitis": "Medium",
-    "infectious gastroenteritis": "Medium",
-    "noninfectious gastroenteritis": "Medium",
-    "gout": "Medium",
-    "strep throat": "Medium",
-    "injury to the arm": "Medium",
-    "injury to the leg": "Medium",
-    "liver disease": "Medium",
-    "spinal stenosis": "Medium",
-    "obstructive sleep apnea (osa)": "Medium",
-    "acute bronchiolitis": "Medium",
-    "urinary tract infection": "Medium",
-    "multiple sclerosis": "Medium",
-    "acute stress reaction": "Medium",
-    "panic disorder": "Medium",
-    "drug reaction": "Medium",
-    "depression": "Medium",
-    "pyogenic skin infection": "Medium",
-    "personality disorder": "Medium",
-    "otitis media": "Medium",
-    "problem during pregnancy": "Medium",
-    "esophagitis": "Medium",
-    "peripheral nerve disorder": "Medium",
-    "hypoglycemia": "Medium",
-    "concussion": "Medium",
-    "complex regional pain syndrome": "Medium",
-    "anxiety": "Medium",
-    "asthma": "Medium",
-    "flu": "Medium",
-    "marijuana abuse": "Medium",
-    "benign prostatic hyperplasia (bph)": "Medium",
+Pure Machine Learning implementation for patient health risk assessment.
+Uses a trained ML model (Random Forest / XGBoost trained on CDC BRFSS 2024 dataset)
+to predict patient health risk probability, risk level ('High', 'Medium', 'Low'),
+severity ('Severe', 'Moderate', 'Mild'), risk score, and recommendations.
 
-    # --- Low: usually self-limiting or manageable at home ---
-    "common cold": "Low",
-    "allergy": "Low",
-    "seasonal allergies (hay fever)": "Low",
-    "cystitis": "Low",
-    "vulvodynia": "Low",
-    "nose disorder": "Low",
-    "spondylosis": "Low",
-    "conjunctivitis due to allergy": "Low",
-    "vaginal cyst": "Low",
-    "fungal infection of the hair": "Low",
-    "sprain or strain": "Low",
-    "arthritis of the hip": "Low",
-    "bursitis": "Low",
-    "eczema": "Low",
-    "dental caries": "Low",
-    "chronic constipation": "Low",
-    "sebaceous cyst": "Low",
-    "psoriasis": "Low",
-    "developmental disability": "Low",
-    "vaginitis": "Low",
-    "actinic keratosis": "Low",
-    "degenerative disc disease": "Low",
-    "macular degeneration": "Low",
-    "contact dermatitis": "Low",
-}
+Zero external constants files or rule-based scoring logic used.
+"""
 
-SEVERITY_SCORE = {
-    "High": 50,
-    "Medium": 30,
-    "Low": 10,
-}
+import os
+from typing import Any, Dict
+import joblib
+import pandas as pd
 
-# Medical conditions that increase risk when combined with any diagnosis
-RISK_MODIFYING_CONDITIONS = {
-    "diabetes",
-    "hypertension",
-    "heart disease",
-    "asthma",
-    "obesity",
-    "chronic kidney disease",
-}
+from app.schemas.patient import RiskAssessmentRequest
+from app.utils.logger import logger
+
+# Model artifact path
+MODEL_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "models",
+    "risk_model.pkl",
+)
+
+# Global variables for loaded model artifacts
+_ML_ARTIFACT: Dict[str, Any] = {}
 
 
-def calculate_risk(data):
-    score = 0
+def load_ml_model() -> Dict[str, Any]:
+    """
+    Loads and caches the trained ML model artifact from disk.
+    Raises RuntimeError if the model file is not found or fails to load.
+    """
+    global _ML_ARTIFACT
+    if _ML_ARTIFACT:
+        return _ML_ARTIFACT
 
-    # 1. Disease severity — the primary driver of risk
-    disease_key = (data.predicted_disease or "").lower().strip()
-    severity = DISEASE_SEVERITY.get(disease_key, "Medium")  # unknown disease -> assume Medium, don't silently ignore
-    score += SEVERITY_SCORE[severity]
+    if not os.path.exists(MODEL_PATH):
+        logger.error("ML Model artifact not found at %s", MODEL_PATH)
+        raise RuntimeError(
+            f"ML Model file not found at '{MODEL_PATH}'. "
+            "Please run 'python scripts/train_risk_model.py' to train the model."
+        )
 
-    # 2. Prediction confidence — a confident high-severity prediction matters more
-    if data.prediction_confidence is not None:
-        if data.prediction_confidence >= 0.7:
-            score += 15
-        elif data.prediction_confidence >= 0.4:
-            score += 5
+    try:
+        artifact = joblib.load(MODEL_PATH)
+        logger.info(
+            "Successfully loaded ML Risk Assessment model '%s' from %s",
+            artifact.get("model_name", "Trained ML Model"),
+            MODEL_PATH,
+        )
+        _ML_ARTIFACT = artifact
+        return artifact
+    except Exception as err:
+        logger.error("Failed to load ML model artifact: %s", str(err))
+        raise RuntimeError(f"Failed to load ML model artifact: {str(err)}") from err
 
-    # 3. Age — older patients are more vulnerable to complications
-    if data.age >= 60:
-        score += 20
-    elif data.age >= 40:
-        score += 10
 
-    # 4. Existing medical conditions — each relevant condition raises risk
-    conditions = {c.lower().strip() for c in data.medical_conditions}
-    matching_conditions = conditions & RISK_MODIFYING_CONDITIONS
-    score += 10 * len(matching_conditions)
+# Load model on startup
+try:
+    load_ml_model()
+except Exception as e:
+    logger.warning("Could not pre-load model artifact on startup: %s", str(e))
 
-    # 5. Blood pressure — standard clinical thresholds (AHA/ACC staging)
-    bp_flag = None
-    if data.systolic_bp is not None and data.diastolic_bp is not None:
-        if data.systolic_bp >= 180 or data.diastolic_bp >= 120:
-            score += 30
-            bp_flag = "Hypertensive Crisis"
-        elif data.systolic_bp >= 140 or data.diastolic_bp >= 90:
-            score += 15
-            bp_flag = "High Blood Pressure"
-        elif data.systolic_bp < 90 or data.diastolic_bp < 60:
-            score += 15
-            bp_flag = "Low Blood Pressure"
 
-    # 6. Blood sugar — standard clinical thresholds (mg/dL)
-    sugar_flag = None
-    if data.blood_sugar_level is not None:
-        if data.blood_sugar_level >= 250:
-            score += 25
-            sugar_flag = "Very High Blood Sugar"
-        elif data.blood_sugar_level >= 126:
-            score += 15
-            sugar_flag = "High Blood Sugar"
-        elif data.blood_sugar_level < 70:
-            score += 20
-            sugar_flag = "Low Blood Sugar (Hypoglycemia)"
+def calculate_risk(request: RiskAssessmentRequest) -> Dict[str, Any]:
+    """
+    Calculates patient risk assessment strictly using the trained ML model.
 
-    # Classify total score
-    if score >= 70:
-        risk_level = "High"
-    elif score >= 40:
-        risk_level = "Medium"
-    else:
-        risk_level = "Low"
+    Extracts 14 patient-friendly features from request and converts them to
+    DataFrame matching the model's 14 feature columns.
+    """
+    logger.info(
+        "Starting ML Risk Assessment for patient (age=%d, bmi=%.1f)",
+        request.age,
+        request.bmi,
+    )
 
-    recommendations = []
+    # 1. Load ML Model Artifacts
+    artifact = load_ml_model()
+    model = artifact["model"]
+    imputer = artifact["imputer"]
+    feature_cols = artifact.get("feature_cols", [])
+    target_labels = artifact.get("target_labels", {0: "Low", 1: "Medium", 2: "High"})
+    model_name = artifact.get("model_name", "Trained ML Model")
+
+    # 2. Build feature mapping dict using 14 patient-friendly request fields
+    feature_map = {
+        "_AGE80": float(request.age),
+        "_SEX": float(request.gender),
+        "_BMI5": float(request.bmi),
+        "GENHLTH": float(request.general_health),
+        "PHYSHLTH": float(request.physical_health),
+        "MENTHLTH": float(request.mental_health),
+        "EXERANY2": float(request.exercise),
+        "SMOKE100": float(request.smoking),
+        "DRNKANY6": float(request.alcohol),
+        "DIABETE4": float(request.diabetes),
+        "CHCKDNY2": float(request.kidney_disease),
+        "ASTHMA3": float(request.asthma),
+        "CHCCOPD3": float(request.copd),
+        "HAVARTH4": float(request.arthritis),
+    }
+
+    # Create DataFrame ensuring columns match model feature_cols order
+    raw_df = pd.DataFrame([feature_map])
+    if feature_cols:
+        raw_df = raw_df[feature_cols]
+
+    # Preprocess features using saved imputer
+    imp_features = imputer.transform(raw_df)
+
+    # 3. Model Inference: predict() and predict_proba()
+    probs = model.predict_proba(imp_features)[0]
+    pred_class_idx = int(model.predict(imp_features)[0])
+
+    max_prob = float(probs[pred_class_idx])
+    risk_probability = round(max_prob, 2)
+    risk_score = int(round(risk_probability * 100))
+
+    # Convert predicted class index (0 -> Low, 1 -> Medium, 2 -> High)
+    risk_level = target_labels.get(pred_class_idx, "Low")
+
+    # Severity Mapping based on Risk Level
     if risk_level == "High":
-        recommendations.append("Seek immediate medical attention.")
+        severity = "Severe"
     elif risk_level == "Medium":
-        recommendations.append("Consult a doctor soon.")
+        severity = "Moderate"
     else:
-        recommendations.append("Rest and monitor your symptoms.")
+        severity = "Mild"
+
+    # Recommendations Mapping based on Risk Level
+    if risk_level == "High":
+        recommendations = ["Consult a healthcare professional immediately."]
+    elif risk_level == "Medium":
+        recommendations = ["Monitor health and consult a physician if symptoms persist."]
+    else:
+        recommendations = ["Maintain healthy lifestyle."]
+
+    logger.info(
+        "ML Risk Assessment Complete: risk_probability=%.2f, risk_level=%s, severity=%s",
+        risk_probability,
+        risk_level,
+        severity,
+    )
 
     return {
-        "disease_severity": severity,
-        "risk_score": score,
+        "risk_probability": risk_probability,
         "risk_level": risk_level,
+        "risk_score": risk_score,
+        "severity": severity,
         "recommendations": recommendations,
-        "blood_pressure_flag": bp_flag,
-        "blood_sugar_flag": sugar_flag,
+        "model_name": model_name,
     }
