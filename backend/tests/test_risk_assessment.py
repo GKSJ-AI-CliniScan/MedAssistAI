@@ -37,9 +37,13 @@ class TestPredictionClient(unittest.TestCase):
         mock_resp = MagicMock()
         mock_resp.status_code = 200
         mock_resp.json.return_value = {
-            "predicted_disease": "Hypertension",
-            "prediction_confidence": 0.85,
-        }
+        "predicted_diseases": [
+            {
+                "disease": "Hypertension",
+                "probability": 0.85
+            }
+        ]
+}
         mock_post.return_value = mock_resp
 
         client = PredictionClient(api_url="http://test-server/api/history/check")

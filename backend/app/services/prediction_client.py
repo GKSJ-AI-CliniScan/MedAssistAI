@@ -42,28 +42,29 @@ class PredictionClient:
 
         try:
             response = requests.post(
-                self.api_url, json=payload, timeout=self.timeout
+                self.api_url,
+                json=payload,
+                timeout=self.timeout,
             )
             response.raise_for_status()
             data = response.json()
 
-            # Flexible parsing for standard key variations
-            predicted_disease = (
-                data.get("predicted_disease")
-                or data.get("disease")
-                or data.get("prediction")
-                or "Unknown"
-            )
-            confidence_raw = (
-                data.get("prediction_confidence")
-                or data.get("confidence")
-                or data.get("confidence_score")
-                or 0.0
-            )
+            # Parse Disease Prediction API response
+            predicted_list = data.get("predicted_diseases", [])
 
-            try:
-                prediction_confidence = float(confidence_raw)
-            except (ValueError, TypeError):
+            if predicted_list and len(predicted_list) > 0:
+                predicted_disease = predicted_list[0].get(
+                    "disease", "Unknown"
+                )
+
+                try:
+                    prediction_confidence = float(
+                        predicted_list[0].get("probability", 0.0)
+                    )
+                except (ValueError, TypeError):
+                    prediction_confidence = 0.0
+            else:
+                predicted_disease = "Unknown"
                 prediction_confidence = 0.0
 
             logger.info(
@@ -71,6 +72,7 @@ class PredictionClient:
                 predicted_disease,
                 prediction_confidence,
             )
+
             return str(predicted_disease), prediction_confidence
 
         except requests.exceptions.RequestException as req_err:
@@ -80,6 +82,7 @@ class PredictionClient:
                 str(req_err),
             )
             return "Unknown", 0.0
+
         except Exception as exc:
             logger.warning(
                 "Unexpected error during Disease Prediction API parsing: %s. Falling back to defaults.",
