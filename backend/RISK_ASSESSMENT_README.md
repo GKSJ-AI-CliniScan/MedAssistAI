@@ -90,7 +90,7 @@ backend/
 
 1. **`prediction_client.py`**:
    - Calls `POST /api/history/check` with patient symptoms.
-   - Extract `predicted_disease` and `prediction_confidence`.
+   - Extracts `predicted_disease` and `prediction_confidence`.
    - Handles network errors and timeouts gracefully with default fallbacks `("Unknown", 0.0)`.
 
 2. **`preprocessing.py`**:
@@ -157,10 +157,44 @@ Evaluates comprehensive patient health risk via the service architecture. Accept
 
 ---
 
-## 🧪 Testing & Execution
+## 🧪 Testing & Verification Guide
 
-### Run Automated Test Suite
+### Method 1: Run Automated Test Suite
+Runs all 11 unit & integration tests covering preprocessing, ML inference, Disease Prediction API resilience, Decision Layer evaluation, and API schema compliance:
+
 ```bash
 cd backend
 python -m unittest discover -s tests
+```
+
+### Method 2: Start Development Server & Interactive OpenAPI Docs
+1. Launch the FastAPI server:
+   ```bash
+   cd backend
+   python -m uvicorn app.main:app --reload --port 8000
+   ```
+2. Open Swagger UI in browser: **http://localhost:8000/docs**
+3. Navigate to `POST /risk-assessment`, click **Try it out**, paste a request payload, and click **Execute**.
+
+### Method 3: Test via PowerShell / cURL Command
+With the server running on `localhost:8000`:
+
+```powershell
+Invoke-RestMethod -Uri "http://localhost:8000/risk-assessment" -Method Post -ContentType "application/json" -Body '{
+  "age": 65,
+  "gender": 1,
+  "bmi": 28.5,
+  "general_health": 3,
+  "exercise": 1,
+  "smoking": 0,
+  "alcohol": 1,
+  "diabetes": 1,
+  "arthritis": 1,
+  "asthma": 0,
+  "copd": 0,
+  "kidney_disease": 0,
+  "mental_health": 2,
+  "physical_health": 5,
+  "symptoms": ["chest_pain", "shortness_of_breath"]
+}'
 ```
