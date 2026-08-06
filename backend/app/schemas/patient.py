@@ -1,17 +1,20 @@
 """
-Pydantic Schemas for Patient Risk Assessment.
+Pydantic Schemas for Patient Health Data and Risk Assessment.
 
-Defines request and response payload structures with field validations,
-type hints, and OpenAPI Swagger example schemas for ML-based risk assessment.
+Defines request structures with field validations, type hints, and OpenAPI
+Swagger example schemas for risk assessment, including CDC BRFSS features and symptoms.
 """
 
 from typing import List
 from pydantic import BaseModel, Field, ConfigDict
 
+from app.schemas.response import RiskAssessmentResponse
+
 
 class RiskAssessmentRequest(BaseModel):
     """
-    Request model for patient health risk assessment based on patient-relevant clinical features.
+    Request model for patient health risk assessment based on patient BRFSS clinical features
+    and reported symptoms.
     """
     age: int = Field(
         ...,
@@ -111,6 +114,11 @@ class RiskAssessmentRequest(BaseModel):
         description="Number of days physical health was not good in the past 30 days (0 to 30).",
         examples=[5]
     )
+    symptoms: List[str] = Field(
+        default_factory=list,
+        description="List of patient-reported symptoms for Disease Prediction integration.",
+        examples=[["chest_pain", "shortness_of_breath"]]
+    )
 
     model_config = ConfigDict(
         json_schema_extra={
@@ -128,62 +136,11 @@ class RiskAssessmentRequest(BaseModel):
                 "copd": 0,
                 "kidney_disease": 0,
                 "mental_health": 2,
-                "physical_health": 5
+                "physical_health": 5,
+                "symptoms": ["chest_pain", "shortness_of_breath"]
             }
         }
     )
 
 
-class RiskAssessmentResponse(BaseModel):
-    """
-    Response model for calculated patient health risk evaluation using ML model.
-    """
-    risk_probability: float = Field(
-        ...,
-        ge=0.0,
-        le=1.0,
-        description="ML Model risk prediction probability (0.0 to 1.0).",
-        examples=[0.87]
-    )
-    risk_level: str = Field(
-        ...,
-        description="Overall risk level derived from ML prediction ('High', 'Medium', 'Low').",
-        examples=["High"]
-    )
-    risk_score: int = Field(
-        ...,
-        ge=0,
-        le=100,
-        description="Calculated composite risk score (0 to 100).",
-        examples=[87]
-    )
-    severity: str = Field(
-        ...,
-        description="Patient risk severity level ('Severe', 'Moderate', 'Mild').",
-        examples=["Severe"]
-    )
-    recommendations: List[str] = Field(
-        ...,
-        description="List of clinical recommendations based on calculated risk level.",
-        examples=[["Consult a healthcare professional immediately."]]
-    )
-    model_name: str = Field(
-    ...,
-    description="Name of the Machine Learning model used for prediction.",
-    examples=["XGBoost Classifier"]
-    )
-
-    model_config = ConfigDict(
-        json_schema_extra={
-            "example": {
-                "risk_probability": 0.87,
-                "risk_level": "High",
-                "risk_score": 87,
-                "severity": "Severe",
-                "recommendations": [
-                    "Consult a healthcare professional immediately."
-                ],
-                "model_name": "XGBoost Classifier"
-            }
-        }
-    )
+__all__ = ["RiskAssessmentRequest", "RiskAssessmentResponse"]
