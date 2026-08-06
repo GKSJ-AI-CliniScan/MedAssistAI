@@ -11,6 +11,14 @@ __pycache__/
 # Environment variables
 .env
 
+# ML artifacts (place locally; do not commit large binaries)
+*.pkl
+!app/ml/.gitkeep
+
+app/ml/clean_190k_dataset.csv
+app/ml/encoded__dataset.csv
+
+
 # VS Code
 .vscode/
 
