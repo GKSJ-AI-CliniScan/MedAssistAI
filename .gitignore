@@ -89,3 +89,11 @@ Thumbs.db
 # ==========================================
 
 *.pem
+
+
+# ==========================================
+# Custom
+# ==========================================
+python_ai/datasets/90_disease_dataset.csv
+python_ai/datasets/symptom_Description.csv
+python_ai/datasets/symptom_precaution.csv
