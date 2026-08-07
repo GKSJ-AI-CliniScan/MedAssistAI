@@ -94,6 +94,11 @@ Thumbs.db
 # ==========================================
 # Custom
 # ==========================================
+#datasets
 python_ai/datasets/90_disease_dataset.csv
 python_ai/datasets/symptom_Description.csv
 python_ai/datasets/symptom_precaution.csv
+# Model files
+python_ai/models/catboost.pkl
+python_ai/models/feature_columns.pkl
+python_ai/models/label_encoder.pkl
