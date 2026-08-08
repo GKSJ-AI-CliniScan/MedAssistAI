@@ -38,21 +38,30 @@ def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None
     return encoded_jwt
 
 async def get_current_user(token: str = Depends(oauth2_scheme)) -> dict:
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
+    print("TOKEN =", token)
+
     try:
-        payload = jwt.decode(token, settings.JWT_SECRET_KEY, algorithms=[settings.ALGORITHM])
-        user_id: str = payload.get("sub")
-        email: str = payload.get("email")
-        role: str = payload.get("role")
-        if user_id is None:
-            raise credentials_exception
-        return {"id": user_id, "email": email, "role": role}
-    except JWTError:
-        raise credentials_exception
+        payload = jwt.decode(
+            token,
+            settings.JWT_SECRET_KEY,
+            algorithms=[settings.ALGORITHM]
+        )
+
+        print("PAYLOAD =", payload)
+
+        return {
+            "id": payload.get("sub"),
+            "email": payload.get("email"),
+            "role": payload.get("role"),
+        }
+
+    except Exception as e:
+        print("JWT ERROR =", e)
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not validate credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
 
 class RoleChecker:
     def __init__(self, allowed_roles: List[str]):

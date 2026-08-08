@@ -56,7 +56,10 @@ class MockCollection:
         except Exception as e:
             logger.error(f"Error saving mock file {self.filepath}: {e}")
 
-    async def find_one(self, query):
+    async def find_one(self, query=None):
+        if query is None:
+            query = {}
+
         for doc in self.data:
             match = True
             for k, v in query.items():
@@ -65,11 +68,13 @@ class MockCollection:
                     break
             if match:
                 return doc
+
         return None
 
     def find(self, query=None):
         if not query:
             return MockCursor(list(self.data))
+
         results = []
         for doc in self.data:
             match = True
@@ -79,11 +84,13 @@ class MockCollection:
                     break
             if match:
                 results.append(doc)
+
         return MockCursor(results)
 
     async def insert_one(self, doc):
         if "_id" not in doc:
             doc["_id"] = str(ObjectId())
+
         self.data.append(doc)
         self._save_data()
         return doc
@@ -93,16 +100,20 @@ class MockCollection:
             if "_id" not in doc:
                 doc["_id"] = str(ObjectId())
             self.data.append(doc)
+
         self._save_data()
         return docs
 
-    async def update_one(self, query, update):
+    async def update_one(self, query, update, upsert=False):
         doc = await self.find_one(query)
+
         if doc:
-            set_dict = update.get("$set", {})
-            for k, v in set_dict.items():
-                doc[k] = v
-            self._save_data()
+            doc.update(update.get("$set", {}))
+        elif upsert:
+            new_doc = update.get("$set", {})
+            self.data.append(new_doc)
+
+        self._save_data()
         return doc
 
     async def create_index(self, keys, unique=False):

@@ -1,0 +1,14 @@
+.env
+*.env
+venv/
+.venv/
+__pycache__/
+*.pyc
+node_modules/
+dist/
+backend/reports/
+backend/data/
+.vscode/
+.idea/backend/models/xgb_tuned_lossguide.json
+backend/models/xgb_tuned_lossguide.json
+backend/models/xgb_tuned_lossguide.json
