@@ -89,8 +89,24 @@ The selected Random Forest model will be used for integration into the MedAssist
 - Documented the final Random Forest model selection and Top-K accuracy results.
 
 ---
+# Milestone 3 Submission
+
+## UI/UX, Testing & Improvements
+
+### Work Completed
+- Improved UI/UX and web page designs.
+- Improved and reviewed datasets.
+- Performed end-to-end application testing.
+- Fixed bugs and integration issues.
+- Improved disease prediction and Knowledge Base workflow.
+- Enhanced overall application usability and performance.
+
+### Remaining Work
+- Final testing and bug fixing.
+- Final documentation and deployment.
 
 ## Milestone Status
 
 - **Milestone 1:** Completed
 - **Milestone 2:** Completed
+- **Milestone 3:** Completed
