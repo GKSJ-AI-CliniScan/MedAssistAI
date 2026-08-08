@@ -1,0 +1,15 @@
+{
+  "name": "medassist-ai-project",
+  "version": "1.0.0",
+  "description": "MedAssist AI Project Launcher",
+  "scripts": {
+    "frontend": "npm --prefix frontend run dev",
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "backend": "cd flask_backend && python app.py",
+    "start": "npm --prefix frontend run dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

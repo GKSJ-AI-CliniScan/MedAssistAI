@@ -52,6 +52,39 @@ export default function Login() {
     { key: Role.SUPER_ADMIN, label: t("roles.superAdmin", "Super Admin") },
   ];
 
+  const DEMO_PRESETS = [
+    { role: Role.PATIENT, name: "Sarah Williams (Patient)", email: "patient@medassist.ai", phone: "9876543210", icon: "🩺", desc: "Symptom check & predictions" },
+    { role: Role.DOCTOR, name: "Dr. Alexander Smith (Doctor)", email: "doctor@medassist.ai", phone: "9876543211", icon: "👨‍⚕️", desc: "Diagnosis audit & prescriptions" },
+    { role: Role.PHARMACY, name: "Pharmacy Manager", email: "pharmacy@medassist.ai", phone: "9876543214", icon: "💊", desc: "Medicine stock & fulfillment" },
+    { role: Role.APPOINTMENT, name: "Clinic Receptionist", email: "receptionist@medassist.ai", phone: "9876543213", icon: "📋", desc: "Queue & patient bookings" },
+    { role: Role.LAB_ASSISTANT, name: "Lab Specialist", email: "lab@medassist.ai", phone: "9876543212", icon: "🔬", desc: "Lab tests & report uploads" },
+    { role: Role.HOSPITAL_ADMIN, name: "Hospital Administrator", email: "admin@medassist.ai", phone: "9876543215", icon: "🏥", desc: "Analytics & hospital staff" },
+    { role: Role.SUPER_ADMIN, name: "Super Administrator", email: "superadmin@medassist.ai", phone: "9876543216", icon: "🛡️", desc: "Global system control" }
+  ];
+
+  const quickDemoLogin = async (preset) => {
+    setError("");
+    setSelectedRole(preset.role);
+    if (authMethod === "phone") {
+      setPhone(preset.phone);
+    } else {
+      setEmail(preset.email);
+    }
+    setGeneratedOTP("123456");
+    setOtp("123456");
+    setCodeSent(true);
+
+    setIsSubmitting(true);
+    try {
+      const identifier = authMethod === "phone" ? preset.phone : preset.email;
+      await login({ identifier, password: "123456", role: preset.role });
+    } catch (err) {
+      setError(err.message || "Quick demo login failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   useEffect(() => {
     if (authenticatedUser) {
       if (authenticatedUser.profileCompleted) {
@@ -64,6 +97,8 @@ export default function Login() {
 
   const handleSendCode = async () => {
     setError("");
+    const identifier = authMethod === "phone" ? phone.trim() : email.trim().toLowerCase();
+    
     if (authMethod === "phone") {
       if (!phone.trim() || !/^\d{10}$/.test(phone.trim())) {
         setError("Enter a valid 10-digit phone number.");
@@ -78,8 +113,14 @@ export default function Login() {
     setIsSubmitting(true);
     try {
       await new Promise((resolve) => setTimeout(resolve, 700));
-      const randomOTP = Math.floor(100000 + Math.random() * 900000).toString();
-      setGeneratedOTP(randomOTP);
+      const demo = DEMO_ACCOUNTS[identifier];
+      if (demo) {
+        setGeneratedOTP("123456");
+        setOtp("123456");
+      } else {
+        const randomOTP = Math.floor(100000 + Math.random() * 900000).toString();
+        setGeneratedOTP(randomOTP);
+      }
       setCodeSent(true);
     } finally {
       setIsSubmitting(false);
@@ -103,19 +144,26 @@ export default function Login() {
         if (!email.trim()) {
           throw new Error("Enter your email address to continue.");
         }
-        identifier = email.trim();
+        identifier = email.trim().toLowerCase();
       }
 
-      if (!codeSent) {
-        throw new Error("Please request an OTP before submitting.");
-      }
-      if (otp.trim() !== generatedOTP) {
-        throw new Error(`Incorrect OTP. The generated OTP is: ${generatedOTP}`);
+      const isDemo = DEMO_ACCOUNTS[identifier];
+      let roleToUse = selectedRole;
+
+      if (isDemo) {
+        roleToUse = isDemo.role;
+      } else {
+        if (!codeSent) {
+          throw new Error("Please request an OTP before submitting.");
+        }
+        if (otp.trim() !== generatedOTP) {
+          throw new Error(`Incorrect OTP. The generated OTP is: ${generatedOTP}`);
+        }
       }
 
       await login({
         identifier,
-        role: selectedRole,
+        role: roleToUse,
         loginMethod: authMethod,
       });
 
@@ -260,7 +308,7 @@ export default function Login() {
                     type="tel"
                     required
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) => handlePhoneChange(e.target.value)}
                     placeholder="9001000000"
                     className="w-full h-14 pl-12 pr-4 bg-white border border-gray-200 rounded-2xl text-sm text-gray-900 outline-none transition-all focus:border-green-400 focus:ring-2 focus:ring-green-100"
                   />
@@ -275,7 +323,7 @@ export default function Login() {
                     type="email"
                     required
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => handleEmailChange(e.target.value)}
                     placeholder="you@medassist.ai"
                     className="w-full h-14 pl-12 pr-4 bg-white border border-gray-200 rounded-2xl text-sm text-gray-900 outline-none transition-all focus:border-green-400 focus:ring-2 focus:ring-green-100"
                   />
@@ -318,7 +366,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full h-14 rounded-2xl font-bold text-base text-white flex items-center justify-center gap-2 transition-all active:scale-95 disabled:opacity-60 mt-2"
+              className="w-full h-14 rounded-2xl font-bold text-base text-white flex items-center justify-center gap-2 transition-all active:scale-95 disabled:opacity-60 mt-2 shadow-lg shadow-emerald-600/20"
               style={{ background: "linear-gradient(135deg, #1a6b3a 0%, #1a5c32 100%)" }}
             >
               {isSubmitting ? (
@@ -331,6 +379,40 @@ export default function Login() {
               )}
             </button>
           </form>
+
+          {/* Quick Demo Accounts Selection */}
+          <div className="mt-8 pt-6 border-t border-gray-100">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                ⚡ Quick Demo Login (One-Click)
+              </span>
+              <span className="text-[11px] text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full">
+                OTP: 123456
+              </span>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {DEMO_PRESETS.map((preset) => (
+                <button
+                  key={preset.email}
+                  type="button"
+                  onClick={() => quickDemoLogin(preset)}
+                  disabled={isSubmitting}
+                  className="p-3 bg-gray-50 hover:bg-emerald-50 text-left rounded-2xl border border-gray-200 hover:border-emerald-300 transition-all flex items-center gap-2.5 group"
+                >
+                  <span className="text-xl flex-shrink-0">{preset.icon}</span>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-bold text-xs text-gray-900 group-hover:text-emerald-800 truncate">
+                      {preset.name}
+                    </p>
+                    <p className="text-[11px] text-gray-500 truncate">
+                      {preset.email}
+                    </p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="mx-6 mb-6 px-5 py-4 rounded-2xl flex items-center gap-4" style={{ backgroundColor: "#f5faf7" }}>
@@ -338,7 +420,7 @@ export default function Login() {
             <ShieldCheck className="w-4 h-4" style={{ color: "#1a6b3a" }} />
           </div>
           <p className="text-xs text-gray-500 leading-relaxed">
-            {t("auth.secureDemo", "Secure demo access. All data is stored locally on your browser.")}
+            Demo credentials are pre-seeded in the database. Click any demo role to sign in instantly or enter OTP <strong>123456</strong>.
           </p>
         </div>
       </motion.div>

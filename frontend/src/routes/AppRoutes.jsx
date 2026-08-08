@@ -67,6 +67,7 @@ import Dashboard from "../pages/Dashboard";
 
 import AIConsultant from "../pages/patient/AIConsultant";
 import SymptomAnalysis from "../pages/patient/SymptomAnalysis";
+import DiseasePrediction from "../pages/patient/DiseasePrediction";
 import ImageAnalysis from "../pages/patient/ImageAnalysis";
 import ReportAnalysis from "../pages/patient/ReportAnalysis";
 import Recommendations from "../pages/patient/Recommendations";
@@ -104,6 +105,7 @@ import EMR from "../pages/EMR";
 import Billing from "../pages/Billing";
 import Addtest from "../pages/lab/add-test";
 import TestManagementPage from "../pages/lab/tests";
+import LabDashboard from "../pages/lab/LabDashboard";
 import AddMedicine from "../pages/clinic/AddMedicine";
 import ExpiredMedicine from "../pages/clinic/ExpiredMedicine";
 
@@ -174,6 +176,8 @@ function RoleBasedDashboard() {
     case Role.PHARMACY:
     case Role.CLINIC:
       return <Navigate to="/clinic/dashboard" replace />;
+    case Role.LAB_ASSISTANT:
+      return <Navigate to="/lab/dashboard" replace />;
     case Role.PATIENT:
       return <PatientDashboard user={user} />;
     default:
@@ -232,6 +236,7 @@ export default function AppRoutes() {
                 Role.APPOINTMENT,
                 Role.PHARMACY,
                 Role.PATIENT,
+                Role.LAB_ASSISTANT,
               ]}
             />
           }
@@ -261,6 +266,14 @@ export default function AppRoutes() {
             element={
               <Layout>
                 <SymptomAnalysis />
+              </Layout>
+            }
+          />
+          <Route
+            path="/patient/disease-prediction"
+            element={
+              <Layout>
+                <DiseasePrediction />
               </Layout>
             }
           />
@@ -353,22 +366,6 @@ export default function AppRoutes() {
             element={
               <Layout>
                 <Stocks />
-              </Layout>
-            }
-          />
-          <Route
-            path="/lab/add-test"
-            element={
-              <Layout>
-                <Addtest />
-              </Layout>
-            }
-          />
-          <Route
-            path="/lab/tests"
-            element={
-              <Layout>
-                <TestManagementPage />
               </Layout>
             }
           />
@@ -562,6 +559,34 @@ export default function AppRoutes() {
             element={
               <Layout>
                 <ExpiredMedicine />
+              </Layout>
+            }
+          />
+        </Route>
+
+        {/* ========== LAB ASSISTANT ROUTES ========== */}
+        <Route element={<RoleGuard allowedRoles={[Role.ADMIN, Role.HOSPITAL_ADMIN, Role.LAB_ASSISTANT]} />}>
+          <Route
+            path="/lab/dashboard"
+            element={
+              <Layout>
+                <LabDashboard />
+              </Layout>
+            }
+          />
+          <Route
+            path="/lab/add-test"
+            element={
+              <Layout>
+                <Addtest />
+              </Layout>
+            }
+          />
+          <Route
+            path="/lab/tests"
+            element={
+              <Layout>
+                <TestManagementPage />
               </Layout>
             }
           />

@@ -56,8 +56,9 @@ export default function Sidebar({ user, isSidebarOpen, handleLogout }) {
       case Role.PATIENT:
         return [
           { name: t("navigation.dashboard", "Dashboard"), path: "/dashboard", icon: LayoutDashboard },
-          { name: t("ai.aiAssistant", "AI Consultant"), path: "/patient/ai-consultant", icon: Bot },
           { name: t("ai.symptomAnalysis", "AI Symptom Analysis"), path: "/patient/symptom-analysis", icon: Activity },
+          { name: t("ai.diseasePrediction", "AI Disease Prediction"), path: "/patient/disease-prediction", icon: Brain },
+          { name: t("ai.aiAssistant", "AI Consultant"), path: "/patient/ai-consultant", icon: Bot },
           { name: t("ai.analyzeReport", "Medical Report Analysis"), path: "/patient/report-analysis", icon: FileText },
           { name: t("ai.analyzeImage", "Medical Image Analysis"), path: "/patient/image-analysis", icon: ScanHeart },
           { name: t("ai.healthRecommendations", "AI Recommendations"), path: "/patient/recommendations", icon: Sparkles },
@@ -106,6 +107,15 @@ export default function Sidebar({ user, isSidebarOpen, handleLogout }) {
           { name: t("prescriptions.prescriptions", "Prescription Verification"), path: "/pharmacy/verification", icon: FileText },
           { name: t("navigation.settings", "Settings"), path: "/settings", icon: Settings },
         ];
+
+      case Role.LAB_ASSISTANT:
+        return [
+          { name: t("navigation.dashboard", "Lab Dashboard"), path: "/lab/dashboard", icon: LayoutDashboard },
+          { name: t("lab.addTest", "Add Test"), path: "/lab/add-test", icon: Plus },
+          { name: t("lab.tests", "Test Management"), path: "/lab/tests", icon: Microscope },
+          { name: t("navigation.settings", "Settings"), path: "/settings", icon: Settings },
+        ];
+
 
       case Role.HOSPITAL_ADMIN:
         return [

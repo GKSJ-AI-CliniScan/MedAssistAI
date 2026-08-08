@@ -30,5 +30,12 @@ Thumbs.db
 # Coverage
 coverage/
 
-# Optional: lockfiles (keep if you want reproducibility)
-# package-lock.json
+# Python & Vite caches
+__pycache__/
+*.pyc
+.vite/
+.vite-temp/
+
+# Large ML binary models (exceeds GitHub 100MB limit)
+*.pkl
+models/*.pkl

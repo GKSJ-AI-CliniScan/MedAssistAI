@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # MongoDB Medical Data Store
+  mongodb:
+    image: mongo:6.0
+    container_name: medassist_mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: medassist_ai
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - medassist_network
+
+  # Python Flask & ML AI Processing Engine
+  backend:
+    build:
+      context: .
+      dockerfile: flask_backend/Dockerfile
+    container_name: medassist_backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - MONGO_URI=mongodb://mongodb:27017/medassist_ai
+      - SECRET_KEY=medassist_super_secure_jwt_secret_2026
+      - GROQ_API_KEY=${GROQ_API_KEY}
+    depends_on:
+      - mongodb
+    networks:
+      - medassist_network
+
+  # React Frontend with Nginx
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: medassist_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - medassist_network
+
+networks:
+  medassist_network:
+    driver: bridge
+
+volumes:
+  mongo_data:
+    driver: local
