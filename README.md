@@ -90,25 +90,364 @@ The disease prediction system follows a complete machine learning and healthcare
                       │
                       ▼
                 Health Report
+```
 
-#🛠️ Technology Stack
-Technology	Purpose
-🐍 Python 3.10+	Backend and Machine Learning development
-⚡ FastAPI	REST API development
-⚛️ React 19	Frontend development
-🗄️ PostgreSQL	Database management
-🔗 SQLAlchemy	ORM and database operations
-📦 Pydantic	Request and response validation
-🔐 JWT	Authentication and authorization
-🧠 Scikit-learn	Machine Learning
-🚀 XGBoost	Machine Learning model
-💡 LightGBM	Machine Learning model
-🤖 Voting Classifier	Ensemble disease prediction
-⚙️ Uvicorn	FastAPI application server
-🐳 Docker	Containerization
-📖 Swagger / OpenAPI	API testing and documentation
+---
+
+# 🛠️ Technology Stack
+
+| Technology | Purpose |
+|---|---|
+| 🐍 **Python 3.10+** | Backend and Machine Learning development |
+| ⚡ **FastAPI** | REST API development |
+| ⚛️ **React 19** | Frontend development |
+| 🗄️ **PostgreSQL** | Database management |
+| 🔗 **SQLAlchemy** | ORM and database operations |
+| 📦 **Pydantic** | Request and response validation |
+| 🔐 **JWT** | Authentication and authorization |
+| 🧠 **Scikit-learn** | Machine Learning |
+| 🚀 **XGBoost** | Machine Learning model |
 | 💡 **LightGBM** | Machine Learning model |
 | 🤖 **Voting Classifier** | Ensemble disease prediction |
 | ⚙️ **Uvicorn** | FastAPI application server |
 | 🐳 **Docker** | Containerization |
 | 📖 **Swagger / OpenAPI** | API testing and documentation |
+
+---
+
+# 📂 Backend Architecture
+
+```text
+backend/
+│
+├── app/
+│   │
+│   ├── ml/
+│   │   ├── __init__.py
+│   │   ├── disease_mapping.py
+│   │   ├── extracted_features.py
+│   │   ├── model_loader.py
+│   │   ├── predictor.py
+│   │   ├── preprocessing.py
+│   │   ├── risk_assessment.py
+│   │   └── severity_analysis.py
+│   │
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── user.py
+│   │   ├── patient.py
+│   │   ├── doctor.py
+│   │   ├── appointment.py
+│   │   ├── report.py
+│   │   └── symptom.py
+│   │
+│   ├── routers/
+│   │   ├── __init__.py
+│   │   ├── auth.py
+│   │   ├── home.py
+│   │   ├── patient.py
+│   │   ├── doctor.py
+│   │   ├── appointment.py
+│   │   ├── symptom.py
+│   │   ├── prediction_router.py
+│   │   ├── report_router.py
+│   │   └── analytics_router.py
+│   │
+│   ├── schemas/
+│   │   ├── __init__.py
+│   │   ├── user_schema.py
+│   │   ├── patient_schema.py
+│   │   ├── doctor_schema.py
+│   │   ├── appointment_schema.py
+│   │   ├── symptom_schema.py
+│   │   ├── prediction_schema.py
+│   │   └── report_schema.py
+│   │
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── user_service.py
+│   │   ├── patient_service.py
+│   │   ├── doctor_service.py
+│   │   ├── appointment_service.py
+│   │   ├── symptom_service.py
+│   │   ├── prediction_service.py
+│   │   ├── report_service.py
+│   │   ├── analytics_service.py
+│   │   ├── health_risk_service.py
+│   │   └── recommendation_service.py
+│   │
+│   ├── utils/
+│   │   ├── __init__.py
+│   │   ├── auth_handler.py
+│   │   ├── jwt_handler.py
+│   │   ├── role_checker.py
+│   │   └── logger.py
+│   │
+│   ├── config/
+│   │   └── settings.py
+│   │
+│   ├── database/
+│   │   ├── database.py
+│   │   ├── init_db.py
+│   │   └── session.py
+│   │
+│   └── main.py
+│
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+├── .gitignore
+└── README.md
+```
+
+---
+
+# 🔌 Backend API
+
+## 🔐 Authentication
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/auth/register` | Register a new user |
+| `POST` | `/auth/login` | Authenticate user and generate JWT |
+| `GET` | `/auth/me` | Get authenticated user information |
+
+### Supported Roles
+
+- 👤 Patient
+- 👨‍⚕️ Doctor
+- 🛡️ Admin
+
+---
+
+## 👤 Patient Management
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/patient/profile` | Get patient profile |
+| `PUT` | `/patient/profile` | Update patient profile |
+| `GET` | `/patient/all` | Get authorized patient information |
+
+---
+
+## 👨‍⚕️ Doctor Management
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/doctor/profile` | Get doctor profile |
+| `PUT` | `/doctor/profile` | Update doctor profile and availability |
+| `GET` | `/doctor/all` | Get available doctors |
+
+---
+
+## 📅 Appointment Management
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/appointments` | Schedule an appointment |
+| `GET` | `/appointments/my` | View user's appointments |
+| `PUT` | `/appointments/{id}/status` | Update appointment status |
+| `GET` | `/appointments/all` | View all appointments |
+
+Patients can schedule appointments, while doctors and administrators can manage appointment status and monitor appointments according to their roles.
+
+---
+
+## 🧬 Symptom Dictionary
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/symptoms` | Retrieve supported symptoms |
+| `POST` | `/symptoms` | Add a new symptom |
+
+The symptom dictionary provides the supported symptoms used by the disease prediction system.
+
+Administrators can add new symptoms when required.
+
+---
+
+## 🧠 Disease Prediction
+
+### `POST /predict`
+
+Processes patient symptoms through the complete Machine Learning pipeline and returns:
+
+- Predicted disease
+- Risk assessment
+- Severity assessment
+- Medical recommendations
+- Health report information
+
+---
+
+## 📋 Health Reports
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/reports/my` | Get patient's report history |
+| `GET` | `/reports/patient/{patient_id}` | Get reports for a patient |
+| `GET` | `/reports/{id}` | Get detailed report |
+| `PUT` | `/reports/{id}/notes` | Add or update doctor notes |
+| `GET` | `/reports/{id}/download` | Download printable report |
+
+### Reports Include
+
+- Patient health information
+- Predicted disease
+- Risk assessment
+- Severity analysis
+- Medical recommendations
+- Doctor notes
+- Report history
+
+---
+
+## 📊 Analytics & Monitoring
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/analytics/summary` | System overview statistics |
+| `GET` | `/analytics/diseases` | Disease prediction distribution |
+
+Analytics provide insights into system usage and disease prediction patterns.
+
+---
+
+# 🔐 Authentication & Authorization
+
+MedAssist AI uses **JWT-based authentication** combined with **role-based authorization**.
+
+```text
+             User Login
+                  │
+                  ▼
+        Credential Validation
+                  │
+                  ▼
+          JWT Access Token
+                  │
+                  ▼
+          Role Verification
+                  │
+                  ▼
+          Protected API Access
+```
+
+Role-based authorization ensures that users can access only the functionality permitted for their role.
+
+---
+
+# 🗄️ Database
+
+The backend uses **PostgreSQL** with **SQLAlchemy ORM**.
+
+### Database Entities
+
+- 👤 Users
+- 🧑‍⚕️ Patients
+- 👨‍⚕️ Doctors
+- 📅 Appointments
+- 🧬 Symptoms
+- 📋 Health Reports
+
+---
+
+# 🐳 Docker Support
+
+Docker configuration is provided through:
+
+```text
+Dockerfile
+docker-compose.yml
+```
+
+### Build and Run
+
+```bash
+docker compose up --build
+```
+
+### Stop Containers
+
+```bash
+docker compose down
+```
+
+---
+
+# 📖 API Documentation
+
+MedAssist AI provides interactive **Swagger / OpenAPI documentation**.
+
+After starting the backend, open:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+Swagger can be used to:
+
+- Test API endpoints
+- Verify request and response schemas
+- Test authentication
+- Test JWT-protected routes
+- Validate backend workflows
+
+---
+
+# 🧪 Testing & Validation
+
+The backend was tested through **Swagger/OpenAPI** and application workflows.
+
+### Testing Coverage
+
+- ✅ Authentication
+- ✅ JWT authorization
+- ✅ Patient operations
+- ✅ Doctor operations
+- ✅ Appointment management
+- ✅ Symptom management
+- ✅ Disease prediction
+- ✅ Disease name mapping
+- ✅ Risk assessment
+- ✅ Severity analysis
+- ✅ Health reports
+- ✅ Report downloading
+- ✅ Analytics
+
+---
+
+# 👥 Team
+
+## MedAssist AI
+
+**Team:** Team 2
+
+**Developer / Backend:** SAI KIRAN
+
+---
+
+# 🎯 Milestone 3
+
+This milestone focuses on integrating the **Machine Learning pipeline with the FastAPI backend and healthcare management system**, creating an end-to-end workflow from symptom input to disease prediction, risk assessment, recommendations, and health reporting.
+
+---
+
+# 🚀 Future Enhancements
+
+Potential future improvements include:
+
+- 🔮 Advanced disease prediction models
+- 🧠 Explainable AI for prediction results
+- 📱 Mobile application
+- 💬 AI healthcare assistant
+- 📊 Advanced healthcare analytics
+- 🔔 Appointment notifications
+- ☁️ Cloud deployment
+- 🔒 Enhanced security and auditing
+
+---
+
+# ⭐ MedAssist AI
+
+> **AI-assisted healthcare, connecting symptoms, predictions, risk assessment, and healthcare management in one platform.**
