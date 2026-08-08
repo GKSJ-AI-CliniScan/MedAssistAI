@@ -91,19 +91,22 @@ The disease prediction system follows a complete machine learning and healthcare
                       ▼
                 Health Report
 
-# 🛠️ Technology Stack
-
-| Technology | Purpose |
-|---|---|
-| 🐍 **Python 3.10+** | Backend and Machine Learning development |
-| ⚡ **FastAPI** | REST API development |
-| ⚛️ **React 19** | Frontend development |
-| 🗄️ **PostgreSQL** | Database management |
-| 🔗 **SQLAlchemy** | ORM and database operations |
-| 📦 **Pydantic** | Request and response validation |
-| 🔐 **JWT** | Authentication and authorization |
-| 🧠 **Scikit-learn** | Machine Learning |
-| 🚀 **XGBoost** | Machine Learning model |
+#🛠️ Technology Stack
+Technology	Purpose
+🐍 Python 3.10+	Backend and Machine Learning development
+⚡ FastAPI	REST API development
+⚛️ React 19	Frontend development
+🗄️ PostgreSQL	Database management
+🔗 SQLAlchemy	ORM and database operations
+📦 Pydantic	Request and response validation
+🔐 JWT	Authentication and authorization
+🧠 Scikit-learn	Machine Learning
+🚀 XGBoost	Machine Learning model
+💡 LightGBM	Machine Learning model
+🤖 Voting Classifier	Ensemble disease prediction
+⚙️ Uvicorn	FastAPI application server
+🐳 Docker	Containerization
+📖 Swagger / OpenAPI	API testing and documentation
 | 💡 **LightGBM** | Machine Learning model |
 | 🤖 **Voting Classifier** | Ensemble disease prediction |
 | ⚙️ **Uvicorn** | FastAPI application server |
