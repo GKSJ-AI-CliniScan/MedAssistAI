@@ -1,129 +1,75 @@
-# Medical Image Classification Module
+# 🏥 MedAssist AI
+### Medical Symptom Analysis & Disease Prediction System
 
-This module is a part of the **MedAssistAI** project and focuses on disease prediction using medical images. It uses deep learning with transfer learning to classify medical images for multiple diseases.
-
----
-
-## Diseases Supported
-
-- Glaucoma
-- Brain Stroke
-- Diabetic Retinopathy
-- Heart Attack
+![Status](https://img.shields.io/badge/Status-Active-success)
+![Frontend](https://img.shields.io/badge/Frontend-React-blue)
+![Backend](https://img.shields.io/badge/Backend-Flask-black)
+![ML](https://img.shields.io/badge/ML-Disease%20Prediction-orange)
+![Deep Learning](https://img.shields.io/badge/DL-MobileNetV2-red)
 
 ---
 
-## Model Architecture
+## 📌 Overview
 
-- MobileNetV2 (Transfer Learning)
-- Global Average Pooling
-- Dropout
-- Dense Output Layer (Binary Classification)
+**MedAssist AI** is an AI-powered healthcare application that provides
+symptom-based disease prediction, medical image analysis, and patient
+health management features.
 
----
-
-## Image Specifications
-
-- Input Size: **224 × 224**
-- Color Mode: RGB
-- Image Normalization: Pixel values scaled before training
+The system combines a **React frontend**, **Flask backend**, machine
+learning models, and deep learning models.
 
 ---
 
-## Framework & Libraries
+## ✨ Features
 
-- TensorFlow
-- Keras
-- NumPy
-- Pandas
-- Matplotlib
-- Pillow
-- Scikit-learn
-
----
-
-## Dataset
-
-The datasets were obtained from **Roboflow**.
-
-Supported dataset formats:
-- CSV-based datasets
-- Folder-based datasets
-
-The training pipeline automatically detects the dataset type and loads it accordingly.
+- 🔐 User Authentication
+- 🩺 Symptom-Based Disease Prediction
+- 🖼️ Medical Image Classification
+- 📄 Medical Report Analysis
+- 📅 Appointment Management
+- 🏥 Patient Management
 
 ---
 
-## Project Structure
+## 🧠 Machine Learning
 
-```
-Image_Model/
-│
-├── models/
-│   ├── glaucoma_model.keras
-│   ├── brain_stroke_model.keras
-│   ├── diabetic_retinopathy_model.keras
-│   └── heart_attack_model.keras
-│
-├── notebooks/
-│   └── train_classifier.ipynb
-│
-├── src/
-│   └── predict.py
-│
-├── README.md
-├── requirements.txt
-└── .gitignore
-```
+### Symptom-Based Prediction
 
----
+A machine learning model is used to predict diseases based on the
+symptoms provided by the user.
 
-## Trained Models
+### Medical Image Classification
 
-| Disease | Status |
-|---------|--------|
-| Glaucoma | ✅ Completed |
-| Brain Stroke | ✅ Completed |
-| Diabetic Retinopathy | ✅ Completed |
-| Heart Attack | ✅ Completed |
+**MobileNetV2 Transfer Learning** is used for medical image
+classification.
+
+Supported diseases:
+
+| Disease | Model |
+|---|---|
+| Glaucoma | MobileNetV2 |
+| Brain Stroke | MobileNetV2 |
+| Diabetic Retinopathy | MobileNetV2 |
+| Heart Attack | MobileNetV2 |
+
+**Input:** 224 × 224 RGB images
 
 ---
 
-## How to Train
+## 🏗️ System Architecture
 
-1. Select the disease name in the notebook.
-2. Run the preprocessing pipeline.
-3. Train the MobileNetV2 model.
-4. The best model is automatically saved in the `models/` folder.
-
----
-
-## Model Prediction
-
-The reusable prediction module can be executed using:
-
-```bash
-python src/predict.py <disease_name> <image_path>
-```
-
-Example:
-
-```bash
-python src/predict.py glaucoma sample_images/glaucoma.jpg
-```
-
----
-
-## Model Storage
-
-All trained models are stored in the `models/` directory as `.keras` files and can be directly integrated into the backend inference pipeline.
-
----
-
-## Current Status
-
-- ✅ Reusable preprocessing pipeline implemented
-- ✅ Automatic dataset type detection
-- ✅ Four disease classification models trained
-- ✅ Standalone prediction module implemented
-- ✅ Models ready for backend integration
+```text
+User
+  ↓
+React Frontend
+  ↓
+Flask Backend
+  ↓
+┌───────────────────────┐
+│ Disease Prediction    │
+│ Image Classification  │
+│ Report Analysis       │
+│ Patient Management    │
+└───────────────────────┘
+  ↓
+Database / ML Models

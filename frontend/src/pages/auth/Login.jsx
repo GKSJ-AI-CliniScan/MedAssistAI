@@ -52,6 +52,39 @@ export default function Login() {
     { key: Role.SUPER_ADMIN, label: t("roles.superAdmin", "Super Admin") },
   ];
 
+  const DEMO_ACCOUNTS = {
+    "patient@medassist.ai": { role: Role.PATIENT, phone: "9876543210" },
+    "9876543210": { role: Role.PATIENT, email: "patient@medassist.ai" },
+    "doctor@medassist.ai": { role: Role.DOCTOR, phone: "9876543211" },
+    "9876543211": { role: Role.DOCTOR, email: "doctor@medassist.ai" },
+    "lab@medassist.ai": { role: Role.LAB_ASSISTANT, phone: "9876543212" },
+    "9876543212": { role: Role.LAB_ASSISTANT, email: "lab@medassist.ai" },
+    "receptionist@medassist.ai": { role: Role.APPOINTMENT, phone: "9876543213" },
+    "9876543213": { role: Role.APPOINTMENT, email: "receptionist@medassist.ai" },
+    "pharmacy@medassist.ai": { role: Role.PHARMACY, phone: "9876543214" },
+    "9876543214": { role: Role.PHARMACY, email: "pharmacy@medassist.ai" },
+    "admin@medassist.ai": { role: Role.HOSPITAL_ADMIN, phone: "9876543215" },
+    "9876543215": { role: Role.HOSPITAL_ADMIN, email: "admin@medassist.ai" },
+    "superadmin@medassist.ai": { role: Role.SUPER_ADMIN, phone: "9876543216" },
+    "9876543216": { role: Role.SUPER_ADMIN, email: "superadmin@medassist.ai" },
+  };
+
+  const handlePhoneChange = (val) => {
+    setPhone(val);
+    const demo = DEMO_ACCOUNTS[val.trim()];
+    if (demo) {
+      setSelectedRole(demo.role);
+    }
+  };
+
+  const handleEmailChange = (val) => {
+    setEmail(val);
+    const demo = DEMO_ACCOUNTS[val.trim().toLowerCase()];
+    if (demo) {
+      setSelectedRole(demo.role);
+    }
+  };
+
   useEffect(() => {
     if (authenticatedUser) {
       if (authenticatedUser.profileCompleted) {
@@ -64,6 +97,8 @@ export default function Login() {
 
   const handleSendCode = async () => {
     setError("");
+    const identifier = authMethod === "phone" ? phone.trim() : email.trim().toLowerCase();
+    
     if (authMethod === "phone") {
       if (!phone.trim() || !/^\d{10}$/.test(phone.trim())) {
         setError("Enter a valid 10-digit phone number.");
@@ -78,8 +113,14 @@ export default function Login() {
     setIsSubmitting(true);
     try {
       await new Promise((resolve) => setTimeout(resolve, 700));
-      const randomOTP = Math.floor(100000 + Math.random() * 900000).toString();
-      setGeneratedOTP(randomOTP);
+      const demo = DEMO_ACCOUNTS[identifier];
+      if (demo) {
+        setGeneratedOTP("123456");
+        setOtp("123456");
+      } else {
+        const randomOTP = Math.floor(100000 + Math.random() * 900000).toString();
+        setGeneratedOTP(randomOTP);
+      }
       setCodeSent(true);
     } finally {
       setIsSubmitting(false);
@@ -103,19 +144,26 @@ export default function Login() {
         if (!email.trim()) {
           throw new Error("Enter your email address to continue.");
         }
-        identifier = email.trim();
+        identifier = email.trim().toLowerCase();
       }
 
-      if (!codeSent) {
-        throw new Error("Please request an OTP before submitting.");
-      }
-      if (otp.trim() !== generatedOTP) {
-        throw new Error(`Incorrect OTP. The generated OTP is: ${generatedOTP}`);
+      const isDemo = DEMO_ACCOUNTS[identifier];
+      let roleToUse = selectedRole;
+
+      if (isDemo) {
+        roleToUse = isDemo.role;
+      } else {
+        if (!codeSent) {
+          throw new Error("Please request an OTP before submitting.");
+        }
+        if (otp.trim() !== generatedOTP) {
+          throw new Error(`Incorrect OTP. The generated OTP is: ${generatedOTP}`);
+        }
       }
 
       await login({
         identifier,
-        role: selectedRole,
+        role: roleToUse,
         loginMethod: authMethod,
       });
 
@@ -260,7 +308,7 @@ export default function Login() {
                     type="tel"
                     required
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) => handlePhoneChange(e.target.value)}
                     placeholder="9001000000"
                     className="w-full h-14 pl-12 pr-4 bg-white border border-gray-200 rounded-2xl text-sm text-gray-900 outline-none transition-all focus:border-green-400 focus:ring-2 focus:ring-green-100"
                   />
@@ -275,7 +323,7 @@ export default function Login() {
                     type="email"
                     required
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => handleEmailChange(e.target.value)}
                     placeholder="you@medassist.ai"
                     className="w-full h-14 pl-12 pr-4 bg-white border border-gray-200 rounded-2xl text-sm text-gray-900 outline-none transition-all focus:border-green-400 focus:ring-2 focus:ring-green-100"
                   />

@@ -32,3 +32,4 @@ outputs/
 
 # TensorBoard logs (if used later)
 logs/
+models/best_decision_tree_model.pkl

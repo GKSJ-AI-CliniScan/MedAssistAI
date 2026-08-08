@@ -6,6 +6,7 @@ import { SYMPTOM_CATEGORIES } from "../../lib/symptoms";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../hooks/useAuth";
 import { hospitalDataService } from "../../services/hospitalDataService";
+import { apiRequest } from "../../services/api";
 
 export default function SymptomAnalysis() {
   const { t } = useTranslation();
@@ -41,51 +42,42 @@ export default function SymptomAnalysis() {
     if (selectedSymptoms.length === 0) return;
 
     setIsAnalyzing(true);
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    setResults(null);
 
-    const mockResults = {
-      topDiseases: [
-        { name: "Common Cold", confidence: 85, risk: "Low" },
-        { name: "Influenza", confidence: 72, risk: "Medium" },
-        { name: "Viral Infection", confidence: 65, risk: "Medium" },
-        { name: "Bacterial Infection", confidence: 45, risk: "Medium" },
-        { name: "Allergic Reaction", confidence: 30, risk: "Low" }
-      ],
-      recommendedSpecialist: "General Physician",
-      suggestedTests: ["Complete Blood Count", "Chest X-ray", "Throat Swab"],
-      precautions: [
-        "Rest and stay hydrated",
-        "Avoid cold foods and drinks",
-        "Monitor temperature regularly",
-        "Consult doctor if symptoms worsen"
-      ],
-      aiRecommendations: [
-        "Monitor your symptoms closely for the next 24-48 hours",
-        "Stay hydrated and get plenty of rest",
-        "If symptoms worsen or new symptoms appear, seek medical attention immediately",
-        "Maintain good hygiene and wash hands frequently"
-      ]
-    };
+    try {
+      const response = await apiRequest("/predict-disease", {
+        method: "POST",
+        body: JSON.stringify({ symptoms: selectedSymptoms })
+      });
 
-    setResults(mockResults);
-    setIsAnalyzing(false);
+      if (response && response.success) {
+        setResults(response);
 
-    // Save to hospitalDataService
-    const patientName = user?.name || "Alice Cooper";
-    const patientId = user?.id || "patient-1";
-    hospitalDataService.addAIPrediction({
-      patientId,
-      patientName,
-      symptoms: selectedSymptoms,
-      prediction: mockResults.topDiseases[0].name,
-      confidence: mockResults.topDiseases[0].confidence,
-      date: new Date().toISOString().split("T")[0],
-      status: "Pending",
-      recommendedSpecialist: mockResults.recommendedSpecialist,
-      suggestedTests: mockResults.suggestedTests,
-      precautions: mockResults.precautions,
-      aiRecommendations: mockResults.aiRecommendations
-    });
+        // Save to hospitalDataService
+        const patientName = user?.name || "Sarah Williams";
+        const patientId = user?.id || "patient-1";
+        hospitalDataService.addAIPrediction({
+          patientId,
+          patientName,
+          symptoms: selectedSymptoms,
+          prediction: response.disease,
+          confidence: response.confidence,
+          date: new Date().toISOString().split("T")[0],
+          status: "Pending",
+          recommendedSpecialist: response.recommendedSpecialist,
+          suggestedTests: response.suggestedTests,
+          precautions: response.precautions,
+          aiRecommendations: response.aiRecommendations
+        });
+      } else {
+        throw new Error(response?.message || "Failed to analyze symptoms");
+      }
+    } catch (err) {
+      console.error("Prediction error:", err);
+      alert("Analysis failed: " + (err.message || "Please check that the Flask server is running and try again."));
+    } finally {
+      setIsAnalyzing(false);
+    }
   };
 
   const filteredSymptomsBySearch = searchTerm 

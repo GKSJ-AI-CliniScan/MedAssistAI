@@ -107,6 +107,15 @@ export default function Sidebar({ user, isSidebarOpen, handleLogout }) {
           { name: t("navigation.settings", "Settings"), path: "/settings", icon: Settings },
         ];
 
+      case Role.LAB_ASSISTANT:
+        return [
+          { name: t("navigation.dashboard", "Lab Dashboard"), path: "/lab/dashboard", icon: LayoutDashboard },
+          { name: t("lab.addTest", "Add Test"), path: "/lab/add-test", icon: Plus },
+          { name: t("lab.tests", "Test Management"), path: "/lab/tests", icon: Microscope },
+          { name: t("navigation.settings", "Settings"), path: "/settings", icon: Settings },
+        ];
+
+
       case Role.HOSPITAL_ADMIN:
         return [
           { name: t("navigation.dashboard", "Hospital Dashboard"), path: "/hospital/dashboard", icon: LayoutDashboard },
