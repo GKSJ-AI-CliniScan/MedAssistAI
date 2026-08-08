@@ -417,21 +417,6 @@ The backend was tested through **Swagger/OpenAPI** and application workflows.
 
 ---
 
-# 👥 Team
-
-## MedAssist AI
-
-**Team:** Team 2
-
-**Developer / Backend:** SAI KIRAN
-
----
-
-# 🎯 Milestone 3
-
-This milestone focuses on integrating the **Machine Learning pipeline with the FastAPI backend and healthcare management system**, creating an end-to-end workflow from symptom input to disease prediction, risk assessment, recommendations, and health reporting.
-
----
 
 # 🚀 Future Enhancements
 
@@ -448,6 +433,13 @@ Potential future improvements include:
 
 ---
 
-# ⭐ MedAssist AI
 
-> **AI-assisted healthcare, connecting symptoms, predictions, risk assessment, and healthcare management in one platform.**
+# 👥 Team
+
+## MedAssist AI
+
+**Team:** Team 2
+
+**Developer / Backend:** SAI KIRAN
+
+
