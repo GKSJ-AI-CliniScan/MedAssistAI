@@ -1,9 +1,3 @@
-# Environment variables
-backend/.env
-
-# Python generated files
-__pycache__/
-*.pyc
 # Logs
 logs
 *.log

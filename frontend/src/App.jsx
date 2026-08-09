@@ -1,79 +1,49 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import DashboardLayout from './components/layout/DashboardLayout';
+import ProtectedRoute, { PublicOnlyRoute, FullScreenLoader } from './components/common/ProtectedRoute';
 
-import Home from "./pages/Home/Home";
-import Login from "./pages/Login/Login";
-import Register from "./pages/Register/Register";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import SymptomChecker from "./pages/SymptomChecker/SymptomChecker";
-import Prediction from "./pages/Prediction/Prediction";
-import Reports from "./pages/Reports/Reports";
-import Profile from "./pages/Profile/Profile";
-import ProtectedRoute from "./components/ProtectedRoute";
-import PredictionDetails from "./pages/PredictionDetails/PredictionDetails";
 
-function App() {
+
+const Login = lazy(() => import('./pages/Login/Login'));
+const Register = lazy(() => import('./pages/Register/Register'));
+const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
+const SymptomChecker = lazy(() => import('./pages/SymptomChecker/SymptomChecker'));
+const Prediction = lazy(() => import('./pages/Prediction/Prediction'));
+const Reports = lazy(() => import('./pages/Reports/Reports'));
+const Profile = lazy(() => import('./pages/Profile/Profile'));
+const Settings = lazy(() => import('./pages/Settings/Settings'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+
+export default function App() {
   return (
-    <Routes>
-  <Route path="/" element={<Home />} />
-  <Route path="/login" element={<Login />} />
-  <Route path="/register" element={<Register />} />
+    <Suspense fallback={<FullScreenLoader />}>
+      <Routes>
+        {/* Public */}
+        <Route path="/login" element={<PublicOnlyRoute><Login /></PublicOnlyRoute>} />
+        <Route path="/register" element={<PublicOnlyRoute><Register /></PublicOnlyRoute>} />
 
-  <Route
-    path="/dashboard"
-    element={
-      <ProtectedRoute>
-        <Dashboard />
-      </ProtectedRoute>
-    }
-  />
+        {/* Protected (shared layout) */}
+        <Route
+          element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/symptom-checker" element={<SymptomChecker />} />
+          <Route path="/prediction/:id" element={<Prediction />} />
+          <Route path="/prediction/result" element={<Prediction />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/settings" element={<Settings />} />
+        </Route>
 
-  <Route
-    path="/symptom-checker"
-    element={
-      <ProtectedRoute>
-        <SymptomChecker />
-      </ProtectedRoute>
-    }
-  />
-
-  <Route
-    path="/prediction"
-    element={
-      <ProtectedRoute>
-        <Prediction />
-      </ProtectedRoute>
-    }
-  />
-
-  <Route
-    path="/reports"
-    element={
-      <ProtectedRoute>
-        <Reports />
-      </ProtectedRoute>
-    }
-  />
-
-  <Route
-    path="/profile"
-    element={
-      <ProtectedRoute>
-        <Profile />
-
-      </ProtectedRoute>
-    }
-  />
-
-  <Route
-  path="/prediction-details"
-  element={
-    <ProtectedRoute>
-      <PredictionDetails />
-    </ProtectedRoute>
-  }
-/>
-</Routes>
+        {/* Fallbacks */}
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Suspense>
   );
 }
-
-export default App;

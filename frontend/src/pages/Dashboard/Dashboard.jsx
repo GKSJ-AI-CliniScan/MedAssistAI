@@ -1,352 +1,117 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import Layout from "../../components/layout/Layout";
-import RiskPieChart from "../../components/charts/RiskPieChart";
-import PredictionLineChart from "../../components/charts/PredictionLineChart";
-import api from "../../services/api";
-import toast from "react-hot-toast";
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
+  HeartPulse,
+  Stethoscope,
+  FileText,
+  Activity,
+  Sparkles,
+  TrendingUp,
+  AlertCircle,
+} from 'lucide-react';
+import HealthScoreCard from '../../components/dashboard/HealthScoreCard';
+import StatCard from '../../components/dashboard/StatCard';
+import DiseaseAnalyticsChart from '../../components/dashboard/DiseaseAnalyticsChart';
+import HealthDistributionChart from '../../components/dashboard/HealthDistributionChart';
+import QuickActions from '../../components/dashboard/QuickActions';
+import AIRecommendations from '../../components/dashboard/AIRecommendations';
+import RecentActivity from '../../components/dashboard/RecentActivity';
+import RecentReports from '../../components/dashboard/RecentReports';
+import ProfileCompletion from '../../components/dashboard/ProfileCompletion';
+import { userApi } from '../../services/api';
+import { useAuth } from '../../hooks/useAuth';
+import { getGreeting } from '../../utils/helpers';
 
-import { Bar } from "react-chartjs-2";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-function Dashboard() {
-  const [profile, setProfile] = useState({});
-  const [reports, setReports] = useState([]);
+export default function Dashboard() {
+  const { user } = useAuth();
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    loadDashboard();
+    let active = true;
+    setLoading(true);
+    userApi
+      .getDashboard()
+      .then((d) => active && setData(d))
+      .catch((e) => active && setError(e.message))
+      .finally(() => active && setLoading(false));
+    return () => {
+      active = false;
+    };
   }, []);
 
-  const loadDashboard = async () => {
-    try {
-      setLoading(true);
-
-      const token = localStorage.getItem("token");
-
-      const [profileResponse, reportsResponse] = await Promise.all([
-        api.get("/api/profile", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }),
-        api.get("/api/history", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }),
-      ]);
-
-      setProfile(profileResponse.data);
-      setReports(reportsResponse.data);
-    } catch (error) {
-      toast.error("Unable to load dashboard.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const requiredFields = [
-    profile.first_name,
-    profile.last_name,
-    profile.date_of_birth,
-    profile.gender,
-    profile.height,
-    profile.weight,
-  ];
-
-  const completedFields = requiredFields.filter(Boolean).length;
-  const profileCompletion = Math.round(
-    (completedFields / requiredFields.length) * 100
-  );
-
-  const cards = [
-    {
-      title: "Reports",
-      value: reports.length,
-      icon: "📄",
-    },
-    {
-      title: "High Risk",
-      value: reports.filter(
-        (r) => r.risk_level === "high"
-      ).length,
-      icon: "⚠️",
-    },
-    {
-      title: "Latest Prediction",
-      value:
-        reports[0]?.predicted_diseases?.[0]?.disease ||
-        "N/A",
-      icon: "🩺",
-    },
-    {
-  title: "Profile Completion",
-  value: `${profileCompletion}%`,
-  icon: "👤",
-},
-  ];
-
-
-  const diseaseCounts = {};
-
-  reports.forEach((report) => {
-    const disease =
-      report.predicted_diseases?.[0]?.disease;
-
-    if (disease) {
-      diseaseCounts[disease] =
-        (diseaseCounts[disease] || 0) + 1;
-    }
-  });
-
-  const chartData = {
-    labels: Object.keys(diseaseCounts),
-
-    datasets: [
-      {
-        label: "Predicted Diseases",
-
-        data: Object.values(diseaseCounts),
-
-        backgroundColor: [
-          "#2563eb",
-          "#10b981",
-          "#f59e0b",
-          "#ef4444",
-          "#8b5cf6",
-          "#0ea5e9",
-        ],
-      },
-    ],
-  };
-
-  const chartOptions = {
-    responsive: true,
-
-    plugins: {
-      legend: {
-        position: "top",
-      },
-
-      title: {
-        display: true,
-        text: "Disease Prediction Analytics",
-      },
-    },
-  };
-
-  const hour = new Date().getHours();
-
-const greeting =
-  hour < 12
-    ? "Good Morning"
-    : hour < 17
-      ? "Good Afternoon"
-      : "Good Evening";
-
-  if (loading) {
-    return (
-      <Layout>
-        <div className="flex items-center justify-center h-[70vh]">
-          <div className="text-center">
-            <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-gray-600 text-lg">
-              Loading Dashboard...
-            </p>
-          </div>
-        </div>
-      </Layout>
-    );
-  }
+  const firstName = user?.name?.split(' ')[0] || 'there';
+  const healthScore = data?.health_score ?? 0;
+  const completion = data?.profile_completion ?? 0;
+  const reports = data?.recent_reports ?? [];
+  const activity = data?.recent_activity ?? [];
+  const recommendations = data?.recommendations ?? [];
+  const analytics = data?.analytics ?? {};
+  const trend = data?.trend ?? 0;
 
   return (
-    <Layout>
-
-
-
-      {/* Main Content */}
-
-      <div>
-
-        <div className="flex justify-between items-center mb-10">
-
-          <div>
-            <h1 className="text-4xl font-bold">
-  {greeting}, {profile.first_name || "Patient"} 👋
-</h1>
-
-            <p className="text-gray-500 mt-2">
-              AI Healthcare Dashboard
-            </p>
+    <div className="space-y-6">
+      {/* ---- AI Greeting header ---- */}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <div>
+          <div className="inline-flex items-center gap-2 rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700">
+            <Sparkles className="h-3.5 w-3.5" /> AI Health Assistant
           </div>
-
-          <div className="bg-white rounded-2xl shadow px-6 py-3">
-            <h3 className="font-semibold">
-              {profile.first_name} {profile.last_name}
-            </h3>
-
-            <p className="text-sm text-gray-500">
-              Patient
-            </p>
-          </div>
-
+          <h1 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
+            {getGreeting()}, {firstName}
+          </h1>
+          <p className="mt-1 text-ink-500">Here's your health overview for today.</p>
         </div>
+      </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-
-          {/* Statistics Cards */}
-          <div className="lg:col-span-2 grid md:grid-cols-2 gap-8">
-
-            {cards.map((card) => (
-
-              <div
-                key={card.title}
-                className="bg-white rounded-3xl shadow-lg p-8"
-              >
-
-                <div className="text-5xl mb-4">
-                  {card.icon}
-                </div>
-
-                <h2 className="text-gray-500">
-                  {card.title}
-                </h2>
-
-                <h1 className="text-4xl font-bold mt-2">
-                  {card.value}
-                </h1>
-
-              </div>
-
-            ))}
-
-          </div>
-
-          {/* Recent Activity */}
-          <div className="bg-white rounded-3xl shadow-lg p-8">
-
-            <h2 className="text-2xl font-bold mb-6">
-              Recent Activity
-            </h2>
-
-            <ul className="space-y-4">
-              {reports.length > 0 ? (
-                reports.slice(0, 5).map((report) => (
-                  <li
-                    key={report.id}
-                    className="border-b pb-3"
-                  >
-                    <p className="font-semibold">
-                      🩺 {report.predicted_diseases?.[0]?.disease || "Unknown"}
-                    </p>
-
-                    <p className="text-sm text-gray-500">
-                      {new Date(report.created_at).toLocaleString()}
-                    </p>
-                  </li>
-                ))
-              ) : (
-                <div className="text-center py-6">
-  <div className="text-4xl">🩺</div>
-
-  <p className="font-semibold mt-2">
-    No Predictions Yet
-  </p>
-
-  <p className="text-gray-500 text-sm">
-    Complete a symptom check to generate your first report.
-  </p>
-</div>
-              )}
-            </ul>
-
-          </div>
-
+      {error && (
+        <div className="flex items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700">
+          <AlertCircle className="h-4 w-4 shrink-0" />
+          Couldn't load dashboard data: {error}. Make sure your FastAPI backend is running and the /dashboard endpoint is reachable.
         </div>
+      )}
 
-        <div className="grid lg:grid-cols-2 gap-8 mt-10">
-
-  <div className="bg-white rounded-3xl shadow-lg p-8">
-
-    <h2 className="text-2xl font-bold mb-6">
-      Disease Prediction Analytics
-    </h2>
-
-{reports.length > 0 ? (
-  <Bar
-    data={chartData}
-    options={chartOptions}
-  />
-) : (
-  <div className="text-center py-12 text-gray-500">
-    <div className="text-5xl mb-3">📊</div>
-    <p>No prediction data available yet.</p>
-    <p className="text-sm mt-2">
-      Analyze symptoms to generate reports.
-    </p>
-  </div>
-)}
-
-  </div>
-
-  <RiskPieChart />
-
-</div>
-<PredictionLineChart />
-
-        <div className="mt-10 bg-white rounded-3xl shadow-lg p-8">
-          <h2 className="text-2xl font-bold mb-6">
-            Quick Actions
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-6">
-
-            <button
-              onClick={() => navigate("/symptom-checker")}
-              className="bg-blue-600 text-white py-4 rounded-xl hover:bg-blue-700 transition-all duration-200 hover:scale-105 shadow-md"
-            >
-              🩺 Check Symptoms
-            </button>
-
-            <button
-              onClick={() => navigate("/reports")}
-              className="bg-green-600 text-white py-4 rounded-xl hover:bg-green-700 transition-all duration-200 hover:scale-105 shadow-md"
-            >
-              📄 View Reports
-            </button>
-
-            <button
-              onClick={() => navigate("/profile")}
-              className="bg-purple-600 text-white py-4 rounded-xl hover:bg-purple-700 transition-all duration-200 hover:scale-105 shadow-md"
-            >
-              👤 Edit Profile
-            </button>
-
-          </div>
+      {/* ---- Top row: health score + completion ---- */}
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+        <div className="lg:col-span-2">
+          <HealthScoreCard score={healthScore} trend={trend} loading={loading} />
         </div>
-
+        <ProfileCompletion value={completion} items={data?.completion_items} loading={loading} />
       </div>
-    </Layout>
+
+      {/* ---- Stat cards ---- */}
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <StatCard icon={Stethoscope} label="Symptoms Analyzed" value={data?.stats?.symptoms ?? 0} tone="brand" index={0} loading={loading} />
+        <StatCard icon={FileText} label="Reports Generated" value={data?.stats?.reports ?? 0} tone="emerald" index={1} loading={loading} />
+        <StatCard icon={Activity} label="Health Score" value={loading ? null : `${healthScore}/100`} tone="amber" index={2} loading={loading} />
+        <StatCard icon={TrendingUp} label="Risk Trend" value={loading ? null : `${trend > 0 ? '+' : ''}${trend}%`} tone="rose" index={3} loading={loading} />
+      </div>
+
+      {/* ---- Quick actions ---- */}
+      <div>
+        <h2 className="mb-3 text-base font-semibold text-ink-900">Quick Actions</h2>
+        <QuickActions />
+      </div>
+
+      {/* ---- Charts row ---- */}
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+        <div className="lg:col-span-2">
+          <DiseaseAnalyticsChart labels={analytics.labels} data={analytics.values} loading={loading} />
+        </div>
+        <HealthDistributionChart data={analytics.distribution} loading={loading} />
+      </div>
+
+      {/* ---- Bottom row ---- */}
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+        <RecentReports reports={reports} loading={loading} />
+        <AIRecommendations items={recommendations} loading={loading} />
+        <RecentActivity items={activity} loading={loading} />
+      </div>
+    </div>
   );
 }
-
-export default Dashboard;
