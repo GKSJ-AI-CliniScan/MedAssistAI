@@ -508,475 +508,248 @@
       "\ud83c\udfe0 Rest and stay well hydrated. Monitor your symptoms over the next 24-48 hours.",
       "\ud83e\ude7a If symptoms persist or worsen, please consult a doctor."
     ],
-    "created_at": "2026-07-19 11:19:50.153971"
+    "created_at": "2026-07-19 11:19:50.153971",
+    "id": "6a5cb2d62f80c10fde97ad02"
   },
   {
-    "_id": "6a5ee3d52a6e5235f17aa898",
-    "patient_id": "6a5ee31c2a6e5235f17aa896",
+    "_id": "6a5e1995fe61405c37221f74",
+    "patient_id": "6a5dd045a534127af4c9af13",
     "symptoms": [
-      "ache all over",
-      "acne or pimples",
-      "back pain"
+      "fever",
+      "feeling cold"
     ],
     "predicted_diseases": [
       {
-        "disease": "chronic pancreatitis",
-        "probability": 0.2151
+        "disease": "kidney disease due to longstanding hypertension",
+        "probability": 0.242
       },
       {
-        "disease": "lung contusion",
-        "probability": 0.2017
-      },
-      {
-        "disease": "fracture of the pelvis",
-        "probability": 0.2005
-      },
-      {
-        "disease": "sickle cell anemia",
-        "probability": 0.193
-      },
-      {
-        "disease": "chronic pain disorder",
-        "probability": 0.1897
-      }
-    ],
-    "risk_level": "low",
-    "risk_score": 36.45,
-    "recommendations": [
-      "\ud83c\udfe0 Rest and stay well hydrated. Monitor your symptoms over the next 24-48 hours.",
-      "\ud83e\ude7a If symptoms persist or worsen, please consult a doctor."
-    ],
-    "created_at": "2026-07-21 03:13:25.249520",
-    "id": "6a5ee3d52a6e5235f17aa898"
-  },
-  {
-    "_id": "6a5eec6b2a6e5235f17aa899",
-    "patient_id": "6a5ee31c2a6e5235f17aa896",
-    "symptoms": [
-      "ankle pain",
-      "breathing fast",
-      "headache"
-    ],
-    "predicted_diseases": [
-      {
-        "disease": "sprain or strain",
-        "probability": 0.2127
-      },
-      {
-        "disease": "intracranial abscess",
-        "probability": 0.2027
-      },
-      {
-        "disease": "autonomic nervous system disorder",
-        "probability": 0.2013
-      },
-      {
-        "disease": "ependymoma",
-        "probability": 0.1933
-      },
-      {
-        "disease": "extrapyramidal effect of drugs",
-        "probability": 0.1901
-      }
-    ],
-    "risk_level": "low",
-    "risk_score": 36.38,
-    "recommendations": [
-      "\ud83c\udfe0 Rest and stay well hydrated. Monitor your symptoms over the next 24-48 hours.",
-      "\ud83e\ude7a If symptoms persist or worsen, please consult a doctor."
-    ],
-    "created_at": "2026-07-21 03:50:03.134146",
-    "id": "6a5eec6b2a6e5235f17aa899"
-  },
-  {
-    "_id": "6a5f0178b414f584a8b380d5",
-    "patient_id": "6a5ee31c2a6e5235f17aa896",
-    "symptoms": [
-      "acne or pimples",
-      "ankle pain",
-      "cough",
-      "dry lips"
-    ],
-    "predicted_diseases": [
-      {
-        "disease": "hyperhidrosis",
-        "probability": 0.2456
-      },
-      {
-        "disease": "eczema",
-        "probability": 0.1944
-      },
-      {
-        "disease": "muscular dystrophy",
-        "probability": 0.1871
-      },
-      {
-        "disease": "open wound of the ear",
-        "probability": 0.1869
-      },
-      {
-        "disease": "emphysema",
-        "probability": 0.186
-      }
-    ],
-    "risk_level": "low",
-    "risk_score": 42.37,
-    "recommendations": [
-      "\ud83c\udfe0 Rest and stay well hydrated. Monitor your symptoms over the next 24-48 hours.",
-      "\ud83e\ude7a If symptoms persist or worsen, please consult a doctor."
-    ],
-    "created_at": "2026-07-21 05:19:52.149068+00:00",
-    "id": "6a5f0178b414f584a8b380d5"
-  },
-  {
-    "_id": "6a5f11dcd8b4c13621118d36",
-    "patient_id": "6a5ee31c2a6e5235f17aa896",
-    "age": 20,
-    "gender": "Female",
-    "height": 160.0,
-    "weight": 50.0,
-    "symptoms": [
-      "acne or pimples",
-      "ankle pain",
-      "eye redness",
-      "eye strain"
-    ],
-    "predicted_diseases": [
-      {
-        "disease": "pterygium",
-        "probability": 0.2704
-      },
-      {
-        "disease": "intertrigo (skin condition)",
-        "probability": 0.1875
-      },
-      {
-        "disease": "hormone disorder",
-        "probability": 0.1853
-      },
-      {
-        "disease": "acanthosis nigricans",
-        "probability": 0.1824
-      },
-      {
-        "disease": "hirsutism",
-        "probability": 0.1744
-      }
-    ],
-    "risk_level": "low",
-    "risk_score": 43.11,
-    "recommendations": [
-      "\ud83c\udfe0 Rest and stay well hydrated. Monitor your symptoms over the next 24-48 hours.",
-      "\ud83e\ude7a If symptoms persist or worsen, please consult a doctor."
-    ],
-    "created_at": "2026-07-21 06:29:48.109862+00:00",
-    "id": "6a5f11dcd8b4c13621118d36"
-  },
-  {
-    "_id": "6a5f1502d51cb577774f3c99",
-    "patient_id": "6a5ee31c2a6e5235f17aa896",
-    "symptoms": [
-      "abnormal appearing tongue",
-      "abnormal breathing sounds",
-      "ache all over"
-    ],
-    "age": 21,
-    "gender": "Female",
-    "height": 160.0,
-    "weight": 50.0,
-    "predicted_diseases": [
-      {
-        "disease": "hematoma",
-        "probability": 0.2135
-      },
-      {
-        "disease": "pancreatic cancer",
-        "probability": 0.2132
+        "disease": "hypernatremia",
+        "probability": 0.2245
       },
       {
         "disease": "tonsillar hypertrophy",
-        "probability": 0.2012
+        "probability": 0.1836
       },
       {
-        "disease": "lung contusion",
-        "probability": 0.1887
+        "disease": "chronic kidney disease",
+        "probability": 0.1752
       },
       {
-        "disease": "open wound of the neck",
-        "probability": 0.1835
+        "disease": "scarlet fever",
+        "probability": 0.1747
       }
     ],
     "risk_level": "low",
-    "risk_score": 36.41,
+    "risk_score": 32.26,
     "recommendations": [
       "\ud83c\udfe0 Rest and stay well hydrated. Monitor your symptoms over the next 24-48 hours.",
       "\ud83e\ude7a If symptoms persist or worsen, please consult a doctor."
     ],
-    "created_at": "2026-07-21 06:43:14.950387",
-    "id": "6a5f1502d51cb577774f3c99"
+    "created_at": "2026-07-20 12:50:29.567434"
   },
   {
-    "_id": "6a5f3fe40d0a9f59f0966463",
-    "patient_id": "6a5ee31c2a6e5235f17aa896",
-    "symptoms": [
-      "ankle weakness",
-      "arm pain",
-      "back pain",
-      "eye strain"
-    ],
-    "age": 21,
-    "gender": "Female",
-    "height": 160.0,
-    "weight": 25.0,
-    "predicted_diseases": [
-      {
-        "disease": "pain disorder affecting the neck",
-        "probability": 0.2144
-      },
-      {
-        "disease": "herniated disk",
-        "probability": 0.2135
-      },
-      {
-        "disease": "sickle cell crisis",
-        "probability": 0.1916
-      },
-      {
-        "disease": "neuralgia",
-        "probability": 0.1906
-      },
-      {
-        "disease": "muscle spasm",
-        "probability": 0.1899
-      }
-    ],
-    "risk_level": "low",
-    "risk_score": 41.43,
+    "prediction": "Common Cold",
+    "confidence": 80,
+    "risk": "Low",
+    "reason": "Fever, cough, and feeling cold are typical symptoms of a common cold",
     "recommendations": [
-      "\ud83c\udfe0 Rest and stay well hydrated. Monitor your symptoms over the next 24-48 hours.",
-      "\ud83e\ude7a If symptoms persist or worsen, please consult a doctor."
+      "rest",
+      "stay hydrated",
+      "use over-the-counter pain relievers"
     ],
-    "created_at": "2026-07-21 09:46:12.194931",
-    "id": "6a5f3fe40d0a9f59f0966463"
+    "tests": [
+      "rapid antigen test"
+    ],
+    "precautions": [
+      "avoid close contact with others",
+      "cover mouth and nose when coughing"
+    ],
+    "when_to_see_doctor": "if symptoms worsen or last longer than 7-10 days",
+    "symptoms": [
+      "Fever",
+      "Cough",
+      "Feeling cold"
+    ],
+    "id": "65613a97-6e56-4d9c-a6f2-151f05916ad0",
+    "date": "Aug 06, 2026",
+    "created_at": "2026-08-06T16:10:09.652330",
+    "_id": "6a74648906827a03c2d3524b"
   },
   {
-    "_id": "6a5f4788c497d86d8e970ccb",
-    "patient_id": "patient_user_id",
-    "symptoms": [
-      "anxiety and nervousness",
-      "depression",
-      "dizziness",
-      "insomnia",
-      "chest tightness",
-      "breathing fast"
-    ],
-    "age": 30,
-    "gender": "Male",
-    "height": 175.0,
-    "weight": 70.0,
-    "predicted_diseases": [
-      {
-        "disease": "panic disorder",
-        "probability": 0.2541
-      },
-      {
-        "disease": "drug withdrawal",
-        "probability": 0.1977
-      },
-      {
-        "disease": "somatization disorder",
-        "probability": 0.1875
-      },
-      {
-        "disease": "acute stress reaction",
-        "probability": 0.1844
-      },
-      {
-        "disease": "adjustment reaction",
-        "probability": 0.1763
-      }
-    ],
-    "risk_level": "medium",
-    "risk_score": 47.62,
+    "prediction": "Influenza",
+    "confidence": 80,
+    "risk": "Moderate",
+    "reason": "Fever, cough, and headache are common symptoms of influenza",
     "recommendations": [
-      "\ud83d\udcc5 Schedule an appointment with a primary care physician for further diagnostic testing.",
-      "\u26a0\ufe0f Monitor symptoms closely and avoid strenuous activities.",
-      "\ud83d\udca1 Practice slow, deep breathing exercises and grounding techniques."
+      "rest",
+      "hydration",
+      "over-the-counter pain relievers"
     ],
-    "created_at": "2026-07-21 10:18:48.343946"
+    "tests": [
+      "rapid influenza diagnostic test",
+      "PCR test"
+    ],
+    "precautions": [
+      "practice good hygiene",
+      "avoid close contact with others"
+    ],
+    "when_to_see_doctor": "if symptoms worsen or last longer than 7 days",
+    "symptoms": [
+      "Fever",
+      "Cough",
+      "Headache"
+    ],
+    "id": "8b26337c-28d2-43e0-962c-5bfb9c837aae",
+    "date": "Aug 06, 2026",
+    "created_at": "2026-08-06T16:10:52.382774",
+    "_id": "6a7464b406827a03c2d3524c"
   },
   {
-    "_id": "6a5f6f626b31e25c77fdb9c8",
-    "patient_id": "6a5ee31c2a6e5235f17aa896",
-    "symptoms": [
-      "arm lump or mass",
-      "arm pain",
-      "arm swelling"
-    ],
-    "age": 21,
-    "gender": "Female",
-    "height": 160.0,
-    "weight": 50.0,
-    "predicted_diseases": [
-      {
-        "disease": "thrombophlebitis",
-        "probability": 0.2226
-      },
-      {
-        "disease": "dislocation of the shoulder",
-        "probability": 0.213
-      },
-      {
-        "disease": "fracture of the arm",
-        "probability": 0.1905
-      },
-      {
-        "disease": "bursitis",
-        "probability": 0.1885
-      },
-      {
-        "disease": "injury to the arm",
-        "probability": 0.1855
-      }
-    ],
-    "risk_level": "low",
-    "risk_score": 36.68,
+    "prediction": "Common Cold",
+    "confidence": 80,
+    "risk": "Low",
+    "reason": "Fever, cough, and feeling cold are typical symptoms of a common cold",
     "recommendations": [
-      "\ud83c\udfe0 Rest and stay well hydrated. Monitor your symptoms over the next 24-48 hours.",
-      "\ud83e\ude7a If symptoms persist or worsen, please consult a doctor."
+      "rest",
+      "stay hydrated",
+      "use over-the-counter pain relievers"
     ],
-    "created_at": "2026-07-21 13:08:50.422675",
-    "id": "6a5f6f626b31e25c77fdb9c8"
+    "tests": [
+      "rapid antigen test"
+    ],
+    "precautions": [
+      "practice good hygiene",
+      "avoid close contact with others"
+    ],
+    "when_to_see_doctor": "if symptoms worsen or last longer than 7-10 days",
+    "symptoms": [
+      "Fever",
+      "Cough",
+      "Feeling cold"
+    ],
+    "id": "76b7600c-25d4-48bd-b77f-16e8d7d0b03d",
+    "created_at": "2026-08-06T19:36:28.099141",
+    "date": "Aug 06, 2026",
+    "_id": "6a7494e4889f315e87dae949"
   },
   {
-    "_id": "6a5f7aaf6b31e25c77fdb9c9",
-    "patient_id": "6a5ee31c2a6e5235f17aa896",
-    "symptoms": [
-      "ache all over",
-      "back pain",
-      "disturbance of smell or taste"
-    ],
-    "age": 21,
-    "gender": "Female",
-    "height": 160.0,
-    "weight": 51.0,
-    "predicted_diseases": [
-      {
-        "disease": "chronic pancreatitis",
-        "probability": 0.2151
-      },
-      {
-        "disease": "lung contusion",
-        "probability": 0.2017
-      },
-      {
-        "disease": "fracture of the pelvis",
-        "probability": 0.2005
-      },
-      {
-        "disease": "sickle cell anemia",
-        "probability": 0.193
-      },
-      {
-        "disease": "chronic pain disorder",
-        "probability": 0.1897
-      }
-    ],
-    "risk_level": "low",
-    "risk_score": 36.45,
+    "prediction": "Common Cold",
+    "confidence": 80,
+    "risk": "Low",
+    "reason": "Fever, cough, and feeling cold are typical symptoms of a common cold",
     "recommendations": [
-      "\ud83c\udfe0 Rest and stay well hydrated. Monitor your symptoms over the next 24-48 hours.",
-      "\ud83e\ude7a If symptoms persist or worsen, please consult a doctor."
+      "rest",
+      "stay hydrated",
+      "use over-the-counter medications for symptom relief"
     ],
-    "created_at": "2026-07-21 13:57:03.107701",
-    "id": "6a5f7aaf6b31e25c77fdb9c9"
+    "tests": [
+      "rapid antigen test",
+      "chest X-ray if symptoms worsen"
+    ],
+    "precautions": [
+      "practice good hygiene",
+      "avoid close contact with others"
+    ],
+    "when_to_see_doctor": "if symptoms worsen or last longer than 7-10 days",
+    "symptoms": [
+      "Fever",
+      "Cough",
+      "Feeling cold"
+    ],
+    "id": "d2fba0ef-3056-4c18-a9f3-332cf172a566",
+    "created_at": "2026-08-06T19:46:46.776302",
+    "date": "Aug 06, 2026",
+    "_id": "6a74974e26b19b06d372ee64"
   },
   {
-    "_id": "6a635dcf5cf52c75edaa05e1",
-    "patient_id": "6a5ee31c2a6e5235f17aa896",
-    "symptoms": [
-      "sleepwalking",
-      "anxiety and nervousness",
-      "sleepiness"
-    ],
-    "age": 21,
-    "gender": "Female",
-    "height": 160.0,
-    "weight": 50.0,
-    "predicted_diseases": [
-      {
-        "disease": "primary insomnia",
-        "probability": 0.2799
-      },
-      {
-        "disease": "tricuspid valve disease",
-        "probability": 0.1908
-      },
-      {
-        "disease": "conversion disorder",
-        "probability": 0.1777
-      },
-      {
-        "disease": "galactorrhea of unknown cause",
-        "probability": 0.1775
-      },
-      {
-        "disease": "spinocerebellar ataxia",
-        "probability": 0.1742
-      }
-    ],
-    "risk_level": "low",
-    "risk_score": 38.4,
+    "prediction": "Irritable Bowel Syndrome",
+    "confidence": 80,
+    "risk": "Low",
+    "reason": "Abdominal distention is a common symptom of IBS",
     "recommendations": [
-      "\ud83c\udfe0 Rest and stay well hydrated. Monitor your symptoms over the next 24-48 hours.",
-      "\ud83e\ude7a If symptoms persist or worsen, please consult a doctor."
+      "increase fiber intake",
+      "avoid trigger foods"
     ],
-    "created_at": "2026-07-24 12:42:55.824433",
-    "id": "6a635dcf5cf52c75edaa05e1"
+    "tests": [
+      "complete blood count",
+      "stool test"
+    ],
+    "precautions": [
+      "avoid overeating",
+      "manage stress"
+    ],
+    "when_to_see_doctor": "if symptoms worsen or persist",
+    "symptoms": [
+      "Abdominal distention"
+    ],
+    "id": "a7709600-7262-48c0-a1b7-19557e7212f5",
+    "created_at": "2026-08-06T23:28:14.145986",
+    "date": "Aug 06, 2026",
+    "user_email": "yakobu@gmail.com",
+    "_id": "6a74cb36593adb6443bf26ee"
   },
   {
-    "_id": "6a63672d5cf52c75edaa05e2",
-    "patient_id": "6a5ee31c2a6e5235f17aa896",
-    "symptoms": [
-      "sleepiness",
-      "sleepwalking",
-      "depression",
-      "acne or pimples",
-      "itching of skin",
-      "fever"
-    ],
-    "age": 21,
-    "gender": "Female",
-    "height": 160.0,
-    "weight": 51.0,
-    "predicted_diseases": [
-      {
-        "disease": "alopecia",
-        "probability": 0.2235
-      },
-      {
-        "disease": "molluscum contagiosum",
-        "probability": 0.1985
-      },
-      {
-        "disease": "hepatitis due to a toxin",
-        "probability": 0.1943
-      },
-      {
-        "disease": "eating disorder",
-        "probability": 0.1931
-      },
-      {
-        "disease": "fungal infection of the skin",
-        "probability": 0.1906
-      }
-    ],
-    "risk_level": "medium",
-    "risk_score": 46.7,
+    "prediction": "Rheumatoid Arthritis",
+    "confidence": 80,
+    "risk": "Moderate",
+    "reason": "Symmetrical joint pain and swelling",
     "recommendations": [
-      "\ud83d\udcc5 Schedule an appointment with a primary care physician for further diagnostic testing.",
-      "\u26a0\ufe0f Monitor symptoms closely and avoid strenuous activities."
+      "Rest",
+      "Ice",
+      "Elevation",
+      "Pain relief medication"
     ],
-    "created_at": "2026-07-24 13:22:53.796048"
+    "tests": [
+      "Complete Blood Count",
+      "Erythrocyte Sedimentation Rate",
+      "C-Reactive Protein"
+    ],
+    "precautions": [
+      "Avoid heavy lifting",
+      "Avoid strenuous activities"
+    ],
+    "when_to_see_doctor": "If symptoms worsen or persist for more than 2 weeks",
+    "symptoms": [
+      "Ankle pain",
+      "Ankle swelling",
+      "Arm pain"
+    ],
+    "id": "deff9bcc-f1d6-4730-853b-be64fd52b71b",
+    "created_at": "2026-08-08T00:16:18.936508",
+    "date": "Aug 08, 2026",
+    "user_email": "yakobu@gmail.com",
+    "_id": "6a7627faddc5a356e6c19937"
+  },
+  {
+    "prediction": "Hypothyroidism",
+    "confidence": 80,
+    "risk": "Moderate",
+    "reason": "Abdominal distention, abnormal skin, and tongue appearance are common symptoms of hypothyroidism",
+    "recommendations": [
+      "Maintain a healthy diet",
+      "Stay hydrated",
+      "Exercise regularly"
+    ],
+    "tests": [
+      "Thyroid function tests",
+      "Complete blood count",
+      "Electrolyte panel"
+    ],
+    "precautions": [
+      "Monitor for signs of myxedema coma",
+      "Avoid extreme temperatures"
+    ],
+    "when_to_see_doctor": "If symptoms worsen or do not improve with treatment",
+    "symptoms": [
+      "Abdominal distention",
+      "Abnormal appearing skin",
+      "Abnormal appearing tongue"
+    ],
+    "id": "862aa65e-1768-4acc-bac1-4df83d088b84",
+    "created_at": "2026-08-08T18:02:22.625065",
+    "date": "Aug 08, 2026",
+    "user_email": "yakobu@gmail.com",
+    "_id": "6a7721d641af70cc0158f6fc"
   }
 ]

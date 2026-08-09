@@ -20,7 +20,7 @@
   {
     "key": "depressive or psychotic symptoms",
     "display_name": "Depressive or psychotic symptoms",
-    "category": "General",
+    "category": "Mental Health",
     "_id": "6a4a734755a6eb6b78ec78c6"
   },
   {
@@ -62,7 +62,7 @@
   {
     "key": "irregular heartbeat",
     "display_name": "Irregular heartbeat",
-    "category": "ENT",
+    "category": "Cardiology",
     "_id": "6a4a734755a6eb6b78ec78cd"
   },
   {
@@ -128,7 +128,7 @@
   {
     "key": "difficulty in swallowing",
     "display_name": "Difficulty in swallowing",
-    "category": "General",
+    "category": "ENT",
     "_id": "6a4a734755a6eb6b78ec78d8"
   },
   {
@@ -452,7 +452,7 @@
   {
     "key": "abnormal appearing skin",
     "display_name": "Abnormal appearing skin",
-    "category": "ENT",
+    "category": "Dermatology",
     "_id": "6a4a734755a6eb6b78ec790e"
   },
   {
@@ -548,7 +548,7 @@
   {
     "key": "irregular appearing scalp",
     "display_name": "Irregular appearing scalp",
-    "category": "ENT",
+    "category": "Dermatology",
     "_id": "6a4a734755a6eb6b78ec791e"
   },
   {
@@ -770,7 +770,7 @@
   {
     "key": "heartburn",
     "display_name": "Heartburn",
-    "category": "ENT",
+    "category": "Gastroenterology",
     "_id": "6a4a734755a6eb6b78ec7943"
   },
   {
@@ -848,13 +848,13 @@
   {
     "key": "decreased heart rate",
     "display_name": "Decreased heart rate",
-    "category": "ENT",
+    "category": "Cardiology",
     "_id": "6a4a734755a6eb6b78ec7950"
   },
   {
     "key": "increased heart rate",
     "display_name": "Increased heart rate",
-    "category": "ENT",
+    "category": "Cardiology",
     "_id": "6a4a734755a6eb6b78ec7951"
   },
   {
@@ -1106,7 +1106,7 @@
   {
     "key": "changes in stool appearance",
     "display_name": "Changes in stool appearance",
-    "category": "ENT",
+    "category": "Gastroenterology",
     "_id": "6a4a734755a6eb6b78ec797b"
   },
   {
@@ -1214,7 +1214,7 @@
   {
     "key": "melena",
     "display_name": "Melena",
-    "category": "General",
+    "category": "Gastroenterology",
     "_id": "6a4a734755a6eb6b78ec798d"
   },
   {
@@ -1280,7 +1280,7 @@
   {
     "key": "constipation",
     "display_name": "Constipation",
-    "category": "General",
+    "category": "Gastroenterology",
     "_id": "6a4a734755a6eb6b78ec7998"
   },
   {
@@ -1310,7 +1310,7 @@
   {
     "key": "hemoptysis",
     "display_name": "Hemoptysis",
-    "category": "General",
+    "category": "Pulmonology",
     "_id": "6a4a734755a6eb6b78ec799d"
   },
   {
@@ -1334,7 +1334,7 @@
   {
     "key": "congestion in chest",
     "display_name": "Congestion in chest",
-    "category": "General",
+    "category": "Pulmonology",
     "_id": "6a4a734755a6eb6b78ec79a1"
   },
   {
@@ -1454,7 +1454,7 @@
   {
     "key": "fears and phobias",
     "display_name": "Fears and phobias",
-    "category": "ENT",
+    "category": "Mental Health",
     "_id": "6a4a734755a6eb6b78ec79b5"
   },
   {
@@ -1592,7 +1592,7 @@
   {
     "key": "irregular appearing nails",
     "display_name": "Irregular appearing nails",
-    "category": "ENT",
+    "category": "Dermatology",
     "_id": "6a4a734755a6eb6b78ec79cc"
   },
   {
@@ -1634,7 +1634,7 @@
   {
     "key": "itchy scalp",
     "display_name": "Itchy scalp",
-    "category": "General",
+    "category": "Dermatology",
     "_id": "6a4a734755a6eb6b78ec79d3"
   },
   {
@@ -1658,7 +1658,7 @@
   {
     "key": "warts",
     "display_name": "Warts",
-    "category": "General",
+    "category": "Dermatology",
     "_id": "6a4a734755a6eb6b78ec79d7"
   },
   {
