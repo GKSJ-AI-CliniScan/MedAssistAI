@@ -1,7 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from typing import Dict
 
+import traceback
 import pandas as pd
 import numpy as np
 import joblib
@@ -11,39 +13,52 @@ import uvicorn
 # Load Model
 # ==========================================================
 
-model = joblib.load("models/disease_prediction_model.pkl")
-label_encoder = joblib.load("models/label_encoder.pkl")
-feature_columns = joblib.load("models/feature_columns.pkl")
+model = joblib.load("models/catboost_model_240.pkl")
+label_encoder = joblib.load("models/label_encoder_240.pkl")
+feature_columns = joblib.load("models/feature_columns_240.pkl")
 
 # ==========================================================
-# Load Datasets
+# Load Disease Information
 # ==========================================================
 
-description_df = pd.read_csv("datasets/symptom_Description.csv")
-precaution_df = pd.read_csv("datasets/symptom_precaution.csv")
+disease_info_df = pd.read_csv("datasets/disease_info.csv")
 
-description_df["Disease"] = (
-    description_df["Disease"]
+disease_info_df["Disease"] = (
+    disease_info_df["Disease"]
     .str.lower()
     .str.strip()
 )
 
-precaution_df["Disease"] = (
-    precaution_df["Disease"]
-    .str.lower()
-    .str.strip()
-)
-
+# Disease -> Description
 description_map = dict(
-    zip(description_df["Disease"], description_df["Description"])
+    zip(
+        disease_info_df["Disease"],
+        disease_info_df["Description"]
+    )
 )
 
-precaution_map = (
-    precaution_df
-    .set_index("Disease")
-    .apply(lambda x: x.dropna().tolist(), axis=1)
-    .to_dict()
-)
+# Disease -> Precautions
+precaution_map = {}
+
+for _, row in disease_info_df.iterrows():
+
+    precautions = []
+
+    for col in [
+        "Precaution_1",
+        "Precaution_2",
+        "Precaution_3",
+        "Precaution_4",
+    ]:
+
+        if (
+            col in disease_info_df.columns
+            and pd.notna(row[col])
+            and str(row[col]).strip()
+        ):
+            precautions.append(str(row[col]).strip())
+
+    precaution_map[row["Disease"]] = precautions
 
 # ==========================================================
 # FastAPI App
@@ -51,7 +66,7 @@ precaution_map = (
 
 app = FastAPI(
     title="MedAssistAI API",
-    description="Disease Prediction API using Random Forest",
+    description="Disease Prediction API using CatBoost",
     version="1.0.0"
 )
 
@@ -61,8 +76,8 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Change in production
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -72,7 +87,7 @@ app.add_middleware(
 # ==========================================================
 
 class Patient(BaseModel):
-    data: dict
+    data: Dict[str, int]
 
 # ==========================================================
 # Home
@@ -85,14 +100,17 @@ def home():
     }
 
 # ==========================================================
-# Health Check
+# Health
 # ==========================================================
 
 @app.get("/health")
 def health():
+
     return {
         "status": "healthy",
-        "model_loaded": True
+        "model_loaded": True,
+        "total_diseases": len(label_encoder.classes_),
+        "total_features": len(feature_columns)
     }
 
 # ==========================================================
@@ -104,78 +122,114 @@ def predict(patient: Patient):
 
     try:
 
-        # Create empty input
+        # ==========================================
+        # Create input dataframe
+        # ==========================================
+
         input_df = pd.DataFrame(
-            np.zeros((1, len(feature_columns))),
+            np.zeros(
+                (1, len(feature_columns)),
+                dtype=np.float32
+            ),
             columns=feature_columns
         )
 
         selected_symptoms = []
 
+        # ==========================================
         # Fill input
+        # ==========================================
+
         for key, value in patient.data.items():
 
             key = key.lower().strip()
 
             if key in input_df.columns:
 
-                input_df.loc[0, key] = value
+                value = int(value)
+
+                input_df.at[0, key] = value
 
                 if (
                     key not in ["age_group", "gender"]
                     and value == 1
                 ):
                     selected_symptoms.append(key)
-        # Count selected symptoms
-        selected_count = sum(
-        value
-        for key, value in patient.data.items()
-        if key not in ["age_group", "gender"]
-        )
+
+        # ==========================================
+        # Validate symptom count
+        # ==========================================
+
+        selected_count = len(selected_symptoms)
 
         if selected_count < 2:
-            return {
-                "error": "Please select at least 2 symptoms for an accurate prediction."
-            }
+            raise HTTPException(
+                status_code=400,
+                detail="Please select at least 2 symptoms."
+            )
 
-        # Predict probabilities
+        # ==========================================
+        # Prediction
+        # ==========================================
+
         probs = model.predict_proba(input_df)[0]
 
-        # Diseases having probability > 0
         valid_idx = np.where(probs > 0)[0]
 
-        # Sort descending
+        if len(valid_idx) == 0:
+            raise HTTPException(
+                status_code=500,
+                detail="No prediction generated."
+            )
+
         valid_idx = valid_idx[
             np.argsort(probs[valid_idx])[::-1]
         ]
 
-        # Keep top 3
         top3 = valid_idx[:3]
 
-        # Best prediction
         best_idx = top3[0]
 
-        disease = label_encoder.inverse_transform([best_idx])[0]
+        disease = label_encoder.inverse_transform(
+            [best_idx]
+        )[0]
 
         confidence = round(
-            float(probs[best_idx] * 100),
+            float(probs[best_idx]) * 100,
             2
         )
 
+        # ==========================================
         # Confidence Level
+        # ==========================================
+
         if confidence >= 80:
             confidence_level = "High"
-
         elif confidence >= 50:
             confidence_level = "Medium"
-
         else:
             confidence_level = "Low"
 
-        # Lookup key
-        lookup_key = disease.lower()
+        # ==========================================
+        # Disease Information
+        # ==========================================
 
+        lookup_key = disease.lower().strip()
+
+        description = description_map.get(
+            lookup_key,
+            "Description not available."
+        )
+
+        precautions = precaution_map.get(
+            lookup_key,
+            ["No precautions available."]
+        )
+
+        # ==========================================
         # Top Predictions
+        # ==========================================
+
         top_predictions = []
 
         for idx in top3:
@@ -185,13 +239,19 @@ def predict(patient: Patient):
                 "disease": label_encoder.inverse_transform([idx])[0],
 
                 "probability": round(
-                    float(probs[idx] * 100),
+                    float(probs[idx]) * 100,
                     2
                 )
 
             })
 
+        # ==========================================
+        # Response
+        # ==========================================
+
         return {
+
+            "success": True,
 
             "predicted_disease": disease,
 
@@ -201,25 +261,25 @@ def predict(patient: Patient):
 
             "selected_symptoms": selected_symptoms,
 
-            "description": description_map.get(
-                lookup_key,
-                "Description not available."
-            ),
+            "description": description,
 
-            "precautions": precaution_map.get(
-                lookup_key,
-                ["No precautions available."]
-            ),
+            "precautions": precautions,
 
             "top_predictions": top_predictions
 
         }
 
+    except HTTPException:
+        raise
+
     except Exception as e:
 
-        return {
-            "error": str(e)
-        }
+        traceback.print_exc()
+
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )
 
 # ==========================================================
 # Run Server
