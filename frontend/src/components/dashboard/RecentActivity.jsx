@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { UserPlus, Brain, ShieldAlert, FileText, CalendarDays, Pill, LogOut } from 'lucide-react';
-import { mockActivities } from '../../data/mockDashboard';
+import api from '../../services/api';
 
 const ICON_MAP = { UserPlus, Brain, ShieldAlert, FileText, CalendarDays, Pill, LogOut };
 
@@ -15,51 +15,102 @@ const COLOR_MAP = {
   slate:   { dot: 'bg-slate-400',   ring: 'border-slate-400/30', text: 'text-slate-400' },
 };
 
-const RecentActivity = () => (
-  <section>
-    <div className="mb-4">
-      <h2 className="text-base font-bold text-white">Recent Activity</h2>
-      <p className="text-xs text-slate-400 mt-0.5">Live system event log</p>
-    </div>
+const TYPE_TO_ICON = {
+  prediction: 'Brain',
+  risk: 'ShieldAlert',
+  report: 'FileText',
+  appointment: 'CalendarDays',
+  medication: 'Pill',
+  auth: 'UserPlus',
+};
 
-    <div className="glass-card rounded-2xl border border-white/8 p-4">
-      <div className="relative pl-6">
-        {/* Vertical line */}
-        <div className="absolute left-3 top-3 bottom-3 w-px bg-gradient-to-b from-cyan-500/50 via-white/10 to-transparent" />
+const TYPE_TO_COLOR = {
+  prediction: 'indigo',
+  risk: 'rose',
+  report: 'emerald',
+  appointment: 'cyan',
+  medication: 'amber',
+  auth: 'purple',
+};
 
-        <div className="space-y-4">
-          {mockActivities.map((activity, idx) => {
-            const Icon = ICON_MAP[activity.icon] || FileText;
-            const color = COLOR_MAP[activity.color] || COLOR_MAP.slate;
-            return (
-              <motion.div
-                key={activity.id}
-                initial={{ opacity: 0, x: -16 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.08 }}
-                className="flex items-start gap-3 group"
-              >
-                {/* Timeline dot */}
-                <div className={`absolute left-1 w-4 h-4 rounded-full ${color.dot} border-2 border-slate-950 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-125 transition-transform`}
-                  style={{ marginTop: `${idx * 4 + 0.5}rem` }}>
-                  <div className="w-1.5 h-1.5 rounded-full bg-slate-950" />
-                </div>
+const RecentActivity = () => {
+  const [activities, setActivities] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-                <div className={`w-7 h-7 rounded-lg border ${color.ring} bg-white/4 flex items-center justify-center shrink-0`}>
-                  <Icon size={13} className={color.text} />
-                </div>
+  useEffect(() => {
+    const fetchActivities = async () => {
+      try {
+        const { data } = await api.get('/notifications');
+        const mapped = (data || []).slice(0, 8).map(n => ({
+          id: n.id,
+          text: n.title || n.message,
+          time: n.created_at ? new Date(n.created_at).toLocaleString() : '',
+          icon: TYPE_TO_ICON[n.type] || 'FileText',
+          color: TYPE_TO_COLOR[n.type] || 'slate',
+        }));
+        setActivities(mapped);
+      } catch {
+        setActivities([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchActivities();
+  }, []);
 
-                <div className="flex-1 min-w-0">
-                  <p className="text-[11px] text-slate-200 font-semibold leading-tight">{activity.text}</p>
-                  <p className="text-[10px] text-slate-500 mt-0.5">{activity.time}</p>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+  return (
+    <section>
+      <div className="mb-4">
+        <h2 className="text-base font-bold text-white">Recent Activity</h2>
+        <p className="text-xs text-slate-400 mt-0.5">Live system event log</p>
       </div>
-    </div>
-  </section>
-);
+
+      <div className="glass-card rounded-2xl border border-white/8 p-4">
+        {loading ? (
+          <div className="text-center text-xs text-slate-400 py-6">Loading activity...</div>
+        ) : activities.length === 0 ? (
+          <div className="text-center py-6 space-y-1">
+            <p className="text-xs font-bold text-slate-300">No Recent Activity</p>
+            <p className="text-[10px] text-slate-500">Activities will appear here as you use the platform.</p>
+          </div>
+        ) : (
+          <div className="relative pl-6">
+            <div className="absolute left-3 top-3 bottom-3 w-px bg-gradient-to-b from-cyan-500/50 via-white/10 to-transparent" />
+            <div className="space-y-4">
+              {activities.map((activity, idx) => {
+                const Icon = ICON_MAP[activity.icon] || FileText;
+                const color = COLOR_MAP[activity.color] || COLOR_MAP.slate;
+                return (
+                  <motion.div
+                    key={activity.id}
+                    initial={{ opacity: 0, x: -16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.08 }}
+                    className="flex items-start gap-3 group"
+                  >
+                    <div className={`absolute left-1 w-4 h-4 rounded-full ${color.dot} border-2 border-slate-950 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-125 transition-transform`}
+                      style={{ marginTop: `${idx * 4 + 0.5}rem` }}>
+                      <div className="w-1.5 h-1.5 rounded-full bg-slate-950" />
+                    </div>
+
+                    <div className={`w-7 h-7 rounded-lg border ${color.ring} bg-white/4 flex items-center justify-center shrink-0`}>
+                      <Icon size={13} className={color.text} />
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[11px] text-slate-200 font-semibold leading-tight">{activity.text}</p>
+                      <p className="text-[10px] text-slate-500 mt-0.5">{activity.time}</p>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
 
 export default RecentActivity;
+

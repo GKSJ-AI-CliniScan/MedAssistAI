@@ -18,6 +18,7 @@ from app.api.routers import (
     doctors_router,
     appointments_router,
     admin_router,
+    search_router,
 )
 
 # ── Create all tables & auto-migrate columns ────────────────────────────
@@ -81,6 +82,7 @@ app.include_router(notifications_router, prefix=API_PREFIX)
 app.include_router(doctors_router, prefix=API_PREFIX)
 app.include_router(appointments_router, prefix=API_PREFIX)
 app.include_router(admin_router, prefix=API_PREFIX)
+app.include_router(search_router, prefix=API_PREFIX)
 
 # ── Database Seeding on Startup ───────────────────────────────────────
 @app.on_event("startup")

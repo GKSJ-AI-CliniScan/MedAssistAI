@@ -1,4 +1,4 @@
-# Dependencies
+# Dependencies & Caches
 node_modules/
 .pnp
 .pnp.js
@@ -9,6 +9,8 @@ ENV/
 .next/
 dist/
 frontend/dist/
+.vite/
+frontend/.vite/
 MedAssistAI/
 
 # Python cache & build

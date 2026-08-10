@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Sparkles, Stethoscope, FileText, Brain, HeartPulse, ShieldAlert } from 'lucide-react';
@@ -35,12 +35,22 @@ export const DashboardPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
+  const displayName = user?.full_name || user?.name || 'Doctor';
+  const firstName = displayName.split(' ')[0];
+
   const formattedDate = new Date().toLocaleDateString('en-US', {
     weekday: 'long',
     month: 'long',
     day: 'numeric',
     year: 'numeric'
   });
+
+  const greeting = (() => {
+    const h = new Date().getHours();
+    if (h < 12) return 'Good morning';
+    if (h < 17) return 'Good afternoon';
+    return 'Good evening';
+  })();
 
   return (
     <motion.div
@@ -63,7 +73,7 @@ export const DashboardPage = () => {
             <Sparkles size={11} className="animate-pulse" /> Clinical Workspace Active
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">
-            Welcome to MedAssist AI
+            {greeting}, {firstName} 👋
           </h1>
           <p className="text-slate-400 text-xs sm:text-sm leading-relaxed font-medium">
             Monitor patient health, analyze symptoms using artificial intelligence, predict disease risks, and generate clinical reports from one unified healthcare command center.

@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { Mail, Lock, Eye, EyeOff, User, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import AuthIllustrationPanel from './components/AuthIllustrationPanel';
+import { GoogleAccountModal } from './components/GoogleAccountModal';
 import {
   AuthInput,
   PasswordStrengthMeter,
@@ -21,12 +22,13 @@ export const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showGoogleModal, setShowGoogleModal] = useState(false);
 
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors }
+    formState: { errors },
   } = useForm();
 
   const password = watch('password', '');
@@ -36,7 +38,7 @@ export const RegisterPage = () => {
     try {
       await registerUser(name, email, password);
       toast.success('Account created! Welcome to MedAssist AI.', { icon: '🏥' });
-      setTimeout(() => navigate('/dashboard'), 800);
+      setTimeout(() => navigate('/dashboard'), 600);
     } catch (err) {
       toast.error(err.message || 'Registration failed. Please try again.', { icon: '⚠️' });
     } finally {
@@ -44,36 +46,83 @@ export const RegisterPage = () => {
     }
   };
 
-  const handleGoogle = async () => {
-    setIsLoading(true);
+  const handleGoogleClick = () => {
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
+    // Strategy 1: Google Identity Services One Tap / Popup (id_token flow)
+    if (clientId && window.google?.accounts?.id) {
+      try {
+        window.google.accounts.id.initialize({
+          client_id: clientId,
+          callback: async (response) => {
+            if (response.credential) {
+              try {
+                await loginWithGoogle(response.credential, null);
+                toast.success('Account created with Google! Redirecting…', { icon: '🔐' });
+                setTimeout(() => navigate('/dashboard'), 600);
+              } catch (err) {
+                const msg = err?.response?.data?.detail || err.message || 'Google Sign-In failed.';
+                toast.error(msg);
+              }
+            }
+          },
+        });
+        window.google.accounts.id.prompt((notification) => {
+          if (notification.isNotDisplayed() || notification.isSkippedMoment() || notification.isDismissedMoment()) {
+            handleGoogleOAuth2Popup(clientId);
+          }
+        });
+        return;
+      } catch (e) {
+        console.warn('[GoogleAuth] One Tap failed, trying OAuth2 popup:', e);
+      }
+    }
+
+    // Strategy 2: OAuth2 token client popup (access_token → userinfo)
+    if (clientId && window.google?.accounts?.oauth2) {
+      handleGoogleOAuth2Popup(clientId);
+      return;
+    }
+
+    // Strategy 3: Open the GoogleAccountModal (manual fallback)
+    setShowGoogleModal(true);
+  };
+
+  const handleGoogleOAuth2Popup = (clientId) => {
     try {
-      await loginWithGoogle('google.user@medassist.ai', 'Google Doctor');
-      toast.success('Signed in via Google! Redirecting...', { icon: '🔐' });
-      setTimeout(() => navigate('/dashboard'), 800);
-    } catch (err) {
-      toast.error('Google Sign-In failed.');
-    } finally {
-      setIsLoading(false);
+      const client = window.google.accounts.oauth2.initTokenClient({
+        client_id: clientId,
+        scope: 'openid email profile',
+        callback: async (tokenResponse) => {
+          if (!tokenResponse.error) {
+            try {
+              const infoRes = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+              });
+              const userInfo = await infoRes.json();
+              await loginWithGoogle(null, userInfo);
+              toast.success(`Signed in as ${userInfo.name || userInfo.email}! Redirecting…`, { icon: '🔐' });
+              setTimeout(() => navigate('/dashboard'), 600);
+            } catch (err) {
+              toast.error('Google Sign-In failed. Please try again.');
+            }
+          }
+        },
+      });
+      client.requestAccessToken();
+    } catch (e) {
+      console.warn('[GoogleAuth] OAuth2 popup failed, opening modal:', e);
+      setShowGoogleModal(true);
     }
   };
 
-  const handleMicrosoft = async () => {
-    setIsLoading(true);
-    try {
-      await loginWithGoogle('microsoft.user@medassist.ai', 'Microsoft Doctor');
-      toast.success('Signed in via Microsoft! Redirecting...', { icon: '🔐' });
-      setTimeout(() => navigate('/dashboard'), 800);
-    } catch (err) {
-      toast.error('Microsoft Sign-In failed.');
-    } finally {
-      setIsLoading(false);
-    }
+  const handleMicrosoftClick = () => {
+    toast.info('Microsoft login is not yet configured. Please use email/password or Google Sign-In.', { autoClose: 4000 });
   };
-
 
   const fieldVariants = {
     hidden: { opacity: 0, y: 12 },
-    visible: (i) => ({ opacity: 1, y: 0, transition: { delay: i * 0.07, duration: 0.35 } })
+    visible: (i) => ({ opacity: 1, y: 0, transition: { delay: i * 0.07, duration: 0.35 } }),
   };
 
   return (
@@ -123,8 +172,8 @@ export const RegisterPage = () => {
             {/* Social buttons */}
             <div className="mb-6">
               <SocialAuthButtons
-                onGoogle={handleGoogle}
-                onMicrosoft={handleMicrosoft}
+                onGoogle={handleGoogleClick}
+                onMicrosoft={handleMicrosoftClick}
               />
             </div>
 
@@ -136,15 +185,13 @@ export const RegisterPage = () => {
               {/* Full Name */}
               <motion.div custom={0} variants={fieldVariants} initial="hidden" animate="visible">
                 <AuthInput
-  id="register-name"
-  label="Full Name"
-  placeholder="Dr. Jane Smith"
-  icon={User}
-  error={errors.name?.message}
-  {...register("name", {
-    required: "Full name is required",
-  })}
-/>
+                  id="register-name"
+                  label="Full Name"
+                  placeholder="Dr. Jane Smith"
+                  icon={User}
+                  error={errors.name?.message}
+                  {...register('name', { required: 'Full name is required' })}
+                />
               </motion.div>
 
               {/* Email */}
@@ -158,7 +205,7 @@ export const RegisterPage = () => {
                   error={errors.email?.message}
                   {...register('email', {
                     required: 'Email is required',
-                    pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: 'Invalid email' }
+                    pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: 'Invalid email' },
                   })}
                 />
               </motion.div>
@@ -186,7 +233,6 @@ export const RegisterPage = () => {
                     {...register('password', {
                       required: 'Password is required',
                       minLength: { value: 6, message: 'Minimum 6 characters' },
-                      pattern: { value: /^(?=.*[A-Z])(?=.*\d)/, message: 'Must contain uppercase letter and number' }
                     })}
                   />
                 </div>
@@ -214,7 +260,7 @@ export const RegisterPage = () => {
                   }
                   {...register('confirmPassword', {
                     required: 'Please confirm your password',
-                    validate: v => v === password || 'Passwords do not match'
+                    validate: (v) => v === password || 'Passwords do not match',
                   })}
                 />
               </motion.div>
@@ -239,19 +285,19 @@ export const RegisterPage = () => {
 
               {/* Submit */}
               <AuthSubmitButton
-  isLoading={isLoading}
-  label={
-    <>
-      Create Clinical Account <ArrowRight size={16} />
-    </>
-  }
-  className="bg-gradient-to-r from-emerald-500 to-cyan-600 hover:from-emerald-450 hover:to-cyan-550 shadow-lg shadow-emerald-500/25 border-none"
-/>
-</form>
+                isLoading={isLoading}
+                label={
+                  <>
+                    Create Clinical Account <ArrowRight size={16} />
+                  </>
+                }
+                className="bg-gradient-to-r from-emerald-500 to-cyan-600 hover:from-emerald-450 hover:to-cyan-550 shadow-lg shadow-emerald-500/25 border-none"
+              />
+            </form>
 
             <p className="text-center text-sm text-slate-500 mt-5">
               Already have an account?{' '}
-              <Link to="/auth/Signin" className="text-cyan-400 hover:text-cyan-300 font-bold transition-colors">Sign in</Link>
+              <Link to="/auth/login" className="text-cyan-400 hover:text-cyan-300 font-bold transition-colors">Sign in</Link>
             </p>
           </div>
 
@@ -260,6 +306,13 @@ export const RegisterPage = () => {
           </p>
         </motion.div>
       </div>
+
+      {/* ── GOOGLE ACCOUNT SELECTOR MODAL ── */}
+      <GoogleAccountModal
+        isOpen={showGoogleModal}
+        onClose={() => setShowGoogleModal(false)}
+        onSelectAccount={() => navigate('/dashboard')}
+      />
     </div>
   );
 };

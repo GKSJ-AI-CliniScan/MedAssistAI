@@ -1,70 +1,46 @@
+/**
+ * Report Service
+ * Central service layer connecting frontend to backend PDF report generation and download.
+ */
 import api from './api';
 
-const USE_MOCK = true;
-
 export const reportService = {
-  generateReport: async (sessionData, profile) => {
-    if (!USE_MOCK) {
-      return api.post('/reports/generate', { sessionData, profile });
-    }
-
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    const reportId = `rep_${Date.now()}`;
-    const reportDate = new Date().toISOString().split('T')[0];
-
-    const report = {
-      id: reportId,
-      date: reportDate,
-      patientName: profile?.name || 'John Doe',
-      patientDetails: {
-        age: profile?.age || 32,
-        gender: profile?.gender || 'Male',
-        bloodType: profile?.bloodType || 'O+'
-      },
-      symptoms: sessionData.selectedSymptoms || [],
-      severity: sessionData.severity || 'mild',
-      duration: `${sessionData.duration} days`,
-      predictions: sessionData.predictionResult || [],
-      riskAssessment: sessionData.riskResult || { riskLevel: 'Low', riskScore: 20, healthScore: 86 },
-      recommendations: sessionData.recommendations || {}
-    };
-
-    // Save to report history in localstorage
-    const history = JSON.parse(localStorage.getItem('medassist_reports') || '[]');
-    history.unshift(report);
-    localStorage.setItem('medassist_reports', JSON.stringify(history));
-
-    return report;
-  },
-
+  /**
+   * Get all reports for the authenticated patient.
+   */
   getReports: async () => {
-    if (!USE_MOCK) {
-      return api.get('/reports');
-    }
-    await new Promise((resolve) => setTimeout(resolve, 600));
-    return JSON.parse(localStorage.getItem('medassist_reports') || '[]');
+    const { data } = await api.get('/reports/');
+    return data;
   },
 
-  getReportById: async (id) => {
-    if (!USE_MOCK) {
-      return api.get(`/reports/${id}`);
-    }
-    await new Promise((resolve) => setTimeout(resolve, 300));
-    const history = JSON.parse(localStorage.getItem('medassist_reports') || '[]');
-    return history.find(r => r.id === id) || null;
+  /**
+   * Generate a PDF report from a prediction ID.
+   * @param {number|string} predictionId
+   */
+  generateReport: async (predictionId) => {
+    const { data } = await api.post(`/reports/generate/${predictionId}`);
+    return data;
   },
 
-  deleteReport: async (id) => {
-    if (!USE_MOCK) {
-      return api.delete(`/reports/${id}`);
-    }
-    await new Promise((resolve) => setTimeout(resolve, 400));
-    const history = JSON.parse(localStorage.getItem('medassist_reports') || '[]');
-    const updated = history.filter(r => r.id !== id);
-    localStorage.setItem('medassist_reports', JSON.stringify(updated));
-    return { success: true };
-  }
+  /**
+   * Download a PDF report file as a Blob and trigger browser save file dialog.
+   * @param {number|string} reportId
+   * @param {string} fileName
+   */
+  downloadReportFile: async (reportId, fileName = 'Medical_Report.pdf') => {
+    const response = await api.get(`/reports/${reportId}/download`, {
+      responseType: 'blob',
+    });
+
+    const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', fileName);
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  },
 };
 
 export default reportService;

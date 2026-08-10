@@ -6,8 +6,9 @@ import MainLayout from '../layouts/MainLayout';
 import AuthLayout from '../layouts/AuthLayout';
 import DashboardLayout from '../layouts/DashboardLayout';
 
-// Protection Wrapper
+// Protection Wrappers
 import PrivateRoutes from './PrivateRoutes';
+import PublicOnlyRoute from './PublicOnlyRoute';
 
 // Pages
 import LandingPage from '../pages/Landing/LandingPage';
@@ -38,13 +39,15 @@ export const AppRoutes = () => {
         <Route path="/" element={<LandingPage />} />
       </Route>
 
-      {/* Authentication Pages */}
-      <Route path="/auth" element={<AuthLayout />}>
-        <Route index element={<Navigate to="/auth/login" replace />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
-        <Route path="forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="reset-password" element={<ResetPasswordPage />} />
+      {/* Authentication Pages (Only accessible when NOT authenticated) */}
+      <Route element={<PublicOnlyRoute />}>
+        <Route path="/auth" element={<AuthLayout />}>
+          <Route index element={<Navigate to="/auth/login" replace />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="reset-password" element={<ResetPasswordPage />} />
+        </Route>
       </Route>
 
       {/* Protected Diagnostics Portal Pages */}

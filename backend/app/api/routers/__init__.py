@@ -8,6 +8,7 @@ from app.api.routers.notifications import router as notifications_router
 from app.api.routers.doctors import router as doctors_router
 from app.api.routers.appointments import router as appointments_router
 from app.api.routers.admin import router as admin_router
+from app.api.routers.search import router as search_router
 
 __all__ = [
     "auth_router",
@@ -20,4 +21,5 @@ __all__ = [
     "doctors_router",
     "appointments_router",
     "admin_router",
+    "search_router",
 ]

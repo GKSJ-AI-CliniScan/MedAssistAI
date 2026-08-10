@@ -11,6 +11,7 @@ import {
   Stethoscope, ClipboardList, Star
 } from 'lucide-react';
 import { useUser } from '../../context/UserContext';
+import { useAuth } from '../../context/AuthContext';
 
 /* ─── Tab definitions ──────────────────────────────────────── */
 const TABS = [
@@ -139,6 +140,7 @@ const SectionCard = ({ title, subtitle, children, icon: Icon, action }) => (
 ══════════════════════════════════════════════════════════════ */
 export const ProfilePage = () => {
   const { profile, updateProfile } = useUser();
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('personal');
   const [editMode, setEditMode] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -301,11 +303,19 @@ export const ProfilePage = () => {
         />
 
         <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-          {/* Avatar */}
+          {/* Avatar — shows Google profile photo or fallback initials */}
           <div className="relative shrink-0">
-            <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-cyan-500/30 to-indigo-600/30 border-2 border-cyan-500/30 flex items-center justify-center text-4xl font-extrabold text-white shadow-lg shadow-cyan-500/20">
-              {profile?.name?.[0] || 'J'}
-            </div>
+            {user?.avatar_url ? (
+              <img
+                src={user.avatar_url}
+                alt={profile?.name}
+                className="w-24 h-24 rounded-3xl object-cover border-2 border-cyan-500/40 shadow-lg shadow-cyan-500/20"
+              />
+            ) : (
+              <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-cyan-500/30 to-indigo-600/30 border-2 border-cyan-500/30 flex items-center justify-center text-4xl font-extrabold text-white shadow-lg shadow-cyan-500/20">
+                {(profile?.name || user?.full_name || 'U')[0].toUpperCase()}
+              </div>
+            )}
             {editMode && (
               <motion.button
                 type="button"

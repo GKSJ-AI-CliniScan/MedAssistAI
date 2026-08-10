@@ -16,15 +16,23 @@ def migrate_db():
             cursor.execute("PRAGMA table_info(users)")
             existing_columns = [col[1] for col in cursor.fetchall()]
 
-            if "google_id" not in existing_columns:
-                print("Adding column 'google_id' to 'users' table...")
-                cursor.execute("ALTER TABLE users ADD COLUMN google_id VARCHAR(255)")
-                print("Added google_id column.")
+            columns_to_add = [
+                ("google_id", "VARCHAR(255)"),
+                ("login_provider", "VARCHAR(50) DEFAULT 'email'"),
+                ("first_name", "VARCHAR(128)"),
+                ("last_name", "VARCHAR(128)"),
+                ("phone", "VARCHAR(50)"),
+                ("address", "VARCHAR(500)"),
+                ("is_email_verified", "BOOLEAN DEFAULT 0"),
+                ("verification_token", "VARCHAR(255)"),
+                ("reset_token", "VARCHAR(255)"),
+                ("last_login_at", "DATETIME"),
+            ]
 
-            if "login_provider" not in existing_columns:
-                print("Adding column 'login_provider' to 'users' table...")
-                cursor.execute("ALTER TABLE users ADD COLUMN login_provider VARCHAR(50) DEFAULT 'email'")
-                print("Added login_provider column.")
+            for col_name, col_type in columns_to_add:
+                if col_name not in existing_columns:
+                    print(f"Adding column '{col_name}' to 'users' table...")
+                    cursor.execute(f"ALTER TABLE users ADD COLUMN {col_name} {col_type}")
 
             conn.commit()
             conn.close()

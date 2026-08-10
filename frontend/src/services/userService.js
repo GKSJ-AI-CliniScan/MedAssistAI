@@ -1,47 +1,31 @@
 import api from './api';
 
-const USE_MOCK = true;
-
 export const userService = {
   getProfile: async () => {
-    if (!USE_MOCK) {
-      return api.get('/user/profile');
-    }
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return JSON.parse(localStorage.getItem('medassist_profile'));
+    const { data } = await api.get('/patients/me');
+    return data;
   },
 
   updateProfile: async (profileData) => {
-    if (!USE_MOCK) {
-      return api.put('/user/profile', profileData);
-    }
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    return profileData;
+    const { data } = await api.put('/patients/me', profileData);
+    return data;
   },
 
   getHistory: async () => {
-    if (!USE_MOCK) {
-      return api.get('/user/history');
-    }
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return JSON.parse(localStorage.getItem('medassist_history'));
+    const { data } = await api.get('/patients/me/medical-history');
+    return data;
   },
 
   addHistory: async (historyItem) => {
-    if (!USE_MOCK) {
-      return api.post('/user/history', historyItem);
-    }
-    await new Promise((resolve) => setTimeout(resolve, 600));
-    return { ...historyItem, id: `h_${Date.now()}` };
+    const { data } = await api.post('/patients/me/medical-history', historyItem);
+    return data;
   },
 
   deleteHistory: async (id) => {
-    if (!USE_MOCK) {
-      return api.delete(`/user/history/${id}`);
-    }
-    await new Promise((resolve) => setTimeout(resolve, 400));
-    return { success: true };
+    const { data } = await api.delete(`/patients/me/medical-history/${id}`);
+    return data;
   }
 };
 
 export default userService;
+

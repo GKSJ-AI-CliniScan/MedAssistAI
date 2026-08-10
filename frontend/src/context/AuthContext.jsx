@@ -9,15 +9,16 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const initializeAuth = () => {
+    const initializeAuth = async () => {
       try {
         const isAuth = authService.isAuthenticated();
         const userData = authService.getUser();
         if (isAuth && userData) {
           setUser(userData);
           setIsAuthenticated(true);
+          // Sync fresh profile from server in background
+          authService.getMe().then((freshUser) => setUser(freshUser)).catch(() => {});
         } else {
-          // Clean up if mismatched
           localStorage.removeItem('medassist_access_token');
           localStorage.removeItem('medassist_refresh_token');
           localStorage.removeItem('medassist_user');
@@ -36,7 +37,6 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await authService.login(email, password);
-      // response is { access_token, refresh_token, token_type, user }
       setUser(response.user);
       setIsAuthenticated(true);
       return response.user;
@@ -47,10 +47,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const loginWithGoogle = async (email, name) => {
+  const loginWithGoogle = async (idToken, userInfo = null) => {
     setLoading(true);
     try {
-      const response = await authService.loginWithGoogle(email, name);
+      const response = await authService.loginWithGoogle(idToken, userInfo);
       setUser(response.user);
       setIsAuthenticated(true);
       return response.user;
@@ -61,11 +61,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-
-  const register = async (name, email, password) => {
+  const register = async (name, email, password, role = 'patient') => {
     setLoading(true);
     try {
-      const response = await authService.register(name, email, password);
+      const response = await authService.register(name, email, password, role);
       setUser(response.user);
       setIsAuthenticated(true);
       return response.user;
@@ -83,12 +82,29 @@ export const AuthProvider = ({ children }) => {
   };
 
   const forgotPassword = async (email) => {
-    // Return mock success for demo/forgot password
-    return { success: true, message: "Password reset link sent to your email." };
+    return await authService.forgotPassword(email);
   };
 
   const resetPassword = async (token, newPassword) => {
-    return { success: true, message: "Password reset successfully." };
+    return await authService.resetPassword(token, newPassword);
+  };
+
+  const changePassword = async (oldPassword, newPassword) => {
+    return await authService.changePassword(oldPassword, newPassword);
+  };
+
+  const verifyEmail = async (token) => {
+    return await authService.verifyEmail(token);
+  };
+
+  const refreshUserData = async () => {
+    try {
+      const fresh = await authService.getMe();
+      setUser(fresh);
+      return fresh;
+    } catch (e) {
+      console.error("Failed to refresh user profile data:", e);
+    }
   };
 
   return (
@@ -101,7 +117,10 @@ export const AuthProvider = ({ children }) => {
       register,
       logout,
       forgotPassword,
-      resetPassword
+      resetPassword,
+      changePassword,
+      verifyEmail,
+      refreshUserData,
     }}>
       {children}
     </AuthContext.Provider>

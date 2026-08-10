@@ -1,5 +1,6 @@
 /**
- * Auth Service – Register, Login, Logout, Refresh
+ * Auth Service – Complete Authentication Engine API Client:
+ * Register, Login, Google OAuth, Refresh, Forgot Password, Reset Password, Change Password, Verify Email
  */
 import api from "./api";
 
@@ -26,9 +27,8 @@ export const authService = {
   },
 
   /**
-   * loginWithGoogle supports two flows:
-   *  1. idToken (string) — from GSI One Tap: send to backend for server-side verification
-   *  2. userInfo (object) — from OAuth2 token fallback: contains email, name, picture, sub
+   * Real Google OAuth Login:
+   * Supports ID token from Google GIS or userInfo object from Google UserInfo endpoint.
    */
   async loginWithGoogle(idToken, userInfo = null) {
     const payload = idToken
@@ -44,8 +44,40 @@ export const authService = {
     return data;
   },
 
+  async forgotPassword(email) {
+    const { data } = await api.post("/auth/forgot-password", { email });
+    return data;
+  },
+
+  async resetPassword(token, newPassword) {
+    const { data } = await api.post("/auth/reset-password", {
+      token,
+      new_password: newPassword,
+    });
+    return data;
+  },
+
+  async changePassword(oldPassword, newPassword) {
+    const { data } = await api.post("/auth/change-password", {
+      old_password: oldPassword,
+      new_password: newPassword,
+    });
+    return data;
+  },
+
+  async verifyEmail(token) {
+    const { data } = await api.post("/auth/verify-email", { token });
+    return data;
+  },
+
+  async getMe() {
+    const { data } = await api.get("/auth/me");
+    localStorage.setItem(USER_KEY, JSON.stringify(data));
+    return data;
+  },
 
   logout() {
+    api.post("/auth/logout").catch(() => {});
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(REFRESH_KEY);
     localStorage.removeItem(USER_KEY);
@@ -67,3 +99,5 @@ export const authService = {
     return !!localStorage.getItem(TOKEN_KEY);
   },
 };
+
+export default authService;

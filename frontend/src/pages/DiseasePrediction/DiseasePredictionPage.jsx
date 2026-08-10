@@ -194,13 +194,22 @@ export const DiseasePredictionPage = () => {
         </div>
 
         {hasPredictions && (
-          <RippleButton
-            variant="secondary"
-            onClick={() => navigate('/symptoms')}
-            className="flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold self-start md:self-auto"
-          >
-            <RefreshCw size={13} /> Restart Analysis
-          </RippleButton>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white text-xs font-bold transition-all focus:outline-none"
+            >
+              <FileText size={14} className="text-cyan-400" /> Print / Export PDF
+            </button>
+            <RippleButton
+              variant="secondary"
+              onClick={() => navigate('/symptoms')}
+              className="flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold self-start md:self-auto"
+            >
+              <RefreshCw size={13} /> Restart Analysis
+            </RippleButton>
+          </div>
         )}
       </motion.div>
 
