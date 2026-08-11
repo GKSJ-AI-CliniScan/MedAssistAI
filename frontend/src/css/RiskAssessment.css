@@ -1,0 +1,311 @@
+/* ===========================================
+   Page
+=========================================== */
+
+.risk-page {
+  min-height: 100vh;
+  background: #f5f8ff;
+  padding: 35px;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* ===========================================
+   Hero Card
+=========================================== */
+
+.hero-card {
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  color: white;
+  border-radius: 22px;
+  padding: 40px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 18px 40px rgba(37, 99, 235, .25);
+}
+
+.hero-left h1 {
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.hero-left p {
+  font-size: 16px;
+  opacity: .95;
+  max-width: 650px;
+  line-height: 1.7;
+}
+
+/* ===========================================
+   Risk Circle
+=========================================== */
+
+.risk-circle {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: white;
+  color: #111827;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 12px 35px rgba(0,0,0,.15);
+}
+
+.risk-circle h2 {
+  font-size: 42px;
+  margin: 0;
+  font-weight: bold;
+}
+
+.risk-circle span {
+  color: #6b7280;
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+.risk-level {
+  font-size: 18px !important;
+  margin-top: 10px !important;
+  font-weight: bold;
+}
+
+/* ===========================================
+   Summary Cards
+=========================================== */
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.score-card {
+  background: white;
+  border-radius: 18px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,.06);
+}
+
+.score-card h5 {
+  color: #6b7280;
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.score-card h3 {
+  color: #2563eb;
+  font-size: 34px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* ===========================================
+   Breakdown
+=========================================== */
+
+.breakdown-card {
+  background: white;
+  border-radius: 18px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 25px rgba(0,0,0,.05);
+}
+
+.breakdown-card h3 {
+  margin-bottom: 25px;
+  color: #1e293b;
+}
+
+.breakdown-item {
+  margin-bottom: 22px;
+}
+
+.breakdown-item:last-child {
+  margin-bottom: 0;
+}
+
+.breakdown-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.breakdown-top span {
+  color: #374151;
+  font-weight: 600;
+}
+
+.progress-custom {
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 20px;
+  transition: .5s;
+}
+
+/* ===========================================
+   Recommendation
+=========================================== */
+
+.recommendation-card {
+  display: flex;
+  align-items: center;
+  background: #fff7ed;
+  border-left: 6px solid #f97316;
+  border-radius: 18px;
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.05);
+}
+
+.rec-icon {
+  font-size: 38px;
+  color: #f97316;
+  margin-right: 20px;
+}
+
+.recommendation-card h4 {
+  margin-bottom: 10px;
+  color: #c2410c;
+}
+
+.recommendation-card p {
+  margin: 0;
+  color: #444;
+  line-height: 1.7;
+}
+
+/* ===========================================
+   Disclaimer
+=========================================== */
+
+.disclaimer-card {
+  display: flex;
+  align-items: flex-start;
+  background: white;
+  border-radius: 18px;
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.05);
+}
+
+.disclaimer-icon {
+  color: #2563eb;
+  font-size: 34px;
+  margin-right: 18px;
+}
+
+.disclaimer-card h4 {
+  margin-bottom: 10px;
+  color: #2563eb;
+}
+
+.disclaimer-card p {
+  color: #555;
+  line-height: 1.8;
+}
+
+/* ===========================================
+   Button
+=========================================== */
+
+.button-area {
+  text-align: right;
+}
+
+.next-btn {
+  border: none;
+  background: linear-gradient(90deg,#2563eb,#4f46e5);
+  color: white;
+  padding: 15px 35px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  transition: .3s;
+}
+
+.next-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(37,99,235,.25);
+}
+
+/* ===========================================
+   Loading
+=========================================== */
+
+.loading-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-page h2 {
+  color: #2563eb;
+}
+
+/* ===========================================
+   Responsive
+=========================================== */
+
+@media (max-width:992px){
+
+.hero-card{
+flex-direction:column;
+text-align:center;
+gap:30px;
+}
+
+.summary-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media (max-width:768px){
+
+.risk-page{
+padding:20px;
+}
+
+.summary-grid{
+grid-template-columns:1fr;
+}
+
+.hero-left h1{
+font-size:28px;
+}
+
+.risk-circle{
+width:140px;
+height:140px;
+}
+
+.risk-circle h2{
+font-size:34px;
+}
+
+.button-area{
+text-align:center;
+}
+
+.next-btn{
+width:100%;
+justify-content:center;
+}
+
+}

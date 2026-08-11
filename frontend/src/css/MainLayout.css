@@ -1,0 +1,653 @@
+/* ===========================
+   GOOGLE FONT
+=========================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    background:#f4f7fb;
+}
+
+/* ===========================
+        LAYOUT
+=========================== */
+
+.layout{
+    display:flex;
+    min-height:100vh;
+}
+
+/* ===========================
+        SIDEBAR
+=========================== */
+
+.sidebar{
+    width:280px;
+    background:#0F172A;
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    overflow-y:auto;
+}
+
+.sidebar-logo{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:25px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.sidebar-logo img{
+    width:55px;
+    height:55px;
+}
+
+.sidebar-logo h2{
+    font-size:20px;
+    font-weight:700;
+}
+
+.sidebar-logo p{
+    color:#94A3B8;
+    font-size:12px;
+    margin-top:2px;
+}
+
+/* ===========================
+       MENU
+=========================== */
+
+.sidebar-menu{
+    padding:20px;
+}
+
+.menu-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    color:#CBD5E1;
+    text-decoration:none;
+    padding:13px 15px;
+    border-radius:12px;
+    margin-bottom:6px;
+    transition:.3s;
+    font-size:15px;
+    font-weight:500;
+}
+
+.menu-item:hover{
+    background:#1E40AF;
+    color:white;
+}
+
+.menu-item.active{
+    background:#2563EB;
+    color:white;
+}
+
+.menu-title{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-top:18px;
+    margin-bottom:10px;
+    color:white;
+    font-weight:600;
+}
+
+.submenu{
+    margin-left:20px;
+    margin-bottom:15px;
+}
+
+.submenu-item{
+    display:block;
+    text-decoration:none;
+    color:#94A3B8;
+    padding:9px 12px;
+    border-radius:10px;
+    transition:.3s;
+    font-size:14px;
+}
+
+.submenu-item:hover{
+    background:#1E293B;
+    color:white;
+}
+
+.submenu-item.active{
+    color:#60A5FA;
+}
+
+.logout{
+    margin-top:25px;
+}
+
+/* ===========================
+        MAIN
+=========================== */
+
+.main{
+    margin-left:280px;
+    width:calc(100% - 280px);
+}
+
+/* ===========================
+        NAVBAR
+=========================== */
+
+.navbar{
+    height:75px;
+    background:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 35px;
+    border-bottom:1px solid #E2E8F0;
+    position:sticky;
+    top:0;
+    z-index:999;
+}
+
+.navbar-right{
+    display:flex;
+    align-items:center;
+    gap:25px;
+}
+
+.notification-btn{
+    width:45px;
+    height:45px;
+    border:none;
+    border-radius:50%;
+    background:#EEF4FF;
+    color:#2563EB;
+    cursor:pointer;
+    font-size:18px;
+    transition:.3s;
+}
+
+.notification-btn:hover{
+    background:#2563EB;
+    color:white;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    cursor:pointer;
+}
+
+.avatar{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:#2563EB;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:700;
+    font-size:18px;
+}
+
+.profile h4{
+    font-size:15px;
+    margin-bottom:2px;
+}
+
+.profile span{
+    font-size:13px;
+    color:#64748B;
+}
+
+/* ===========================
+       PAGE
+=========================== */
+
+.page-content{
+    padding:35px;
+}
+/* =====================================================
+   LOGOUT BUTTON
+   Keep logout visually identical to sidebar menu items
+===================================================== */
+
+.sidebar-menu .logout {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.sidebar-menu .logout:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.sidebar-menu .logout:focus {
+  outline: none;
+}
+
+.sidebar-menu .logout svg {
+  flex-shrink: 0;
+}
+/* =====================================================
+   PROFILE WRAPPER
+===================================================== */
+
+.profile-wrapper {
+  position: relative;
+}
+
+
+/* =====================================================
+   PROFILE BUTTON
+===================================================== */
+
+.profile {
+  border: none;
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 8px 12px;
+
+  border-radius: 14px;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+
+  color: #1e293b;
+}
+
+.profile:hover,
+.profile-active {
+  background: #f1f5f9;
+}
+
+
+/* =====================================================
+   PROFILE INFO
+===================================================== */
+
+.profile-info {
+  text-align: left;
+}
+
+.profile-info h4 {
+  margin: 0;
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+  color: #1e293b;
+}
+
+.profile-info span {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 13px;
+
+  color: #64748b;
+}
+
+
+/* =====================================================
+   PROFILE ARROW
+===================================================== */
+
+.profile-arrow {
+  font-size: 14px;
+
+  color: #1e293b;
+
+  transition: 0.3s ease;
+}
+
+.profile-arrow-open {
+  transform: rotate(180deg);
+}
+
+
+/* =====================================================
+   PROFILE DROPDOWN
+===================================================== */
+
+.profile-dropdown {
+  position: absolute;
+
+  top: calc(100% + 14px);
+
+  right: 0;
+
+  width: 380px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 20px;
+
+  padding: 28px 30px;
+
+  box-shadow:
+    0 20px 50px rgba(15, 23, 42, 0.16);
+
+  z-index: 9999;
+
+  animation: profileDropdownOpen 0.25s ease;
+}
+
+
+/* =====================================================
+   DROPDOWN SMALL ARROW
+===================================================== */
+
+.profile-dropdown-arrow {
+  position: absolute;
+
+  top: -9px;
+
+  right: 38px;
+
+  width: 18px;
+
+  height: 18px;
+
+  background: #ffffff;
+
+  border-left: 1px solid #e2e8f0;
+
+  border-top: 1px solid #e2e8f0;
+
+  transform: rotate(45deg);
+}
+
+
+/* =====================================================
+   LARGE PROFILE AVATAR
+===================================================== */
+
+.profile-large-avatar {
+  width: 110px;
+
+  height: 110px;
+
+  border-radius: 50%;
+
+  margin: 0 auto 18px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: #eff6ff;
+
+  border: 4px solid #dbeafe;
+
+  color: #2563eb;
+
+  font-size: 82px;
+
+  overflow: hidden;
+}
+
+
+/* =====================================================
+   PROFILE NAME
+===================================================== */
+
+.profile-dropdown-name {
+  margin: 0;
+
+  text-align: center;
+
+  font-size: 24px;
+
+  font-weight: 700;
+
+  color: #1e293b;
+}
+
+
+/* =====================================================
+   PROFILE ROLE
+===================================================== */
+
+.profile-dropdown-role {
+  margin: 5px 0 0;
+
+  text-align: center;
+
+  font-size: 14px;
+
+  color: #64748b;
+}
+
+
+/* =====================================================
+   DIVIDER
+===================================================== */
+
+.profile-divider {
+  width: 100%;
+
+  height: 1px;
+
+  background: #e2e8f0;
+
+  margin: 22px 0;
+}
+
+
+/* =====================================================
+   PROFILE ACTIONS
+===================================================== */
+
+.profile-actions {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 14px;
+}
+
+
+/* =====================================================
+   SETTINGS BUTTON
+===================================================== */
+
+.profile-settings-btn,
+.profile-logout-btn {
+  height: 58px;
+
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  border: 1px solid #dbe2ea;
+
+  font-size: 16px;
+
+  font-weight: 500;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+}
+
+.profile-settings-btn {
+  color: #1e293b;
+}
+
+.profile-settings-btn:hover {
+  background: #f8fafc;
+
+  border-color: #94a3b8;
+
+  transform: translateY(-2px);
+}
+
+
+/* =====================================================
+   LOGOUT BUTTON
+===================================================== */
+
+.profile-logout-btn {
+  color: #dc2626;
+}
+
+.profile-logout-btn:hover {
+  background: #fef2f2;
+
+  border-color: #fecaca;
+
+  transform: translateY(-2px);
+}
+
+
+/* =====================================================
+   DROPDOWN ANIMATION
+===================================================== */
+
+@keyframes profileDropdownOpen {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(-8px)
+      scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE PROFILE DROPDOWN
+===================================================== */
+
+@media (max-width: 576px) {
+
+  .profile-info {
+    display: none;
+  }
+
+  .profile-dropdown {
+    width: 320px;
+
+    right: -10px;
+
+    padding: 24px;
+  }
+
+  .profile-actions {
+    grid-template-columns: 1fr;
+  }
+
+}
+/* =====================================================
+   NAVBAR PROFILE PHOTO
+===================================================== */
+
+.navbar-profile-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+
+/* =====================================================
+   DROPDOWN PROFILE PHOTO
+===================================================== */
+
+.dropdown-profile-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+
+/* =====================================================
+   NAVBAR AVATAR
+===================================================== */
+
+.avatar {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* =====================================================
+   LARGE DROPDOWN AVATAR
+===================================================== */
+
+.profile-large-avatar {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* =====================================================
+   FALLBACK INITIAL
+===================================================== */
+
+.avatar span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}

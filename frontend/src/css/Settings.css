@@ -1,0 +1,1138 @@
+/* =========================================================
+   MEDASSIST AI - SETTINGS PAGE
+   Professional Healthcare Dashboard UI
+   ========================================================= */
+
+/* =========================================================
+   ROOT SETTINGS PAGE
+   ========================================================= */
+
+.settings-page {
+  width: 100%;
+  min-height: 100%;
+  padding: 32px 36px 50px;
+  box-sizing: border-box;
+  background: #f5f7fb;
+  color: #172033;
+}
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.settings-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.settings-title-area {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.settings-title-icon {
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background: #edf3ff;
+  color: #3563d8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.settings-title-area h1 {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #172033;
+  letter-spacing: -0.4px;
+}
+
+.settings-title-area p {
+  margin: 6px 0 0;
+  color: #7a879b;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* =========================================================
+   PATIENT ID CARD
+   ========================================================= */
+
+.settings-patient-card {
+  min-width: 220px;
+  padding: 13px 18px;
+  border: 1px solid #e5eaf2;
+  border-radius: 14px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 5px 18px rgba(24, 39, 75, 0.05);
+}
+
+.settings-patient-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #edf3ff;
+  color: #3563d8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+}
+
+.settings-patient-card span {
+  display: block;
+  margin-bottom: 3px;
+  color: #8792a5;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.settings-patient-card strong {
+  display: block;
+  color: #1d2a40;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+/* =========================================================
+   GLOBAL ALERT
+   ========================================================= */
+
+.settings-alert {
+  width: 100%;
+  min-height: 48px;
+  box-sizing: border-box;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.settings-alert svg {
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+.settings-alert-success {
+  background: #ecf9f1;
+  border: 1px solid #c8ecd7;
+  color: #197044;
+}
+
+.settings-alert-error {
+  background: #fff0f0;
+  border: 1px solid #f4cccc;
+  color: #b42323;
+}
+
+/* =========================================================
+   MAIN SETTINGS GRID
+   ========================================================= */
+
+.settings-main-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(340px, 0.85fr);
+  align-items: start;
+  gap: 24px;
+}
+
+/* =========================================================
+   COMMON SETTINGS CARD
+   ========================================================= */
+
+.settings-card {
+  width: 100%;
+  min-width: 0;
+  background: #ffffff;
+  border: 1px solid #e7ebf2;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 7px 25px rgba(25, 42, 70, 0.055);
+}
+
+/* =========================================================
+   CARD HEADER
+   ========================================================= */
+
+.settings-card-header {
+  width: 100%;
+  min-height: 86px;
+  padding: 18px 24px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #edf0f5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.settings-card-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.settings-card-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+}
+
+.profile-icon {
+  background: #edf3ff;
+  color: #3563d8;
+}
+
+.security-icon {
+  background: #f0ecff;
+  color: #6b4ce6;
+}
+
+.settings-card-heading h2 {
+  margin: 0;
+  color: #172033;
+  font-size: 17px;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.settings-card-heading p {
+  margin: 4px 0 0;
+  color: #8994a7;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   PROFILE FORM
+   ========================================================= */
+
+.profile-form {
+  width: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 28px;
+}
+
+/* =========================================================
+   PROFILE PHOTO COLUMN
+   ========================================================= */
+
+.profile-photo-column {
+  min-width: 0;
+  padding-right: 24px;
+  border-right: 1px solid #edf0f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.profile-photo-label {
+  align-self: flex-start;
+  margin-bottom: 12px;
+  color: #344054;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.profile-photo-wrapper {
+  width: 112px;
+  height: 112px;
+  position: relative;
+  margin-bottom: 14px;
+}
+
+.profile-photo {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  display: block;
+  object-fit: cover;
+  border: 4px solid #edf3ff;
+  background: #f5f7fb;
+}
+
+.profile-photo-placeholder {
+  width: 112px;
+  height: 112px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 4px solid #edf3ff;
+  background: #f2f5fa;
+  color: #8b98ac;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+}
+
+.profile-camera-badge {
+  position: absolute;
+  right: -1px;
+  bottom: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #3563d8;
+  border: 3px solid #ffffff;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  box-shadow: 0 4px 10px rgba(53, 99, 216, 0.25);
+}
+
+.photo-change-title {
+  margin-top: 2px;
+  color: #1d2a40;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.photo-change-description {
+  margin-top: 5px;
+  color: #8a95a8;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.photo-url-input {
+  width: 100%;
+  min-height: 40px;
+  margin-top: 12px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border: 1px solid #dfe5ee;
+  border-radius: 9px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  transition: all 0.2s ease;
+}
+
+.photo-url-input:focus-within {
+  border-color: #6c8fea;
+  box-shadow: 0 0 0 3px rgba(53, 99, 216, 0.08);
+}
+
+.photo-url-input > svg {
+  flex-shrink: 0;
+  color: #8793a7;
+  font-size: 12px;
+}
+
+.photo-url-input input {
+  width: 100%;
+  min-width: 0;
+  height: 38px;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #344054;
+  font-size: 11px;
+  font-family: inherit;
+}
+
+.photo-url-input input::placeholder {
+  color: #a2abba;
+}
+
+/* =========================================================
+   PROFILE DETAILS
+   ========================================================= */
+
+.profile-details-column {
+  min-width: 0;
+}
+
+.settings-form-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 17px 18px;
+}
+
+.settings-field {
+  min-width: 0;
+}
+
+.settings-field.full-width {
+  grid-column: 1 / -1;
+}
+
+.settings-field label {
+  display: block;
+  margin: 0 0 7px;
+  color: #344054;
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.settings-input-wrapper {
+  width: 100%;
+  height: 44px;
+  box-sizing: border-box;
+  border: 1px solid #dfe5ee;
+  border-radius: 10px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 13px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.settings-input-wrapper:hover {
+  border-color: #c8d1df;
+}
+
+.settings-input-wrapper:focus-within {
+  border-color: #6285e4;
+  box-shadow: 0 0 0 3px rgba(53, 99, 216, 0.08);
+  background: #ffffff;
+}
+
+.settings-input-wrapper > svg {
+  width: 15px;
+  flex-shrink: 0;
+  color: #8a96a9;
+  font-size: 13px;
+}
+
+.settings-input-wrapper input,
+.settings-input-wrapper select {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #344054;
+  font-size: 13px;
+  font-family: inherit;
+}
+
+.settings-input-wrapper input::placeholder {
+  color: #a0aaba;
+}
+
+.settings-input-wrapper select {
+  cursor: pointer;
+  appearance: auto;
+}
+
+.settings-input-wrapper input[type="number"]::-webkit-inner-spin-button,
+.settings-input-wrapper input[type="number"]::-webkit-outer-spin-button {
+  margin: 0;
+}
+
+/* =========================================================
+   PROFILE SAVE AREA
+   ========================================================= */
+
+.profile-save-area {
+  margin-top: 22px;
+  padding-top: 19px;
+  border-top: 1px solid #edf0f5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.settings-primary-button {
+  min-width: 145px;
+  height: 43px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 10px;
+  background: #3563d8;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.settings-primary-button:hover:not(:disabled) {
+  background: #2855c5;
+  box-shadow: 0 6px 15px rgba(53, 99, 216, 0.22);
+  transform: translateY(-1px);
+}
+
+.settings-primary-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.settings-primary-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.secure-note {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #8b96a8;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.secure-note svg {
+  color: #35a36d;
+  font-size: 13px;
+}
+
+/* =========================================================
+   SECURITY CARD
+   ========================================================= */
+
+.security-settings-card {
+  min-width: 0;
+}
+
+.password-form {
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.password-form > .settings-field {
+  margin-bottom: 17px;
+}
+
+/* =========================================================
+   PASSWORD INPUT
+   ========================================================= */
+
+.password-input {
+  padding-right: 7px;
+}
+
+.password-input input {
+  flex: 1;
+}
+
+.password-toggle {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: #8793a6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.password-toggle:hover {
+  background: #f0f3f8;
+  color: #3563d8;
+}
+
+/* =========================================================
+   PASSWORD REQUIREMENTS
+   ========================================================= */
+
+.password-requirements {
+  margin-top: 21px;
+  padding: 16px;
+  border: 1px solid #e5eaf3;
+  border-radius: 12px;
+  background: #f8faff;
+}
+
+.requirements-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.requirements-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #e8efff;
+  color: #3563d8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+
+.requirements-header strong {
+  display: block;
+  color: #27344a;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.requirements-header span {
+  display: block;
+  margin-top: 2px;
+  color: #8994a7;
+  font-size: 10px;
+}
+
+.requirements-list {
+  display: grid;
+  gap: 9px;
+}
+
+.requirement {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #8994a7;
+  font-size: 11px;
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+
+.requirement svg {
+  flex-shrink: 0;
+  color: #c4cbd5;
+  font-size: 12px;
+}
+
+.requirement.valid {
+  color: #2f7652;
+}
+
+.requirement.valid svg {
+  color: #2eae6d;
+}
+
+/* =========================================================
+   PASSWORD MESSAGE
+   ========================================================= */
+
+.password-alert {
+  margin-top: 17px;
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   CHANGE PASSWORD BUTTON
+   ========================================================= */
+
+.change-password-button {
+  width: 100%;
+  height: 44px;
+  margin-top: 18px;
+  border: none;
+  border-radius: 10px;
+  background: #172033;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.change-password-button:hover:not(:disabled) {
+  background: #0e1627;
+  box-shadow: 0 6px 16px rgba(23, 32, 51, 0.18);
+  transform: translateY(-1px);
+}
+
+.change-password-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.change-password-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   BUTTON SPINNER
+   ========================================================= */
+
+.button-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: settingsSpin 0.7s linear infinite;
+}
+
+@keyframes settingsSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   PRIVACY & SECURITY CARD
+   ========================================================= */
+
+.privacy-security-card {
+  width: 100%;
+  min-height: 145px;
+  margin-top: 24px;
+  padding: 24px 26px;
+  box-sizing: border-box;
+  border: 1px solid #e5eaf2;
+  border-radius: 18px;
+  background: #ffffff;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 7px 25px rgba(25, 42, 70, 0.045);
+}
+
+.privacy-icon-wrapper {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: #edf8f2;
+  color: #2f9c67;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.privacy-content {
+  min-width: 0;
+}
+
+.privacy-content h2 {
+  margin: 0;
+  color: #172033;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.privacy-content p {
+  max-width: 700px;
+  margin: 7px 0 12px;
+  color: #7f8b9f;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.privacy-created {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #8a95a7;
+  font-size: 11px;
+}
+
+.privacy-created svg {
+  color: #36a36b;
+  font-size: 12px;
+}
+
+.privacy-created strong {
+  color: #344054;
+  font-weight: 700;
+}
+
+.privacy-visual {
+  min-width: 230px;
+  padding: 15px 18px;
+  border: 1px solid #dff0e7;
+  border-radius: 13px;
+  background: #f7fcf9;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.privacy-shield {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 11px;
+  background: #e2f5e9;
+  color: #2e9b63;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.privacy-protected {
+  min-width: 0;
+}
+
+.privacy-protected strong {
+  display: block;
+  color: #276545;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.privacy-protected span {
+  display: block;
+  margin-top: 3px;
+  color: #82968a;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.secure-badge {
+  width: fit-content;
+  margin-top: 7px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #e3f6eb;
+  color: #278355;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.secure-badge svg {
+  font-size: 9px;
+}
+
+/* =========================================================
+   LOADING STATE
+   ========================================================= */
+
+.settings-loading {
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-loading-card {
+  width: min(420px, 90%);
+  padding: 40px 30px;
+  border: 1px solid #e5eaf2;
+  border-radius: 18px;
+  background: #ffffff;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(25, 42, 70, 0.06);
+}
+
+.settings-loading-card h3 {
+  margin: 16px 0 7px;
+  color: #172033;
+  font-size: 18px;
+}
+
+.settings-loading-card p {
+  margin: 0;
+  color: #8994a7;
+  font-size: 13px;
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+.settings-input-wrapper input:focus-visible,
+.settings-input-wrapper select:focus-visible,
+.photo-url-input input:focus-visible,
+.password-toggle:focus-visible,
+.settings-primary-button:focus-visible,
+.change-password-button:focus-visible {
+  outline: 2px solid rgba(53, 99, 216, 0.35);
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   RESPONSIVE - LARGE TABLETS
+   ========================================================= */
+
+@media (max-width: 1200px) {
+  .settings-page {
+    padding: 28px 26px 45px;
+  }
+
+  .settings-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-form {
+    grid-template-columns: 175px minmax(0, 1fr);
+  }
+
+  .security-settings-card {
+    max-width: none;
+  }
+
+  .privacy-security-card {
+    grid-template-columns: 52px minmax(0, 1fr);
+  }
+
+  .privacy-visual {
+    grid-column: 1 / -1;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE - TABLETS
+   ========================================================= */
+
+@media (max-width: 850px) {
+  .settings-page {
+    padding: 24px 20px 40px;
+  }
+
+  .settings-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .settings-patient-card {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .profile-form {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .profile-photo-column {
+    padding-right: 0;
+    padding-bottom: 22px;
+    border-right: none;
+    border-bottom: 1px solid #edf0f5;
+    align-items: center;
+  }
+
+  .profile-photo-label {
+    align-self: center;
+  }
+
+  .settings-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-field.full-width {
+    grid-column: auto;
+  }
+
+  .privacy-security-card {
+    grid-template-columns: 52px minmax(0, 1fr);
+  }
+
+  .privacy-visual {
+    grid-column: 1 / -1;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .settings-page {
+    padding: 20px 14px 35px;
+  }
+
+  .settings-title-area {
+    gap: 12px;
+  }
+
+  .settings-title-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 13px;
+    font-size: 20px;
+  }
+
+  .settings-title-area h1 {
+    font-size: 26px;
+  }
+
+  .settings-title-area p {
+    font-size: 12px;
+  }
+
+  .settings-card {
+    border-radius: 14px;
+  }
+
+  .settings-card-header {
+    min-height: auto;
+    padding: 17px;
+  }
+
+  .settings-card-heading {
+    gap: 11px;
+  }
+
+  .settings-card-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+  }
+
+  .settings-card-heading h2 {
+    font-size: 15px;
+  }
+
+  .settings-card-heading p {
+    font-size: 10px;
+  }
+
+  .profile-form,
+  .password-form {
+    padding: 17px;
+  }
+
+  .profile-photo-wrapper,
+  .profile-photo,
+  .profile-photo-placeholder {
+    width: 100px;
+    height: 100px;
+  }
+
+  .settings-input-wrapper {
+    height: 43px;
+  }
+
+  .profile-save-area {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .settings-primary-button {
+    width: 100%;
+  }
+
+  .secure-note {
+    white-space: normal;
+  }
+
+  .privacy-security-card {
+    padding: 19px;
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .privacy-icon-wrapper {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    font-size: 18px;
+  }
+
+  .privacy-content h2 {
+    font-size: 16px;
+  }
+
+  .privacy-content p {
+    font-size: 11px;
+  }
+
+  .privacy-visual {
+    padding: 13px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 420px) {
+  .settings-title-area h1 {
+    font-size: 23px;
+  }
+
+  .settings-title-area p {
+    font-size: 11px;
+  }
+
+  .settings-patient-card {
+    min-width: 0;
+  }
+
+  .settings-form-grid {
+    gap: 14px;
+  }
+
+  .settings-field label {
+    font-size: 11px;
+  }
+
+  .settings-input-wrapper input,
+  .settings-input-wrapper select {
+    font-size: 12px;
+  }
+
+  .privacy-security-card {
+    grid-template-columns: 1fr;
+  }
+
+  .privacy-icon-wrapper {
+    width: 44px;
+  }
+
+  .privacy-visual {
+    grid-column: auto;
+  }
+}
