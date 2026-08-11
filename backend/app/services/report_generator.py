@@ -147,8 +147,8 @@ def generate_pdf_report(
     # ── Risk Assessment ──────────────────────────────────────────────────
     if risk:
         story.append(Paragraph("Risk Assessment Summary", section_style))
-        risk_color = danger if risk.risk_level in ("Critical", "High") else (warning if risk.risk_level == "Medium" else success)
-        story.append(Paragraph(f"<b>Risk Level:</b> <font color='#{risk_color.hexval()[1:] if hasattr(risk_color, 'hexval') else 'ef4444'}'>{risk.risk_level}</font> &nbsp;&nbsp; <b>Risk Score:</b> {risk.risk_score}/100 &nbsp;&nbsp; <b>Health Score:</b> {risk.health_score}/100", body_style))
+        risk_hex = "#ef4444" if getattr(risk, "risk_level", "") in ("Critical", "High") else ("#f59e0b" if getattr(risk, "risk_level", "") == "Medium" else "#22c55e")
+        story.append(Paragraph(f"<b>Risk Level:</b> <font color='{risk_hex}'>{getattr(risk, 'risk_level', 'N/A')}</font> &nbsp;&nbsp; <b>Risk Score:</b> {getattr(risk, 'risk_score', 'N/A')}/100 &nbsp;&nbsp; <b>Health Score:</b> {getattr(risk, 'health_score', 'N/A')}/100", body_style))
         if risk.emergency_alert:
             story.append(Paragraph("⚠️ EMERGENCY ALERT: Immediate medical attention is recommended.", ParagraphStyle("emerg", parent=body_style, textColor=danger, fontSize=11, fontName="Helvetica-Bold")))
         story.append(Paragraph(risk.message or "", body_style))

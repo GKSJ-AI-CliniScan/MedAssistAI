@@ -21,7 +21,8 @@ class User(Base):
     reset_token = Column(String(255), nullable=True)
     avatar_url = Column(String(500), nullable=True)
     google_id = Column(String(255), nullable=True, index=True)
-    login_provider = Column(String(50), default="email")  # email | google
+    microsoft_id = Column(String(255), nullable=True, index=True)
+    login_provider = Column(String(50), default="email")  # email | google | microsoft
     last_login_at = Column(DateTime, default=datetime.datetime.utcnow)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)

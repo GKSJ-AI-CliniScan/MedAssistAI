@@ -7,20 +7,22 @@ import { Mail, Lock, Eye, EyeOff, ArrowRight, ShieldCheck, HeartPulse } from 'lu
 import { useAuth } from '../../context/AuthContext';
 import AuthIllustrationPanel from './components/AuthIllustrationPanel';
 import { GoogleAccountModal } from './components/GoogleAccountModal';
+import { MicrosoftAccountModal } from './components/MicrosoftAccountModal';
 import {
   AuthInput,
-  SocialAuthButtons,
   AuthDivider,
   AuthSubmitButton,
   MobileBrand,
 } from './components/AuthFormPrimitives';
+import RippleButton from '../../components/ui/RippleButton';
 
 export const LoginPage = () => {
-  const { login, loginWithGoogle } = useAuth();
+  const { login, loginWithGoogle, loginWithMicrosoft } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showGoogleModal, setShowGoogleModal] = useState(false);
+  const [showMicrosoftModal, setShowMicrosoftModal] = useState(false);
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues: { email: '', password: '', rememberMe: false },
@@ -41,6 +43,7 @@ export const LoginPage = () => {
     }
   };
 
+  /* ── Google Sign-In ─────────────────────────────────────────────── */
   const handleGoogleClick = () => {
     const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
@@ -63,7 +66,6 @@ export const LoginPage = () => {
           },
         });
         window.google.accounts.id.prompt((notification) => {
-          // If One Tap is dismissed or not displayed, fall through to OAuth2 popup
           if (notification.isNotDisplayed() || notification.isSkippedMoment() || notification.isDismissedMoment()) {
             handleGoogleOAuth2Popup(clientId);
           }
@@ -80,7 +82,7 @@ export const LoginPage = () => {
       return;
     }
 
-    // Strategy 3: Open the GoogleAccountModal (manual fallback)
+    // Strategy 3: Open the GoogleAccountModal (manual fallback for dev)
     setShowGoogleModal(true);
   };
 
@@ -112,8 +114,37 @@ export const LoginPage = () => {
     }
   };
 
+  /* ── Microsoft Sign-In ──────────────────────────────────────────── */
   const handleMicrosoftClick = () => {
-    toast.info('Microsoft login is not yet configured. Please use email/password or Google Sign-In.', { autoClose: 4000 });
+    const clientId = import.meta.env.VITE_MICROSOFT_CLIENT_ID;
+    if (clientId) {
+      const redirectUri = window.location.origin + '/auth/login';
+      const authUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${encodeURIComponent(clientId)}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=user.read`;
+      const popup = window.open(authUrl, 'MicrosoftSignInPopup', 'width=500,height=600');
+      const checkPopup = setInterval(() => {
+        try {
+          if (!popup || popup.closed) {
+            clearInterval(checkPopup);
+          } else if (popup.location.href.includes('access_token')) {
+            const hash = popup.location.hash.substring(1);
+            const params = new URLSearchParams(hash);
+            const token = params.get('access_token');
+            popup.close();
+            clearInterval(checkPopup);
+            if (token) {
+              loginWithMicrosoft(token, null).then(() => {
+                toast.success('Signed in with Microsoft! Redirecting…', { icon: '🔐' });
+                setTimeout(() => navigate('/dashboard'), 600);
+              }).catch((err) => {
+                toast.error(err?.response?.data?.detail || 'Microsoft Sign-In failed.');
+              });
+            }
+          }
+        } catch (e) {}
+      }, 500);
+      return;
+    }
+    setShowMicrosoftModal(true);
   };
 
   return (
@@ -166,20 +197,7 @@ export const LoginPage = () => {
               </div>
             </div>
 
-            {/* Social buttons */}
-            <div className="mb-6">
-              <SocialAuthButtons
-                onGoogle={handleGoogleClick}
-                onMicrosoft={handleMicrosoftClick}
-              />
-            </div>
-
-            {/* Divider */}
-            <div className="mb-6">
-              <AuthDivider />
-            </div>
-
-            {/* Form */}
+            {/* ── FORM: Email + Password first ── */}
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
               {/* Email */}
               <AuthInput
@@ -244,14 +262,12 @@ export const LoginPage = () => {
               </label>
 
               {/* Demo hint */}
-              <div className="bg-indigo-500/8 border border-indigo-500/20 rounded-xl p-3 text-xs text-indigo-300 leading-relaxed flex justify-between items-center">
-                <div>
-                  <span className="font-bold text-indigo-200">Demo Credentials: </span>
-                  demo@medassist.ai / Password123
-                </div>
+              <div className="bg-indigo-500/8 border border-indigo-500/20 rounded-xl p-3 text-xs text-indigo-300 leading-relaxed">
+                <span className="font-bold text-indigo-200">Demo Credentials: </span>
+                demo@medassist.ai / Password123
               </div>
 
-              {/* Submit */}
+              {/* Submit — Sign In button */}
               <AuthSubmitButton
                 isLoading={isLoading}
                 loadingLabel="Authenticating..."
@@ -259,11 +275,57 @@ export const LoginPage = () => {
               />
             </form>
 
+            {/* ── DIVIDER ── */}
+            <div className="my-5">
+              <AuthDivider label="or continue with" />
+            </div>
+
+            {/* ── SOCIAL BUTTONS: Google + Microsoft (below form) ── */}
+            <div className="flex gap-3">
+              {/* Continue with Google */}
+              <button
+                type="button"
+                onClick={handleGoogleClick}
+                aria-label="Sign in with Google"
+                className="flex-1 flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl
+                  bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20
+                  text-sm font-semibold text-slate-200 transition-all duration-200 group"
+              >
+                {/* Google coloured G */}
+                <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+                  <path fill="#EA4335" d="M5.26620003,9.76452941 C6.19878754,6.93863203 8.85444915,4.90909091 12,4.90909091 C13.6909091,4.90909091 15.2181818,5.50909091 16.4181818,6.49090909 L19.9090909,3 C17.7818182,1.14545455 15.0545455,0 12,0 C7.27006974,0 3.1977497,2.69829785 1.23999023,6.65002441 L5.26620003,9.76452941 Z"/>
+                  <path fill="#34A853" d="M16.0407269,18.0125889 C14.9509167,18.7163016 13.5660892,19.0909091 12,19.0909091 C8.86648613,19.0909091 6.21911939,17.076871 5.27698177,14.2678769 L1.23746264,17.3349879 C3.19279051,21.2936293 7.26500293,24 12,24 C14.9328362,24 17.7353462,22.9573905 19.834192,20.9995801 L16.0407269,18.0125889 Z"/>
+                  <path fill="#4A90E2" d="M19.834192,20.9995801 C21.9752773,19.0373145 23.4545455,16.1459175 23.4545455,12 C23.4545455,11.2909091 23.3454545,10.5272727 23.1818182,9.81818182 L12,9.81818182 L12,14.4545455 L18.4363636,14.4545455 C18.1187732,16.013997 17.2662994,17.2118056 16.0407269,18.0125889 L19.834192,20.9995801 Z"/>
+                  <path fill="#FBBC05" d="M5.27698177,14.2678769 C5.03832634,13.556323 4.90909091,12.7937589 4.90909091,12 C4.90909091,11.2182781 5.03443647,10.4668121 5.26620003,9.76452941 L1.23999023,6.65002441 C0.43658717,8.26043162 0,10.0753848 0,12 C0,13.9195484 0.444780743,15.7301709 1.23746264,17.3349879 L5.27698177,14.2678769 Z"/>
+                </svg>
+                <span>Google</span>
+              </button>
+
+              {/* Continue with Microsoft */}
+              <button
+                type="button"
+                onClick={handleMicrosoftClick}
+                aria-label="Sign in with Microsoft"
+                className="flex-1 flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl
+                  bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20
+                  text-sm font-semibold text-slate-200 transition-all duration-200 group"
+              >
+                {/* Microsoft 4-colour grid */}
+                <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+                  <path fill="#F25022" d="M0 0h11.5v11.5H0z"/>
+                  <path fill="#7FBA00" d="M12.5 0H24v11.5H12.5z"/>
+                  <path fill="#00A4EF" d="M0 12.5h11.5V24H0z"/>
+                  <path fill="#FFB900" d="M12.5 12.5H24V24H12.5z"/>
+                </svg>
+                <span>Microsoft</span>
+              </button>
+            </div>
+
             {/* Register link */}
-            <p className="text-center text-sm text-slate-500 mt-5">
-              New to MedAssist?{' '}
+            <p className="text-center text-sm text-slate-500 mt-6">
+              Don't have an account?{' '}
               <Link to="/auth/register" className="text-cyan-400 hover:text-cyan-300 font-bold transition-colors">
-                Create your account
+                Sign Up / Create Account
               </Link>
             </p>
           </div>
@@ -277,11 +339,26 @@ export const LoginPage = () => {
         </motion.div>
       </div>
 
-      {/* ── GOOGLE ACCOUNT SELECTOR MODAL ── */}
+      {/* ── GOOGLE ACCOUNT SELECTOR MODAL (dev fallback) ── */}
+      {/* The modal handles loginWithGoogle internally; onSelectAccount just navigates */}
       <GoogleAccountModal
         isOpen={showGoogleModal}
         onClose={() => setShowGoogleModal(false)}
-        onSelectAccount={() => navigate('/dashboard')}
+        onSelectAccount={() => {
+          setShowGoogleModal(false);
+          setTimeout(() => navigate('/dashboard'), 400);
+        }}
+      />
+
+      {/* ── MICROSOFT ACCOUNT SELECTOR MODAL (dev fallback) ── */}
+      {/* The modal handles loginWithMicrosoft internally; onSelectAccount just navigates */}
+      <MicrosoftAccountModal
+        isOpen={showMicrosoftModal}
+        onClose={() => setShowMicrosoftModal(false)}
+        onSelectAccount={() => {
+          setShowMicrosoftModal(false);
+          setTimeout(() => navigate('/dashboard'), 400);
+        }}
       />
     </div>
   );

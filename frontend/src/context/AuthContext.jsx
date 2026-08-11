@@ -61,6 +61,20 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const loginWithMicrosoft = async (accessToken, userInfo = null) => {
+    setLoading(true);
+    try {
+      const response = await authService.loginWithMicrosoft(accessToken, userInfo);
+      setUser(response.user);
+      setIsAuthenticated(true);
+      return response.user;
+    } catch (error) {
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const register = async (name, email, password, role = 'patient') => {
     setLoading(true);
     try {
@@ -114,6 +128,7 @@ export const AuthProvider = ({ children }) => {
       loading,
       login,
       loginWithGoogle,
+      loginWithMicrosoft,
       register,
       logout,
       forgotPassword,

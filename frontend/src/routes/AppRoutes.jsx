@@ -69,6 +69,12 @@ export const AppRoutes = () => {
         </Route>
       </Route>
 
+      {/* ── Route Aliases for easy access ── */}
+      <Route path="/login" element={<Navigate to="/auth/login" replace />} />
+      <Route path="/signin" element={<Navigate to="/auth/login" replace />} />
+      <Route path="/register" element={<Navigate to="/auth/register" replace />} />
+      <Route path="/signup" element={<Navigate to="/auth/register" replace />} />
+
       {/* 404 Route */}
       <Route path="/404" element={<NotFoundPage />} />
       <Route path="*" element={<Navigate to="/404" replace />} />

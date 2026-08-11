@@ -21,7 +21,7 @@ def _get_patient_or_404(user: User, db: Session):
     repo = PatientRepository(db)
     patient = repo.get_by_user_id(user.id)
     if not patient:
-        raise HTTPException(status_code=404, detail="Patient profile not found")
+        patient = repo.create(user_id=user.id)
     return patient
 
 

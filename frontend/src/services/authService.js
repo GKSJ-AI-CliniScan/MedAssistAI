@@ -44,6 +44,24 @@ export const authService = {
     return data;
   },
 
+  /**
+   * Real Microsoft OAuth Login:
+   * Supports Access token from Microsoft OAuth or userInfo object.
+   */
+  async loginWithMicrosoft(accessToken, userInfo = null) {
+    const payload = accessToken
+      ? { access_token: accessToken }
+      : {
+          email: userInfo.email,
+          name: userInfo.name || 'Microsoft User',
+          picture: userInfo.picture || '',
+          microsoft_id: userInfo.microsoft_id || userInfo.sub || '',
+        };
+    const { data } = await api.post("/auth/microsoft", payload);
+    authService._saveSession(data);
+    return data;
+  },
+
   async forgotPassword(email) {
     const { data } = await api.post("/auth/forgot-password", { email });
     return data;

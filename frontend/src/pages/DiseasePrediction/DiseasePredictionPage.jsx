@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import {
   Brain, AlertTriangle, ArrowRight, Activity, Stethoscope,
-  Heart, ShieldCheck, ChevronDown, ChevronUp, RefreshCw,
-  Compass, Plus, FileText, CheckCircle2
+  Heart, ChevronDown, ChevronUp, RefreshCw, FileText, Download, Loader2
 } from 'lucide-react';
 import { useUser } from '../../context/UserContext';
 import RippleButton from '../../components/ui/RippleButton';
+import reportService from '../../services/reportService';
 
 const cardVariants = {
   hidden: { opacity: 0, y: 15 },
   visible: (i) => ({ opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.45, ease: 'easeOut' } })
 };
 
-const DiseaseCard = ({ item, index }) => {
+const DiseaseCard = ({ item, index, onGenerateReport }) => {
   const [expanded, setExpanded] = useState(false);
+  const [downloading, setDownloading] = useState(false);
   const navigate = useNavigate();
 
   const getRiskStyles = (risk) => {
@@ -26,8 +28,17 @@ const DiseaseCard = ({ item, index }) => {
     }
   };
 
-  const confidence = item.confidence ?? 60;
+  const confidence = item.confidence ?? item.probability ?? 60;
   const matchColor = confidence >= 80 ? '#06b6d4' : confidence >= 50 ? '#f59e0b' : '#f43f5e';
+
+  const handleDownloadReport = async () => {
+    setDownloading(true);
+    try {
+      await onGenerateReport(item.id);
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   return (
     <motion.div
@@ -140,7 +151,7 @@ const DiseaseCard = ({ item, index }) => {
             <div className="bg-cyan-500/5 border border-cyan-500/10 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <p className="text-[10px] text-cyan-400 font-bold uppercase tracking-widest">Recommended Specialist</p>
-                <p className="text-xs font-bold text-slate-200 mt-0.5">{item.recommendations?.doctor || 'General Practitioner'}</p>
+                <p className="text-xs font-bold text-slate-200 mt-0.5">{item.recommendations?.doctor || item.doctor || 'General Practitioner'}</p>
               </div>
               <RippleButton
                 variant="outline"
@@ -154,11 +165,28 @@ const DiseaseCard = ({ item, index }) => {
         )}
       </AnimatePresence>
 
-      {/* Accordion toggle footer */}
-      <div className="flex justify-center mt-4 border-t border-white/3 pt-3">
+      {/* Footer Action Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 mt-4 pt-3 border-t border-white/5">
+        <RippleButton
+          variant="outline"
+          onClick={handleDownloadReport}
+          disabled={downloading}
+          className="px-3.5 py-1.5 text-xs font-bold gap-1.5 h-8 border-cyan-500/20 text-cyan-300 hover:bg-cyan-500/10"
+        >
+          {downloading ? (
+            <>
+              <Loader2 size={13} className="animate-spin text-cyan-400" /> Generating PDF...
+            </>
+          ) : (
+            <>
+              <Download size={13} className="text-cyan-400" /> Download PDF Report
+            </>
+          )}
+        </RippleButton>
+
         <button
           onClick={() => setExpanded(!expanded)}
-          className="text-[10px] font-bold text-slate-500 hover:text-slate-350 transition-colors uppercase tracking-widest flex items-center gap-1 focus:outline-none"
+          className="text-[10px] font-bold text-slate-500 hover:text-slate-350 transition-colors uppercase tracking-widest flex items-center gap-1 focus:outline-none ml-auto"
         >
           {expanded ? (
             <>Hide Clinical Profile <ChevronUp size={12} /></>
@@ -174,6 +202,23 @@ const DiseaseCard = ({ item, index }) => {
 export const DiseasePredictionPage = () => {
   const { symptomSession } = useUser();
   const navigate = useNavigate();
+
+  const handleGenerateReport = async (diseaseId) => {
+    try {
+      // Determine prediction record id from symptomSession if available
+      const predictionId = symptomSession.predictionId || 1;
+      const reportData = await reportService.generateReport(predictionId);
+      if (reportData?.id) {
+        await reportService.downloadReportFile(reportData.id, reportData.file_name);
+        toast.success('Report generated and downloaded successfully!');
+      } else {
+        toast.error('Failed to get report details from server');
+      }
+    } catch (err) {
+      console.error('Report generation error:', err);
+      toast.error('Failed to generate PDF report. Please try again.');
+    }
+  };
 
   const predictions = symptomSession.predictionResult;
   const hasPredictions = predictions && predictions.length > 0;
@@ -200,7 +245,7 @@ export const DiseasePredictionPage = () => {
               onClick={() => window.print()}
               className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white text-xs font-bold transition-all focus:outline-none"
             >
-              <FileText size={14} className="text-cyan-400" /> Print / Export PDF
+              <FileText size={14} className="text-cyan-400" /> Print Page
             </button>
             <RippleButton
               variant="secondary"
@@ -267,7 +312,7 @@ export const DiseasePredictionPage = () => {
 
                 <div className="flex flex-wrap gap-1.5">
                   {symptomSession.selectedSymptoms?.map(s => (
-                    <span key={s.id} className="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/8 text-slate-300 font-semibold">
+                    <span key={s.id || s.name} className="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/8 text-slate-300 font-semibold">
                       {s.name}
                     </span>
                   ))}
@@ -292,7 +337,7 @@ export const DiseasePredictionPage = () => {
               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest pl-1">Predicted Diseases ({predictions.length})</h3>
               
               {predictions.map((item, i) => (
-                <DiseaseCard key={item.id} item={item} index={i} />
+                <DiseaseCard key={item.id || i} item={item} index={i} onGenerateReport={handleGenerateReport} />
               ))}
             </div>
 

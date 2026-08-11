@@ -13,55 +13,50 @@ export const usePrediction = () => {
     setLoading(true);
     setError(null);
     try {
-      // Step 1: Run prediction matches
-      const predictions = await predictionService.predictDisease(
-        selectedSymptoms.map(s => s.name),
+      // Step 1: Run prediction API call
+      const data = await predictionService.predictDisease(
+        selectedSymptoms,
         severity,
         duration,
         notes
       );
 
-      // Step 2: Run risk assessment
-      const riskAssessment = await riskService.calculateRisk(
-        selectedSymptoms.map(s => s.name),
-        severity,
-        duration,
-        profile
-      );
+      const predictionsArray = data.predictions || [];
+      const riskAssessment = data.risk || null;
+      const recommendations = data.recommendation || null;
 
-      // Step 3: Run recommendation logic
-      const recommendations = await recommendationService.getRecommendations(predictions);
-
-      // Step 4: Update session state in Context
+      // Step 2: Update session state in Context
       updateSymptomSession({
         selectedSymptoms,
         severity,
         duration,
         notes,
-        predictionResult: predictions,
+        predictionResult: predictionsArray,
         riskResult: riskAssessment,
         recommendations: recommendations
       });
 
-      // Step 5: Send notification triggers if risk is high
-      if (riskAssessment.riskLevel === 'High') {
+      // Step 3: Send notification triggers if risk is high/critical
+      if (riskAssessment?.riskLevel === 'High' || riskAssessment?.riskLevel === 'Critical') {
         addNotification(
           'High Risk Detected',
-          `Analysis flagged a high risk level for ${predictions[0]?.name || 'a condition'}. Please consult a physician.`,
+          `Analysis flagged a high risk level for ${data.top_disease || 'a condition'}. Please consult a physician.`,
           'error'
         );
       } else {
         addNotification(
           'Analysis Completed',
-          'Symptom assessment and disease predictions updated successfully.',
+          `Symptom assessment for ${data.top_disease || 'condition'} completed successfully.`,
           'success'
         );
       }
 
       return {
-        predictions,
+        predictions: predictionsArray,
         riskAssessment,
-        recommendations
+        recommendations,
+        topDisease: data.top_disease,
+        topConfidence: data.top_confidence
       };
     } catch (err) {
       setError(err.message || 'Analysis failed. Please try again.');

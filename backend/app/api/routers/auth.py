@@ -225,6 +225,93 @@ def google_login(payload: dict, db: Session = Depends(get_db)):
         },
     )
 
+@router.post("/microsoft", response_model=Token)
+def microsoft_login(payload: dict, db: Session = Depends(get_db)):
+    user_repo = UserRepository(db)
+    pat_repo = PatientRepository(db)
+    notif_repo = NotificationRepository(db)
+
+    email = None
+    name = "Microsoft User"
+    picture = None
+    microsoft_id = payload.get("microsoft_id", "")
+    access_token_str = payload.get("access_token") or payload.get("id_token")
+
+    if access_token_str and not payload.get("email"):
+        try:
+            import requests
+            headers = {"Authorization": f"Bearer {access_token_str}"}
+            ms_res = requests.get("https://graph.microsoft.com/v1.0/me", headers=headers, timeout=5)
+            if ms_res.status_code == 200:
+                data = ms_res.json()
+                email = data.get("mail") or data.get("userPrincipalName")
+                name = data.get("displayName", "Microsoft User")
+                microsoft_id = data.get("id", "")
+        except Exception:
+            pass
+
+    if not email:
+        email = payload.get("email")
+        name = payload.get("name", "Microsoft User")
+        picture = payload.get("picture")
+        microsoft_id = payload.get("microsoft_id", "") or payload.get("sub", "")
+
+    if not email:
+        raise HTTPException(status_code=400, detail="Could not retrieve email from Microsoft account credential")
+
+    name_parts = name.strip().split(" ", 1)
+    first_name = name_parts[0]
+    last_name = name_parts[1] if len(name_parts) > 1 else ""
+
+    user = user_repo.get_by_email(email)
+    is_new_user = False
+    if not user:
+        is_new_user = True
+        user = user_repo.create(
+            full_name=name,
+            email=email,
+            password="MicrosoftOAuth_" + (microsoft_id[:16] if microsoft_id else "NoID"),
+            role="patient"
+        )
+        user.first_name = first_name
+        user.last_name = last_name
+        user.is_email_verified = True
+        pat_repo.create(user_id=user.id)
+
+    user.microsoft_id = microsoft_id or getattr(user, "microsoft_id", None)
+    user.login_provider = "microsoft"
+    user.last_login_at = datetime.datetime.utcnow()
+    if picture:
+        user.avatar_url = picture
+    db.commit()
+    db.refresh(user)
+
+    if is_new_user:
+        notif_repo.create(
+            user_id=user.id,
+            title="Welcome to MedAssist AI 🎉",
+            message=f"Hello {user.full_name}! Your Microsoft account has been linked successfully.",
+            type="info"
+        )
+
+    access_token = create_access_token({"sub": str(user.id), "role": user.role})
+    refresh_token = create_refresh_token({"sub": str(user.id), "role": user.role})
+    return Token(
+        access_token=access_token,
+        refresh_token=refresh_token,
+        user={
+            "id": user.id,
+            "full_name": user.full_name,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email,
+            "role": user.role,
+            "avatar_url": user.avatar_url,
+            "login_provider": user.login_provider,
+            "is_email_verified": user.is_email_verified,
+        },
+    )
+
 @router.get("/me")
 def get_me(current_user: User = Depends(get_current_user)):
     return {

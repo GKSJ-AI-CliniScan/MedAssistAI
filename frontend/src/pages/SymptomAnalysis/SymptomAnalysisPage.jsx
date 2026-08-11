@@ -118,15 +118,7 @@ export const SymptomAnalysisPage = () => {
 
   const handleSubmitAnalysis = async () => {
     try {
-      const results = await analyzeSymptoms(selectedSymptoms, severity, duration, notes);
-      // Save results to session context so prediction page can read them
-      updateSymptomSession({
-        selectedSymptoms,
-        severity,
-        duration,
-        notes,
-        predictionResult: results?.predictions ?? results,
-      });
+      await analyzeSymptoms(selectedSymptoms, severity, duration, notes);
       toast.success('Clinical AI Analysis Complete!');
       navigate('/prediction');
     } catch (err) {
