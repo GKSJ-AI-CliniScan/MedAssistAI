@@ -80,7 +80,7 @@ export const SymptomAnalysisPage = () => {
   const filteredSymptoms = allSymptoms.filter(s => {
     const matchesSearch = s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           s.synonyms.some(syn => syn.toLowerCase().includes(searchQuery.toLowerCase()));
-    const matchesPart = selectedBodyPart === 'All' || s.bodyPart === selectedBodyPart;
+    const matchesPart = selectedBodyPart === 'All' || s.bodyPart?.toLowerCase() === selectedBodyPart.toLowerCase();
     return matchesSearch && matchesPart;
   });
 

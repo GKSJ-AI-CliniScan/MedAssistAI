@@ -230,26 +230,17 @@ export const GoogleAccountModal = ({ isOpen, onClose, onSelectAccount }) => {
             </div>
           )}
 
-          {/* No Client ID configured — show warning + manual fallback */}
+          {/* No Client ID configured – show simple manual fallback */}
           {!loading && !clientId && (
             <div className="space-y-4">
-              <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3.5 flex items-start gap-3">
-                <AlertTriangle size={18} className="text-amber-400 shrink-0 mt-0.5" />
-                <div className="text-xs text-amber-200 leading-relaxed">
-                  <p className="font-bold mb-1">Google OAuth Client ID not configured</p>
-                  <p className="text-amber-300/80">
-                    To enable real Google Sign-In, add your <code className="text-amber-200 bg-amber-500/10 px-1 rounded">VITE_GOOGLE_CLIENT_ID</code> to <code className="text-amber-200 bg-amber-500/10 px-1 rounded">frontend/.env</code>
-                  </p>
-                </div>
-              </div>
-
-              <form onSubmit={handleManualSubmit} className="space-y-3 pt-2 border-t border-white/10">
-                <p className="text-xs text-slate-400 font-semibold">Development Mode — Manual Google Login:</p>
+              <h3 className="text-sm font-medium text-white mb-2">Google Sign‑In (Development Mode)</h3>
+              <form onSubmit={handleManualSubmit} className="space-y-3 border-t border-white/10 pt-2">
+                <p className="text-xs text-slate-400 font-semibold">Enter your name and Google email to continue.</p>
                 <div className="relative">
                   <User size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
                   <input
                     type="text"
-                    placeholder="Full Name (e.g. Yamini Sharma)"
+                    placeholder="Full Name"
                     value={manualName}
                     onChange={(e) => setManualName(e.target.value)}
                     required
@@ -260,7 +251,7 @@ export const GoogleAccountModal = ({ isOpen, onClose, onSelectAccount }) => {
                   <Mail size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
                   <input
                     type="email"
-                    placeholder="Google Email (e.g. yamini@gmail.com)"
+                    placeholder="Google Email"
                     value={manualEmail}
                     onChange={(e) => setManualEmail(e.target.value)}
                     required

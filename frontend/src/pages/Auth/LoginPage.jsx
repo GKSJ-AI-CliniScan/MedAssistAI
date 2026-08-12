@@ -15,6 +15,7 @@ import {
   MobileBrand,
 } from './components/AuthFormPrimitives';
 import RippleButton from '../../components/ui/RippleButton';
+import { authService } from '../../services/authService';
 
 export const LoginPage = () => {
   const { login, loginWithGoogle, loginWithMicrosoft } = useAuth();
@@ -43,46 +44,30 @@ export const LoginPage = () => {
     }
   };
 
-  /* ── Google Sign-In ─────────────────────────────────────────────── */
-  const handleGoogleClick = () => {
+  /* ── Google Sign-In ──────────────────────────────────────────────── */
+  const handleGoogleClick = async () => {
     const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-
-    // Strategy 1: Google Identity Services One Tap / Popup (id_token flow)
+    // If client ID is configured and Google One‑Tap is available, use it.
     if (clientId && window.google?.accounts?.id) {
       try {
         window.google.accounts.id.initialize({
           client_id: clientId,
           callback: async (response) => {
             if (response.credential) {
-              try {
-                await loginWithGoogle(response.credential, null);
-                toast.success('Signed in with Google! Redirecting…', { icon: '🔐' });
-                setTimeout(() => navigate('/dashboard'), 600);
-              } catch (err) {
-                const msg = err?.response?.data?.detail || err.message || 'Google Sign-In failed.';
-                toast.error(msg);
-              }
+              await loginWithGoogle(response.credential, null);
+              toast.success('Signed in with Google! Redirecting…', { icon: '🔐' });
+              setTimeout(() => navigate('/dashboard'), 600);
             }
           },
+          auto_select: false,
         });
-        window.google.accounts.id.prompt((notification) => {
-          if (notification.isNotDisplayed() || notification.isSkippedMoment() || notification.isDismissedMoment()) {
-            handleGoogleOAuth2Popup(clientId);
-          }
-        });
+        window.google.accounts.id.prompt();
         return;
       } catch (e) {
-        console.warn('[GoogleAuth] One Tap failed, trying OAuth2 popup:', e);
+        console.warn('[GoogleAuth] One‑Tap init failed, falling back to modal.', e);
       }
     }
-
-    // Strategy 2: OAuth2 token client popup (access_token → userinfo)
-    if (clientId && window.google?.accounts?.oauth2) {
-      handleGoogleOAuth2Popup(clientId);
-      return;
-    }
-
-    // Strategy 3: Open the GoogleAccountModal (manual fallback for dev)
+    // No client ID or One‑Tap unavailable – show fallback modal.
     setShowGoogleModal(true);
   };
 
@@ -115,7 +100,17 @@ export const LoginPage = () => {
   };
 
   /* ── Microsoft Sign-In ──────────────────────────────────────────── */
-  const handleMicrosoftClick = () => {
+  const handleMicrosoftClick = async () => {
+    try {
+      const authData = await authService.getMicrosoftAuthUrl();
+      if (authData.configured && authData.url) {
+        window.location.href = authData.url;
+        return;
+      }
+    } catch (e) {
+      console.warn('[MicrosoftAuth] Backend OAuth URL check failed, checking client keys…');
+    }
+
     const clientId = import.meta.env.VITE_MICROSOFT_CLIENT_ID;
     if (clientId) {
       const redirectUri = window.location.origin + '/auth/login';
@@ -146,6 +141,7 @@ export const LoginPage = () => {
     }
     setShowMicrosoftModal(true);
   };
+
 
   return (
     <div className="min-h-screen flex bg-[#060913] text-white overflow-hidden">

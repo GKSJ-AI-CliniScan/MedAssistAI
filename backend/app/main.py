@@ -124,6 +124,7 @@ def seed_data():
         db.close()
 
 # ── Health Check ──────────────────────────────────────────────────────
+@app.get("/health", tags=["System"])
 @app.get("/api/health", tags=["System"])
 def health_check():
     return {

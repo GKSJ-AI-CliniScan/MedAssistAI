@@ -30,6 +30,17 @@ class Settings(BaseSettings):
     MODEL_PATH: str = os.path.join(os.path.dirname(os.path.dirname(__file__)), "ml", "saved_models", "disease_model.joblib")
     DATASET_PATH: str = os.path.join(os.path.dirname(os.path.dirname(__file__)), "ml", "saved_models", "disease_symptoms.csv")
 
+    # OAuth Configuration
+    FRONTEND_URL: str = os.getenv("FRONTEND_URL", "http://localhost:5173")
+    GOOGLE_CLIENT_ID: str = os.getenv("GOOGLE_CLIENT_ID", "")
+    GOOGLE_CLIENT_SECRET: str = os.getenv("GOOGLE_CLIENT_SECRET", "")
+    GOOGLE_CALLBACK_URL: str = os.getenv("GOOGLE_CALLBACK_URL", "http://localhost:8000/api/v1/auth/google/callback")
+
+    MICROSOFT_CLIENT_ID: str = os.getenv("MICROSOFT_CLIENT_ID", "")
+    MICROSOFT_CLIENT_SECRET: str = os.getenv("MICROSOFT_CLIENT_SECRET", "")
+    MICROSOFT_TENANT_ID: str = os.getenv("MICROSOFT_TENANT_ID", "common")
+    MICROSOFT_CALLBACK_URL: str = os.getenv("MICROSOFT_CALLBACK_URL", "http://localhost:8000/api/v1/auth/microsoft/callback")
+
     @field_validator("SQLALCHEMY_DATABASE_URI", mode="before")
     def assemble_db_connection(cls, v: Union[str, None], info) -> str:
         if isinstance(v, str):

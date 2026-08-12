@@ -76,31 +76,31 @@ def build_pdf(filename="MedAssist_AI_Complete_Project_Documentation.pdf"):
         'DocTitle',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
-        fontSize=26,
-        leading=30,
+        fontSize=24,
+        leading=28,
         textColor=secondary_color,
-        spaceAfter=6
+        spaceAfter=4
     )
 
     subtitle_style = ParagraphStyle(
         'DocSubtitle',
         parent=styles['Normal'],
         fontName='Helvetica',
-        fontSize=13,
-        leading=16,
+        fontSize=12,
+        leading=15,
         textColor=primary_color,
-        spaceAfter=15
+        spaceAfter=12
     )
 
     h1_style = ParagraphStyle(
         'H1',
         parent=styles['Heading1'],
         fontName='Helvetica-Bold',
-        fontSize=16,
-        leading=20,
+        fontSize=14,
+        leading=18,
         textColor=secondary_color,
-        spaceBefore=14,
-        spaceAfter=8,
+        spaceBefore=12,
+        spaceAfter=6,
         keepWithNext=True
     )
 
@@ -108,10 +108,10 @@ def build_pdf(filename="MedAssist_AI_Complete_Project_Documentation.pdf"):
         'H2',
         parent=styles['Heading2'],
         fontName='Helvetica-Bold',
-        fontSize=12,
-        leading=15,
+        fontSize=11,
+        leading=14,
         textColor=primary_color,
-        spaceBefore=10,
+        spaceBefore=8,
         spaceAfter=4,
         keepWithNext=True
     )
@@ -120,10 +120,10 @@ def build_pdf(filename="MedAssist_AI_Complete_Project_Documentation.pdf"):
         'Body',
         parent=styles['BodyText'],
         fontName='Helvetica',
-        fontSize=9.5,
-        leading=13.5,
+        fontSize=9,
+        leading=13,
         textColor=text_color,
-        spaceAfter=6
+        spaceAfter=5
     )
 
     bullet_style = ParagraphStyle(
@@ -152,8 +152,8 @@ def build_pdf(filename="MedAssist_AI_Complete_Project_Documentation.pdf"):
         'TableHeader',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
-        fontSize=9,
-        leading=11,
+        fontSize=8.5,
+        leading=10.5,
         textColor=colors.white
     )
 
@@ -161,8 +161,8 @@ def build_pdf(filename="MedAssist_AI_Complete_Project_Documentation.pdf"):
         'TableCell',
         parent=styles['Normal'],
         fontName='Helvetica',
-        fontSize=8.5,
-        leading=11,
+        fontSize=8,
+        leading=10.5,
         textColor=text_color
     )
 
@@ -177,8 +177,8 @@ def build_pdf(filename="MedAssist_AI_Complete_Project_Documentation.pdf"):
 
     # Title Block
     story.append(Paragraph("MedAssist AI — Comprehensive Project Architecture & Specification", title_style))
-    story.append(Paragraph("End-to-End Technical Documentation from Scratch | Clinical Diagnostic Platform", subtitle_style))
-    story.append(HRFlowable(width="100%", thickness=2, color=primary_color, spaceAfter=15))
+    story.append(Paragraph("End-to-End Technical Documentation & Integrated Medical Datasets | Clinical Diagnostic Platform", subtitle_style))
+    story.append(HRFlowable(width="100%", thickness=2, color=primary_color, spaceAfter=12))
 
     # 1. Executive Summary & Overview
     story.append(Paragraph("1. Project Overview & Clinical Mission", h1_style))
@@ -193,7 +193,7 @@ def build_pdf(filename="MedAssist_AI_Complete_Project_Documentation.pdf"):
     story.append(Paragraph("• <b>Automated Clinical Reporting:</b> Generates downloadable, publication-grade PDF medical reports complete with patient history and diagnostic summaries.", bullet_style))
     story.append(Paragraph("• <b>Seamless Authentication:</b> Provides multi-channel user authentication featuring JWT, OAuth 2.0 (Google & Microsoft), and interactive fallback capabilities.", bullet_style))
 
-    story.append(Spacer(1, 10))
+    story.append(Spacer(1, 8))
 
     # 2. Technology Stack
     story.append(Paragraph("2. System Architecture & Technology Stack", h1_style))
@@ -206,7 +206,7 @@ def build_pdf(filename="MedAssist_AI_Complete_Project_Documentation.pdf"):
         [Paragraph("Icons & Motion", table_cell_bold), Paragraph("Lucide React & Framer Motion", table_cell_style), Paragraph("Latest", table_cell_style), Paragraph("Modern iconography, smooth page transitions & interactive modals", table_cell_style)],
         [Paragraph("Backend API", table_cell_bold), Paragraph("FastAPI (Python)", table_cell_style), Paragraph("Python 3.14 / FastAPI 0.115+", table_cell_style), Paragraph("Asynchronous REST API framework with automatic OpenAPI docs", table_cell_style)],
         [Paragraph("Database & ORM", table_cell_bold), Paragraph("SQLAlchemy & SQLite", table_cell_style), Paragraph("SQLAlchemy v2.0+", table_cell_style), Paragraph("Relational database schema with repository pattern data access", table_cell_style)],
-        [Paragraph("AI / ML Models", table_cell_bold), Paragraph("Scikit-Learn & NumPy", table_cell_style), Paragraph("v1.5+", table_cell_style), Paragraph("Random Forest & Decision Tree classification models for diagnostic prediction", table_cell_style)],
+        [Paragraph("AI / ML Models", table_cell_bold), Paragraph("Scikit-Learn & CatBoost", table_cell_style), Paragraph("v1.5+ / CatBoost 1.2", table_cell_style), Paragraph("CatBoost & Random Forest classification models for diagnostic prediction", table_cell_style)],
         [Paragraph("Security & Auth", table_cell_bold), Paragraph("PyJWT & Passlib", table_cell_style), Paragraph("v2.9+", table_cell_style), Paragraph("JSON Web Token (JWT) stateless auth with bcrypt password hashing", table_cell_style)],
         [Paragraph("PDF Generator", table_cell_bold), Paragraph("ReportLab", table_cell_style), Paragraph("v5.0.0", table_cell_style), Paragraph("Automated canvas & document generation for medical reports", table_cell_style)]
     ]
@@ -218,15 +218,78 @@ def build_pdf(filename="MedAssist_AI_Complete_Project_Documentation.pdf"):
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
         ('GRID', (0,0), (-1,-1), 0.5, colors.HexColor("#cbd5e1")),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, bg_light]),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 5),
-        ('TOPPADDING', (0,0), (-1,-1), 5),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 4),
+        ('TOPPADDING', (0,0), (-1,-1), 4),
     ]))
     story.append(t_tech)
 
-    story.append(Spacer(1, 15))
+    story.append(Spacer(1, 10))
 
-    # 3. Directory & File Structure
-    story.append(Paragraph("3. Complete Project Directory Structure", h1_style))
+    # NEW SECTION 3: INTEGRATED MEDICAL DATASETS & ML MODELS
+    story.append(Paragraph("3. Integrated Medical Datasets & Machine Learning Models", h1_style))
+    story.append(Paragraph(
+        "MedAssist AI features fully integrated clinical datasets and trained machine learning artifacts stored directly within `backend/app/ml/`. These datasets power the real-time disease prediction, symptom matching, and clinical recommendation engines:",
+        body_style
+    ))
+
+    dataset_table_data = [
+        [Paragraph("Dataset / Model Artifact", table_header_style), Paragraph("File Path in Project", table_header_style), Paragraph("File Size", table_header_style), Paragraph("Integrated Dataset Content & Features", table_header_style)],
+        [
+            Paragraph("CatBoost Classifier Model", table_cell_bold),
+            Paragraph("backend/app/ml/models/catboost_model.pkl", table_cell_style),
+            Paragraph("653.4 KB", table_cell_style),
+            Paragraph("Pre-trained gradient boosting classifier trained on multi-symptom clinical datasets to output disease probabilities across 240+ target conditions.", table_cell_style)
+        ],
+        [
+            Paragraph("240-Disease Medical Dataset", table_cell_bold),
+            Paragraph("backend/app/ml/diseases_240.json", table_cell_style),
+            Paragraph("5.94 KB", table_cell_style),
+            Paragraph("Curated medical dataset covering 240+ diseases, clinical categories (Infectious, Respiratory, Cardiac, Gastro, etc.), descriptions, and specialist doctor mappings.", table_cell_style)
+        ],
+        [
+            Paragraph("102-Symptom Catalog Dataset", table_cell_bold),
+            Paragraph("backend/app/ml/all_symptoms.json", table_cell_style),
+            Paragraph("12.33 KB", table_cell_style),
+            Paragraph("Comprehensive dataset containing 102 clinical symptoms categorized by body part (Head, Chest, Abdomen, Joints, etc.), default severity ratings, and medical synonyms.", table_cell_style)
+        ],
+        [
+            Paragraph("Target Class Label Encoder", table_cell_bold),
+            Paragraph("backend/app/ml/models/label_encoder.pkl", table_cell_style),
+            Paragraph("45.44 KB", table_cell_style),
+            Paragraph("Scikit-Learn LabelEncoder instance that maps numerical output prediction vectors back to exact medical disease names.", table_cell_style)
+        ],
+        [
+            Paragraph("Symptom Feature Matrix Columns", table_cell_bold),
+            Paragraph("backend/app/ml/models/feature_columns.pkl", table_cell_style),
+            Paragraph("1.56 KB", table_cell_style),
+            Paragraph("Pickled feature column array defining binary and weighted symptom inputs expected by the CatBoost / RandomForest ML pipeline.", table_cell_style)
+        ]
+    ]
+
+    t_dataset = Table(dataset_table_data, colWidths=[1.5*inch, 1.8*inch, 0.8*inch, 2.9*inch])
+    t_dataset.setStyle(TableStyle([
+        ('BACKGROUND', (0,0), (-1,0), secondary_color),
+        ('ALIGN', (0,0), (-1,-1), 'LEFT'),
+        ('VALIGN', (0,0), (-1,-1), 'TOP'),
+        ('GRID', (0,0), (-1,-1), 0.5, colors.HexColor("#cbd5e1")),
+        ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, bg_light]),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 4),
+        ('TOPPADDING', (0,0), (-1,-1), 4),
+    ]))
+    story.append(t_dataset)
+
+    story.append(Spacer(1, 6))
+
+    story.append(Paragraph("<b>Machine Learning Inference Pipeline Workflow:</b>", body_style))
+    story.append(Paragraph("1. <b>Symptom Matching:</b> Patient input symptoms are searched and matched against the `all_symptoms.json` dataset.", bullet_style))
+    story.append(Paragraph("2. <b>Vector Encoding:</b> Selected symptoms are aligned with `feature_columns.pkl` into a binary/weighted feature vector.", bullet_style))
+    story.append(Paragraph("3. <b>CatBoost Prediction:</b> `catboost_model.pkl` calculates probability distributions across target disease classes.", bullet_style))
+    story.append(Paragraph("4. <b>Decoding & Enrichment:</b> Top prediction results are decoded via `label_encoder.pkl` and enriched with details from `diseases_240.json`.", bullet_style))
+
+    story.append(PageBreak())
+
+    # 4. Directory & File Structure
+    story.append(Paragraph("4. Complete Project Directory Structure", h1_style))
     story.append(Paragraph("The project is structured cleanly as a decoupled monorepo containing distinct <b>frontend</b> and <b>backend</b> services:", body_style))
 
     dir_structure_code = """medassist-ai/
@@ -248,6 +311,9 @@ def build_pdf(filename="MedAssist_AI_Complete_Project_Documentation.pdf"):
 │   │   │   ├── database.py           # SQLAlchemy engine & session factory
 │   │   │   └── security.py           # JWT token encoding/decoding & bcrypt hashing
 │   │   ├── ml/
+│   │   │   ├── models/               # ML Models (catboost_model.pkl, label_encoder.pkl, feature_columns.pkl)
+│   │   │   ├── all_symptoms.json     # 102-Symptom catalog dataset
+│   │   │   ├── diseases_240.json     # 240-Disease medical dataset
 │   │   │   ├── predictor.py          # Machine learning model loader & inference engine
 │   │   │   ├── recommendation_engine.py # Clinical treatment & medication mapper
 │   │   │   └── risk_engine.py        # Risk score calculator & severity classifier
@@ -284,10 +350,10 @@ def build_pdf(filename="MedAssist_AI_Complete_Project_Documentation.pdf"):
 
     story.append(Paragraph(dir_structure_code.replace("\n", "<br/>").replace(" ", "&nbsp;"), code_style))
 
-    story.append(PageBreak())
+    story.append(Spacer(1, 10))
 
-    # 4. Detailed Component & Feature Deep Dive
-    story.append(Paragraph("4. Key Modules & Functional Workflows", h1_style))
+    # 5. Detailed Component & Feature Deep Dive
+    story.append(Paragraph("5. Key Modules & Functional Workflows", h1_style))
 
     story.append(Paragraph("A. Authentication & Security Flow", h2_style))
     story.append(Paragraph(
@@ -301,8 +367,8 @@ def build_pdf(filename="MedAssist_AI_Complete_Project_Documentation.pdf"):
 
     story.append(Paragraph("B. AI Symptom Analysis & Disease Prediction", h2_style))
     story.append(Paragraph(
-        "• <b>Symptom Search & Selection:</b> Patients select symptoms from a curated clinical database, specifying severity levels (Mild, Moderate, Severe) and duration (in days).<br/>"
-        "• <b>Machine Learning Inference:</b> The backend ML engine (`predictor.py`) processes input vectors through pre-trained classification models to predict target medical conditions with calculated confidence scores.<br/>"
+        "• <b>Symptom Search & Selection:</b> Patients select symptoms from a curated clinical dataset (`all_symptoms.json`), specifying severity levels (Mild, Moderate, Severe) and duration (in days).<br/>"
+        "• <b>Machine Learning Inference:</b> The backend ML engine (`predictor.py` & `catboost_model.pkl`) processes input vectors through pre-trained classification models to predict target medical conditions with calculated confidence scores.<br/>"
         "• <b>Full Flow Integration:</b> Submitting symptom analysis automatically creates linked Database records for Prediction, Risk Assessment, and Recommendations.",
         body_style
     ))
@@ -336,8 +402,8 @@ def build_pdf(filename="MedAssist_AI_Complete_Project_Documentation.pdf"):
 
     story.append(Spacer(1, 10))
 
-    # 5. Database Schema Specification
-    story.append(Paragraph("5. Relational Database Schema Specification", h1_style))
+    # 6. Database Schema Specification
+    story.append(Paragraph("6. Relational Database Schema Specification", h1_style))
 
     db_schema_data = [
         [Paragraph("Table Name", table_header_style), Paragraph("Primary Key", table_header_style), Paragraph("Key Fields", table_header_style), Paragraph("Foreign Keys & Relations", table_header_style)],
@@ -365,15 +431,15 @@ def build_pdf(filename="MedAssist_AI_Complete_Project_Documentation.pdf"):
 
     story.append(Spacer(1, 10))
 
-    # 6. Feature Implementation Matrix
-    story.append(Paragraph("6. Implementation Status Matrix", h1_style))
+    # 7. Feature Implementation Matrix
+    story.append(Paragraph("7. Implementation Status Matrix", h1_style))
 
     status_data = [
         [Paragraph("Feature Area", table_header_style), Paragraph("Implementation Status", table_header_style), Paragraph("Details & Capabilities", table_header_style)],
         [Paragraph("Email & Password Auth", table_cell_bold), Paragraph("100% Fully Implemented", table_cell_style), Paragraph("BCrypt password hashing, JWT access token issue & validation", table_cell_style)],
         [Paragraph("Google & Microsoft Sign-In", table_cell_bold), Paragraph("100% Fully Implemented", table_cell_style), Paragraph("OAuth 2.0 flow with interactive modal fallbacks for development", table_cell_style)],
         [Paragraph("Symptom Analysis", table_cell_bold), Paragraph("100% Fully Implemented", table_cell_style), Paragraph("Interactive symptom tag selection, severity and duration input", table_cell_style)],
-        [Paragraph("AI Disease Prediction", table_cell_bold), Paragraph("100% Fully Implemented", table_cell_style), Paragraph("Machine Learning classification with confidence score outputs", table_cell_style)],
+        [Paragraph("AI Disease Prediction", table_cell_bold), Paragraph("100% Fully Implemented", table_cell_style), Paragraph("CatBoost & ML classification trained on 240-disease dataset", table_cell_style)],
         [Paragraph("Risk Stratification", table_cell_bold), Paragraph("100% Fully Implemented", table_cell_style), Paragraph("Urgency score, risk matrix calculation, and emergency flags", table_cell_style)],
         [Paragraph("Treatment & Prescriptions", table_cell_bold), Paragraph("100% Fully Implemented", table_cell_style), Paragraph("Medication recommendations, lifestyle, diet, and specialist advice", table_cell_style)],
         [Paragraph("PDF Report Generation", table_cell_bold), Paragraph("100% Fully Implemented", table_cell_style), Paragraph("ReportLab engine PDF export and browser download integration", table_cell_style)],
@@ -394,8 +460,8 @@ def build_pdf(filename="MedAssist_AI_Complete_Project_Documentation.pdf"):
 
     story.append(Spacer(1, 10))
 
-    # 7. Setup & Execution Guide
-    story.append(Paragraph("7. Setup & Execution Guide (From Scratch)", h1_style))
+    # 8. Setup & Execution Guide
+    story.append(Paragraph("8. Setup & Execution Guide (From Scratch)", h1_style))
     story.append(Paragraph("Follow these exact steps to run the backend and frontend locally from scratch:", body_style))
 
     setup_code = """# 1. Backend Setup & Run

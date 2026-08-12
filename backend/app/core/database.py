@@ -15,6 +15,9 @@ if not DATABASE_URL:
     pg_db = os.getenv("POSTGRES_DB", "medassist_db")
     DATABASE_URL = f"postgresql://{pg_user}:{pg_pass}@{pg_host}:{pg_port}/{pg_db}"
 
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 # ── Create engine with SQLite fallback ─────────────────────────────────
 try:
     if "sqlite" in DATABASE_URL:

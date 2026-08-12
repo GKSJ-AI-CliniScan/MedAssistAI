@@ -62,6 +62,21 @@ export const authService = {
     return data;
   },
 
+  async getGoogleAuthUrl() {
+    const { data } = await api.get("/auth/google/url");
+    return data;
+  },
+
+  async getMicrosoftAuthUrl() {
+    const { data } = await api.get("/auth/microsoft/url");
+    return data;
+  },
+
+  setSessionTokens(accessToken, refreshToken) {
+    localStorage.setItem(TOKEN_KEY, accessToken);
+    localStorage.setItem(REFRESH_KEY, refreshToken);
+  },
+
   async forgotPassword(email) {
     const { data } = await api.post("/auth/forgot-password", { email });
     return data;

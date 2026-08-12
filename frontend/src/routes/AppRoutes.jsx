@@ -16,6 +16,7 @@ import LoginPage from '../pages/Auth/LoginPage';
 import RegisterPage from '../pages/Auth/RegisterPage';
 import ForgotPasswordPage from '../pages/Auth/ForgotPasswordPage';
 import ResetPasswordPage from '../pages/Auth/ResetPasswordPage';
+import AuthCallbackPage from '../pages/Auth/AuthCallbackPage';
 import DashboardPage from '../pages/Dashboard/DashboardPage';
 import ProfilePage from '../pages/Profile/ProfilePage';
 import MedicalHistoryPage from '../pages/MedicalHistory/MedicalHistoryPage';
@@ -38,6 +39,9 @@ export const AppRoutes = () => {
       <Route element={<MainLayout />}>
         <Route path="/" element={<LandingPage />} />
       </Route>
+
+      {/* OAuth Callback Route */}
+      <Route path="/auth/callback" element={<AuthCallbackPage />} />
 
       {/* Authentication Pages (Only accessible when NOT authenticated) */}
       <Route element={<PublicOnlyRoute />}>

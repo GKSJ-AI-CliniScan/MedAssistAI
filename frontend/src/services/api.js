@@ -4,7 +4,8 @@
  */
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:8000/api`;
+const rawUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:8000/api`;
+const BASE_URL = rawUrl.endsWith('/') ? rawUrl.slice(0, -1) : rawUrl;
 
 const api = axios.create({
   baseURL: BASE_URL,

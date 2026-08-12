@@ -4,10 +4,14 @@ Register, Login, Google OAuth, Email Verification, Password Reset, Password Chan
 """
 import datetime
 from typing import Optional
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
+from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, EmailStr
+import urllib.parse
+import requests
 from app.core.database import get_db
+from app.core.config import settings
 from app.core.security import verify_password, get_password_hash, create_access_token, create_refresh_token, decode_token
 from app.api.deps import get_current_user
 from app.repositories import UserRepository, PatientRepository, NotificationRepository
@@ -311,6 +315,204 @@ def microsoft_login(payload: dict, db: Session = Depends(get_db)):
             "is_email_verified": user.is_email_verified,
         },
     )
+
+@router.get("/google/url")
+def get_google_auth_url():
+    """Generates the official Google OAuth2 consent URL."""
+    if not settings.GOOGLE_CLIENT_ID:
+        return {"url": "", "configured": False, "message": "GOOGLE_CLIENT_ID environment variable is not configured."}
+    
+    params = {
+        "client_id": settings.GOOGLE_CLIENT_ID,
+        "redirect_uri": settings.GOOGLE_CALLBACK_URL,
+        "response_type": "code",
+        "scope": "openid email profile",
+        "access_type": "offline",
+        "prompt": "consent",
+    }
+    url = f"https://accounts.google.com/o/oauth2/v2/auth?{urllib.parse.urlencode(params)}"
+    return {"url": url, "configured": True}
+
+@router.get("/google/callback")
+def google_callback(code: str = Query(...), db: Session = Depends(get_db)):
+    """Handles Google OAuth authorization code exchange."""
+    if not settings.GOOGLE_CLIENT_ID or not settings.GOOGLE_CLIENT_SECRET:
+        frontend_err = f"{settings.FRONTEND_URL}/auth/login?error=Google+OAuth+credentials+not+configured+on+backend"
+        return RedirectResponse(url=frontend_err)
+    
+    token_url = "https://oauth2.googleapis.com/token"
+    data = {
+        "code": code,
+        "client_id": settings.GOOGLE_CLIENT_ID,
+        "client_secret": settings.GOOGLE_CLIENT_SECRET,
+        "redirect_uri": settings.GOOGLE_CALLBACK_URL,
+        "grant_type": "authorization_code",
+    }
+    
+    try:
+        res = requests.post(token_url, data=data, timeout=10)
+        if res.status_code != 200:
+            return RedirectResponse(url=f"{settings.FRONTEND_URL}/auth/login?error=Google+token+exchange+failed")
+        
+        token_json = res.json()
+        id_token_str = token_json.get("id_token")
+        access_token_str = token_json.get("access_token")
+        
+        # Get user profile from Google
+        user_info_res = requests.get(
+            "https://www.googleapis.com/oauth2/v3/userinfo",
+            headers={"Authorization": f"Bearer {access_token_str}"},
+            timeout=10
+        )
+        if user_info_res.status_code != 200:
+            return RedirectResponse(url=f"{settings.FRONTEND_URL}/auth/login?error=Failed+to+fetch+Google+user+profile")
+        
+        user_info = user_info_res.json()
+        email = user_info.get("email")
+        name = user_info.get("name", "Google User")
+        picture = user_info.get("picture")
+        google_id = user_info.get("sub", "")
+        
+        if not email:
+            return RedirectResponse(url=f"{settings.FRONTEND_URL}/auth/login?error=Google+account+email+not+provided")
+        
+        user_repo = UserRepository(db)
+        pat_repo = PatientRepository(db)
+        notif_repo = NotificationRepository(db)
+        
+        name_parts = name.strip().split(" ", 1)
+        first_name = name_parts[0]
+        last_name = name_parts[1] if len(name_parts) > 1 else ""
+        
+        user = user_repo.get_by_email(email)
+        if not user:
+            user = user_repo.create(
+                full_name=name,
+                email=email,
+                password="GoogleOAuth_" + (google_id[:16] if google_id else "NoID"),
+                role="patient"
+            )
+            user.first_name = first_name
+            user.last_name = last_name
+            user.is_email_verified = True
+            pat_repo.create(user_id=user.id)
+            notif_repo.create(
+                user_id=user.id,
+                title="Welcome to MedAssist AI 🎉",
+                message=f"Hello {user.full_name}! Your Google account has been linked successfully.",
+                type="info"
+            )
+            
+        user.google_id = google_id or user.google_id
+        user.login_provider = "google"
+        user.last_login_at = datetime.datetime.utcnow()
+        if picture:
+            user.avatar_url = picture
+        db.commit()
+        
+        jwt_access = create_access_token({"sub": str(user.id), "role": user.role})
+        jwt_refresh = create_refresh_token({"sub": str(user.id), "role": user.role})
+        
+        redirect_target = f"{settings.FRONTEND_URL}/auth/callback?access_token={jwt_access}&refresh_token={jwt_refresh}"
+        return RedirectResponse(url=redirect_target)
+    except Exception as e:
+        return RedirectResponse(url=f"{settings.FRONTEND_URL}/auth/login?error={urllib.parse.quote(str(e))}")
+
+@router.get("/microsoft/url")
+def get_microsoft_auth_url():
+    """Generates the official Microsoft Azure AD OAuth2 consent URL."""
+    if not settings.MICROSOFT_CLIENT_ID:
+        return {"url": "", "configured": False, "message": "MICROSOFT_CLIENT_ID environment variable is not configured."}
+    
+    tenant = settings.MICROSOFT_TENANT_ID or "common"
+    params = {
+        "client_id": settings.MICROSOFT_CLIENT_ID,
+        "response_type": "code",
+        "redirect_uri": settings.MICROSOFT_CALLBACK_URL,
+        "response_mode": "query",
+        "scope": "openid profile email User.Read",
+    }
+    url = f"https://login.microsoftonline.com/{tenant}/oauth2/v2.0/authorize?{urllib.parse.urlencode(params)}"
+    return {"url": url, "configured": True}
+
+@router.get("/microsoft/callback")
+def microsoft_callback(code: str = Query(...), db: Session = Depends(get_db)):
+    """Handles Microsoft OAuth authorization code exchange."""
+    if not settings.MICROSOFT_CLIENT_ID or not settings.MICROSOFT_CLIENT_SECRET:
+        frontend_err = f"{settings.FRONTEND_URL}/auth/login?error=Microsoft+OAuth+credentials+not+configured+on+backend"
+        return RedirectResponse(url=frontend_err)
+    
+    tenant = settings.MICROSOFT_TENANT_ID or "common"
+    token_url = f"https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token"
+    data = {
+        "client_id": settings.MICROSOFT_CLIENT_ID,
+        "client_secret": settings.MICROSOFT_CLIENT_SECRET,
+        "code": code,
+        "redirect_uri": settings.MICROSOFT_CALLBACK_URL,
+        "grant_type": "authorization_code",
+    }
+    
+    try:
+        res = requests.post(token_url, data=data, timeout=10)
+        if res.status_code != 200:
+            return RedirectResponse(url=f"{settings.FRONTEND_URL}/auth/login?error=Microsoft+token+exchange+failed")
+        
+        token_json = res.json()
+        ms_access_token = token_json.get("access_token")
+        
+        # Fetch profile from Microsoft Graph
+        headers = {"Authorization": f"Bearer {ms_access_token}"}
+        ms_res = requests.get("https://graph.microsoft.com/v1.0/me", headers=headers, timeout=10)
+        if ms_res.status_code != 200:
+            return RedirectResponse(url=f"{settings.FRONTEND_URL}/auth/login?error=Failed+to+fetch+Microsoft+user+profile")
+        
+        profile_data = ms_res.json()
+        email = profile_data.get("mail") or profile_data.get("userPrincipalName")
+        name = profile_data.get("displayName", "Microsoft User")
+        microsoft_id = profile_data.get("id", "")
+        
+        if not email:
+            return RedirectResponse(url=f"{settings.FRONTEND_URL}/auth/login?error=Microsoft+account+email+not+provided")
+        
+        user_repo = UserRepository(db)
+        pat_repo = PatientRepository(db)
+        notif_repo = NotificationRepository(db)
+        
+        name_parts = name.strip().split(" ", 1)
+        first_name = name_parts[0]
+        last_name = name_parts[1] if len(name_parts) > 1 else ""
+        
+        user = user_repo.get_by_email(email)
+        if not user:
+            user = user_repo.create(
+                full_name=name,
+                email=email,
+                password="MicrosoftOAuth_" + (microsoft_id[:16] if microsoft_id else "NoID"),
+                role="patient"
+            )
+            user.first_name = first_name
+            user.last_name = last_name
+            user.is_email_verified = True
+            pat_repo.create(user_id=user.id)
+            notif_repo.create(
+                user_id=user.id,
+                title="Welcome to MedAssist AI 🎉",
+                message=f"Hello {user.full_name}! Your Microsoft account has been linked successfully.",
+                type="info"
+            )
+            
+        user.microsoft_id = microsoft_id or getattr(user, "microsoft_id", None)
+        user.login_provider = "microsoft"
+        user.last_login_at = datetime.datetime.utcnow()
+        db.commit()
+        
+        jwt_access = create_access_token({"sub": str(user.id), "role": user.role})
+        jwt_refresh = create_refresh_token({"sub": str(user.id), "role": user.role})
+        
+        redirect_target = f"{settings.FRONTEND_URL}/auth/callback?access_token={jwt_access}&refresh_token={jwt_refresh}"
+        return RedirectResponse(url=redirect_target)
+    except Exception as e:
+        return RedirectResponse(url=f"{settings.FRONTEND_URL}/auth/login?error={urllib.parse.quote(str(e))}")
 
 @router.get("/me")
 def get_me(current_user: User = Depends(get_current_user)):
