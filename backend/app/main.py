@@ -2,11 +2,18 @@
 MedAssist AI – FastAPI Main Application Entry Point
 """
 import os
-# Prevent OpenBLAS memory allocation retries/crashes on Windows
-os.environ["OPENBLAS_NUM_THREADS"] = "1"
-os.environ["OMP_NUM_THREADS"] = "1"
-os.environ["MKL_NUM_THREADS"] = "1"
-os.environ["NUMEXPR_NUM_THREADS"] = "1"
+import sys
+
+# Ensure backend root is in path so migrate_db can be found on Render
+_backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _backend_dir not in sys.path:
+    sys.path.insert(0, _backend_dir)
+
+# Limit thread usage for ML libraries on constrained cloud environments
+os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
+os.environ.setdefault("OMP_NUM_THREADS", "1")
+os.environ.setdefault("MKL_NUM_THREADS", "1")
+os.environ.setdefault("NUMEXPR_NUM_THREADS", "1")
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -29,8 +36,11 @@ from app.api.routers import (
 
 # ── Create all tables & auto-migrate columns ────────────────────────────
 import app.models  # noqa: F401
-from migrate_db import migrate_db
-migrate_db()
+try:
+    from migrate_db import migrate_db
+    migrate_db()
+except Exception as _migrate_err:
+    print(f"[WARNING] migrate_db skipped: {_migrate_err}")
 
 # ── FastAPI App Instance ─────────────────────────────────────────────
 app = FastAPI(
