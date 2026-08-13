@@ -1,10 +1,3 @@
-"""
-BRFSS Feature Preprocessing & Artifact Management Module.
-
-Encapsulates feature mapping, imputation, and artifact loading for the CDC BRFSS
-XGBoost ML Risk Assessment model without altering feature transformations.
-"""
-
 import os
 from typing import Any, Dict, Tuple
 import joblib

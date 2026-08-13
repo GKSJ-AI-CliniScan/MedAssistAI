@@ -1,10 +1,3 @@
-"""
-Disease Prediction API Client Module.
-
-Handles HTTP communication with the external Disease Prediction API (POST /api/history/check).
-Extracts predicted disease and prediction confidence internally and handles API failures gracefully.
-"""
-
 from typing import List, Tuple
 import requests
 
