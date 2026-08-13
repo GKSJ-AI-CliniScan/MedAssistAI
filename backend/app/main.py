@@ -112,24 +112,33 @@ def seed_data():
         # Seed Demo User
         demo_email = "demo@medassist.ai"
         if not user_repo.get_by_email(demo_email):
-            user = user_repo.create(
-                full_name="Demo Doctor",
-                email=demo_email,
-                password="Password123",
-                role="doctor"
-            )
-            pat_repo.create(user_id=user.id)
-            
+            try:
+                user = user_repo.create(
+                    full_name="Demo Doctor",
+                    email=demo_email,
+                    password="Password123",
+                    role="doctor"
+                )
+                pat_repo.create(user_id=user.id)
+            except Exception as _e:
+                db.rollback()
+
         # Seed standard patient user
         patient_email = "patient@medassist.ai"
         if not user_repo.get_by_email(patient_email):
-            p_user = user_repo.create(
-                full_name="Jane Doe",
-                email=patient_email,
-                password="Password123",
-                role="patient"
-            )
-            pat_repo.create(user_id=p_user.id)
+            try:
+                p_user = user_repo.create(
+                    full_name="Jane Doe",
+                    email=patient_email,
+                    password="Password123",
+                    role="patient"
+                )
+                pat_repo.create(user_id=p_user.id)
+            except Exception as _e:
+                db.rollback()
+    except Exception as exc:
+        db.rollback()
+        print(f"[WARNING] Database seed warning: {exc}")
     finally:
         db.close()
 
