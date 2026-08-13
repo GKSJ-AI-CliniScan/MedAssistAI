@@ -6,20 +6,45 @@ from app.utils.logger import logger
 
 # Diseases/conditions that may require urgent medical attention.
 CRITICAL_DISEASES = {
+    # Cardiovascular
     "heart attack",
     "myocardial infarction",
-    "stroke",
-    "hypertensive crisis",
     "acute coronary syndrome",
-    "pulmonary embolism",
-    "pneumonia",
-    "sepsis",
     "cardiac arrest",
-    "anaphylaxis",
-    "acute kidney failure",
     "heart failure",
-    "brain hemorrhage",
+    "hypertensive crisis",
     "aortic dissection",
+    "acute aortic syndrome",
+
+    # Neurological
+    "stroke",
+    "brain hemorrhage",
+    "intracranial hemorrhage",
+    "status epilepticus",
+
+    # Respiratory
+    "pulmonary embolism",
+    "tension pneumothorax",
+    "acute respiratory failure",
+    "severe pneumonia",
+
+    # Severe systemic/infectious
+    "sepsis",
+    "septic shock",
+
+    # Allergic
+    "anaphylaxis",
+    "anaphylactic shock",
+
+    # Renal/metabolic
+    "acute kidney failure",
+    "diabetic ketoacidosis",
+    "hyperosmolar hyperglycemic state",
+
+    # Other emergencies
+    "acute limb ischemia",
+    "gastrointestinal hemorrhage",
+    "massive bleeding",
 }
 
 class DecisionEngine:
