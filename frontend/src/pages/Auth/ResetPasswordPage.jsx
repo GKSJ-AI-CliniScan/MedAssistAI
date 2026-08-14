@@ -17,7 +17,7 @@ export const ResetPasswordPage = () => {
   const { resetPassword } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const token = searchParams.get('token') || 'mock_reset_token';
+  const token = searchParams.get('token') || '';
 
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);

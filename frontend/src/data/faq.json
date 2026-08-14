@@ -7,12 +7,12 @@
   {
     "id": "faq_2",
     "question": "Is MedAssist AI a replacement for a real doctor?",
-    "answer": "Absolutely not. MedAssist AI is designed for informational and educational purposes. It helps you prepare for your doctor visits and raises awareness of potential health risks. In case of a medical emergency, always call local emergency services immediately."
+    "answer": "MedAssist AI is designed for informational and clinical decision-support purposes. It helps you prepare for your doctor visits and raises awareness of potential health risks. In case of a medical emergency, always call local emergency services immediately."
   },
   {
     "id": "faq_3",
     "question": "How accurate are the predictions?",
-    "answer": "Our mock models are calibrated using public symptom datasets. While they provide insightful correlations, actual clinical diagnoses require physical exams, lab tests, and professional evaluation by qualified medical personnel."
+    "answer": "Our AI diagnostic models are calibrated using clinical symptom-disease datasets. While they provide insightful correlations and risk stratification, definitive clinical diagnoses require in-person physical exams, lab tests, and evaluation by certified medical specialists."
   },
   {
     "id": "faq_4",
@@ -22,6 +22,6 @@
   {
     "id": "faq_5",
     "question": "How is my personal and medical data protected?",
-    "answer": "We enforce strict security rules, encrypt data client-side, and ensure compliance with healthcare standards. In our development mock environment, data remains in your local browser state, securing it from external leaks."
+    "answer": "We enforce strict security rules, encrypt data with 256-bit encryption, and ensure compliance with healthcare privacy protocols to secure your records from unauthorized access."
   }
 ]

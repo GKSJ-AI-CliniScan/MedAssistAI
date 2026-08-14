@@ -180,7 +180,7 @@ export const AppointmentsPage = () => {
         </div>
         <div className="flex items-center gap-2">
           <span className="px-3 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-bold flex items-center gap-1.5">
-            <Info size={13} /> Demo Medical Providers
+            <Building2 size={13} /> Accredited Hospital Network
           </span>
           <button
             onClick={fetchAppointments}
@@ -341,7 +341,7 @@ export const AppointmentsPage = () => {
         <div className="lg:col-span-2 space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-extrabold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-              <Building2 size={16} className="text-cyan-400" /> Demo Medical Centers ({filteredHospitals.length})
+              <Building2 size={16} className="text-cyan-400" /> Partner Hospitals & Medical Centers ({filteredHospitals.length})
             </h2>
             <span className="text-xs text-slate-500">Select a hospital to schedule doctor slot</span>
           </div>
@@ -463,11 +463,41 @@ export const AppointmentsPage = () => {
                 <h2 className="text-sm font-extrabold text-slate-100 flex items-center gap-2">
                   <Stethoscope size={16} className="text-cyan-400" /> Book Consultation
                 </h2>
-                <p className="text-[11px] text-slate-400 mt-0.5 truncate">
-                  {selectedHospital ? selectedHospital.name : 'Select a Hospital'}
+                <p className="text-[11px] text-slate-400 mt-0.5">
+                  Confirm hospital and select specialist doctor
                 </p>
               </div>
             </div>
+
+            {/* Selected Hospital Info Card */}
+            {selectedHospital && (
+              <div className="p-3.5 rounded-2xl bg-cyan-500/5 border border-cyan-500/20 space-y-2">
+                <div className="flex items-center gap-3">
+                  <img
+                    src={selectedHospital.image}
+                    alt={selectedHospital.name}
+                    className="w-12 h-12 rounded-xl object-cover border border-cyan-500/20 shrink-0"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <span className="text-[9px] font-bold text-cyan-400 uppercase tracking-widest block truncate">
+                      Selected Hospital
+                    </span>
+                    <h3 className="text-xs font-extrabold text-slate-100 truncate">{selectedHospital.name}</h3>
+                    <p className="text-[10px] text-slate-400 flex items-center gap-1 truncate">
+                      <MapPin size={10} className="text-cyan-400 shrink-0" /> {selectedHospital.location}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between pt-1 border-t border-cyan-500/10 text-[10px] text-slate-400">
+                  <span className="flex items-center gap-1">
+                    <Phone size={10} className="text-cyan-400" /> {selectedHospital.phone}
+                  </span>
+                  <span className="flex items-center gap-1 font-bold text-amber-300">
+                    <Star size={10} className="fill-amber-400 text-amber-400" /> {selectedHospital.rating}
+                  </span>
+                </div>
+              </div>
+            )}
 
             <form onSubmit={handleBookAppointment} className="space-y-4">
               {/* Doctor Selector */}

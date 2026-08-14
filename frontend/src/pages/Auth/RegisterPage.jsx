@@ -40,7 +40,8 @@ export const RegisterPage = () => {
       toast.success('Account created! Welcome to MedAssist AI.', { icon: '🏥' });
       setTimeout(() => navigate('/dashboard'), 600);
     } catch (err) {
-      toast.error(err.message || 'Registration failed. Please try again.', { icon: '⚠️' });
+      const msg = err?.response?.data?.detail || err?.response?.data?.message || err.message || 'Registration failed. Please try again.';
+      toast.error(msg, { icon: '⚠️' });
     } finally {
       setIsLoading(false);
     }

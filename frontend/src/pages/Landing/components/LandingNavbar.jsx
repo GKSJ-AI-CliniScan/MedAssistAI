@@ -89,18 +89,18 @@ const LandingNavbar = () => {
               <RippleButton
                 variant="primary"
                 className="hidden sm:flex px-5 py-2 text-xs font-bold"
-                onClick={() => navigate('/dashboard')}
+                onClick={() => navigate('/signin')}
               >
                 Go to Dashboard
               </RippleButton>
             ) : (
               <>
-                <Link to="/auth/login" className="hidden sm:inline-block">
+                <Link to="/signin" className="hidden sm:inline-block">
                   <button className="px-4 py-2 text-xs font-semibold text-slate-300 hover:text-white transition-colors">
                     Sign In
                   </button>
                 </Link>
-                <RippleButton variant="primary" className="px-5 py-2 text-xs font-bold" onClick={() => navigate('/auth/login')}>
+                <RippleButton variant="primary" className="px-5 py-2 text-xs font-bold" onClick={() => navigate('/signin')}>
                   Get Started
                 </RippleButton>
               </>
@@ -176,16 +176,16 @@ const LandingNavbar = () => {
                   <RippleButton
                     variant="primary"
                     className="w-full py-3 text-sm font-bold"
-                    onClick={() => { navigate('/dashboard'); setMobileOpen(false); }}
+                    onClick={() => { navigate('/signin'); setMobileOpen(false); }}
                   >
                     Go to Dashboard
                   </RippleButton>
                 ) : (
                   <>
-                    <RippleButton variant="primary" className="w-full py-3 text-sm font-bold" onClick={() => { navigate('/auth/login'); setMobileOpen(false); }}>
+                    <RippleButton variant="primary" className="w-full py-3 text-sm font-bold" onClick={() => { navigate('/signin'); setMobileOpen(false); }}>
                       Get Started Free
                     </RippleButton>
-                    <RippleButton variant="outline" className="w-full py-3 text-sm font-bold" onClick={() => { navigate('/auth/login'); setMobileOpen(false); }}>
+                    <RippleButton variant="outline" className="w-full py-3 text-sm font-bold" onClick={() => { navigate('/signin'); setMobileOpen(false); }}>
                       Sign In
                     </RippleButton>
                   </>

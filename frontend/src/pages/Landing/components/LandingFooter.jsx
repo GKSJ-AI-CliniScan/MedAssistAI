@@ -15,8 +15,8 @@ const footerLinks = [
   {
     title: 'Portal',
     links: [
-      { label: 'Sign In', href: '/auth/login' },
-      { label: 'Register', href: '/auth/register' },
+      { label: 'Sign In', href: '/signin' },
+      { label: 'Register', href: '/register' },
       { label: 'Dashboard', href: '/dashboard' },
       { label: 'Settings', href: '/settings' },
     ],

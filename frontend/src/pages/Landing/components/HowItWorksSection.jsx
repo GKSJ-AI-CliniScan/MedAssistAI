@@ -156,7 +156,7 @@ const HowItWorksSection = () => {
                     <div className="w-6 h-6 rounded-lg bg-indigo-500/20" />
                   </div>
                 </div>
-                {/* Mock stats */}
+                {/* Clinical metrics preview */}
                 <div className="grid grid-cols-3 gap-3 mb-4">
                   {['87%', '12', 'Low'].map((val, i) => (
                     <div key={i} className="bg-white/5 rounded-xl p-3 text-center">
@@ -169,7 +169,7 @@ const HowItWorksSection = () => {
                     </div>
                   ))}
                 </div>
-                {/* Mock chart bars */}
+                {/* Risk trend preview bars */}
                 <div className="flex items-end gap-1.5 h-16">
                   {[40, 65, 45, 80, 55, 70, 90, 60, 75, 85].map((h, i) => (
                     <motion.div
@@ -194,7 +194,7 @@ const HowItWorksSection = () => {
               </motion.div>
 
               <Link
-                to="/auth/register"
+                to="/register"
                 className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-cyan-400 hover:text-cyan-300 transition-colors group"
               >
                 Start your health analysis

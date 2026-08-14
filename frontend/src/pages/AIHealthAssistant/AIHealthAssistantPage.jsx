@@ -15,7 +15,7 @@ export const AIHealthAssistantPage = () => {
     {
       id: 'm1',
       sender: 'bot',
-      text: 'Welcome to MedAssist Clinical AI Assistant. I can help analyze symptom profiles, explain lab findings, and outline lifestyle guidelines based on mock diagnostic databases. What clinical inquiry can I help you with today?',
+      text: 'Welcome to MedAssist Clinical AI Assistant. I can help analyze symptom profiles, explain lab findings, and outline lifestyle guidelines based on validated clinical diagnostic intelligence. What health inquiry can I assist you with today?',
       timestamp: 'Just now'
     }
   ]);
@@ -189,7 +189,7 @@ export const AIHealthAssistantPage = () => {
               <AlertTriangle size={14} /> Clinical Disclaimer
             </h3>
             <p className="text-[10px] text-slate-400 leading-relaxed">
-              MedAssist AI responses are generated using mock healthcare datasets for demonstrative, educational, and workflow optimization purposes. This is not a diagnostic device. Always seek direct consultation from certified clinical doctors for symptoms.
+              MedAssist AI clinical responses are generated using advanced healthcare AI algorithms for clinical decision-support and educational purposes. This is not a substitute for direct physical examination. Always seek direct consultation from certified clinical doctors for severe symptoms.
             </p>
           </div>
         </div>

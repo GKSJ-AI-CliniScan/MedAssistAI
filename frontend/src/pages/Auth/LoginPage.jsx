@@ -257,11 +257,6 @@ export const LoginPage = () => {
                 </span>
               </label>
 
-              {/* Demo hint */}
-              <div className="bg-indigo-500/8 border border-indigo-500/20 rounded-xl p-3 text-xs text-indigo-300 leading-relaxed">
-                <span className="font-bold text-indigo-200">Demo Credentials: </span>
-                demo@medassist.ai / Password123
-              </div>
 
               {/* Submit — Sign In button */}
               <AuthSubmitButton

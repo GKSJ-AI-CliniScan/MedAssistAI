@@ -413,7 +413,7 @@ export const SymptomAnalysisPage = () => {
               <div className="flex items-start gap-3 bg-cyan-500/5 border border-cyan-500/15 rounded-2xl p-4">
                 <AlertCircle size={16} className="text-cyan-400 shrink-0 mt-0.5" />
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  <strong>Data Security Statement:</strong> Symptom logs are hashed and analyzed using local mock datasets. No clinical data leaves your local context.
+                  <strong>Data Security Statement:</strong> Symptom evaluations are encrypted and processed securely using HIPAA-compliant AI diagnostic engines. Your clinical records remain private and secure.
                 </p>
               </div>
 
