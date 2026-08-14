@@ -1,0 +1,327 @@
+/**
+ * MedAssist AI — Hospital & Clinical Specialists Dataset
+ * Structured realistic demo data representing tertiary hospitals, multi-specialty centers,
+ * and clinical specialists across major Indian healthcare hubs.
+ */
+
+export const HOSPITALS = [
+  {
+    id: 'hosp-1',
+    name: 'Apollo Specialty Hospitals',
+    image: 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=800&q=80',
+    location: 'Visakhapatnam, Andhra Pradesh',
+    address: 'Health City, Arilova, Visakhapatnam, AP 530040',
+    phone: '+91 891 286 7777',
+    email: 'info_vizag@apollohospitals.com',
+    type: 'Multi-Specialty Tertiary Hospital',
+    rating: 4.9,
+    reviewsCount: 1420,
+    emergencyAvailable: true,
+    departments: ['Cardiology', 'Oncology', 'Neurology', 'General Medicine', 'Orthopedics'],
+    description: 'Premier JCI-accredited tertiary care hospital equipped with state-of-the-art robotic surgery, advanced cath labs, and 24/7 emergency response.',
+    doctors: [
+      {
+        id: 'doc-101',
+        name: 'Dr. Rajesh Sharma',
+        avatar: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=250&q=80',
+        specialization: 'Cardiologist',
+        qualification: 'MBBS, MD, DM (Cardiology), FACC',
+        experience: 16,
+        hospitalId: 'hosp-1',
+        consultationFee: 800,
+        availableDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+        availableTimeSlots: ['09:00 AM', '10:30 AM', '02:00 PM', '04:00 PM'],
+        consultationMode: ['In-person', 'Online'],
+        rating: 4.9,
+        languages: ['English', 'Telugu', 'Hindi'],
+        shortDescription: 'Senior Consultant Interventional Cardiologist specializing in complex coronary interventions, heart failure management, and preventive cardiac care.'
+      },
+      {
+        id: 'doc-102',
+        name: 'Dr. Ananya Rao',
+        avatar: 'https://images.unsplash.com/photo-1594824813566-88855ce78961?auto=format&fit=crop&w=250&q=80',
+        specialization: 'Neurologist',
+        qualification: 'MBBS, MD (Medicine), DM (Neurology)',
+        experience: 12,
+        hospitalId: 'hosp-1',
+        consultationFee: 750,
+        availableDays: ['Mon', 'Wed', 'Fri', 'Sat'],
+        availableTimeSlots: ['10:00 AM', '11:30 AM', '03:00 PM', '05:00 PM'],
+        consultationMode: ['In-person', 'Online'],
+        rating: 4.8,
+        languages: ['English', 'Telugu'],
+        shortDescription: 'Expert in stroke intervention, epilepsy management, migraine care, and neurodegenerative disorders.'
+      }
+    ]
+  },
+  {
+    id: 'hosp-2',
+    name: 'KIMS Super Specialty Hospitals',
+    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
+    location: 'Hyderabad, Telangana',
+    address: '1-8-31/1, Minister Road, Secunderabad, Hyderabad, TS 500003',
+    phone: '+91 40 4488 5000',
+    email: 'contact@kimshospitals.com',
+    type: 'Super Specialty Research Institute',
+    rating: 4.8,
+    reviewsCount: 2180,
+    emergencyAvailable: true,
+    departments: ['Gastroenterology', 'Orthopedics', 'Pulmonology', 'Dermatology'],
+    description: 'Leading South Indian quaternary care center renowned for organ transplants, gastroenterology care, and orthopedic joint replacements.',
+    doctors: [
+      {
+        id: 'doc-201',
+        name: 'Dr. Vikramaditya Verma',
+        avatar: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=250&q=80',
+        specialization: 'Gastroenterologist',
+        qualification: 'MBBS, MD, DM (Gastroenterology)',
+        experience: 18,
+        hospitalId: 'hosp-2',
+        consultationFee: 900,
+        availableDays: ['Tue', 'Thu', 'Fri', 'Sat'],
+        availableTimeSlots: ['09:30 AM', '11:00 AM', '02:30 PM', '04:30 PM'],
+        consultationMode: ['In-person', 'Online'],
+        rating: 4.9,
+        languages: ['English', 'Telugu', 'Hindi'],
+        shortDescription: 'Leading Hepatologist and Endoscopist with expertise in inflammatory bowel disease, liver cirrhosis, and therapeutic endoscopy.'
+      },
+      {
+        id: 'doc-202',
+        name: 'Dr. Sneha Reddy',
+        avatar: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=250&q=80',
+        specialization: 'Dermatologist',
+        qualification: 'MBBS, MD (Dermatology, Venereology & Leprosy)',
+        experience: 9,
+        hospitalId: 'hosp-2',
+        consultationFee: 650,
+        availableDays: ['Mon', 'Tue', 'Wed', 'Sat'],
+        availableTimeSlots: ['10:00 AM', '01:00 PM', '03:30 PM'],
+        consultationMode: ['In-person', 'Online'],
+        rating: 4.7,
+        languages: ['English', 'Telugu'],
+        shortDescription: 'Specialist in clinical dermatology, laser therapies, psoriasis management, and pediatric skin disorders.'
+      }
+    ]
+  },
+  {
+    id: 'hosp-3',
+    name: 'Fortis Healthcare Center',
+    image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80',
+    location: 'Bengaluru, Karnataka',
+    address: '154/9, Bannerghatta Road, Opp IIM-B, Bengaluru, KA 560076',
+    phone: '+91 80 6621 4444',
+    email: 'enquiry.bgroad@fortishealthcare.com',
+    type: 'Multi-Specialty Medical Center',
+    rating: 4.7,
+    reviewsCount: 980,
+    emergencyAvailable: true,
+    departments: ['Pediatrics', 'ENT Specialist', 'Ophthalmology', 'General Surgery'],
+    description: 'Patient-centric medical hub specializing in pediatric cardiology, minimally invasive surgery, and comprehensive eye/ENT care.',
+    doctors: [
+      {
+        id: 'doc-301',
+        name: 'Dr. Suresh Menon',
+        avatar: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=250&q=80',
+        specialization: 'Pediatrician',
+        qualification: 'MBBS, MD (Pediatrics), DCH',
+        experience: 14,
+        hospitalId: 'hosp-3',
+        consultationFee: 700,
+        availableDays: ['Mon', 'Tue', 'Thu', 'Fri'],
+        availableTimeSlots: ['09:00 AM', '11:00 AM', '02:00 PM'],
+        consultationMode: ['In-person', 'Online'],
+        rating: 4.9,
+        languages: ['English', 'Kannada', 'Malayalam', 'Hindi'],
+        shortDescription: 'Dedicated child specialist providing newborn care, immunization guidance, and pediatric acute infection management.'
+      },
+      {
+        id: 'doc-302',
+        name: 'Dr. Meera Iyer',
+        avatar: 'https://images.unsplash.com/photo-1594824813566-88855ce78961?auto=format&fit=crop&w=250&q=80',
+        specialization: 'ENT Specialist',
+        qualification: 'MBBS, MS (Otorhinolaryngology)',
+        experience: 10,
+        hospitalId: 'hosp-3',
+        consultationFee: 650,
+        availableDays: ['Wed', 'Thu', 'Fri', 'Sat'],
+        availableTimeSlots: ['10:30 AM', '01:30 PM', '04:00 PM'],
+        consultationMode: ['In-person', 'Online'],
+        rating: 4.8,
+        languages: ['English', 'Kannada', 'Tamil'],
+        shortDescription: 'Expert in sinus surgery, hearing loss treatments, vertigo evaluation, and allergic rhinitis management.'
+      }
+    ]
+  },
+  {
+    id: 'hosp-4',
+    name: 'Manipal Super Specialty Hospital',
+    image: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=800&q=80',
+    location: 'Visakhapatnam, Andhra Pradesh',
+    address: '15-2-9, Gokhale Road, Maharani Peta, Visakhapatnam, AP 530002',
+    phone: '+91 891 304 3333',
+    email: 'info_vizag@manipalhospitals.com',
+    type: 'Tertiary Healthcare Hospital',
+    rating: 4.8,
+    reviewsCount: 1110,
+    emergencyAvailable: true,
+    departments: ['Nephrology', 'Urology', 'Endocrinology', 'Cardiology'],
+    description: 'Advanced clinical care facility focusing on kidney transplants, urological endoscopic surgery, and metabolic disease research.',
+    doctors: [
+      {
+        id: 'doc-401',
+        name: 'Dr. K. V. N. Prasad',
+        avatar: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=250&q=80',
+        specialization: 'Urologist / Nephrologist',
+        qualification: 'MBBS, MS (Surgery), MCh (Urology)',
+        experience: 17,
+        hospitalId: 'hosp-4',
+        consultationFee: 850,
+        availableDays: ['Mon', 'Tue', 'Wed', 'Fri'],
+        availableTimeSlots: ['09:30 AM', '11:30 AM', '03:00 PM'],
+        consultationMode: ['In-person', 'Online'],
+        rating: 4.9,
+        languages: ['English', 'Telugu'],
+        shortDescription: 'Senior Consultant Urologist with expertise in kidney stone laser treatment, prostate health, and laparoscopic urology.'
+      },
+      {
+        id: 'doc-402',
+        name: 'Dr. Lakshmi Narayana',
+        avatar: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=250&q=80',
+        specialization: 'Endocrinologist',
+        qualification: 'MBBS, MD, DM (Endocrinology)',
+        experience: 13,
+        hospitalId: 'hosp-4',
+        consultationFee: 750,
+        availableDays: ['Tue', 'Thu', 'Fri', 'Sat'],
+        availableTimeSlots: ['10:00 AM', '02:00 PM', '04:30 PM'],
+        consultationMode: ['In-person', 'Online'],
+        rating: 4.7,
+        languages: ['English', 'Telugu', 'Hindi'],
+        shortDescription: 'Specialist in diabetes care, thyroid disorders, osteoporosis, and hormonal imbalance management.'
+      }
+    ]
+  },
+  {
+    id: 'hosp-5',
+    name: 'MIOT International Hospital',
+    image: 'https://images.unsplash.com/photo-1512678080530-7760d81faba6?auto=format&fit=crop&w=800&q=80',
+    location: 'Chennai, Tamil Nadu',
+    address: '4/112, Mount Poonamallee Road, Manapakkam, Chennai, TN 600089',
+    phone: '+91 44 4200 2288',
+    email: 'enquiry@miotinternational.com',
+    type: 'International Medical Care',
+    rating: 4.9,
+    reviewsCount: 3120,
+    emergencyAvailable: true,
+    departments: ['Orthopedics', 'Trauma', 'Rheumatology', 'Pulmonology'],
+    description: 'World-class orthopedic and trauma specialty hospital serving patients across 130 countries with pioneer joint reconstruction techniques.',
+    doctors: [
+      {
+        id: 'doc-501',
+        name: 'Dr. A. K. Sundaram',
+        avatar: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=250&q=80',
+        specialization: 'Orthopedic Specialist',
+        qualification: 'MBBS, MS (Orthopedics), FRCS (Trauma & Ortho)',
+        experience: 22,
+        hospitalId: 'hosp-5',
+        consultationFee: 1000,
+        availableDays: ['Mon', 'Wed', 'Thu', 'Sat'],
+        availableTimeSlots: ['09:00 AM', '11:00 AM', '02:30 PM', '05:00 PM'],
+        consultationMode: ['In-person', 'Online'],
+        rating: 4.9,
+        languages: ['English', 'Tamil'],
+        shortDescription: 'Chief Joint Replacement Surgeon known for computer-navigated knee and hip replacement surgeries.'
+      },
+      {
+        id: 'doc-502',
+        name: 'Dr. Radhika Nair',
+        avatar: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=250&q=80',
+        specialization: 'Pulmonologist',
+        qualification: 'MBBS, MD (Pulmonary Medicine), FCCP',
+        experience: 11,
+        hospitalId: 'hosp-5',
+        consultationFee: 800,
+        availableDays: ['Tue', 'Wed', 'Fri'],
+        availableTimeSlots: ['10:00 AM', '01:30 PM', '03:30 PM'],
+        consultationMode: ['In-person', 'Online'],
+        rating: 4.8,
+        languages: ['English', 'Tamil', 'Malayalam'],
+        shortDescription: 'Chest physician expert in asthma, COPD, sleep apnea, pulmonary fibrosis, and respiratory infections.'
+      }
+    ]
+  },
+  {
+    id: 'hosp-6',
+    name: 'Max Super Specialty Hospital',
+    image: 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=800&q=80',
+    location: 'Delhi NCR',
+    address: '1, 2, Press Enclave Marg, Saket, New Delhi, DL 110017',
+    phone: '+91 11 2651 5050',
+    email: 'connect@maxhealthcare.com',
+    type: 'Super Specialty Hospital',
+    rating: 4.8,
+    reviewsCount: 2450,
+    emergencyAvailable: true,
+    departments: ['Oncology', 'Cardiac Care', 'Gynecologist', 'Psychiatry'],
+    description: 'NABH and NABL accredited hospital offering comprehensive cancer therapies, high-risk obstetrics, and behavioral health care.',
+    doctors: [
+      {
+        id: 'doc-601',
+        name: 'Dr. Priya Kapoor',
+        avatar: 'https://images.unsplash.com/photo-1594824813566-88855ce78961?auto=format&fit=crop&w=250&q=80',
+        specialization: 'Gynecologist',
+        qualification: 'MBBS, MD (Obstetrics & Gynecology), FICOG',
+        experience: 15,
+        hospitalId: 'hosp-6',
+        consultationFee: 850,
+        availableDays: ['Mon', 'Tue', 'Thu', 'Fri'],
+        availableTimeSlots: ['09:30 AM', '11:30 AM', '02:00 PM', '04:00 PM'],
+        consultationMode: ['In-person', 'Online'],
+        rating: 4.9,
+        languages: ['English', 'Hindi', 'Punjabi'],
+        shortDescription: 'Senior Obstetrician and Gynecologist specializing in high-risk pregnancy, laparoscopic surgery, and infertility management.'
+      },
+      {
+        id: 'doc-602',
+        name: 'Dr. Amitav Banerjee',
+        avatar: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=250&q=80',
+        specialization: 'Psychiatrist',
+        qualification: 'MBBS, MD (Psychiatry), DPM',
+        experience: 19,
+        hospitalId: 'hosp-6',
+        consultationFee: 900,
+        availableDays: ['Wed', 'Thu', 'Fri', 'Sat'],
+        availableTimeSlots: ['10:00 AM', '01:00 PM', '04:30 PM'],
+        consultationMode: ['In-person', 'Online'],
+        rating: 4.8,
+        languages: ['English', 'Hindi', 'Bengali'],
+        shortDescription: 'Behavioral medicine specialist focusing on depression, stress management, anxiety disorders, and adult psychiatry.'
+      }
+    ]
+  }
+];
+
+export const DEPARTMENTS = [
+  'All Departments',
+  'Cardiology',
+  'Neurology',
+  'Gastroenterology',
+  'Pediatrics',
+  'Orthopedics',
+  'Dermatology',
+  'Urology',
+  'Endocrinology',
+  'Pulmonology',
+  'Gynecologist',
+  'Psychiatry',
+  'ENT Specialist'
+];
+
+export const LOCATIONS = [
+  'All Locations',
+  'Visakhapatnam, Andhra Pradesh',
+  'Hyderabad, Telangana',
+  'Bengaluru, Karnataka',
+  'Chennai, Tamil Nadu',
+  'Delhi NCR'
+];

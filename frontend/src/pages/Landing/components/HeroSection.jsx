@@ -186,7 +186,7 @@ const HeroSection = () => {
           transition={{ duration: 0.7, delay: 0.4, ease: 'easeOut' }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14"
         >
-          <RippleButton variant="primary" className="px-8 py-3.5 text-sm font-bold gap-2 group" onClick={() => navigate('/auth/register')}>
+          <RippleButton variant="primary" className="px-8 py-3.5 text-sm font-bold gap-2 group" onClick={() => navigate('/auth/login')}>
             Get Started Free
             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </RippleButton>

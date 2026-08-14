@@ -100,7 +100,7 @@ const LandingNavbar = () => {
                     Sign In
                   </button>
                 </Link>
-                <RippleButton variant="primary" className="px-5 py-2 text-xs font-bold" onClick={() => navigate('/auth/register')}>
+                <RippleButton variant="primary" className="px-5 py-2 text-xs font-bold" onClick={() => navigate('/auth/login')}>
                   Get Started
                 </RippleButton>
               </>
@@ -182,7 +182,7 @@ const LandingNavbar = () => {
                   </RippleButton>
                 ) : (
                   <>
-                    <RippleButton variant="primary" className="w-full py-3 text-sm font-bold" onClick={() => { navigate('/auth/register'); setMobileOpen(false); }}>
+                    <RippleButton variant="primary" className="w-full py-3 text-sm font-bold" onClick={() => { navigate('/auth/login'); setMobileOpen(false); }}>
                       Get Started Free
                     </RippleButton>
                     <RippleButton variant="outline" className="w-full py-3 text-sm font-bold" onClick={() => { navigate('/auth/login'); setMobileOpen(false); }}>
