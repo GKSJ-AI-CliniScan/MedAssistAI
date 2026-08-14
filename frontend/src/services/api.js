@@ -4,8 +4,31 @@
  */
 import axios from "axios";
 
-const rawUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:8000/api`;
-const BASE_URL = rawUrl.endsWith('/') ? rawUrl.slice(0, -1) : rawUrl;
+const PROD_API_URL = "https://medassistai-1-weid.onrender.com/api";
+const LOCAL_API_URL = "http://localhost:8000/api";
+
+const getBaseUrl = () => {
+  const envUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL;
+  const isLocalHost = typeof window !== 'undefined' && (
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1' ||
+    window.location.hostname.startsWith('192.168.')
+  );
+
+  // If deployed on Vercel or any live domain, always prioritize the live Render backend
+  if (!isLocalHost) {
+    if (envUrl && !envUrl.includes('localhost') && !envUrl.includes('127.0.0.1')) {
+      return envUrl.endsWith('/') ? envUrl.slice(0, -1) : envUrl;
+    }
+    return PROD_API_URL;
+  }
+
+  // If running locally, use envUrl if defined, otherwise localhost:8000
+  const url = envUrl || LOCAL_API_URL;
+  return url.endsWith('/') ? url.slice(0, -1) : url;
+};
+
+const BASE_URL = getBaseUrl();
 
 const api = axios.create({
   baseURL: BASE_URL,
