@@ -70,7 +70,7 @@ const CTASection = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-              <RippleButton variant="primary" className="px-10 py-3.5 text-sm font-bold gap-2 group" onClick={() => navigate('/register')}>
+              <RippleButton variant="primary" className="px-10 py-3.5 text-sm font-bold gap-2 group" onClick={() => navigate('/patient-register')}>
                 Create Free Account
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </RippleButton>

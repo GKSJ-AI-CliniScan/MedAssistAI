@@ -16,8 +16,8 @@ const footerLinks = [
     title: 'Portal',
     links: [
       { label: 'Sign In', href: '/signin' },
-      { label: 'Register', href: '/register' },
-      { label: 'Dashboard', href: '/dashboard' },
+      { label: 'Patient Register', href: '/patient-register' },
+      { label: 'Patient Dashboard', href: '/patient-dashboard' },
       { label: 'Settings', href: '/settings' },
     ],
   },

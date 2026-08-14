@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import {
   CalendarDays, Clock, User, Check, Search, Calendar, Plus,
   ShieldCheck, Video, MapPin, Trash2, RefreshCw, AlertCircle,
@@ -12,6 +13,11 @@ import appointmentService from '../../services/appointmentService';
 import { HOSPITALS, DEPARTMENTS, LOCATIONS } from '../../data/hospitalsData';
 
 export const AppointmentsPage = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const initialSpecialtyParam = searchParams.get('specialty');
+
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -19,7 +25,11 @@ export const AppointmentsPage = () => {
   // Search & Filters state
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('All Locations');
-  const [selectedDepartment, setSelectedDepartment] = useState('All Departments');
+  const [selectedDepartment, setSelectedDepartment] = useState(
+    initialSpecialtyParam && DEPARTMENTS.includes(initialSpecialtyParam)
+      ? initialSpecialtyParam
+      : 'All Departments'
+  );
   const [minRating, setMinRating] = useState(0);
 
   // Selected hospital & doctor for booking
@@ -30,10 +40,13 @@ export const AppointmentsPage = () => {
   const [consultationMode, setConsultationMode] = useState('In-person');
   const [patientName, setPatientName] = useState('');
   const [patientPhone, setPatientPhone] = useState('');
-  const [symptomNotes, setSymptomNotes] = useState('');
+  const [symptomNotes, setSymptomNotes] = useState(
+    initialSpecialtyParam ? `Referred for ${initialSpecialtyParam} evaluation` : ''
+  );
 
-  // Hospital View Modal state
+  // Modal states
   const [activeHospitalModal, setActiveHospitalModal] = useState(null);
+  const [activeDoctorModal, setActiveDoctorModal] = useState(null);
 
   // Booking Confirmation Card state
   const [bookedConfirmation, setBookedConfirmation] = useState(null);
@@ -55,6 +68,27 @@ export const AppointmentsPage = () => {
     fetchAppointments();
   }, []);
 
+  // Update selected doctor when prefiltered by param
+  useEffect(() => {
+    if (initialSpecialtyParam) {
+      const matchingHosp = HOSPITALS.find(h =>
+        h.doctors.some(d => d.specialization.toLowerCase().includes(initialSpecialtyParam.toLowerCase()))
+      );
+      if (matchingHosp) {
+        setSelectedHospital(matchingHosp);
+        const matchingDoc = matchingHosp.doctors.find(d =>
+          d.specialization.toLowerCase().includes(initialSpecialtyParam.toLowerCase())
+        );
+        if (matchingDoc) {
+          setSelectedDoctor(matchingDoc);
+          if (matchingDoc.availableTimeSlots && matchingDoc.availableTimeSlots.length > 0) {
+            setSelectedTimeSlot(matchingDoc.availableTimeSlots[0]);
+          }
+        }
+      }
+    }
+  }, [initialSpecialtyParam]);
+
   // Sync doctor when hospital changes
   const handleSelectHospital = (hosp) => {
     setSelectedHospital(hosp);
@@ -75,7 +109,7 @@ export const AppointmentsPage = () => {
 
   // Filter hospitals based on search & criteria
   const filteredHospitals = HOSPITALS.filter((hosp) => {
-    const q = searchQuery.toLowerCase().strip ? searchQuery.toLowerCase().trim() : '';
+    const q = searchQuery.toLowerCase().trim();
     const matchesSearch =
       !q ||
       hosp.name.toLowerCase().includes(q) ||
@@ -91,7 +125,8 @@ export const AppointmentsPage = () => {
 
     const matchesDept =
       selectedDepartment === 'All Departments' ||
-      hosp.departments.includes(selectedDepartment);
+      hosp.departments.includes(selectedDepartment) ||
+      hosp.doctors.some((d) => d.specialization.toLowerCase().includes(selectedDepartment.toLowerCase()));
 
     const matchesRating = hosp.rating >= minRating;
 
@@ -116,10 +151,10 @@ export const AppointmentsPage = () => {
         doctor_id: selectedDoctor.id,
         doctor_name: selectedDoctor.name,
         doctor_specialty: selectedDoctor.specialization,
-        date_time: `${selectedDate} ${selectedTimeSlot}`,
+        date_time: `${selectedDate} • ${selectedTimeSlot}`,
         priority: 'Normal',
         status: 'Confirmed',
-        notes: `Patient: ${patientName.trim()} | Hospital: ${selectedHospital.name} | Mode: ${consultationMode} | Notes: ${symptomNotes.trim() || 'N/A'}`,
+        notes: `Patient: ${patientName.trim()} | Hospital: ${selectedHospital.name} | Mode: ${consultationMode} | Notes: ${symptomNotes.trim() || 'General Consultation'}`,
       };
 
       const created = await appointmentService.createAppointment(payload).catch(() => ({
@@ -172,24 +207,48 @@ export const AppointmentsPage = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight text-white flex items-center gap-2.5">
-            <Building2 className="text-cyan-400" /> Hospital & Clinical Appointments
+            <Building2 className="text-cyan-400" /> Find Hospitals & Doctors
           </h1>
-          <p className="text-slate-400 text-sm mt-0.5">
-            Discover accredited hospitals, select specialists, and schedule verified consultations
+          <p className="text-slate-400 text-xs sm:text-sm mt-0.5">
+            Discover accredited hospitals in Visakhapatnam, select certified specialists, and book verified clinical appointments
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
+          <button
+            onClick={() => navigate('/my-appointments')}
+            className="px-3.5 py-2 rounded-xl bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-bold flex items-center gap-1.5 hover:bg-purple-500/20 transition-all"
+          >
+            <Clock size={14} /> My Appointments
+          </button>
           <span className="px-3 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-bold flex items-center gap-1.5">
-            <Building2 size={13} /> Accredited Hospital Network
+            <Building2 size={13} /> Demo Hospital Network
           </span>
           <button
             onClick={fetchAppointments}
             className="p-2 rounded-xl bg-white/5 border border-white/10 text-slate-400 hover:text-white transition-all text-xs font-bold flex items-center gap-1.5 focus:outline-none"
           >
-            <RefreshCw size={13} className={loading ? 'animate-spin' : ''} /> Refresh
+            <RefreshCw size={13} className={loading ? 'animate-spin' : ''} />
           </button>
         </div>
       </div>
+
+      {/* ── Active Pre-filter Notice (e.g. from Symptom Analysis) ── */}
+      {initialSpecialtyParam && (
+        <div className="p-3.5 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-between gap-3 text-xs text-cyan-300">
+          <div className="flex items-center gap-2">
+            <Stethoscope size={16} className="text-cyan-400 shrink-0" />
+            <span>
+              Pre-filtered by AI Symptom Referral: <strong className="text-white font-extrabold">{initialSpecialtyParam}</strong>
+            </span>
+          </div>
+          <button
+            onClick={() => setSelectedDepartment('All Departments')}
+            className="text-[11px] font-bold text-slate-400 hover:text-white underline"
+          >
+            Show All Specialties
+          </button>
+        </div>
+      )}
 
       {/* ── BOOKING CONFIRMATION MODAL / CARD ── */}
       <AnimatePresence>
@@ -213,7 +272,7 @@ export const AppointmentsPage = () => {
                     </span>
                   </div>
                   <p className="text-xs text-slate-300 mt-0.5">
-                    Your appointment has been registered with the hospital care management system.
+                    Your appointment has been registered with {bookedConfirmation.hospital.name}.
                   </p>
                 </div>
               </div>
@@ -250,16 +309,16 @@ export const AppointmentsPage = () => {
 
             <div className="flex flex-wrap items-center justify-end gap-3 pt-2">
               <button
-                onClick={() => setBookedConfirmation(null)}
-                className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white text-xs font-bold transition-all"
+                onClick={() => navigate('/my-appointments')}
+                className="px-5 py-2.5 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/40 text-purple-300 text-xs font-bold transition-all"
               >
-                Back to Search
+                Go to My Appointments →
               </button>
               <button
-                onClick={() => handleCancelAppointment(bookedConfirmation.appointmentId)}
-                className="px-4 py-2 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 hover:bg-rose-500/20 text-xs font-bold transition-all"
+                onClick={() => setBookedConfirmation(null)}
+                className="px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white text-xs font-bold transition-all"
               >
-                Cancel Appointment
+                Back to Search
               </button>
             </div>
           </motion.div>
@@ -274,14 +333,13 @@ export const AppointmentsPage = () => {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search hospitals, doctors, or specialties (e.g. Cardiologist, Visakhapatnam, Apollo)..."
+            placeholder="Search demo hospitals, doctors, or specialties (e.g. Cardiologist, Visakhapatnam, Apollo)..."
             className="w-full bg-white/5 border border-white/10 rounded-2xl py-3.5 pl-11 pr-4 text-xs text-slate-200 placeholder-slate-500 outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all"
           />
         </div>
 
         {/* Filter controls */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-          {/* Location dropdown */}
           <div>
             <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
               Filter by Location
@@ -299,7 +357,6 @@ export const AppointmentsPage = () => {
             </select>
           </div>
 
-          {/* Department dropdown */}
           <div>
             <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
               Filter by Specialty / Department
@@ -317,7 +374,6 @@ export const AppointmentsPage = () => {
             </select>
           </div>
 
-          {/* Rating filter */}
           <div>
             <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
               Minimum Rating
@@ -341,9 +397,9 @@ export const AppointmentsPage = () => {
         <div className="lg:col-span-2 space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-extrabold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-              <Building2 size={16} className="text-cyan-400" /> Partner Hospitals & Medical Centers ({filteredHospitals.length})
+              <Building2 size={16} className="text-cyan-400" /> Demo Hospitals & Clinics ({filteredHospitals.length})
             </h2>
-            <span className="text-xs text-slate-500">Select a hospital to schedule doctor slot</span>
+            <span className="text-xs text-slate-500">Select hospital to choose doctor</span>
           </div>
 
           {filteredHospitals.length === 0 ? (
@@ -351,7 +407,7 @@ export const AppointmentsPage = () => {
               <AlertCircle size={36} className="text-slate-600 mx-auto" />
               <h3 className="text-sm font-bold text-slate-300">No Hospitals Found</h3>
               <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                No hospitals match your search query or filter criteria. Try clearing filters or searching for another city/specialty.
+                No hospitals match your search query or filter criteria. Try clearing filters.
               </p>
               <button
                 onClick={() => {
@@ -380,7 +436,7 @@ export const AppointmentsPage = () => {
                         ? 'border-cyan-500/50 ring-1 ring-cyan-500/30 bg-gradient-to-b from-cyan-500/10 via-slate-900/40 to-slate-950/80 shadow-glass-md'
                         : 'border-white/8 hover:border-white/15 bg-white/3'}`}
                   >
-                    {/* Hospital Card Top Image Header */}
+                    {/* Top Image Header */}
                     <div className="relative h-28 rounded-2xl overflow-hidden mb-3.5 bg-slate-900">
                       <img
                         src={hosp.image}
@@ -408,11 +464,9 @@ export const AppointmentsPage = () => {
 
                     {/* Hospital Info */}
                     <div className="space-y-2 flex-1">
-                      <div className="flex justify-between items-start gap-2">
-                        <h3 className="font-extrabold text-sm text-slate-100 group-hover:text-cyan-300 transition-colors line-clamp-1">
-                          {hosp.name}
-                        </h3>
-                      </div>
+                      <h3 className="font-extrabold text-sm text-slate-100 group-hover:text-cyan-300 transition-colors line-clamp-1">
+                        {hosp.name}
+                      </h3>
 
                       <p className="text-[11px] text-slate-400 flex items-center gap-1 truncate">
                         <MapPin size={12} className="text-cyan-400 shrink-0" /> {hosp.location}
@@ -442,7 +496,7 @@ export const AppointmentsPage = () => {
                         }}
                         className="text-[10px] font-bold text-slate-400 hover:text-cyan-300 flex items-center gap-1 focus:outline-none"
                       >
-                        <Info size={11} /> View Hospital Details
+                        <Info size={11} /> Hospital Info
                       </button>
                       <span className={`text-[10px] font-bold flex items-center gap-1 ${isSelected ? 'text-cyan-400' : 'text-slate-500'}`}>
                         {isSelected ? 'Selected' : 'Select'} <ChevronRight size={12} />
@@ -458,15 +512,13 @@ export const AppointmentsPage = () => {
         {/* Right Column: Appointment Booking Panel */}
         <div className="space-y-4">
           <div className="glass-card rounded-3xl p-6 border border-white/8 space-y-5 relative overflow-hidden">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-sm font-extrabold text-slate-100 flex items-center gap-2">
-                  <Stethoscope size={16} className="text-cyan-400" /> Book Consultation
-                </h2>
-                <p className="text-[11px] text-slate-400 mt-0.5">
-                  Confirm hospital and select specialist doctor
-                </p>
-              </div>
+            <div>
+              <h2 className="text-sm font-extrabold text-slate-100 flex items-center gap-2">
+                <Stethoscope size={16} className="text-cyan-400" /> Book Consultation
+              </h2>
+              <p className="text-[11px] text-slate-400 mt-0.5">
+                Confirm hospital and select specialist doctor
+              </p>
             </div>
 
             {/* Selected Hospital Info Card */}
@@ -502,32 +554,46 @@ export const AppointmentsPage = () => {
             <form onSubmit={handleBookAppointment} className="space-y-4">
               {/* Doctor Selector */}
               <div className="space-y-2">
-                <label className="text-xs font-semibold text-slate-300 block">Select Doctor</label>
-                <div className="space-y-2 max-h-[180px] overflow-y-auto pr-1">
+                <label className="text-xs font-semibold text-slate-300 block">Select Doctor / Specialist</label>
+                <div className="space-y-2 max-h-[190px] overflow-y-auto pr-1">
                   {selectedHospital.doctors.map((doc) => {
                     const isSelected = selectedDoctor?.id === doc.id;
                     return (
-                      <button
+                      <div
                         key={doc.id}
-                        type="button"
                         onClick={() => handleSelectDoctor(doc)}
-                        className={`w-full p-3 rounded-2xl border text-left transition-all flex items-center gap-3 focus:outline-none
+                        className={`w-full p-3 rounded-2xl border text-left transition-all flex items-center justify-between gap-2.5 cursor-pointer
                           ${isSelected
                             ? 'bg-cyan-500/10 border-cyan-500/30 text-cyan-300'
                             : 'bg-white/3 border-white/5 text-slate-400 hover:bg-white/5'}`}
                       >
-                        <img
-                          src={doc.avatar}
-                          alt={doc.name}
-                          className="w-9 h-9 rounded-xl object-cover border border-white/10 shrink-0"
-                        />
-                        <div className="flex-1 min-w-0">
-                          <p className="text-xs font-extrabold text-slate-100 truncate">{doc.name}</p>
-                          <p className="text-[10px] text-cyan-400 font-medium truncate">{doc.specialization}</p>
-                          <p className="text-[9px] text-slate-500">{doc.experience} yrs exp • ₹{doc.consultationFee}</p>
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <img
+                            src={doc.avatar}
+                            alt={doc.name}
+                            className="w-9 h-9 rounded-xl object-cover border border-white/10 shrink-0"
+                          />
+                          <div className="min-w-0">
+                            <p className="text-xs font-extrabold text-slate-100 truncate">{doc.name}</p>
+                            <p className="text-[10px] text-cyan-400 font-medium truncate">{doc.specialization}</p>
+                            <p className="text-[9px] text-slate-500">{doc.experience} yrs exp • ₹{doc.consultationFee}</p>
+                          </div>
                         </div>
-                        {isSelected && <Check size={14} className="text-cyan-400 shrink-0" />}
-                      </button>
+
+                        <div className="flex items-center gap-1 shrink-0">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setActiveDoctorModal(doc);
+                            }}
+                            className="text-[10px] text-slate-400 hover:text-cyan-300 p-1 font-bold"
+                          >
+                            Profile
+                          </button>
+                          {isSelected && <Check size={14} className="text-cyan-400" />}
+                        </div>
+                      </div>
                     );
                   })}
                 </div>
@@ -537,7 +603,7 @@ export const AppointmentsPage = () => {
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-slate-300 block">Consultation Type</label>
                 <div className="grid grid-cols-2 gap-2">
-                  {['In-person', 'Online'].map((mode) => (
+                  {['In-person', 'Online Video'].map((mode) => (
                     <button
                       key={mode}
                       type="button"
@@ -547,7 +613,7 @@ export const AppointmentsPage = () => {
                           ? 'bg-cyan-500/10 border-cyan-500/30 text-cyan-300'
                           : 'bg-white/3 border-white/5 text-slate-400 hover:border-white/10'}`}
                     >
-                      {mode === 'Online' ? <Video size={13} /> : <MapPin size={13} />}
+                      {mode.includes('Online') ? <Video size={13} /> : <MapPin size={13} />}
                       {mode}
                     </button>
                   ))}
@@ -586,25 +652,25 @@ export const AppointmentsPage = () => {
               {/* Patient Intake */}
               <div className="space-y-2">
                 <div className="space-y-1">
-                  <label className="text-xs font-semibold text-slate-300 block">Patient Name <span className="text-rose-400">*</span></label>
+                  <label className="text-xs font-semibold text-slate-300 block">Patient Full Name <span className="text-rose-400">*</span></label>
                   <input
                     type="text"
                     value={patientName}
                     onChange={(e) => setPatientName(e.target.value)}
-                    placeholder="Enter patient full name"
+                    placeholder="Enter patient name"
                     className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 px-3 text-xs text-slate-200 placeholder-slate-500 outline-none focus:border-cyan-500/50"
                     required
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-semibold text-slate-300 block">Phone Number</label>
+                  <label className="text-xs font-semibold text-slate-300 block">Reason for Visit / Symptoms</label>
                   <input
-                    type="tel"
-                    value={patientPhone}
-                    onChange={(e) => setPatientPhone(e.target.value)}
-                    placeholder="+91 98765 43210"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 px-3 text-xs text-slate-200 placeholder-slate-500 outline-none focus:border-cyan-500/50"
+                    type="text"
+                    value={symptomNotes}
+                    onChange={(e) => setSymptomNotes(e.target.value)}
+                    placeholder="e.g. Chest tightness, Fever, Routine review"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl py-2 px-3 text-xs text-slate-200 placeholder-slate-500 outline-none focus:border-cyan-500/50"
                   />
                 </div>
               </div>
@@ -617,44 +683,13 @@ export const AppointmentsPage = () => {
               >
                 {submitting ? (
                   <>
-                    <RefreshCw size={14} className="animate-spin" /> Confirming Booking...
+                    <RefreshCw size={14} className="animate-spin" /> Scheduling...
                   </>
                 ) : (
                   'Confirm Appointment Booking'
                 )}
               </RippleButton>
             </form>
-          </div>
-
-          {/* Active Schedule Panel */}
-          <div className="glass-card rounded-3xl p-5 border border-white/8 space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xs font-extrabold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
-                <ShieldCheck size={14} className="text-indigo-400" /> Registered Appointments ({appointments.length})
-              </h3>
-            </div>
-
-            {appointments.length === 0 ? (
-              <p className="text-xs text-slate-500 italic text-center py-4">No active appointments scheduled yet.</p>
-            ) : (
-              <div className="space-y-2.5 max-h-[220px] overflow-y-auto pr-1">
-                {appointments.map((appt) => (
-                  <div key={appt.id} className="p-3 rounded-2xl bg-white/3 border border-white/5 flex items-center justify-between gap-2">
-                    <div className="min-w-0">
-                      <p className="text-xs font-bold text-slate-200 truncate">{appt.doctor_name || appt.doctor || 'Doctor Consultation'}</p>
-                      <p className="text-[10px] text-cyan-400 truncate">{appt.date_time || appt.date || 'Scheduled'}</p>
-                    </div>
-                    <button
-                      onClick={() => handleCancelAppointment(appt.id)}
-                      className="p-1 text-slate-500 hover:text-rose-400 focus:outline-none"
-                      title="Cancel appointment"
-                    >
-                      <Trash2 size={13} />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
         </div>
       </div>
@@ -698,7 +733,7 @@ export const AppointmentsPage = () => {
               <p className="text-xs text-slate-300 leading-relaxed">{activeHospitalModal.description}</p>
 
               <div className="space-y-2">
-                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Medical Departments</h4>
+                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Clinical Departments</h4>
                 <div className="flex flex-wrap gap-1.5">
                   {activeHospitalModal.departments.map((d) => (
                     <span key={d} className="text-xs px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 font-semibold">
@@ -727,6 +762,75 @@ export const AppointmentsPage = () => {
                 className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-bold text-xs shadow-glow-primary"
               >
                 Select This Hospital for Booking
+              </button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* ── DOCTOR PROFILE MODAL ── */}
+      <AnimatePresence>
+        {activeDoctorModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="glass-card rounded-3xl max-w-lg w-full p-6 border border-white/15 space-y-5 relative overflow-hidden"
+            >
+              <div className="flex justify-between items-start">
+                <div className="flex items-center gap-3">
+                  <img
+                    src={activeDoctorModal.avatar}
+                    alt={activeDoctorModal.name}
+                    className="w-14 h-14 rounded-2xl object-cover border border-cyan-500/30 shrink-0"
+                  />
+                  <div>
+                    <h3 className="text-base font-extrabold text-white">{activeDoctorModal.name}</h3>
+                    <p className="text-xs text-cyan-400 font-bold">{activeDoctorModal.specialization}</p>
+                    <p className="text-[10px] text-slate-400">{activeDoctorModal.qualification}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setActiveDoctorModal(null)}
+                  className="p-1.5 rounded-xl bg-white/5 text-slate-400 hover:text-white"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              <p className="text-xs text-slate-300 leading-relaxed">{activeDoctorModal.bio}</p>
+
+              <div className="grid grid-cols-2 gap-3 text-xs">
+                <div className="p-3 rounded-xl bg-white/3 border border-white/5">
+                  <span className="text-slate-400 block text-[10px]">Experience</span>
+                  <span className="font-bold text-white">{activeDoctorModal.experience}+ Years</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white/3 border border-white/5">
+                  <span className="text-slate-400 block text-[10px]">Consultation Fee</span>
+                  <span className="font-bold text-emerald-400">₹{activeDoctorModal.consultationFee}</span>
+                </div>
+              </div>
+
+              <div className="space-y-1 text-xs">
+                <span className="text-slate-400 block text-[10px]">Available Days</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {activeDoctorModal.availableDays.map(d => (
+                    <span key={d} className="px-2 py-0.5 rounded-lg bg-cyan-500/10 text-cyan-300 text-[10px] font-bold">
+                      {d}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                onClick={() => {
+                  handleSelectDoctor(activeDoctorModal);
+                  setActiveDoctorModal(null);
+                }}
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-bold text-xs shadow-glow-primary"
+              >
+                Select {activeDoctorModal.name} for Appointment
               </button>
             </motion.div>
           </div>
