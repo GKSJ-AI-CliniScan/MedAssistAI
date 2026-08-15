@@ -22,3 +22,4 @@ class Doctor(Base):
     # Relationships
     user = relationship("User", back_populates="doctor")
     appointments = relationship("Appointment", back_populates="doctor", cascade="all, delete-orphan")
+    prescriptions = relationship("Prescription", back_populates="doctor", cascade="all, delete-orphan")

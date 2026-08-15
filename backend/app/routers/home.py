@@ -22,6 +22,18 @@ def home():
 
 
 @router.get(
+    "/health",
+    summary="Service Health Check",
+)
+def health_check():
+    return {
+        "status": "healthy",
+        "app": settings.APP_NAME,
+        "version": settings.APP_VERSION,
+    }
+
+
+@router.get(
     "/patient/dashboard",
     summary="Patient Dashboard",
 )

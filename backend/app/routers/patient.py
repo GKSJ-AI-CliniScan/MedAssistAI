@@ -47,12 +47,26 @@ def update_profile(
 @router.get(
     "/all",
     response_model=List[PatientResponse],
-    summary="Get list of all patients (Doctor or Admin only)",
+    summary="Get list of all patients (Doctor, Admin)",
 )
 def list_patients(
     skip: int = 0,
     limit: int = 100,
+    search: str = None,
     current_user: User = Depends(require_roles("doctor", "admin")),
     db: Session = Depends(get_db),
 ):
-    return get_all_patients(db, skip=skip, limit=limit)
+    return get_all_patients(db, skip=skip, limit=limit, search=search)
+
+
+@router.get(
+    "/{patient_id}/history",
+    summary="Get complete patient history (Doctor, Admin)",
+)
+def get_patient_history(
+    patient_id: int,
+    current_user: User = Depends(require_roles("doctor", "admin")),
+    db: Session = Depends(get_db),
+):
+    from app.services.patient_service import get_patient_history_data
+    return get_patient_history_data(db, patient_id)

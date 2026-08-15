@@ -18,10 +18,10 @@ router = APIRouter(
 
 @router.get(
     "/summary",
-    summary="Get system overview analytics metrics (Admin or Doctor)",
+    summary="Get system overview analytics metrics (Admin, Doctor, or Patient)",
 )
 def get_analytics_summary(
-    current_user: User = Depends(require_roles("admin", "doctor")),
+    current_user: User = Depends(require_roles("admin", "doctor", "patient")),
     db: Session = Depends(get_db),
 ) -> Dict[str, Any]:
     return get_system_analytics_summary(db)
@@ -29,10 +29,10 @@ def get_analytics_summary(
 
 @router.get(
     "/diseases",
-    summary="Get top predicted diseases distribution (Admin or Doctor)",
+    summary="Get top predicted diseases distribution (Admin, Doctor, or Patient)",
 )
 def get_disease_analytics(
-    current_user: User = Depends(require_roles("admin", "doctor")),
+    current_user: User = Depends(require_roles("admin", "doctor", "patient")),
     db: Session = Depends(get_db),
 ) -> Dict[str, Any]:
     return get_disease_distribution_stats(db)

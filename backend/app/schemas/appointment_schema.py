@@ -6,23 +6,29 @@ from app.schemas.doctor_schema import DoctorResponse
 
 
 class AppointmentCreate(BaseModel):
-    doctor_id: int
+    doctor_id: Optional[int] = None
+    patient_id: Optional[int] = None
     appointment_date: datetime
     reason: Optional[str] = None
     notes: Optional[str] = None
 
 
 class AppointmentStatusUpdate(BaseModel):
-    status: str  # Pending, Confirmed, Completed, Cancelled
+    status: str  # Pending, Confirmed, Scheduled, Completed, Cancelled
     notes: Optional[str] = None
 
     @field_validator("status")
     @classmethod
     def validate_status(cls, value: str) -> str:
-        allowed = {"Pending", "Confirmed", "Completed", "Cancelled"}
-        if value not in allowed:
+        allowed = {
+            "pending", "confirmed", "scheduled", "completed", "cancelled", "canceled"
+        }
+        val = value.strip().lower()
+        if val not in allowed:
             raise ValueError(f"Status must be one of: {', '.join(allowed)}")
-        return value
+        if val == "canceled":
+            return "Cancelled"
+        return val.capitalize()
 
 
 class AppointmentResponse(BaseModel):

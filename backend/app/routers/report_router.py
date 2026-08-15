@@ -36,11 +36,11 @@ def get_my_reports(
 @router.get(
     "/patient/{patient_id}",
     response_model=List[ReportResponse],
-    summary="Get reports for a specific patient (Doctor or Admin)",
+    summary="Get reports for a specific patient (Doctor, Admin, or Patient)",
 )
 def get_reports_for_patient(
     patient_id: int,
-    current_user: User = Depends(require_roles("doctor", "admin")),
+    current_user: User = Depends(require_roles("doctor", "admin", "patient")),
     db: Session = Depends(get_db),
 ):
     return get_reports_by_patient_id(db, patient_id)
@@ -62,12 +62,12 @@ def get_report(
 @router.put(
     "/{id}/notes",
     response_model=ReportResponse,
-    summary="Update doctor notes and medical recommendations on report (Doctor or Admin)",
+    summary="Update doctor notes and medical recommendations on report (Doctor, Admin, or Patient)",
 )
 def update_notes(
     id: int,
     data: ReportUpdate,
-    current_user: User = Depends(require_roles("doctor", "admin")),
+    current_user: User = Depends(require_roles("doctor", "admin", "patient")),
     db: Session = Depends(get_db),
 ):
     return update_report_notes(db, id, current_user, data)
@@ -83,7 +83,6 @@ def download_report(
     db: Session = Depends(get_db),
 ):
     report = get_report_by_id(db, id)
-    # generate_printable_report_text automatically pulls report.patient.user
     report_text = generate_printable_report_text(report)
 
     filename = f"MedAssistAI_Report_{report.id}.txt"

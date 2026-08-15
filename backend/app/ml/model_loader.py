@@ -64,8 +64,9 @@ def load_model(force_reload: bool = False) -> Any:
 
     try:
         logger.info("Loading trained disease prediction model from %s", MODEL_PATH)
-        _model = joblib.load(MODEL_PATH)
-        logger.info("Trained model loaded successfully from %s", MODEL_PATH)
+        # Use memory mapping to reduce memory footprint
+        _model = joblib.load(MODEL_PATH, mmap_mode='r')
+        logger.info("Trained model loaded successfully from %s (using memory mapping)", MODEL_PATH)
         return _model
     except Exception as exc:
         logger.exception("Failed to load trained model from %s", MODEL_PATH)

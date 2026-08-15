@@ -1,3 +1,5 @@
+import asyncio
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -15,38 +17,87 @@ from app.routers import (
     prediction_router,
     report_router,
     analytics_router,
+    prescription_router,
 )
 from app.utils.logger import get_logger
 
 logger = get_logger("MedAssistAI.Main")
 
-# Initialize database tables and preload ML mapping on startup
-try:
-    init_db()
-    logger.info("Database initialized successfully.")
-except Exception as e:
-    logger.warning("Database initialization deferred: %s", e)
 
-try:
-    load_disease_mapping()
-    logger.info("Preloaded disease name mappings into memory.")
-except Exception as e:
-    logger.warning("Disease mapping preload warning: %s", e)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup: Initialize DB and preload ML models
+    try:
+        init_db()
+        logger.info("Database initialized successfully.")
+    except Exception as e:
+        logger.warning("Database initialization deferred: %s", e)
+
+    try:
+        load_disease_mapping()
+        logger.info("Preloaded disease name mappings into memory.")
+    except Exception as e:
+        logger.warning("Disease mapping preload warning: %s", e)
+
+    # Preload the voting classifier model asynchronously so first prediction request is fast
+    def _warmup_model():
+        try:
+            logger.info("Preloading ML voting classifier model in background...")
+            load_model()
+            logger.info("ML voting classifier model preloaded and resident in memory.")
+        except Exception as e:
+            logger.warning("ML model warmup error: %s", e)
+
+    loop = asyncio.get_event_loop()
+    loop.run_in_executor(None, _warmup_model)
+
+    yield
+
+    # Shutdown
+    logger.info("Shutting down MedAssistAI API server.")
+
 
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION,
     debug=settings.DEBUG,
+    lifespan=lifespan,
     description=(
         "MedAssistAI API: AI-powered healthcare web application for disease prediction, "
         "health risk assessment, severity analysis, medical recommendations, report management, and system analytics."
     ),
 )
 
-# Enable CORS for frontend integration
+# Build dynamic allowed origins list
+default_origins = [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://localhost:5175",
+    "http://localhost:5176",
+    "http://localhost:5177",
+    "http://localhost:3000",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:5174",
+    "http://127.0.0.1:5175",
+    "http://127.0.0.1:5176",
+    "http://127.0.0.1:5177",
+    "http://127.0.0.1:3000",
+]
+
+# Parse additional comma-separated origins from environment if provided
+if settings.ALLOWED_ORIGINS:
+    extra_origins = [
+        origin.strip()
+        for origin in settings.ALLOWED_ORIGINS.split(",")
+        if origin.strip()
+    ]
+    default_origins.extend(extra_origins)
+
+# Enable CORS for local dev + production Vercel origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=default_origins,
+    allow_origin_regex=r"^https://.*\.vercel\.app$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -62,3 +113,4 @@ app.include_router(symptom.router)
 app.include_router(prediction_router.router)
 app.include_router(report_router.router)
 app.include_router(analytics_router.router)
+app.include_router(prescription_router.router)

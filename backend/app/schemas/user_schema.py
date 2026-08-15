@@ -15,12 +15,21 @@ class UserRegister(BaseModel):
         allowed = {"patient", "doctor", "admin"}
         if value and value.lower() not in allowed:
             raise ValueError(f"Role must be one of: {', '.join(allowed)}")
-        return value.lower() if value else "patient"
+        # For public registration, force role to be patient
+        if value and value.lower() != "patient":
+            raise ValueError("Public registration is only available for patients")
+        return "patient"
 
 
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
+    role: Optional[str] = None
+
+
+class PasswordChangeRequest(BaseModel):
+    current_password: str = Field(..., description="Current account password")
+    new_password: str = Field(..., min_length=6, description="New account password (min 6 characters)")
 
 
 class UserResponse(BaseModel):

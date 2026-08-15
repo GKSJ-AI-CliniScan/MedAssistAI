@@ -1,0 +1,48 @@
+# Environment variable files (Keep secrets safe!)
+.env
+.env*.local
+frontend/.env
+backend/.env
+
+# Node.js dependencies & builds
+node_modules/
+dist/
+dist-ssr/
+frontend/dist/
+frontend/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python environments & cache
+venv/
+.venv/
+backend/venv/
+__pycache__/
+*.py[cod]
+*$py.class
+backend/__pycache__/
+backend/app/__pycache__/
+backend/app/**/__pycache__/
+
+# Local Database & SQLite files
+*.db
+*.sqlite
+*.sqlite3
+backend/*.db
+backend/*.sqlite
+backend/*.sqlite3
+
+# Large dataset CSV files (training artifacts >100MB)
+backend/app/ml/clean_190k_dataset.csv
+backend/app/ml/encoded__dataset.csv
+
+# Large local zip & dump files
+*.zip
+*.tar.gz
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
