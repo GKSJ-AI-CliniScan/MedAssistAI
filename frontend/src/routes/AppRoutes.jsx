@@ -56,6 +56,7 @@ import NotificationsPage from '../pages/Notifications/NotificationsPage';
 import SettingsPage from '../pages/Settings/SettingsPage';
 import NotFoundPage from '../pages/Errors/NotFoundPage';
 import AIHealthAssistantPage from '../pages/AIHealthAssistant/AIHealthAssistantPage';
+import HospitalsPage from '../pages/Hospitals/HospitalsPage';
 
 export const AppRoutes = () => {
   return (
@@ -124,6 +125,7 @@ export const AppRoutes = () => {
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/appointments" element={<AppointmentsPage />} />
+          <Route path="/hospitals" element={<HospitalsPage />} />
           <Route path="/assistant" element={<AIHealthAssistantPage />} />
         </Route>
       </Route>

@@ -44,6 +44,7 @@ export const Sidebar = () => {
     { name: 'Patient Profile', path: '/patient-profile', icon: User },
     { name: 'Symptom Analysis', path: '/symptom-analysis', icon: Stethoscope },
     { name: 'Find a Doctor', path: '/appointments', icon: Building2 },
+    { name: 'Hospitals Directory', path: '/hospitals', icon: Building2 },
     { name: 'My Appointments', path: '/my-appointments', icon: Clock },
     { name: 'Disease Prediction', path: '/prediction', icon: Brain },
     { name: 'Risk Assessment', path: '/risk', icon: ShieldAlert },

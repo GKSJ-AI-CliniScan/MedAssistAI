@@ -52,7 +52,8 @@ export const PatientDashboardPage = () => {
   const quickActions = [
     { label: 'Symptom Analysis', path: '/symptom-analysis', icon: Stethoscope, color: 'cyan', desc: 'AI-driven multi-symptom triage' },
     { label: 'Find a Doctor', path: '/appointments', icon: User, color: 'indigo', desc: 'Search certified specialists' },
-    { label: 'Book Appointment', path: '/appointments', icon: CalendarDays, color: 'purple', desc: 'Schedule hospital visit' },
+    { label: 'Hospitals Directory', path: '/hospitals', icon: Building2, color: 'purple', desc: 'Browse hospitals across AP' },
+    { label: 'Book Appointment', path: '/appointments', icon: CalendarDays, color: 'violet', desc: 'Schedule hospital visit' },
     { label: 'Medical History', path: '/medical-history', icon: History, color: 'emerald', desc: 'Past records & diagnoses' },
     { label: 'Health Reports', path: '/reports', icon: FileText, color: 'amber', desc: 'Download clinical PDF summaries' },
     { label: 'My Appointments', path: '/my-appointments', icon: Clock, color: 'teal', desc: 'Manage scheduled visits' },
