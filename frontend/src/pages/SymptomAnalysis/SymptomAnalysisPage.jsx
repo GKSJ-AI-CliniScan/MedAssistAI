@@ -8,6 +8,8 @@ import {
 } from 'lucide-react';
 import RippleButton from '../../components/ui/RippleButton';
 import { downloadSymptomAnalysisReport } from '../../utils/documentGenerator';
+import { useUser } from '../../context/UserContext';
+import predictionService from '../../services/predictionService';
 
 // Full symptom registry
 const SYMPTOM_CATEGORIES = [
@@ -176,6 +178,7 @@ const ANALYSIS_ENGINE = {
 
 export const SymptomAnalysisPage = () => {
   const navigate = useNavigate();
+  const { updateSymptomSession } = useUser();
 
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
   const [step, setStep] = useState('select'); // 'select' | 'result'
@@ -215,11 +218,127 @@ export const SymptomAnalysisPage = () => {
       return;
     }
     setIsAnalyzing(true);
-    await new Promise(r => setTimeout(r, 1800));
-    const result = ANALYSIS_ENGINE.analyze(selectedSymptoms);
-    setAnalysisResult(result);
-    setStep('result');
-    setIsAnalyzing(false);
+    try {
+      const data = await predictionService.predictDisease(selectedSymptoms, 'mild', 3, '');
+      const selectedSymptomsObjects = selectedSymptoms.map(id => {
+        const s = allSymptoms.find(sym => sym.id === id);
+        return {
+          id,
+          name: s ? s.label : id,
+          label: s ? s.label : id
+        };
+      });
+      updateSymptomSession({
+        selectedSymptoms: selectedSymptomsObjects,
+        severity: 'mild',
+        duration: 3,
+        notes: '',
+        predictionId: data.prediction_id || 1,
+        predictionResult: (data.predictions || []).map(p => ({
+          ...p,
+          id: p.id,
+          name: p.name || p.disease,
+          riskLevel: p.riskLevel || 'Low',
+          confidence: p.confidence || 0.6,
+          description: p.description || 'Clinical observation.',
+          matchedSymptoms: p.matchedSymptoms || selectedSymptoms,
+          causes: p.causes || ['Pathogenic agents'],
+          complications: p.complications || ['Symptom escalation']
+        })),
+        riskResult: {
+          riskScore: data.risk?.riskScore || 20,
+          riskLevel: data.risk?.riskLevel || 'Low',
+          healthScore: data.risk?.healthScore || 80,
+          emergencyAlert: data.risk?.emergencyAlert || false,
+          message: data.risk?.message || 'Standard clinical summary.',
+          factors: data.risk?.factors || [],
+          evaluatedAt: data.risk?.evaluatedAt || new Date().toISOString()
+        },
+        recommendations: {
+          lifestyle: data.recommendation?.lifestyle || 'Maintain daily routine.',
+          diet: data.recommendation?.diet || 'Balanced diet.',
+          exercise: data.recommendation?.exercise || 'Regular light exercise.',
+          waterIntake: data.recommendation?.waterIntake || '2-3 liters of water.',
+          sleep: data.recommendation?.sleep || '7-8 hours of sleep.',
+          followUp: data.recommendation?.followUp || 'Annual routine checkup.',
+          doctor: data.recommendation?.doctor || 'General Practitioner',
+          medicines: data.recommendation?.medicines || [],
+          disclaimer: data.recommendation?.disclaimer || 'Information only.'
+        }
+      });
+
+      setAnalysisResult({
+        conditions: (data.predictions || []).map(p => p.name || p.disease),
+        specialist: data.recommendation?.doctor || 'General Practitioner',
+        riskLevel: data.risk?.riskLevel || 'Low',
+        urgency: data.risk?.message || 'Standard checkup recommended',
+        matchScore: Math.round((data.top_confidence || 0.6) * 100)
+      });
+      setStep('result');
+    } catch (err) {
+      console.warn('Prediction API failed, using local engine fallback:', err);
+      const result = ANALYSIS_ENGINE.analyze(selectedSymptoms);
+      const selectedSymptomsObjects = selectedSymptoms.map(id => {
+        const s = allSymptoms.find(sym => sym.id === id);
+        return {
+          id,
+          name: s ? s.label : id,
+          label: s ? s.label : id
+        };
+      });
+      const fallbackResult = {
+        conditions: result.conditions,
+        specialist: result.specialist,
+        riskLevel: result.riskLevel,
+        urgency: result.urgency,
+        matchScore: result.matchScore
+      };
+      updateSymptomSession({
+        selectedSymptoms: selectedSymptomsObjects,
+        severity: 'mild',
+        duration: 3,
+        notes: '',
+        predictionId: 1,
+        predictionResult: result.conditions.map((cond, idx) => ({
+          id: cond.toLowerCase().replace(/ /g, '_'),
+          name: cond,
+          riskLevel: result.riskLevel,
+          confidence: idx === 0 ? result.matchScore : Math.max(10, result.matchScore - 20),
+          description: `Clinical profile for ${cond} determined by rule-based analysis.`,
+          matchedSymptoms: selectedSymptoms,
+          causes: ['Pathogenic agents', 'Environmental factors'],
+          complications: ['Symptom escalation'],
+          doctor: result.specialist
+        })),
+        riskResult: {
+          riskScore: result.riskLevel === 'High' ? 80 : result.riskLevel === 'Moderate' ? 45 : 15,
+          riskLevel: result.riskLevel,
+          healthScore: result.riskLevel === 'High' ? 40 : result.riskLevel === 'Moderate' ? 70 : 90,
+          emergencyAlert: result.riskLevel === 'High',
+          message: result.urgency,
+          factors: [
+            { name: 'Active Symptoms', weight: selectedSymptoms.length * 10 },
+            { name: 'Symptom Match Count', weight: result.matchScore }
+          ],
+          evaluatedAt: new Date().toISOString()
+        },
+        recommendations: {
+          lifestyle: 'Rest well, avoid heavy physical activities.',
+          diet: 'Stay on a simple, nutritious diet and warm liquids.',
+          exercise: 'Rest is recommended; avoid strenuous activity.',
+          waterIntake: 'Drink at least 2.5 - 3 liters of water.',
+          sleep: 'Aim for 8+ hours of restful sleep.',
+          followUp: 'Consult a general physician if symptoms persist beyond 5 days.',
+          doctor: result.specialist,
+          medicines: ['Supportive care'],
+          disclaimer: 'This is a local clinical pattern matching fallback assessment.'
+        }
+      });
+      setAnalysisResult(fallbackResult);
+      setStep('result');
+    } finally {
+      setIsAnalyzing(false);
+    }
   };
 
   const handleReset = () => {
