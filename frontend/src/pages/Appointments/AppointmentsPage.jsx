@@ -11,6 +11,7 @@ import RippleButton from '../../components/ui/RippleButton';
 import { toast } from 'react-toastify';
 import appointmentService from '../../services/appointmentService';
 import { HOSPITALS, DEPARTMENTS, LOCATIONS } from '../../data/hospitalsData';
+import { downloadAppointmentSlip } from '../../utils/documentGenerator';
 
 export const AppointmentsPage = () => {
   const [searchParams] = useSearchParams();
@@ -308,6 +309,25 @@ export const AppointmentsPage = () => {
             </div>
 
             <div className="flex flex-wrap items-center justify-end gap-3 pt-2">
+              <button
+                onClick={() => {
+                  downloadAppointmentSlip({
+                    id: bookedConfirmation.appointmentId,
+                    patientName: bookedConfirmation.patientName,
+                    doctorName: bookedConfirmation.doctor.name,
+                    specialty: bookedConfirmation.doctor.specialization,
+                    hospitalName: bookedConfirmation.hospital.name,
+                    date: bookedConfirmation.date,
+                    time: bookedConfirmation.timeSlot,
+                    mode: bookedConfirmation.mode,
+                    reason: bookedConfirmation.reason
+                  });
+                  toast.success('Appointment confirmation slip downloaded!', { icon: '📄' });
+                }}
+                className="px-4 py-2.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 text-xs font-bold transition-all flex items-center gap-1.5"
+              >
+                <FileText size={14} /> Download Slip
+              </button>
               <button
                 onClick={() => navigate('/my-appointments')}
                 className="px-5 py-2.5 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/40 text-purple-300 text-xs font-bold transition-all"

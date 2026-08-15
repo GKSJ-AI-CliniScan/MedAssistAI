@@ -33,10 +33,10 @@ export const AuthProvider = ({ children }) => {
     initializeAuth();
   }, []);
 
-  const login = async (email, password) => {
+  const login = async (email, password, roleHint = null) => {
     setLoading(true);
     try {
-      const response = await authService.login(email, password);
+      const response = await authService.login(email, password, roleHint);
       setUser(response.user);
       setIsAuthenticated(true);
       return response.user;

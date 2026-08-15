@@ -5,9 +5,10 @@ import { toast } from 'react-toastify';
 import {
   CalendarDays, Clock, Stethoscope, Building2, CheckCircle2,
   XCircle, RefreshCw, AlertCircle, ChevronRight, Trash2,
-  MapPin, Video, Search, Filter
+  MapPin, Video, Search, Filter, Download, FileText
 } from 'lucide-react';
 import appointmentService from '../../services/appointmentService';
+import { downloadAppointmentSlip } from '../../utils/documentGenerator';
 import RippleButton from '../../components/ui/RippleButton';
 
 const STATUS_TABS = [
@@ -223,11 +224,32 @@ export const MyAppointmentsPage = () => {
 
                 {/* Action Buttons */}
                 <div className="flex items-center gap-2 self-end md:self-center">
+                  <button
+                    onClick={() => {
+                      downloadAppointmentSlip({
+                        id: appt.id,
+                        patientName: 'Patient',
+                        doctorName: appt.doctor_name,
+                        specialty: appt.doctor_specialty,
+                        hospitalName: appt.hospitalName,
+                        date: appt.date_time?.split('•')[0]?.trim() || 'Upcoming',
+                        time: appt.date_time?.split('•')[1]?.trim() || '10:30 AM',
+                        mode: appt.mode,
+                        reason: appt.reason
+                      });
+                      toast.success('Appointment slip downloaded!', { icon: '📄' });
+                    }}
+                    className="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-cyan-300 border border-white/8 text-xs font-bold transition-all flex items-center gap-1"
+                    title="Download Appointment Confirmation Slip"
+                  >
+                    <Download size={13} /> Slip
+                  </button>
                   {isCancellable && (
                     <>
                       <button
                         onClick={() => toast.info('Reschedule feature: Please contact the hospital directly to reschedule.', { icon: '📅' })}
                         className="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/8 text-slate-300 text-xs font-bold transition-all"
+                        title="Reschedule Consultation"
                       >
                         <RefreshCw size={13} />
                       </button>

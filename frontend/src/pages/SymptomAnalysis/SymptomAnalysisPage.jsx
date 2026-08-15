@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {
   Stethoscope, Activity, ChevronRight, X, Info, AlertCircle,
-  Check, ArrowRight, Sparkles, RefreshCw, Search, Shield
+  Check, ArrowRight, Sparkles, RefreshCw, Search, Shield, Download, FileText
 } from 'lucide-react';
 import RippleButton from '../../components/ui/RippleButton';
+import { downloadSymptomAnalysisReport } from '../../utils/documentGenerator';
 
 // Full symptom registry
 const SYMPTOM_CATEGORIES = [
@@ -519,6 +520,20 @@ export const SymptomAnalysisPage = () => {
                   <Stethoscope size={16} /> Find {analysisResult.specialist} Near Me
                   <ArrowRight size={15} />
                 </RippleButton>
+
+                <button
+                  onClick={() => {
+                    const symptomObjs = selectedSymptoms.map(id => allSymptoms.find(s => s.id === id) || { label: id });
+                    downloadSymptomAnalysisReport({
+                      selectedSymptoms: symptomObjs,
+                      analysisResult
+                    });
+                    toast.success('Clinical triage report downloaded!', { icon: '📄' });
+                  }}
+                  className="w-full py-3.5 rounded-2xl bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/30 text-cyan-200 text-xs font-bold transition-all flex items-center justify-center gap-2"
+                >
+                  <Download size={14} /> Download Clinical Triage Report (TXT/PDF)
+                </button>
 
                 <button
                   onClick={handleReset}
