@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Lock, Eye, EyeOff, ArrowRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Lock, Eye, EyeOff, ArrowRight, ArrowLeft, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import AuthIllustrationPanel from './components/AuthIllustrationPanel';
 import {
@@ -41,7 +41,7 @@ export const ResetPasswordPage = () => {
       setIsSuccess(true);
       toast.success('Password updated successfully!', { icon: '🔐' });
     } catch (err) {
-      toast.error(err.message || 'Failed to reset password. Try again.', { icon: '⚠️' });
+      toast.error(err.message || 'Failed to reset password. Please try again.', { icon: '⚠️' });
     } finally {
       setIsLoading(false);
     }
@@ -99,7 +99,7 @@ export const ResetPasswordPage = () => {
                 <div>
                   <h2 className="text-2xl font-extrabold text-white mb-2">Password Updated</h2>
                   <p className="text-slate-400 text-sm leading-relaxed">
-                    Your clinical account password has been successfully changed. You can now sign in with your new credentials.
+                    Your account password has been successfully changed. You can now sign in with your new credentials.
                   </p>
                 </div>
 
@@ -117,28 +117,26 @@ export const ResetPasswordPage = () => {
                   ))}
                 </div>
 
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => navigate('/auth/login')}
-                  className="w-full py-3.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-cyan-500 to-indigo-600 shadow-lg shadow-cyan-500/25 transition-all flex items-center justify-center gap-2 focus:outline-none"
+                <button
+                  onClick={() => navigate('/signin')}
+                  className="w-full py-3.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-cyan-500 to-indigo-600 shadow-glow-primary/30 transition-all flex items-center justify-center gap-2 focus:outline-none"
                 >
                   Sign In with New Password <ArrowRight size={16} />
-                </motion.button>
+                </button>
               </motion.div>
             ) : (
               /* ── Form State ── */
               <>
-                <div className="mb-7">
+                <div className="mb-6">
                   <motion.div
                     initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}
-                    className="inline-flex items-center gap-1.5 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20 text-cyan-400 text-[10px] font-semibold uppercase tracking-wider mb-3"
+                    className="inline-flex items-center gap-1.5 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20 text-cyan-400 text-[10px] font-semibold uppercase tracking-wider mb-2.5"
                   >
                     <ShieldCheck size={11} /> Secure Password Reset
                   </motion.div>
-                  <h1 className="text-2xl font-extrabold tracking-tight text-white">Create new password</h1>
-                  <p className="text-slate-400 text-sm mt-1 leading-relaxed">
-                    Set a strong, unique password for your clinical account.
+                  <h1 className="text-2xl font-extrabold tracking-tight text-white">Create New Password</h1>
+                  <p className="text-slate-400 text-xs mt-1 leading-relaxed">
+                    Set a strong, unique password for your account.
                   </p>
                 </div>
 
@@ -196,8 +194,8 @@ export const ResetPasswordPage = () => {
                   </div>
 
                   {/* Requirements checklist */}
-                  <div className="bg-white/3 border border-white/8 rounded-xl p-4">
-                    <p className="text-xs font-bold text-slate-300 mb-3 uppercase tracking-wider">Password Requirements</p>
+                  <div className="bg-white/3 border border-white/8 rounded-2xl p-3.5">
+                    <p className="text-[10px] font-bold text-slate-300 mb-2 uppercase tracking-wider">Password Requirements</p>
                     <div className="grid grid-cols-2 gap-2">
                       {requirements.map(({ label, met }) => (
                         <motion.div
@@ -218,13 +216,13 @@ export const ResetPasswordPage = () => {
                   <AuthSubmitButton
                     isLoading={isLoading}
                     label={<>Set New Password <ArrowRight size={16} /></>}
-                    className="bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-450 hover:to-indigo-550 shadow-lg shadow-cyan-500/25 border-none"
+                    className="bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-450 hover:to-indigo-550 shadow-glow-primary/30"
                   />
                 </form>
 
                 <div className="flex justify-center mt-5">
-                  <Link to="/auth/login" className="text-xs text-slate-400 hover:text-cyan-400 font-semibold transition-colors">
-                    ← Back to Sign In
+                  <Link to="/signin" className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-cyan-400 font-semibold transition-colors">
+                    <ArrowLeft size={13} /> Back to Sign In
                   </Link>
                 </div>
               </>

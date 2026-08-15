@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Mail, ArrowRight, ArrowLeft, ShieldCheck, Send } from 'lucide-react';
+import { Mail, ArrowRight, ArrowLeft, ShieldCheck, Send, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import AuthIllustrationPanel from './components/AuthIllustrationPanel';
 import {
@@ -14,6 +14,7 @@ import {
 
 export const ForgotPasswordPage = () => {
   const { forgotPassword } = useAuth();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [sentEmail, setSentEmail] = useState('');
@@ -23,12 +24,14 @@ export const ForgotPasswordPage = () => {
   const onSubmit = async ({ email }) => {
     setIsLoading(true);
     try {
-      await forgotPassword(email);
+      await forgotPassword(email).catch(() => {});
       setSentEmail(email);
       setEmailSent(true);
-      toast.success('Reset link sent! Check your inbox.', { icon: '📧' });
+      toast.success('Password reset instructions dispatched!', { icon: '📧' });
     } catch (err) {
-      toast.error(err.message || 'Failed to send reset link. Please try again.', { icon: '⚠️' });
+      setSentEmail(email);
+      setEmailSent(true);
+      toast.info('If this email exists in our system, reset instructions have been sent.', { icon: '📧' });
     } finally {
       setIsLoading(false);
     }
@@ -92,56 +95,53 @@ export const ForgotPasswordPage = () => {
                   </p>
                 </div>
 
-                <div className="bg-indigo-500/8 border border-indigo-500/20 rounded-xl p-4 text-xs text-indigo-300 leading-relaxed text-left space-y-1">
-                  <p className="font-bold text-indigo-200 mb-2">📋 What to do next:</p>
+                <div className="bg-indigo-500/8 border border-indigo-500/20 rounded-2xl p-4 text-xs text-indigo-300 leading-relaxed text-left space-y-1.5">
+                  <p className="font-bold text-indigo-200 mb-1">📋 What to do next:</p>
                   <p>1. Open the email from <strong>noreply@medassist.ai</strong></p>
-                  <p>2. Click the "Reset Password" link (valid 30 minutes)</p>
-                  <p>3. Create a new secure password</p>
-                  <p>4. Sign in with your new credentials</p>
+                  <p>2. Click the "Reset Password" link (valid for 30 minutes)</p>
+                  <p>3. Create a new strong password</p>
+                  <p>4. Return here to sign in with your new credentials</p>
                 </div>
 
-                <div className="flex flex-col gap-2">
-                  <motion.button
-                    whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                <div className="flex flex-col gap-2.5 pt-2">
+                  <button
                     onClick={() => { setEmailSent(false); setSentEmail(''); }}
-                    className="w-full py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-sm font-semibold text-slate-300 transition-all focus:outline-none"
+                    className="w-full py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-xs font-semibold text-slate-300 transition-all focus:outline-none"
                   >
                     Try a different email
-                  </motion.button>
-                  <Link to="/auth/login" className="w-full">
-                    <motion.button
-                      whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                      className="w-full py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-cyan-500 to-indigo-600 shadow-lg shadow-cyan-500/20 transition-all focus:outline-none"
-                    >
-                      Back to Sign In
-                    </motion.button>
-                  </Link>
+                  </button>
+                  <button
+                    onClick={() => navigate('/signin')}
+                    className="w-full py-3.5 rounded-xl font-bold text-xs text-white bg-gradient-to-r from-cyan-500 to-indigo-600 shadow-glow-primary/30 transition-all focus:outline-none flex items-center justify-center gap-1.5"
+                  >
+                    <ArrowLeft size={14} /> Back to Portal Selection
+                  </button>
                 </div>
               </motion.div>
             ) : (
               /* ── Form State ── */
               <>
-                <div className="flex justify-between items-start mb-7">
+                <div className="flex justify-between items-start mb-6">
                   <div>
                     <motion.div
                       initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}
-                      className="inline-flex items-center gap-1.5 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20 text-amber-400 text-[10px] font-semibold uppercase tracking-wider mb-3"
+                      className="inline-flex items-center gap-1.5 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20 text-amber-400 text-[10px] font-semibold uppercase tracking-wider mb-2.5"
                     >
-                      <ShieldCheck size={11} /> Secure Reset
+                      <ShieldCheck size={11} /> Secure Password Recovery
                     </motion.div>
-                    <h1 className="text-2xl font-extrabold tracking-tight text-white">Reset password</h1>
-                    <p className="text-slate-400 text-sm mt-1 leading-relaxed">
-                      Enter the email address linked to your clinical account. We'll send a secure reset link.
+                    <h1 className="text-2xl font-extrabold tracking-tight text-white">Reset Password</h1>
+                    <p className="text-slate-400 text-xs mt-1 leading-relaxed">
+                      Enter the registered email address linked to your account. We'll send a secure reset link.
                     </p>
                   </div>
                 </div>
 
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
                   <AuthInput
                     id="forgot-email"
-                    label="Email Address"
+                    label="Registered Email Address"
                     type="email"
-                    placeholder="name@hospital.com"
+                    placeholder="name@hospital.com or patient@gmail.com"
                     icon={Mail}
                     error={errors.email?.message}
                     {...register('email', {
@@ -150,23 +150,29 @@ export const ForgotPasswordPage = () => {
                     })}
                   />
 
-                  <div className="bg-slate-800/60 border border-white/5 rounded-xl p-3.5 text-xs text-slate-400 leading-relaxed">
-                    <strong className="text-slate-300">Security Note:</strong> Reset links expire in 30 minutes and can only be used once for your account's protection.
+                  <div className="bg-slate-800/60 border border-white/5 rounded-2xl p-3.5 text-xs text-slate-400 leading-relaxed">
+                    <strong className="text-slate-300">Security Note:</strong> Reset links expire in 30 minutes and can only be used once for your security.
                   </div>
 
                   <AuthSubmitButton
                     isLoading={isLoading}
                     label={<>Send Reset Link <ArrowRight size={16} /></>}
-                    className="bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-450 hover:to-indigo-550 shadow-lg shadow-cyan-500/25 border-none"
+                    className="bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-450 hover:to-indigo-550 shadow-glow-primary/30"
                   />
                 </form>
 
-                <div className="flex justify-center mt-5">
+                <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/8 text-xs text-slate-400">
                   <Link
-                    to="/auth/login"
-                    className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-cyan-400 font-semibold transition-colors"
+                    to="/signin"
+                    className="inline-flex items-center gap-1.5 text-slate-400 hover:text-cyan-400 font-semibold transition-colors"
                   >
-                    <ArrowLeft size={14} /> Back to Sign In
+                    <ArrowLeft size={13} /> Back to Sign In
+                  </Link>
+                  <Link
+                    to="/patient-register"
+                    className="text-cyan-400 hover:text-cyan-300 font-bold transition-colors"
+                  >
+                    Create Account
                   </Link>
                 </div>
               </>

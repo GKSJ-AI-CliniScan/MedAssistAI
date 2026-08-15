@@ -81,6 +81,10 @@ export const AppRoutes = () => {
       <Route path="/doctor-login" element={<DoctorLoginPage />} />
       <Route path="/doctor-register" element={<DoctorRegisterPage />} />
 
+      {/* Password Recovery */}
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/reset-password" element={<ResetPasswordPage />} />
+
       {/* ── Legacy Auth (wrapped in PublicOnlyRoute) ── */}
       <Route element={<PublicOnlyRoute />}>
         <Route path="/auth" element={<AuthLayout />}>

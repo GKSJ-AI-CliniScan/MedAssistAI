@@ -114,7 +114,7 @@ export const authService = {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(REFRESH_KEY);
     localStorage.removeItem(USER_KEY);
-    window.location.href = "/auth/login";
+    window.location.href = "/signin";
   },
 
   _saveSession(data) {

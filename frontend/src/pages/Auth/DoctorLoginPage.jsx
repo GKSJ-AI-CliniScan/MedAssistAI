@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Mail, Lock, Eye, EyeOff, ArrowRight, Stethoscope, ShieldCheck, Award } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, ArrowRight, Stethoscope, Award, AlertCircle, UserPlus } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import AuthIllustrationPanel from './components/AuthIllustrationPanel';
 import { GoogleAccountModal } from './components/GoogleAccountModal';
@@ -22,6 +22,7 @@ export const DoctorLoginPage = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [authError, setAuthError] = useState(null);
   const [showGoogleModal, setShowGoogleModal] = useState(false);
   const [showMicrosoftModal, setShowMicrosoftModal] = useState(false);
 
@@ -31,16 +32,18 @@ export const DoctorLoginPage = () => {
 
   const onSubmit = async ({ email, password, rememberMe }) => {
     setIsLoading(true);
+    setAuthError(null);
     try {
       const user = await login(email, password);
       if (rememberMe) localStorage.setItem('medassist_remember', email);
       toast.success('Welcome Doctor! Loading Clinical Dashboard…', { icon: '🩺' });
       setTimeout(() => {
         navigate('/doctor-dashboard');
-      }, 500);
+      }, 400);
     } catch (err) {
-      const msg = err?.response?.data?.detail || err.message || 'Authentication failed. Please verify credentials.';
-      toast.error(msg, { icon: '🔒' });
+      const msg = err?.response?.data?.detail || err.message || 'Invalid credentials or doctor account not found.';
+      setAuthError('Doctor account not found or credentials invalid. If you are a new clinical practitioner, please register below.');
+      toast.error('Doctor account not found. Please register as a doctor.', { icon: '⚠️' });
     } finally {
       setIsLoading(false);
     }
@@ -56,7 +59,7 @@ export const DoctorLoginPage = () => {
             if (response.credential) {
               await loginWithGoogle(response.credential, null);
               toast.success('Doctor authenticated with Google! Redirecting…', { icon: '🔐' });
-              setTimeout(() => navigate('/doctor-dashboard'), 500);
+              setTimeout(() => navigate('/doctor-dashboard'), 400);
             }
           },
           auto_select: false,
@@ -106,22 +109,45 @@ export const DoctorLoginPage = () => {
             />
 
             {/* Header */}
-            <div className="flex justify-between items-start mb-7">
+            <div className="flex justify-between items-start mb-6">
               <div>
                 <motion.div
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="inline-flex items-center gap-1.5 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20 text-indigo-400 text-[10px] font-extrabold uppercase tracking-wider mb-2.5"
+                  className="inline-flex items-center gap-1.5 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20 text-indigo-400 text-[10px] font-extrabold uppercase tracking-wider mb-2"
                 >
                   <Award size={11} /> Clinical Practitioner Portal
                 </motion.div>
                 <h1 className="text-2xl font-extrabold tracking-tight text-white">Doctor Login</h1>
-                <p className="text-slate-400 text-xs mt-1">Sign in with your clinical credentials or Medical ID</p>
+                <p className="text-slate-400 text-xs mt-0.5">Sign in with your clinical credentials or Medical ID</p>
               </div>
               <div className="w-10 h-10 rounded-xl bg-indigo-500/15 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
                 <Stethoscope size={18} />
               </div>
             </div>
+
+            {/* Error Banner if account not found */}
+            <AnimatePresence>
+              {authError && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="mb-5 p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs space-y-2.5"
+                >
+                  <div className="flex items-start gap-2.5">
+                    <AlertCircle size={16} className="text-rose-400 shrink-0 mt-0.5" />
+                    <p className="leading-relaxed font-medium">{authError}</p>
+                  </div>
+                  <Link
+                    to="/doctor-register"
+                    className="flex items-center justify-center gap-1.5 w-full py-2 px-3 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-500/40 text-indigo-200 font-bold transition-all text-xs"
+                  >
+                    <UserPlus size={13} /> Register as Doctor Now
+                  </Link>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {/* Doctor Form */}
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
@@ -141,7 +167,7 @@ export const DoctorLoginPage = () => {
                     Password
                   </label>
                   <Link
-                    to="/auth/forgot-password"
+                    to="/forgot-password"
                     className="text-xs text-indigo-400 hover:text-indigo-300 font-semibold transition-colors"
                   >
                     Forgot password?
@@ -179,7 +205,6 @@ export const DoctorLoginPage = () => {
 
               <AuthSubmitButton
                 isLoading={isLoading}
-                loadingLabel="Verifying Medical License..."
                 label={<>Sign In to Doctor Dashboard <ArrowRight size={16} /></>}
                 className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-450 hover:to-purple-550 shadow-glow-secondary/30"
               />
