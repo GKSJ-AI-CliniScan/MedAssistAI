@@ -55,7 +55,14 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    const isAuthRoute =
+      originalRequest?.url?.includes('/auth/login') ||
+      originalRequest?.url?.includes('/auth/register') ||
+      originalRequest?.url?.includes('/auth/refresh') ||
+      originalRequest?.url?.includes('/auth/google') ||
+      originalRequest?.url?.includes('/auth/microsoft');
+
+    if (error.response?.status === 401 && !originalRequest._retry && !isAuthRoute) {
       originalRequest._retry = true;
       try {
         const refreshToken = localStorage.getItem("medassist_refresh_token");
@@ -68,8 +75,9 @@ api.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${data.access_token}`;
         return api(originalRequest);
       } catch {
-        localStorage.clear();
-        window.location.href = "/auth/login";
+        localStorage.removeItem("medassist_access_token");
+        localStorage.removeItem("medassist_refresh_token");
+        localStorage.removeItem("medassist_user");
       }
     }
     return Promise.reject(error);
