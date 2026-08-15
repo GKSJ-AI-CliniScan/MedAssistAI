@@ -16,8 +16,10 @@ export const AuthProvider = ({ children }) => {
         if (isAuth && userData) {
           setUser(userData);
           setIsAuthenticated(true);
-          // Sync fresh profile from server in background
-          authService.getMe().then((freshUser) => setUser(freshUser)).catch(() => {});
+          // Sync fresh profile from server in background (skip for demo sessions)
+          if (!authService.isDemoSession()) {
+            authService.getMe().then((freshUser) => setUser(freshUser)).catch(() => {});
+          }
         } else {
           localStorage.removeItem('medassist_access_token');
           localStorage.removeItem('medassist_refresh_token');

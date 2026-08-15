@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+
 import { FileText, ArrowLeft, Download, Plus, Search, Filter, RefreshCw, FileCode, CheckCircle2 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import RippleButton from '../../components/ui/RippleButton';
@@ -8,20 +10,33 @@ import reportService from '../../services/reportService';
 
 export const ReportsPage = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [downloadingId, setDownloadingId] = useState(null);
   const [search, setSearch] = useState('');
   const [typeFilter, setTypeFilter] = useState('All');
 
+  // Redirect non-patient users away from reports
+  useEffect(() => {
+    if (user && user.role !== 'patient') {
+      toast.info('Reports are only available for patient accounts.', { icon: 'ℹ️' });
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
+
+  
+
   const fetchReports = async () => {
+    if (!user || user.role !== 'patient') return;
     setLoading(true);
     try {
       const data = await reportService.getReports();
       setReports(data || []);
     } catch (err) {
       console.error('Failed to load reports:', err);
-      toast.error(err?.response?.data?.detail || 'Could not retrieve report archives.');
+      toast.error(err?.response?.data?.detail || 'Could not retrieve report archives.', { icon: '🚫' });
     } finally {
       setLoading(false);
     }
@@ -29,7 +44,7 @@ export const ReportsPage = () => {
 
   useEffect(() => {
     fetchReports();
-  }, []);
+  }, [user]);
 
   const handleDownload = async (rep) => {
     setDownloadingId(rep.id);

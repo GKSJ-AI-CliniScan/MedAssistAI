@@ -240,6 +240,21 @@ export const authService = {
   isAuthenticated() {
     return !!localStorage.getItem(TOKEN_KEY);
   },
+
+  /**
+   * Returns true when the session was created by a fallback/demo login
+   * (i.e. the backend was unreachable during login).
+   * Demo tokens start with 'medassist_' and are NOT real JWTs.
+   */
+  isDemoSession() {
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) return false;
+    return (
+      token.startsWith('medassist_jwt_') ||
+      token.startsWith('medassist_google_jwt_') ||
+      token.startsWith('medassist_ms_jwt_')
+    );
+  },
 };
 
 export default authService;

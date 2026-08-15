@@ -38,6 +38,20 @@ const api = axios.create({
   },
 });
 
+/**
+ * Helper: returns true when the stored token is a demo/fallback token
+ * (not a real JWT issued by the backend).
+ */
+const _isDemoToken = () => {
+  const token = localStorage.getItem("medassist_access_token");
+  if (!token) return false;
+  return (
+    token.startsWith('medassist_jwt_') ||
+    token.startsWith('medassist_google_jwt_') ||
+    token.startsWith('medassist_ms_jwt_')
+  );
+};
+
 // ── Request Interceptor: Attach JWT token ─────────────────────────────
 api.interceptors.request.use(
   (config) => {
@@ -64,6 +78,15 @@ api.interceptors.response.use(
       originalRequest?.url?.includes('/auth/me');
 
     if (error.response?.status === 401 && !originalRequest._retry && !isAuthRoute) {
+      // ── Demo mode: silently return empty data instead of throwing ──
+      // Demo tokens are fake and will always get 401. Instead of flooding
+      // the UI with "Invalid or expired token" toasts, return empty data
+      // so pages render their "no data" states gracefully.
+      if (_isDemoToken()) {
+        console.info('[MedAssist] Demo mode – skipping authenticated API call:', originalRequest.url);
+        return { data: [], status: 200, statusText: 'OK (Demo Mode)', config: originalRequest };
+      }
+
       originalRequest._retry = true;
       try {
         const refreshToken = localStorage.getItem("medassist_refresh_token");
