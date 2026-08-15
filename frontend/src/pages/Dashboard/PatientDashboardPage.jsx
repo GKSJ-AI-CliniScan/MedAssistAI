@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import appointmentService from '../../services/appointmentService';
+import { downloadHealthSummaryPdf } from '../../utils/documentGenerator';
 import RippleButton from '../../components/ui/RippleButton';
 
 export const PatientDashboardPage = () => {
@@ -91,6 +92,24 @@ export const PatientDashboardPage = () => {
             >
               <CalendarDays size={14} /> Book Doctor Appointment
             </RippleButton>
+            <button
+              onClick={() => {
+                downloadHealthSummaryPdf({
+                  name: displayName,
+                  bloodGroup,
+                  conditions,
+                  medications,
+                  age: patientProfile?.age || 28,
+                  gender: patientProfile?.gender || 'Female',
+                  city: patientProfile?.city || 'Andhra Pradesh',
+                  emergencyContact: patientProfile?.emergencyContact || 'Family Contact'
+                });
+              }}
+              className="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-cyan-300 border border-white/10 text-xs font-bold transition-all flex items-center gap-1.5"
+              title="Download Complete Health Record PDF"
+            >
+              <FileText size={14} /> Download Health Record (PDF)
+            </button>
           </div>
         </div>
 
