@@ -20,6 +20,9 @@ export const authService = {
       authService._saveSession(data);
       return data;
     } catch (err) {
+      if (err.response) {
+        throw err;
+      }
       // Fallback session on backend cold-start
       const fallbackUser = {
         id: role === 'doctor' ? `doc-${Math.floor(1000 + Math.random() * 9000)}` : `pat-${Math.floor(1000 + Math.random() * 9000)}`,
@@ -45,43 +48,56 @@ export const authService = {
       authService._saveSession(data);
       return data;
     } catch (err) {
+      // If the backend actively rejected credentials, propagate the real error to the login page
+      if (err.response) {
+        throw err;
+      }
+
+      // Check if it is a demo account. Only allow fallback log-in for demo emails when server is down.
       const normalizedEmail = (email || '').trim().toLowerCase();
-      const isDoc =
-        roleHint === 'doctor' ||
-        normalizedEmail.includes('doctor') ||
-        normalizedEmail.startsWith('dr.');
+      const isDemoEmail = normalizedEmail.includes('patient') || normalizedEmail.includes('doctor') || normalizedEmail.includes('demo');
 
-      const formatName = (str) => {
-        if (!str) return isDoc ? 'Dr. Rahul Sharma' : 'Yamini Lakshmi';
-        const namePart = str.includes('@') ? str.split('@')[0] : str;
-        return namePart
-          .split(/[\._-]/)
-          .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-          .join(' ');
-      };
+      if (isDemoEmail) {
+        const isDoc =
+          roleHint === 'doctor' ||
+          normalizedEmail.includes('doctor') ||
+          normalizedEmail.startsWith('dr.');
 
-      const rawName = formatName(normalizedEmail);
-      const displayName = isDoc
-        ? (rawName.startsWith('Dr') ? rawName : `Dr. ${rawName}`)
-        : rawName;
+        const formatName = (str) => {
+          if (!str) return isDoc ? 'Dr. Rahul Sharma' : 'Yamini Lakshmi';
+          const namePart = str.includes('@') ? str.split('@')[0] : str;
+          return namePart
+            .split(/[\._-]/)
+            .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+            .join(' ');
+        };
 
-      const demoUser = {
-        id: isDoc ? `doc-${Math.floor(1000 + Math.random() * 9000)}` : `pat-${Math.floor(1000 + Math.random() * 9000)}`,
-        full_name: displayName,
-        email: normalizedEmail || (isDoc ? 'doctor@medassist.ai' : 'patient@medassist.ai'),
-        role: isDoc ? 'doctor' : 'patient',
-        avatar_url: '',
-        is_email_verified: true,
-      };
+        const rawName = formatName(normalizedEmail);
+        const displayName = isDoc
+          ? (rawName.startsWith('Dr') ? rawName : `Dr. ${rawName}`)
+          : rawName;
 
-      const demoData = {
-        access_token: `medassist_jwt_${Date.now()}`,
-        refresh_token: `medassist_refresh_${Date.now()}`,
-        user: demoUser,
-      };
+        const demoUser = {
+          id: isDoc ? `doc-${Math.floor(1000 + Math.random() * 9000)}` : `pat-${Math.floor(1000 + Math.random() * 9000)}`,
+          full_name: displayName,
+          email: normalizedEmail || (isDoc ? 'doctor@medassist.ai' : 'patient@medassist.ai'),
+          role: isDoc ? 'doctor' : 'patient',
+          avatar_url: '',
+          is_email_verified: true,
+        };
 
-      authService._saveSession(demoData);
-      return demoData;
+        const demoData = {
+          access_token: `medassist_jwt_${Date.now()}`,
+          refresh_token: `medassist_refresh_${Date.now()}`,
+          user: demoUser,
+        };
+
+        authService._saveSession(demoData);
+        return demoData;
+      }
+
+      // Throw error if backend is offline and user attempted real custom account login
+      throw new Error('Unable to connect to the medical server. Please check your internet connection or try again later.');
     }
   },
 
