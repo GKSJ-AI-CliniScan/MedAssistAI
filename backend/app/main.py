@@ -1,5 +1,5 @@
-import asyncio
 from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -21,39 +21,53 @@ from app.routers import (
 )
 from app.utils.logger import get_logger
 
+
 logger = get_logger("MedAssistAI.Main")
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: Initialize DB and preload ML models
+    # ---------------------------------------------------------
+    # Startup
+    # ---------------------------------------------------------
+
+    # Initialize database
     try:
         init_db()
         logger.info("Database initialized successfully.")
     except Exception as e:
         logger.warning("Database initialization deferred: %s", e)
 
+    # Preload disease name mappings
     try:
         load_disease_mapping()
         logger.info("Preloaded disease name mappings into memory.")
     except Exception as e:
         logger.warning("Disease mapping preload warning: %s", e)
 
-    # Preload the voting classifier model asynchronously so first prediction request is fast
-    def _warmup_model():
-        try:
-            logger.info("Preloading ML voting classifier model in background...")
-            load_model()
-            logger.info("ML voting classifier model preloaded and resident in memory.")
-        except Exception as e:
-            logger.warning("ML model warmup error: %s", e)
+    # Load the trained ML model BEFORE application startup completes.
+    #
+    # The model is stored on Hugging Face and downloaded by
+    # model_loader.py when it is not already available locally.
+    #
+    # This is intentionally synchronous so Render does not mark
+    # the service as ready before the ML model is available.
+    try:
+        logger.info("Loading ML voting classifier model during startup...")
+        load_model()
+        logger.info("ML voting classifier model loaded successfully.")
+    except Exception as e:
+        logger.exception("ML model startup error: %s", e)
+        raise
 
-    loop = asyncio.get_event_loop()
-    loop.run_in_executor(None, _warmup_model)
-
+    # ---------------------------------------------------------
+    # Application is ready
+    # ---------------------------------------------------------
     yield
 
+    # ---------------------------------------------------------
     # Shutdown
+    # ---------------------------------------------------------
     logger.info("Shutting down MedAssistAI API server.")
 
 
@@ -64,11 +78,16 @@ app = FastAPI(
     lifespan=lifespan,
     description=(
         "MedAssistAI API: AI-powered healthcare web application for disease prediction, "
-        "health risk assessment, severity analysis, medical recommendations, report management, and system analytics."
+        "health risk assessment, severity analysis, medical recommendations, "
+        "report management, and system analytics."
     ),
 )
 
-# Build dynamic allowed origins list
+
+# -------------------------------------------------------------
+# CORS
+# -------------------------------------------------------------
+
 default_origins = [
     "http://localhost:5173",
     "http://localhost:5174",
@@ -84,7 +103,8 @@ default_origins = [
     "http://127.0.0.1:3000",
 ]
 
-# Parse additional comma-separated origins from environment if provided
+
+# Add production origins from environment variable
 if settings.ALLOWED_ORIGINS:
     extra_origins = [
         origin.strip()
@@ -93,7 +113,7 @@ if settings.ALLOWED_ORIGINS:
     ]
     default_origins.extend(extra_origins)
 
-# Enable CORS for local dev + production Vercel origins
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=default_origins,
@@ -103,7 +123,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Register API Routers
+
+# -------------------------------------------------------------
+# API Routers
+# -------------------------------------------------------------
+
 app.include_router(home.router)
 app.include_router(auth.router)
 app.include_router(patient.router)
