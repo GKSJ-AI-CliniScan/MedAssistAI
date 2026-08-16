@@ -31,13 +31,16 @@ export const DoctorDashboardPage = () => {
     }
   })();
 
-  const doctorName = user?.full_name || user?.name || doctorProfile?.name || 'Dr. Rahul Sharma';
-  const specialization = doctorProfile?.specialization || 'Cardiologist & Interventional Physician';
-  const hospital = doctorProfile?.hospital || 'MedLife Multispeciality Hospital, Visakhapatnam';
-  const experience = doctorProfile?.experience || 12;
-  const consultationType = doctorProfile?.consultationType || 'Both (In-person & Video)';
-  const medRegNo = doctorProfile?.medRegNo || 'AP-MCI-88942';
-  const consultationFee = doctorProfile?.fee || '₹800';
+  // Resolve name: prefer authenticated user object, then localStorage, then default
+  const rawName = user?.full_name || user?.name || doctorProfile?.name || 'Doctor';
+  const doctorName = rawName.startsWith('Dr.') ? rawName : `Dr. ${rawName}`;
+  const doctorEmail = user?.email || doctorProfile?.email || '';
+  const specialization = doctorProfile?.specialization || 'General Physician';
+  const hospital = doctorProfile?.hospital || 'MedAssist AI Clinical Network';
+  const experience = doctorProfile?.experience || 0;
+  const consultationType = doctorProfile?.consultationType || 'In-person & Video';
+  const medRegNo = doctorProfile?.medRegNo || '—';
+  const consultationFee = doctorProfile?.consultationFee || doctorProfile?.fee || '—';
 
   const fetchDoctorAppointments = async () => {
     setLoading(true);
@@ -156,14 +159,24 @@ export const DoctorDashboardPage = () => {
             <Award size={12} className="text-indigo-400" /> Doctor Clinical Portal • Active Practice
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-            Welcome back, {doctorName.startsWith('Dr.') ? doctorName : `Dr. ${doctorName}`}
+            Welcome back, {doctorName}
           </h1>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-slate-300">
             <span className="font-semibold text-indigo-300">{specialization}</span>
             <span className="text-slate-600">•</span>
             <span>{hospital}</span>
-            <span className="text-slate-600">•</span>
-            <span>Reg. No: <strong className="text-white font-mono">{medRegNo}</strong></span>
+            {medRegNo !== '—' && (
+              <>
+                <span className="text-slate-600">•</span>
+                <span>Reg. No: <strong className="text-white font-mono">{medRegNo}</strong></span>
+              </>
+            )}
+            {doctorEmail && (
+              <>
+                <span className="text-slate-600">•</span>
+                <span className="text-slate-400">{doctorEmail}</span>
+              </>
+            )}
           </div>
 
           {/* Quick Doctor Actions */}
@@ -201,15 +214,19 @@ export const DoctorDashboardPage = () => {
           </div>
           <div>
             <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Experience</span>
-            <span className="text-xs font-extrabold text-white">{experience}+ Years</span>
+            <span className="text-xs font-extrabold text-white">
+              {experience > 0 ? `${experience}+ Years` : 'New Practitioner'}
+            </span>
           </div>
           <div>
             <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Fee / Visit</span>
-            <span className="text-xs font-extrabold text-cyan-400">{consultationFee}</span>
+            <span className="text-xs font-extrabold text-cyan-400">
+              {consultationFee !== '—' ? `₹${consultationFee}` : 'Not Set'}
+            </span>
           </div>
           <div>
             <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Mode</span>
-            <span className="text-xs font-extrabold text-indigo-300">In-person & Video</span>
+            <span className="text-xs font-extrabold text-indigo-300">{consultationType}</span>
           </div>
         </div>
       </div>

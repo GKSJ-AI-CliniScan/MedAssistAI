@@ -44,26 +44,29 @@ export const DoctorRegisterPage = () => {
   const onSubmit = async (data) => {
     setIsLoading(true);
     try {
+      const displayName = data.fullName.startsWith('Dr.') ? data.fullName : `Dr. ${data.fullName}`;
       const doctorProfile = {
-        name: data.fullName.startsWith('Dr.') ? data.fullName : `Dr. ${data.fullName}`,
+        name: displayName,
         email: data.email,
         phone: data.phone,
         medRegNo: data.medRegNo,
         specialization: data.specialization,
         qualification: data.qualification,
-        experience: Number(data.experience) || 5,
+        experience: Number(data.experience) || 0,
         hospital: data.hospital,
         city: data.city,
         consultationType: data.consultationType,
-        consultationFee: Number(data.fee) || 600,
+        consultationFee: Number(data.fee) || 0,
         verificationStatus: 'Verification Pending',
         role: 'doctor'
       };
 
-      await registerUser(doctorProfile.name, data.email, data.password, 'doctor');
+      // Register on backend — authService.register saves the session automatically
+      await registerUser(displayName, data.email, data.password, 'doctor');
       localStorage.setItem('medassist_doctor_profile', JSON.stringify(doctorProfile));
 
-      toast.success('Doctor credentials registered! Please log in to access the clinical dashboard.', { icon: '🩺' });
+      // Registration also logs the doctor in — go straight to dashboard
+      toast.success(`Welcome, ${displayName}! Your clinical account is active.`, { icon: '🩺' });
       setTimeout(() => navigate('/doctor-dashboard'), 600);
     } catch (err) {
       const msg = err?.response?.data?.detail || err?.response?.data?.message || err.message || 'Registration failed. Please try again.';

@@ -47,6 +47,7 @@ const _isDemoToken = () => {
   if (!token) return false;
   return (
     token.startsWith('medassist_jwt_') ||
+    token.startsWith('medassist_offline_jwt_') ||
     token.startsWith('medassist_google_jwt_') ||
     token.startsWith('medassist_ms_jwt_')
   );

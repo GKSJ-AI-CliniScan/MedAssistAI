@@ -44,7 +44,10 @@ export const PatientRegisterPage = () => {
   const onSubmit = async (data) => {
     setIsLoading(true);
     try {
-      // Save patient profile data
+      // Register on backend — authService.register saves the session automatically
+      await registerUser(data.fullName, data.email, data.password, 'patient');
+
+      // Save extended profile details to localStorage for display across pages
       const patientProfile = {
         name: data.fullName,
         email: data.email,
@@ -60,11 +63,10 @@ export const PatientRegisterPage = () => {
         medications: data.medications,
         role: 'patient'
       };
-
-      await registerUser(data.fullName, data.email, data.password, 'patient');
       localStorage.setItem('medassist_patient_profile', JSON.stringify(patientProfile));
-      
-      toast.success('Patient account registered successfully! Please log in to continue.', { icon: '🏥' });
+
+      // Registration also logs the user in — go straight to dashboard
+      toast.success(`Welcome to MedAssist AI, ${data.fullName.split(' ')[0]}! Your patient account is ready.`, { icon: '🏥' });
       setTimeout(() => navigate('/patient-dashboard'), 600);
     } catch (err) {
       const msg = err?.response?.data?.detail || err?.response?.data?.message || err.message || 'Registration failed. Please try again.';

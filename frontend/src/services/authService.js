@@ -8,7 +8,21 @@ const TOKEN_KEY = "medassist_access_token";
 const REFRESH_KEY = "medassist_refresh_token";
 const USER_KEY = "medassist_user";
 
+// Prefixes used by fake/demo tokens (NOT real JWTs from the backend)
+const DEMO_TOKEN_PREFIXES = [
+  'medassist_jwt_',
+  'medassist_offline_jwt_',
+  'medassist_google_jwt_',
+  'medassist_ms_jwt_',
+];
+
 export const authService = {
+  /**
+   * Register a new account.
+   * Always calls the real backend. If the backend is unreachable, throws a
+   * clear error — we do NOT silently create a fake local account because
+   * that account would not persist and would cause login failures.
+   */
   async register(fullName, email, password, role = "patient") {
     try {
       const { data } = await api.post("/auth/register", {
@@ -21,65 +35,53 @@ export const authService = {
       return data;
     } catch (err) {
       if (err.response) {
+        // Backend actively rejected — propagate the real error message
         throw err;
       }
-      // Fallback session on backend cold-start
-      const fallbackUser = {
-        id: role === 'doctor' ? `doc-${Math.floor(1000 + Math.random() * 9000)}` : `pat-${Math.floor(1000 + Math.random() * 9000)}`,
-        full_name: fullName || (role === 'doctor' ? 'Dr. Medical Practitioner' : 'Registered Patient'),
-        email: email || `${role}@medassist.ai`,
-        role: role,
-        avatar_url: '',
-        is_email_verified: true,
-      };
-      const fallbackData = {
-        access_token: `medassist_jwt_${Date.now()}`,
-        refresh_token: `medassist_refresh_${Date.now()}`,
-        user: fallbackUser,
-      };
-      authService._saveSession(fallbackData);
-      return fallbackData;
+      // Backend is completely unreachable — do NOT create a fake account
+      throw new Error(
+        "Cannot reach the medical server to create your account. " +
+        "Please check your internet connection and try again."
+      );
     }
   },
 
+  /**
+   * Login with email + password.
+   * Strict validation order (enforced on backend):
+   *  1. Email existence  → 404 "Account not found"
+   *  2. Role match       → 400 "Wrong portal"
+   *  3. Password check   → 401 "Incorrect password"
+   *
+   * Offline-only fallback is allowed for the 3 seeded demo emails, but only
+   * when the backend is completely unreachable (no response at all).
+   */
   async login(email, password, roleHint = null) {
     try {
       const { data } = await api.post("/auth/login", { email, password, role: roleHint });
       authService._saveSession(data);
       return data;
     } catch (err) {
-      // If the backend responded with ANY error (400, 401, 403, 404, etc.), propagate it directly.
-      // Never auto-login when the server actively rejects the credentials.
+      // Backend replied with an error (400 / 401 / 403 / 404) → propagate as-is
       if (err.response) {
         throw err;
       }
 
-      // Backend is completely unreachable (network error / server offline).
-      // Only allow demo fallback for recognized demo-only emails.
+      // Backend is completely unreachable (no response). Allow offline demo fallback
+      // ONLY for the exact seeded demo accounts.
       const normalizedEmail = (email || '').trim().toLowerCase();
-      const isDemoEmail =
-        normalizedEmail === 'patient@medassist.ai' ||
-        normalizedEmail === 'doctor@medassist.ai' ||
-        normalizedEmail === 'demo@medassist.ai';
+      const DEMO_ACCOUNTS = {
+        'patient@medassist.ai': 'patient',
+        'doctor@medassist.ai': 'doctor',
+        'demo@medassist.ai': 'doctor',
+      };
 
-      if (isDemoEmail) {
-        const isDoc =
-          roleHint === 'doctor' ||
-          normalizedEmail.includes('doctor') ||
-          normalizedEmail.includes('demo');
+      if (DEMO_ACCOUNTS[normalizedEmail] !== undefined) {
+        const expectedRole = DEMO_ACCOUNTS[normalizedEmail];
 
-        const demoUser = {
-          id: isDoc ? `doc-offline-${Date.now()}` : `pat-offline-${Date.now()}`,
-          full_name: isDoc ? 'Dr. Rahul Sharma' : 'Jane Doe',
-          email: normalizedEmail,
-          role: isDoc ? 'doctor' : 'patient',
-          avatar_url: '',
-          is_email_verified: true,
-        };
-
-        // Validate roleHint matches the expected demo role
-        if (roleHint && demoUser.role !== roleHint) {
-          const errorMsg = demoUser.role === 'patient'
+        // Role mismatch for demo accounts
+        if (roleHint && expectedRole !== roleHint) {
+          const errorMsg = expectedRole === 'patient'
             ? 'This account is registered as a Patient. Please use Patient Login.'
             : 'This account is registered as a Doctor. Please use Doctor Login.';
           const error = new Error(errorMsg);
@@ -87,90 +89,117 @@ export const authService = {
           throw error;
         }
 
+        const demoUser = {
+          id: expectedRole === 'doctor' ? `doc-offline-${Date.now()}` : `pat-offline-${Date.now()}`,
+          full_name: expectedRole === 'doctor' ? 'Dr. Rahul Sharma' : 'Jane Doe',
+          email: normalizedEmail,
+          role: expectedRole,
+          avatar_url: '',
+          is_email_verified: true,
+        };
+
         const demoData = {
           access_token: `medassist_offline_jwt_${Date.now()}`,
           refresh_token: `medassist_offline_refresh_${Date.now()}`,
           user: demoUser,
         };
-
         authService._saveSession(demoData);
         return demoData;
       }
 
-      // Not a demo email and backend is offline — throw a user-friendly error
-      throw new Error('Unable to connect to the medical server. Please check your internet connection or try again later.');
+      // Real user account + backend offline → explain the situation clearly
+      throw new Error(
+        'Unable to connect to the medical server. ' +
+        'Please check your internet connection or try again in a moment.'
+      );
     }
   },
 
   /**
-   * Real Google OAuth Login:
-   * Supports ID token from Google GIS or userInfo object from Google UserInfo endpoint.
+   * Google OAuth Login.
+   * Sends id_token or userInfo to backend. Role is passed so backend can
+   * create the correct profile. If backend is unreachable, throws — we do
+   * NOT create a fake Google session that would fail on next page load.
    */
   async loginWithGoogle(idToken, userInfo = null, role = "patient") {
     try {
       const payload = idToken
-        ? { id_token: idToken }
+        ? { id_token: idToken, role }
         : {
             email: userInfo?.email,
             name: userInfo?.name || `${userInfo?.given_name || ''} ${userInfo?.family_name || ''}`.trim(),
             picture: userInfo?.picture || '',
             google_id: userInfo?.sub || '',
+            role,
           };
       const { data } = await api.post("/auth/google", payload);
       authService._saveSession(data);
       return data;
     } catch (err) {
-      const fallbackUser = {
-        id: `google-${Date.now()}`,
-        full_name: userInfo?.name || (role === 'doctor' ? 'Dr. Google Physician' : 'Google User'),
-        email: userInfo?.email || 'user@gmail.com',
-        role: role,
-        avatar_url: userInfo?.picture || '',
-        is_email_verified: true,
-      };
-      const fallbackData = {
-        access_token: `medassist_google_jwt_${Date.now()}`,
-        refresh_token: `medassist_google_refresh_${Date.now()}`,
-        user: fallbackUser,
-      };
-      authService._saveSession(fallbackData);
-      return fallbackData;
+      if (err.response) {
+        throw err;
+      }
+      // Offline fallback — only if we actually have user info
+      if (userInfo?.email) {
+        const fallbackUser = {
+          id: `google-offline-${Date.now()}`,
+          full_name: userInfo?.name || (role === 'doctor' ? 'Dr. Google Physician' : 'Google User'),
+          email: userInfo.email,
+          role,
+          avatar_url: userInfo?.picture || '',
+          is_email_verified: true,
+        };
+        const fallbackData = {
+          access_token: `medassist_google_jwt_${Date.now()}`,
+          refresh_token: `medassist_google_refresh_${Date.now()}`,
+          user: fallbackUser,
+        };
+        authService._saveSession(fallbackData);
+        return fallbackData;
+      }
+      throw new Error('Google sign-in failed. Please check your connection and try again.');
     }
   },
 
   /**
-   * Real Microsoft OAuth Login:
-   * Supports Access token from Microsoft OAuth or userInfo object.
+   * Microsoft OAuth Login.
    */
   async loginWithMicrosoft(accessToken, userInfo = null, role = "patient") {
     try {
       const payload = accessToken
-        ? { access_token: accessToken }
+        ? { access_token: accessToken, role }
         : {
             email: userInfo?.email,
             name: userInfo?.name || 'Microsoft User',
             picture: userInfo?.picture || '',
             microsoft_id: userInfo?.microsoft_id || userInfo?.sub || '',
+            role,
           };
       const { data } = await api.post("/auth/microsoft", payload);
       authService._saveSession(data);
       return data;
     } catch (err) {
-      const fallbackUser = {
-        id: `ms-${Date.now()}`,
-        full_name: userInfo?.name || (role === 'doctor' ? 'Dr. Microsoft Practitioner' : 'Microsoft User'),
-        email: userInfo?.email || 'user@outlook.com',
-        role: role,
-        avatar_url: '',
-        is_email_verified: true,
-      };
-      const fallbackData = {
-        access_token: `medassist_ms_jwt_${Date.now()}`,
-        refresh_token: `medassist_ms_refresh_${Date.now()}`,
-        user: fallbackUser,
-      };
-      authService._saveSession(fallbackData);
-      return fallbackData;
+      if (err.response) {
+        throw err;
+      }
+      if (userInfo?.email) {
+        const fallbackUser = {
+          id: `ms-offline-${Date.now()}`,
+          full_name: userInfo?.name || (role === 'doctor' ? 'Dr. Microsoft Practitioner' : 'Microsoft User'),
+          email: userInfo.email,
+          role,
+          avatar_url: '',
+          is_email_verified: true,
+        };
+        const fallbackData = {
+          access_token: `medassist_ms_jwt_${Date.now()}`,
+          refresh_token: `medassist_ms_refresh_${Date.now()}`,
+          user: fallbackUser,
+        };
+        authService._saveSession(fallbackData);
+        return fallbackData;
+      }
+      throw new Error('Microsoft sign-in failed. Please check your connection and try again.');
     }
   },
 
@@ -234,6 +263,9 @@ export const authService = {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(REFRESH_KEY);
     localStorage.removeItem(USER_KEY);
+    // Also clear profile data so stale info doesn't show after re-login
+    localStorage.removeItem('medassist_patient_profile');
+    localStorage.removeItem('medassist_doctor_profile');
     window.location.href = "/signin";
   },
 
@@ -259,18 +291,13 @@ export const authService = {
   },
 
   /**
-   * Returns true when the session was created by a fallback/demo login
-   * (i.e. the backend was unreachable during login).
-   * Demo tokens start with 'medassist_' and are NOT real JWTs.
+   * Returns true when the current session was created by an offline/demo fallback
+   * (i.e. the backend was unreachable during login). Demo tokens are NOT real JWTs.
    */
   isDemoSession() {
     const token = localStorage.getItem(TOKEN_KEY);
     if (!token) return false;
-    return (
-      token.startsWith('medassist_jwt_') ||
-      token.startsWith('medassist_google_jwt_') ||
-      token.startsWith('medassist_ms_jwt_')
-    );
+    return DEMO_TOKEN_PREFIXES.some(prefix => token.startsWith(prefix));
   },
 };
 
