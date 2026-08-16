@@ -59,9 +59,28 @@ export default function PatientSymptomCheckerPage() {
     setSelectedSymptoms([]);
   };
 
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
+  const categories = [
+    'All',
+    'General',
+    'Respiratory',
+    'Cardiovascular',
+    'Neurological',
+    'Digestive',
+    'Musculoskeletal',
+    'Skin',
+    'ENT & Sensory',
+    'Urological & Reproductive',
+    'Psychological',
+  ];
+
   const filteredSymptoms = availableSymptoms.filter(symptom => {
     const symptomName = symptom.name || symptom;
-    return String(symptomName).toLowerCase().includes(searchTerm.toLowerCase());
+    const symptomCategory = symptom.category || 'General';
+    const matchesSearch = String(symptomName).toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'All' || symptomCategory.toLowerCase() === selectedCategory.toLowerCase();
+    return matchesSearch && matchesCategory;
   });
 
   const handleAnalyze = async () => {
@@ -79,7 +98,11 @@ export default function PatientSymptomCheckerPage() {
       // Navigate to prediction results page with the prediction data and selected symptoms
       navigate('/patient/prediction', { state: { prediction, symptoms: selectedSymptoms } });
     } catch (err) {
-      setError('Analysis failed. Please try again later.');
+      const backendDetail = err.response?.data?.detail;
+      const errorMessage = typeof backendDetail === 'string'
+        ? backendDetail
+        : (Array.isArray(backendDetail) ? backendDetail.map(d => d.msg || JSON.stringify(d)).join(', ') : 'Analysis failed. Please try again or select different symptoms.');
+      setError(errorMessage);
       console.error('Error analyzing symptoms:', err);
     } finally {
       setAnalyzing(false);
@@ -130,7 +153,7 @@ export default function PatientSymptomCheckerPage() {
         <div className="lg:col-span-8 space-y-6">
           <Card 
             title="Symptom Selector" 
-            subtitle="Choose your active clinical manifestations"
+            subtitle={`Choose from ${availableSymptoms.length || 370}+ clinical manifestations`}
             variant="ai"
           >
             <div className="space-y-4">
@@ -141,7 +164,7 @@ export default function PatientSymptomCheckerPage() {
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-clinical-mutedLight dark:text-clinical-mutedDark" />
                   <input
                     type="text"
-                    placeholder="Search from 54 clinical symptoms (e.g. fever, headache, chest pain)..."
+                    placeholder={`Search from ${availableSymptoms.length || '370+'} clinical symptoms (e.g. fever, headache, chest pain)...`}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-clinical-tealDark/20 bg-white dark:bg-clinical-bgDarkSec text-xs text-clinical-textLight dark:text-clinical-textDark focus:outline-none focus:border-[#06B6D4]"
@@ -161,12 +184,29 @@ export default function PatientSymptomCheckerPage() {
                     variant="outline"
                     size="small"
                     onClick={handleClearAll}
-                    className="gap-1.5 text-xs text-red-500 border-red-200 dark:border-red-900 py-2.5"
+                    className="gap-1.5 text-xs text-red-500 border-red-200 dark:border-red-900 py-2.5 shrink-0"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                     <span>Clear ({selectedSymptoms.length})</span>
                   </Button>
                 )}
+              </div>
+
+              {/* Category Pills */}
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs no-scrollbar">
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`px-3 py-1 rounded-full whitespace-nowrap transition-colors text-[11px] font-medium ${
+                      selectedCategory === cat
+                        ? 'bg-[#06B6D4] text-white font-semibold shadow-sm'
+                        : 'bg-slate-100 dark:bg-clinical-bgDarkSec text-clinical-mutedLight dark:text-clinical-mutedDark hover:bg-slate-200 dark:hover:bg-clinical-tealDark/20'
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
               </div>
 
               {/* Selected symptoms display tags */}
@@ -219,7 +259,7 @@ export default function PatientSymptomCheckerPage() {
                   })
                 ) : (
                   <div className="col-span-full text-center py-8 text-clinical-mutedLight dark:text-clinical-mutedDark text-xs">
-                    {searchTerm ? 'No symptoms match your search.' : 'No symptoms available.'}
+                    {searchTerm ? 'No symptoms match your search.' : 'No symptoms available in this category.'}
                   </div>
                 )}
               </div>

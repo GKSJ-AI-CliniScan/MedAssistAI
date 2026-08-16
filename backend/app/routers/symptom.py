@@ -22,7 +22,7 @@ router = APIRouter(
 )
 def list_symptoms(
     skip: int = 0,
-    limit: int = 200,
+    limit: int = 500,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):

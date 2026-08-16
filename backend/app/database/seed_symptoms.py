@@ -1,82 +1,68 @@
 from sqlalchemy.orm import Session
-from app.database.session import get_db, SessionLocal
+from app.database.session import SessionLocal
 from app.models.symptom import Symptom
+from app.ml.extracted_features import MODEL_FEATURE_NAMES
 
-SYMPTOMS = [
-    # General & Systemic
-    ("Fever", "Elevated body temperature", "General", 2),
-    ("Chills", "Feeling cold with shivering", "General", 1),
-    ("Fatigue", "Extreme tiredness and lack of energy", "General", 2),
-    ("Weakness", "Generalized muscle weakness", "General", 2),
-    ("Sweating", "Excessive perspiration", "General", 1),
-    ("Loss of appetite", "Decreased desire to eat", "General", 1),
-    ("Weight loss", "Unintentional weight reduction", "General", 2),
-    ("Weight gain", "Unintentional weight increase", "General", 1),
-    
-    # Respiratory
-    ("Cough", "Persistent coughing", "Respiratory", 2),
-    ("Shortness of breath", "Difficulty breathing", "Respiratory", 3),
-    ("Wheezing", "High-pitched whistling sound when breathing", "Respiratory", 2),
-    ("Chest pain", "Pain or discomfort in chest", "Respiratory", 3),
-    ("Sore throat", "Pain or irritation in throat", "Respiratory", 1),
-    ("Runny nose", "Nasal discharge", "Respiratory", 1),
-    ("Nasal congestion", "Stuffy nose", "Respiratory", 1),
-    ("Difficulty swallowing", "Trouble swallowing food or liquids", "Respiratory", 2),
-    
-    # Head & Neurological
-    ("Headache", "Pain in head or neck", "Neurological", 2),
-    ("Dizziness", "Feeling lightheaded or unsteady", "Neurological", 2),
-    ("Blurred vision", "Unclear or hazy vision", "Neurological", 2),
-    ("Tinnitus", "Ringing in ears", "Neurological", 1),
-    ("Loss of smell", "Inability to smell", "Neurological", 1),
-    ("Loss of taste", "Inability to taste", "Neurological", 1),
-    ("Numbness", "Loss of sensation", "Neurological", 2),
-    ("Tingling", "Pins and needles sensation", "Neurological", 1),
-    ("Tremors", "Involuntary shaking", "Neurological", 2),
-    ("Seizure", "Abnormal electrical activity in brain", "Neurological", 3),
-    ("Memory problems", "Difficulty remembering", "Neurological", 2),
-    ("Anxiety", "Excessive worry or fear", "Psychological", 2),
-    ("Insomnia", "Difficulty sleeping", "Psychological", 1),
-    
-    # Gastrointestinal
-    ("Nausea", "Feeling sick to stomach", "Gastrointestinal", 1),
-    ("Vomiting", "Forceful expulsion of stomach contents", "Gastrointestinal", 2),
-    ("Abdominal pain", "Pain in stomach area", "Gastrointestinal", 2),
-    ("Diarrhea", "Loose or watery stools", "Gastrointestinal", 2),
-    ("Constipation", "Difficulty passing stools", "Gastrointestinal", 1),
-    ("Heartburn", "Burning sensation in chest", "Gastrointestinal", 1),
-    ("Bloating", "Feeling of fullness in abdomen", "Gastrointestinal", 1),
-    
-    # Urinary
-    ("Burning urination", "Pain during urination", "Urinary", 2),
-    ("Frequent urination", "Need to urinate often", "Urinary", 1),
-    ("Blood in urine", "Red or brown urine", "Urinary", 3),
-    ("Difficulty urinating", "Trouble starting or stopping urination", "Urinary", 2),
-    
-    # Musculoskeletal
-    ("Back pain", "Pain in back", "Musculoskeletal", 2),
-    ("Joint pain", "Pain in joints", "Musculoskeletal", 2),
-    ("Muscle pain", "Pain in muscles", "Musculoskeletal", 1),
-    ("Stiffness", "Reduced flexibility", "Musculoskeletal", 1),
-    
-    # Skin
-    ("Skin rash", "Red or irritated skin", "Skin", 1),
-    ("Itching", "Uncomfortable skin sensation", "Skin", 1),
-    ("Swelling", "Edema or puffiness", "Skin", 2),
-    
-    # Cardiovascular
-    ("Palpitations", "Awareness of heart beating", "Cardiovascular", 2),
-    ("High blood pressure", "Elevated blood pressure readings", "Cardiovascular", 2),
-    ("Low blood pressure", "Decreased blood pressure readings", "Cardiovascular", 2),
-    
-    # Ear, Nose, Throat
-    ("Ear pain", "Pain in ear", "ENT", 1),
-    ("Tooth pain", "Pain in teeth or gums", "ENT", 1),
-    
-    # Reproductive
-    ("Menstrual pain", "Pain during menstruation", "Reproductive", 1),
-    ("Pelvic pain", "Pain in lower abdomen/pelvis", "Reproductive", 2),
-]
+
+def format_symptom_name(raw: str) -> str:
+    cleaned = raw.replace(".1", "").replace("_", " ").strip()
+    words = cleaned.split()
+    small_words = {"and", "or", "of", "in", "on", "with", "the", "from", "to", "for", "a", "an"}
+    return " ".join([
+        w.capitalize() if i == 0 or w.lower() not in small_words else w.lower()
+        for i, w in enumerate(words)
+    ])
+
+
+def categorize_feature(feat: str) -> str:
+    f = feat.lower()
+    if any(k in f for k in ["breath", "cough", "sputum", "wheezing", "apnea", "sinus", "coryza", "throat", "speaking", "hemoptysis"]):
+        return "Respiratory"
+    if any(k in f for k in ["chest", "heart", "palpitations", "circulation", "pulse", "decreased heart", "increased heart"]):
+        return "Cardiovascular"
+    if any(k in f for k in ["headache", "dizziness", "seizure", "involuntary", "fainting", "memory", "slurring", "paresthesia", "sensation", "sleep", "nightmares", "stuttering", "pupil", "facial pain"]):
+        return "Neurological"
+    if any(k in f for k in ["abdominal", "stomach", "nausea", "vomit", "diarrhea", "constipation", "flatulence", "stool", "jaundice", "regurgitation", "heartburn", "eating", "appetite", "thirst", "distention", "melena"]):
+        return "Digestive"
+    if any(k in f for k in ["pain", "joint", "knee", "hip", "wrist", "ankle", "elbow", "shoulder", "arm", "leg", "back", "neck", "bone", "muscle", "cramp", "stiffness", "weakness", "foot", "hand", "toe", "finger", "rib", "groin", "posture", "knock-kneed", "bowlegged"]):
+        return "Musculoskeletal"
+    if any(k in f for k in ["skin", "rash", "mole", "acne", "itching", "lesion", "wart", "ulcer", "pallor", "flushing", "hair", "nail", "dryness", "diaper", "peeling", "sweat", "wrinkles", "oiliness"]):
+        return "Skin"
+    if any(k in f for k in ["ear", "eye", "hearing", "vision", "blindness", "lacrimation", "eyelid", "tinnitus", "nose", "smell", "taste", "lip", "mouth", "tongue", "tooth", "gum", "jaw", "tonsil"]):
+        return "ENT & Sensory"
+    if any(k in f for k in ["urin", "bladder", "kidney", "penis", "scrotum", "testicle", "vaginal", "vulva", "menstrua", "pregnancy", "breast", "nipple", "menopause", "infertility", "ejaculation", "orgasm", "sex drive", "pelvic", "prostate"]):
+        return "Urological & Reproductive"
+    if any(k in f for k in ["anxiety", "depression", "psychotic", "insomnia", "hostile", "alcohol", "drug", "anger", "temper", "phobia", "delusion", "hallucination", "self-esteem", "compulsion", "antisocial", "hysterical"]):
+        return "Psychological"
+    return "General"
+
+
+def get_severity(feat: str) -> int:
+    f = feat.lower()
+    if any(k in f for k in ["unconscious", "seizure", "severe bleeding", "vomiting blood", "hemoptysis", "blindness", "apnea", "fainting", "sharp chest pain", "difficulty breathing"]):
+        return 5
+    if any(k in f for k in ["chest", "shortness of breath", "blood in urine", "blood in stool", "rectal bleeding", "melena", "high fever", "persistent vomiting", "severe headache", "jaundice"]):
+        return 4
+    if any(k in f for k in ["fever", "abdominal pain", "dizziness", "wheezing", "palpitations", "irregular heartbeat", "pus", "swelling", "mass", "lump", "cramps"]):
+        return 3
+    if any(k in f for k in ["cough", "vomiting", "diarrhea", "back pain", "joint pain", "muscle pain", "weakness", "headache", "nausea", "insomnia"]):
+        return 2
+    return 1
+
+
+# Build complete 377-symptom catalogue from model feature vocabulary
+CATALOGUE_SYMPTOMS = []
+_seen_names = set()
+
+for raw_feat in MODEL_FEATURE_NAMES:
+    name = format_symptom_name(raw_feat)
+    if name not in _seen_names:
+        _seen_names.add(name)
+        category = categorize_feature(raw_feat)
+        severity = get_severity(raw_feat)
+        description = f"Clinical manifestation of {raw_feat.replace('.1', '').replace('_', ' ')}"
+        CATALOGUE_SYMPTOMS.append((name, description, category, severity))
+
 
 def seed_symptoms(db: Session = None):
     should_close = False
@@ -85,26 +71,29 @@ def seed_symptoms(db: Session = None):
         should_close = True
 
     try:
-        # Check if symptoms already exist
-        existing_count = db.query(Symptom).count()
-        if existing_count >= 50:
-            print(f"Symptoms already seeded ({existing_count} found)")
+        existing_map = {s.name.strip().lower(): s for s in db.query(Symptom).all()}
+        if len(existing_map) >= len(CATALOGUE_SYMPTOMS):
+            print(f"Symptoms already fully seeded ({len(existing_map)} found)")
             return
-        
-        # Add symptoms
-        for name, description, category, severity in SYMPTOMS:
-            existing = db.query(Symptom).filter(Symptom.name == name).first()
-            if not existing:
+
+        added_count = 0
+        for name, description, category, severity in CATALOGUE_SYMPTOMS:
+            if name.lower() not in existing_map:
                 symptom = Symptom(
                     name=name,
                     description=description,
                     category=category,
-                    severity_weight=severity
+                    severity_weight=severity,
                 )
                 db.add(symptom)
-        
+                added_count += 1
+            else:
+                sym = existing_map[name.lower()]
+                sym.category = category
+                sym.severity_weight = severity
+
         db.commit()
-        print(f"Successfully seeded {len(SYMPTOMS)} symptoms")
+        print(f"Successfully seeded/verified {added_count} symptoms (total catalogue: {len(CATALOGUE_SYMPTOMS)})")
     except Exception as e:
         db.rollback()
         print(f"Error seeding symptoms: {e}")
@@ -112,5 +101,7 @@ def seed_symptoms(db: Session = None):
         if should_close:
             db.close()
 
+
 if __name__ == "__main__":
     seed_symptoms()
+

@@ -28,27 +28,22 @@ DEFAULT_SYMPTOMS = [
 
 
 def seed_symptoms(db: Session) -> None:
-    for item in DEFAULT_SYMPTOMS:
-        existing = db.query(Symptom).filter(Symptom.name == item["name"]).first()
-        if not existing:
-            symptom = Symptom(
-                name=item["name"],
-                category=item["category"],
-                severity_weight=item["severity_weight"],
-                description=item["description"],
-            )
-            db.add(symptom)
-    db.commit()
+    from app.database.seed_symptoms import seed_symptoms as db_seed_symptoms
+    db_seed_symptoms(db)
 
 
-def get_all_symptoms(db: Session, skip: int = 0, limit: int = 200) -> List[Symptom]:
+def get_all_symptoms(db: Session, skip: int = 0, limit: int = 500) -> List[Symptom]:
     """
     Retrieve paginated list of symptoms with deterministic ID ordering before pagination.
+    Supports fetching the full 370+ symptom catalogue.
     """
     count = db.query(Symptom).count()
     if count == 0:
         seed_symptoms(db)
-    return db.query(Symptom).order_by(Symptom.id.asc()).offset(skip).limit(limit).all()
+    query = db.query(Symptom).order_by(Symptom.id.asc()).offset(skip)
+    if limit is not None and limit > 0:
+        query = query.limit(limit)
+    return query.all()
 
 
 def create_symptom(db: Session, data: SymptomCreate) -> Symptom:

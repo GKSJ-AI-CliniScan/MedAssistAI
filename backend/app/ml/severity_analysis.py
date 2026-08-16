@@ -8,41 +8,82 @@ logger = logging.getLogger(__name__)
 
 
 # Severity weights used by the rule-based severity engine.
-# These can later be replaced or extended using the final dataset.
 SYMPTOM_WEIGHTS: Dict[str, int] = {
-    # High-priority symptoms
+    # Emergency / Critical symptoms (Weight 5)
+    "unconsciousness": 5,
+    "fainting": 5,
+    "seizure": 5,
+    "seizures": 5,
+    "severe_bleeding": 5,
+    "vomiting_blood": 5,
+    "hemoptysis": 5,
+    "apnea": 5,
+    "blindness": 5,
+    "sharp_chest_pain": 5,
     "chest_pain": 5,
     "difficulty_breathing": 5,
-    "shortness_of_breath": 5,
-    "unconsciousness": 5,
-    "seizure": 5,
-    "severe_bleeding": 5,
 
-    # Moderate-priority symptoms
-    "high_fever": 3,
-    "persistent_vomiting": 3,
-    "severe_headache": 3,
+    # High-priority symptoms (Weight 4)
+    "shortness_of_breath": 4,
+    "chest_tightness": 4,
+    "burning_chest_pain": 4,
+    "blood_in_urine": 4,
+    "blood_in_stool": 4,
+    "rectal_bleeding": 4,
+    "melena": 4,
+    "high_fever": 4,
+    "persistent_vomiting": 4,
+    "severe_headache": 4,
+    "jaundice": 4,
+
+    # Moderate-priority symptoms (Weight 3)
+    "fever": 3,
+    "sharp_abdominal_pain": 3,
     "abdominal_pain": 3,
+    "upper_abdominal_pain": 3,
+    "lower_abdominal_pain": 3,
     "dizziness": 3,
+    "wheezing": 3,
+    "palpitations": 3,
+    "irregular_heartbeat": 3,
     "persistent_cough": 3,
+    "throat_swelling": 3,
+    "difficulty_in_swallowing": 3,
+    "swollen_lymph_nodes": 3,
 
-    # Common lower-priority symptoms
-    "fever": 2,
+    # Common lower-priority symptoms (Weight 2)
+    "cough": 2,
     "vomiting": 2,
-    "headache": 1,
-    "cough": 1,
-    "fatigue": 1,
-    "nausea": 1,
+    "diarrhea": 2,
+    "back_pain": 2,
+    "low_back_pain": 2,
+    "joint_pain": 2,
+    "muscle_pain": 2,
+    "weakness": 2,
+    "headache": 2,
+    "nausea": 2,
+    "insomnia": 2,
+    "chills": 2,
+    "sweating": 2,
+    "fatigue": 2,
+    "sore_throat": 2,
+    "nasal_congestion": 2,
 }
-
 
 EMERGENCY_SYMPTOMS = {
     "chest_pain",
+    "sharp_chest_pain",
     "difficulty_breathing",
     "shortness_of_breath",
     "unconsciousness",
+    "fainting",
     "seizure",
+    "seizures",
     "severe_bleeding",
+    "vomiting_blood",
+    "hemoptysis",
+    "apnea",
+    "blindness",
 }
 
 
@@ -59,12 +100,10 @@ def calculate_severity_score(symptoms: List[str]) -> int:
     """
     Calculate the total severity score for known symptoms.
     """
-
     score = 0
-
     for symptom in symptoms:
         normalized = normalize_symptom(symptom)
-        score += SYMPTOM_WEIGHTS.get(normalized, 0)
+        score += SYMPTOM_WEIGHTS.get(normalized, 1)
 
     return score
 
