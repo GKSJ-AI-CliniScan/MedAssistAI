@@ -65,9 +65,9 @@ export const PatientRegisterPage = () => {
       };
       localStorage.setItem('medassist_patient_profile', JSON.stringify(patientProfile));
 
-      // Registration also logs the user in — go straight to dashboard
-      toast.success(`Welcome to MedAssist AI, ${data.fullName.split(' ')[0]}! Your patient account is ready.`, { icon: '🏥' });
-      setTimeout(() => navigate('/patient-dashboard'), 600);
+      // Registration successful — redirect to Patient Login page
+      toast.success('Patient account registered successfully! Please log in with your credentials.', { icon: '🏥' });
+      setTimeout(() => navigate('/patient-login'), 600);
     } catch (err) {
       const msg = err?.response?.data?.detail || err?.response?.data?.message || err.message || 'Registration failed. Please try again.';
       toast.error(msg, { icon: '⚠️' });

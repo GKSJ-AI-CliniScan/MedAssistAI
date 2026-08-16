@@ -259,14 +259,18 @@ export const authService = {
     return data;
   },
 
-  logout() {
-    api.post("/auth/logout").catch(() => {});
+  clearSession() {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(REFRESH_KEY);
     localStorage.removeItem(USER_KEY);
-    // Also clear profile data so stale info doesn't show after re-login
+  },
+
+  logout() {
+    api.post("/auth/logout").catch(() => {});
+    authService.clearSession();
     localStorage.removeItem('medassist_patient_profile');
     localStorage.removeItem('medassist_doctor_profile');
+    sessionStorage.clear();
     window.location.href = "/signin";
   },
 

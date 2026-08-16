@@ -44,15 +44,18 @@ def register(payload: UserRegister, db: Session = Depends(get_db)):
     if existing_user:
         existing_role = (existing_user.role or "patient").strip().lower()
         if existing_role != clean_role:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="This email is already registered with another role."
-            )
+            detail = f"This email is already registered as a {existing_role.capitalize()}. Please use {existing_role.capitalize()} Login."
         else:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="This email is already registered. Please use another email or log in."
-            )
+            if clean_role == "patient":
+                detail = "Patient account already exists with this email."
+            elif clean_role == "doctor":
+                detail = "Doctor account already exists with this email."
+            else:
+                detail = "This email is already registered."
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=detail
+        )
 
     name_parts = payload.full_name.strip().split(" ", 1)
     first_name = name_parts[0]
@@ -89,7 +92,7 @@ def register(payload: UserRegister, db: Session = Depends(get_db)):
     notif_repo.create(
         user_id=user.id,
         title="Welcome to MedAssist AI 🎉",
-        message=f"Hello {user.full_name}! Your clinical account has been created. Explore disease prediction and health diagnostics.",
+        message=f"Hello {user.full_name}! Your clinical account has been created.",
         type="info",
     )
 
@@ -121,36 +124,43 @@ def login(payload: UserLogin, db: Session = Depends(get_db)):
     
     # 1. Check whether email exists
     if not user:
+        if clean_role == "patient":
+            detail = "No patient account found. Please create a patient account first."
+        elif clean_role == "doctor":
+            detail = "No doctor account found. Please create a doctor account first."
+        else:
+            detail = "No account found. Please create an account first."
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Account not found. Please create an account first."
+            detail=detail
         )
 
     user_role = (user.role or "patient").strip().lower()
 
     # 2. Check role mismatch
     if clean_role and user_role != clean_role:
-        if user_role == "patient":
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="This account is registered as a Patient. Please use Patient Login."
-            )
-        elif user_role == "doctor":
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="This account is registered as a Doctor. Please use Doctor Login."
-            )
+        if clean_role == "patient" and user_role == "doctor":
+            detail = "No patient account found with this email."
+        elif clean_role == "doctor" and user_role == "patient":
+            detail = "No doctor account found with this email."
         else:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Role mismatch. Please use the correct login portal."
-            )
+            detail = f"Role mismatch. Required portal role: {clean_role}."
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=detail
+        )
 
     # 3. Check password
     if not verify_password(payload.password, user.hashed_password):
+        if clean_role == "patient":
+            detail = "Invalid patient email or password."
+        elif clean_role == "doctor":
+            detail = "Invalid doctor email or password."
+        else:
+            detail = "Invalid email or password."
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect email or password."
+            detail=detail
         )
 
     # 4. Check active status

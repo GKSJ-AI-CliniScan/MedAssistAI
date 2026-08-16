@@ -81,8 +81,10 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await authService.register(name, email, password, role);
-      setUser(response.user);
-      setIsAuthenticated(true);
+      // Registration successful — clear active session so user logs in explicitly via login page
+      authService.clearSession();
+      setUser(null);
+      setIsAuthenticated(false);
       return response.user;
     } catch (error) {
       throw error;

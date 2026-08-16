@@ -65,9 +65,9 @@ export const DoctorRegisterPage = () => {
       await registerUser(displayName, data.email, data.password, 'doctor');
       localStorage.setItem('medassist_doctor_profile', JSON.stringify(doctorProfile));
 
-      // Registration also logs the doctor in — go straight to dashboard
-      toast.success(`Welcome, ${displayName}! Your clinical account is active.`, { icon: '🩺' });
-      setTimeout(() => navigate('/doctor-dashboard'), 600);
+      // Registration successful — redirect to Doctor Login page
+      toast.success('Doctor credentials registered successfully! Please log in to access the clinical portal.', { icon: '🩺' });
+      setTimeout(() => navigate('/doctor-login'), 600);
     } catch (err) {
       const msg = err?.response?.data?.detail || err?.response?.data?.message || err.message || 'Registration failed. Please try again.';
       toast.error(msg, { icon: '⚠️' });

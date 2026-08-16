@@ -47,14 +47,14 @@ export const PrivateRoutes = ({ children }) => {
 
   // Patient trying to access Doctor routes
   if (!isDoctor && isDoctorOnlyRoute) {
-    toast.error('Access Denied: Please log in with a Doctor account.', { icon: '🚫' });
-    return <Navigate to="/doctor-login" replace />;
+    toast.error('You do not have permission to access the doctor dashboard.', { icon: '🚫' });
+    return <Navigate to="/patient-dashboard" replace />;
   }
 
   // Doctor trying to access Patient routes
   if (isDoctor && isPatientOnlyRoute) {
-    toast.error('Access Denied: Please log in with a Patient account.', { icon: '🚫' });
-    return <Navigate to="/patient-login" replace />;
+    toast.error('You do not have permission to access the patient dashboard.', { icon: '🚫' });
+    return <Navigate to="/doctor-dashboard" replace />;
   }
 
   return children ? children : <Outlet />;
