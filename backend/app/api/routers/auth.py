@@ -118,6 +118,7 @@ def register(payload: UserRegister, db: Session = Depends(get_db)):
 def login(payload: UserLogin, db: Session = Depends(get_db)):
     user_repo = UserRepository(db)
     clean_email = (payload.email or "").strip().lower()
+    portal_role = (payload.role or "").strip().lower() if payload.role else None
 
     user = user_repo.get_by_email(clean_email)
     
@@ -141,6 +142,10 @@ def login(payload: UserLogin, db: Session = Depends(get_db)):
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Account is deactivated. Contact clinical support."
         )
+
+    # Set role to the portal role requested during login (e.g. "doctor" from Doctor Login)
+    if portal_role in ["doctor", "patient"]:
+        user.role = portal_role
 
     user_role = (user.role or "patient").strip().lower()
 
