@@ -57,8 +57,9 @@ export const authService = {
    * when the backend is completely unreachable (no response at all).
    */
   async login(email, password, roleHint = null) {
+    const cleanEmail = (email || '').trim();
     try {
-      const { data } = await api.post("/auth/login", { email, password, role: roleHint });
+      const { data } = await api.post("/auth/login", { email: cleanEmail, password, role: roleHint });
       authService._saveSession(data);
       return data;
     } catch (err) {

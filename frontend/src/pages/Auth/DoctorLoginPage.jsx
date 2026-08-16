@@ -26,16 +26,23 @@ export const DoctorLoginPage = () => {
   const [showGoogleModal, setShowGoogleModal] = useState(false);
   const [showMicrosoftModal, setShowMicrosoftModal] = useState(false);
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm({
     defaultValues: { email: '', password: '', rememberMe: false },
   });
+
+  const fillDemoCredentials = () => {
+    setValue('email', 'doctor@medassist.ai');
+    setValue('password', 'Password123');
+    setAuthError(null);
+  };
 
   const onSubmit = async ({ email, password, rememberMe }) => {
     setIsLoading(true);
     setAuthError(null);
+    const cleanEmail = (email || '').trim();
     try {
-      const user = await login(email, password, 'doctor');
-      if (rememberMe) localStorage.setItem('medassist_remember', email);
+      const user = await login(cleanEmail, password, 'doctor');
+      if (rememberMe) localStorage.setItem('medassist_remember', cleanEmail);
       toast.success(`Welcome, ${user?.full_name || 'Doctor'}! Loading Clinical Dashboard…`, { icon: '🩺' });
       setTimeout(() => {
         navigate('/doctor-dashboard');
@@ -57,7 +64,7 @@ export const DoctorLoginPage = () => {
           client_id: clientId,
           callback: async (response) => {
             if (response.credential) {
-              await loginWithGoogle(response.credential, null);
+              await loginWithGoogle(response.credential, null, 'doctor');
               toast.success('Doctor authenticated with Google! Redirecting…', { icon: '🔐' });
               setTimeout(() => navigate('/doctor-dashboard'), 400);
             }
@@ -148,6 +155,18 @@ export const DoctorLoginPage = () => {
                 </motion.div>
               )}
             </AnimatePresence>
+
+            {/* Demo Account Quick Fill */}
+            <div className="mb-4">
+              <button
+                type="button"
+                onClick={fillDemoCredentials}
+                className="w-full py-2 px-3 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm group"
+              >
+                <span>⚡ Auto-fill Demo Doctor Credentials</span>
+                <span className="text-[10px] text-indigo-400/70 group-hover:text-indigo-200 font-mono">(doctor@medassist.ai)</span>
+              </button>
+            </div>
 
             {/* Doctor Form */}
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>

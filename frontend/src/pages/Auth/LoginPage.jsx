@@ -25,17 +25,24 @@ export const LoginPage = () => {
   const [showGoogleModal, setShowGoogleModal] = useState(false);
   const [showMicrosoftModal, setShowMicrosoftModal] = useState(false);
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm({
     defaultValues: { email: '', password: '', rememberMe: false },
   });
 
   const onSubmit = async ({ email, password, rememberMe }) => {
     setIsLoading(true);
+    const cleanEmail = (email || '').trim();
     try {
-      await login(email, password);
-      if (rememberMe) localStorage.setItem('medassist_remember', email);
+      const user = await login(cleanEmail, password);
+      if (rememberMe) localStorage.setItem('medassist_remember', cleanEmail);
       toast.success('Welcome back! Redirecting to your dashboard…', { icon: '🏥', style: { fontWeight: 600 } });
-      setTimeout(() => navigate('/dashboard'), 600);
+      setTimeout(() => {
+        if (user?.role === 'doctor') {
+          navigate('/doctor-dashboard');
+        } else {
+          navigate('/patient-dashboard');
+        }
+      }, 400);
     } catch (err) {
       const msg = err?.response?.data?.detail || err.message || 'Authentication failed. Please try again.';
       toast.error(msg, { icon: '🔒' });
