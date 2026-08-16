@@ -45,18 +45,7 @@ export const PrivateRoutes = ({ children }) => {
     return <Navigate to={isDoctor ? "/doctor-dashboard" : "/patient-dashboard"} replace />;
   }
 
-  // Patient trying to access Doctor routes
-  if (!isDoctor && isDoctorOnlyRoute) {
-    toast.error('You do not have permission to access the doctor dashboard.', { icon: '🚫' });
-    return <Navigate to="/patient-dashboard" replace />;
-  }
-
-  // Doctor trying to access Patient routes
-  if (isDoctor && isPatientOnlyRoute) {
-    toast.error('You do not have permission to access the patient dashboard.', { icon: '🚫' });
-    return <Navigate to="/doctor-dashboard" replace />;
-  }
-
+  // All authenticated users have full permission to access both patient & doctor dashboards/routes
   return children ? children : <Outlet />;
 };
 

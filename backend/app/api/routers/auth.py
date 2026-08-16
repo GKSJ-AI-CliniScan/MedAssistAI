@@ -118,71 +118,53 @@ def register(payload: UserRegister, db: Session = Depends(get_db)):
 def login(payload: UserLogin, db: Session = Depends(get_db)):
     user_repo = UserRepository(db)
     clean_email = (payload.email or "").strip().lower()
-    clean_role = (payload.role or "").strip().lower() if payload.role else None
 
     user = user_repo.get_by_email(clean_email)
     
     # 1. Check whether email exists
     if not user:
-        if clean_role == "patient":
-            detail = "No patient account found. Please create a patient account first."
-        elif clean_role == "doctor":
-            detail = "No doctor account found. Please create a doctor account first."
-        else:
-            detail = "No account found. Please create an account first."
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=detail
+            detail="Account not found. Please create an account first."
         )
 
-    user_role = (user.role or "patient").strip().lower()
-
-    # 2. Check role mismatch
-    if clean_role and user_role != clean_role:
-        if clean_role == "patient" and user_role == "doctor":
-            detail = "No patient account found with this email."
-        elif clean_role == "doctor" and user_role == "patient":
-            detail = "No doctor account found with this email."
-        else:
-            detail = f"Role mismatch. Required portal role: {clean_role}."
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=detail
-        )
-
-    # 3. Check password
+    # 2. Check password
     if not verify_password(payload.password, user.hashed_password):
-        if clean_role == "patient":
-            detail = "Invalid patient email or password."
-        elif clean_role == "doctor":
-            detail = "Invalid doctor email or password."
-        else:
-            detail = "Invalid email or password."
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=detail
+            detail="Invalid email or password."
         )
 
-    # 4. Check active status
+    # 3. Check active status
     if not user.is_active:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Account is deactivated. Contact clinical support."
         )
 
-    # Ensure profile records exist
-    if user_role == "patient" and not user.patient:
-        pat_repo = PatientRepository(db)
-        pat_repo.create(user_id=user.id)
-    elif user_role == "doctor" and not user.doctor:
-        from app.repositories.doctor_repository import DoctorRepository
-        doc_repo = DoctorRepository(db)
-        doc_repo.create(
-            user_id=user.id,
-            specialty="General Physician",
-            experience=5,
-            bio="Registered Medical Practitioner"
-        )
+    user_role = (user.role or "patient").strip().lower()
+
+    # Ensure profile records exist for both roles so all dashboards work seamlessly for everyone
+    if not user.patient:
+        try:
+            pat_repo = PatientRepository(db)
+            pat_repo.create(user_id=user.id)
+        except Exception:
+            pass
+
+    if not user.doctor:
+        try:
+            from app.repositories.doctor_repository import DoctorRepository
+            doc_repo = DoctorRepository(db)
+            doc_repo.create(
+                user_id=user.id,
+                specialty="General Physician",
+                experience=5,
+                phone=user.phone or "",
+                bio="Registered Medical Practitioner"
+            )
+        except Exception:
+            pass
 
     user.last_login_at = datetime.datetime.utcnow()
     db.commit()
