@@ -1,6 +1,60 @@
+import { useRef } from "react";
 import logo from "../assets/logo.png";
 
 function Navbar() {
+  // =====================================================
+  // ADMIN LOGIN - HIDDEN 3-CLICK SHORTCUT
+  // =====================================================
+
+  const clickCountRef = useRef(0);
+  const clickTimerRef = useRef(null);
+
+  const handleLogoClick = (event) => {
+    event.preventDefault();
+
+    // Increase click count
+    clickCountRef.current += 1;
+
+    // Clear previous timer
+    if (clickTimerRef.current) {
+      clearTimeout(clickTimerRef.current);
+    }
+
+    // ===================================================
+    // THREE QUICK CLICKS
+    // ===================================================
+
+    if (clickCountRef.current === 3) {
+      clickCountRef.current = 0;
+
+      // Open Admin Login
+      window.location.href = "/admin/login";
+
+      return;
+    }
+
+    // ===================================================
+    // RESET CLICK COUNT
+    // ===================================================
+
+    clickTimerRef.current = setTimeout(() => {
+      clickCountRef.current = 0;
+    }, 1000);
+
+    // ===================================================
+    // NORMAL SINGLE CLICK
+    // ===================================================
+
+    // For a single click, go to Home after the
+    // short detection period.
+    setTimeout(() => {
+      if (clickCountRef.current === 1) {
+        window.location.href = "/";
+        clickCountRef.current = 0;
+      }
+    }, 250);
+  };
+
   return (
     <nav
       className="navbar navbar-expand-lg sticky-top"
@@ -25,9 +79,11 @@ function Navbar() {
         <a
           className="navbar-brand d-flex align-items-center"
           href="/"
+          onClick={handleLogoClick}
           style={{
             textDecoration: "none",
             marginRight: "0",
+            cursor: "pointer",
           }}
         >
           <img
@@ -93,6 +149,10 @@ function Navbar() {
               gap: "8px",
             }}
           >
+            {/* ============================= */}
+            {/* HOME */}
+            {/* ============================= */}
+
             <li className="nav-item">
               <a
                 className="nav-link"
@@ -107,6 +167,10 @@ function Navbar() {
                 Home
               </a>
             </li>
+
+            {/* ============================= */}
+            {/* FEATURES */}
+            {/* ============================= */}
 
             <li className="nav-item">
               <a
@@ -123,6 +187,10 @@ function Navbar() {
               </a>
             </li>
 
+            {/* ============================= */}
+            {/* HOW IT WORKS */}
+            {/* ============================= */}
+
             <li className="nav-item">
               <a
                 className="nav-link"
@@ -138,6 +206,10 @@ function Navbar() {
               </a>
             </li>
 
+            {/* ============================= */}
+            {/* ABOUT */}
+            {/* ============================= */}
+
             <li className="nav-item">
               <a
                 className="nav-link"
@@ -152,6 +224,10 @@ function Navbar() {
                 About
               </a>
             </li>
+
+            {/* ============================= */}
+            {/* CONTACT */}
+            {/* ============================= */}
 
             <li className="nav-item">
               <a
@@ -175,7 +251,9 @@ function Navbar() {
 
           <div className="d-flex align-items-center gap-2">
 
-            {/* Login */}
+            {/* ============================= */}
+            {/* LOGIN */}
+            {/* ============================= */}
 
             <a
               href="/login"
@@ -196,7 +274,9 @@ function Navbar() {
               Login
             </a>
 
-            {/* Register */}
+            {/* ============================= */}
+            {/* REGISTER */}
+            {/* ============================= */}
 
             <a
               href="/register"
@@ -213,7 +293,8 @@ function Navbar() {
                 fontWeight: "600",
                 textDecoration: "none",
                 textAlign: "center",
-                boxShadow: "0 6px 15px rgba(37, 99, 235, 0.18)",
+                boxShadow:
+                  "0 6px 15px rgba(37, 99, 235, 0.18)",
               }}
             >
               Register
