@@ -152,6 +152,7 @@ export const AppointmentsPage = () => {
         doctor_id: selectedDoctor.id,
         doctor_name: selectedDoctor.name,
         doctor_specialty: selectedDoctor.specialization,
+        patient_name: patientName.trim(),
         date_time: `${selectedDate} • ${selectedTimeSlot}`,
         priority: 'Normal',
         status: 'Confirmed',
