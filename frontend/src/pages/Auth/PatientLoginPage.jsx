@@ -36,14 +36,14 @@ export const PatientLoginPage = () => {
     try {
       const user = await login(email, password, 'patient');
       if (rememberMe) localStorage.setItem('medassist_remember', email);
-      toast.success('Welcome back! Loading Patient Portal…', { icon: '🏥' });
+      toast.success(`Welcome back, ${user?.full_name || 'Patient'}! Loading Patient Portal…`, { icon: '🏥' });
       setTimeout(() => {
         navigate('/patient-dashboard');
       }, 300);
     } catch (err) {
-      const msg = err?.response?.data?.detail || err.message || 'Invalid email or password.';
-      setAuthError('Account not found or credentials invalid. If you do not have an account, please create a patient account below.');
-      toast.error('Account not found. Please create an account to get started.', { icon: '⚠️' });
+      const msg = err?.response?.data?.detail || err.message || 'Login failed. Please try again.';
+      setAuthError(msg);
+      toast.error(msg, { icon: '⚠️' });
     } finally {
       setIsLoading(false);
     }

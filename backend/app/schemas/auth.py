@@ -20,6 +20,7 @@ class UserRegister(BaseModel):
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
+    role: Optional[str] = None
 
 class ForgotPassword(BaseModel):
     email: EmailStr

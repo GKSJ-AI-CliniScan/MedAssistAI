@@ -36,14 +36,14 @@ export const DoctorLoginPage = () => {
     try {
       const user = await login(email, password, 'doctor');
       if (rememberMe) localStorage.setItem('medassist_remember', email);
-      toast.success('Welcome Doctor! Loading Clinical Dashboard…', { icon: '🩺' });
+      toast.success(`Welcome, ${user?.full_name || 'Doctor'}! Loading Clinical Dashboard…`, { icon: '🩺' });
       setTimeout(() => {
         navigate('/doctor-dashboard');
       }, 300);
     } catch (err) {
-      const msg = err?.response?.data?.detail || err.message || 'Invalid credentials or doctor account not found.';
-      setAuthError('Doctor account not found or credentials invalid. If you are a new clinical practitioner, please register below.');
-      toast.error('Doctor account not found. Please register as a doctor.', { icon: '⚠️' });
+      const msg = err?.response?.data?.detail || err.message || 'Login failed. Please try again.';
+      setAuthError(msg);
+      toast.error(msg, { icon: '⚠️' });
     } finally {
       setIsLoading(false);
     }

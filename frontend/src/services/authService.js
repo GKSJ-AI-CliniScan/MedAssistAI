@@ -44,51 +44,52 @@ export const authService = {
 
   async login(email, password, roleHint = null) {
     try {
-      const { data } = await api.post("/auth/login", { email, password });
+      const { data } = await api.post("/auth/login", { email, password, role: roleHint });
       authService._saveSession(data);
       return data;
     } catch (err) {
-      // If the backend actively rejected credentials, propagate the real error to the login page
+      // If the backend responded with ANY error (400, 401, 403, 404, etc.), propagate it directly.
+      // Never auto-login when the server actively rejects the credentials.
       if (err.response) {
         throw err;
       }
 
-      // Check if it is a demo account. Only allow fallback log-in for demo emails when server is down.
+      // Backend is completely unreachable (network error / server offline).
+      // Only allow demo fallback for recognized demo-only emails.
       const normalizedEmail = (email || '').trim().toLowerCase();
-      const isDemoEmail = normalizedEmail.includes('patient') || normalizedEmail.includes('doctor') || normalizedEmail.includes('demo');
+      const isDemoEmail =
+        normalizedEmail === 'patient@medassist.ai' ||
+        normalizedEmail === 'doctor@medassist.ai' ||
+        normalizedEmail === 'demo@medassist.ai';
 
       if (isDemoEmail) {
         const isDoc =
           roleHint === 'doctor' ||
           normalizedEmail.includes('doctor') ||
-          normalizedEmail.startsWith('dr.');
-
-        const formatName = (str) => {
-          if (!str) return isDoc ? 'Dr. Rahul Sharma' : 'Yamini Lakshmi';
-          const namePart = str.includes('@') ? str.split('@')[0] : str;
-          return namePart
-            .split(/[\._-]/)
-            .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-            .join(' ');
-        };
-
-        const rawName = formatName(normalizedEmail);
-        const displayName = isDoc
-          ? (rawName.startsWith('Dr') ? rawName : `Dr. ${rawName}`)
-          : rawName;
+          normalizedEmail.includes('demo');
 
         const demoUser = {
-          id: isDoc ? `doc-${Math.floor(1000 + Math.random() * 9000)}` : `pat-${Math.floor(1000 + Math.random() * 9000)}`,
-          full_name: displayName,
-          email: normalizedEmail || (isDoc ? 'doctor@medassist.ai' : 'patient@medassist.ai'),
+          id: isDoc ? `doc-offline-${Date.now()}` : `pat-offline-${Date.now()}`,
+          full_name: isDoc ? 'Dr. Rahul Sharma' : 'Jane Doe',
+          email: normalizedEmail,
           role: isDoc ? 'doctor' : 'patient',
           avatar_url: '',
           is_email_verified: true,
         };
 
+        // Validate roleHint matches the expected demo role
+        if (roleHint && demoUser.role !== roleHint) {
+          const errorMsg = demoUser.role === 'patient'
+            ? 'This account is registered as a Patient. Please use Patient Login.'
+            : 'This account is registered as a Doctor. Please use Doctor Login.';
+          const error = new Error(errorMsg);
+          error.response = { data: { detail: errorMsg } };
+          throw error;
+        }
+
         const demoData = {
-          access_token: `medassist_jwt_${Date.now()}`,
-          refresh_token: `medassist_refresh_${Date.now()}`,
+          access_token: `medassist_offline_jwt_${Date.now()}`,
+          refresh_token: `medassist_offline_refresh_${Date.now()}`,
           user: demoUser,
         };
 
@@ -96,7 +97,7 @@ export const authService = {
         return demoData;
       }
 
-      // Throw error if backend is offline and user attempted real custom account login
+      // Not a demo email and backend is offline — throw a user-friendly error
       throw new Error('Unable to connect to the medical server. Please check your internet connection or try again later.');
     }
   },

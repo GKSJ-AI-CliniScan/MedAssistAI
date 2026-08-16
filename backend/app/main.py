@@ -104,22 +104,56 @@ app.include_router(search_router, prefix=API_PREFIX)
 @app.on_event("startup")
 def seed_data():
     from app.repositories import UserRepository, PatientRepository
+    from app.repositories.doctor_repository import DoctorRepository
     db = SessionLocal()
     try:
         user_repo = UserRepository(db)
         pat_repo = PatientRepository(db)
-        
-        # Seed Demo User
+        doc_repo = DoctorRepository(db)
+
+        # Seed Demo Doctor account (doctor@medassist.ai)
+        doctor_email = "doctor@medassist.ai"
+        if not user_repo.get_by_email(doctor_email):
+            try:
+                doc_user = user_repo.create(
+                    full_name="Dr. Rahul Sharma",
+                    email=doctor_email,
+                    password="Password123",
+                    role="doctor"
+                )
+                doc_user.first_name = "Rahul"
+                doc_user.last_name = "Sharma"
+                doc_user.is_email_verified = True
+                db.commit()
+                doc_repo.create(
+                    user_id=doc_user.id,
+                    specialty="Cardiologist",
+                    experience=12,
+                    phone="+91 891 255 8899",
+                    bio="Senior interventional cardiologist with 12+ years of clinical experience."
+                )
+            except Exception as _e:
+                db.rollback()
+                print(f"[WARNING] Doctor seed error: {_e}")
+
+        # Seed Demo alias (demo@medassist.ai → doctor)
         demo_email = "demo@medassist.ai"
         if not user_repo.get_by_email(demo_email):
             try:
-                user = user_repo.create(
+                demo_user = user_repo.create(
                     full_name="Demo Doctor",
                     email=demo_email,
                     password="Password123",
                     role="doctor"
                 )
-                pat_repo.create(user_id=user.id)
+                demo_user.is_email_verified = True
+                db.commit()
+                doc_repo.create(
+                    user_id=demo_user.id,
+                    specialty="General Physician",
+                    experience=5,
+                    bio="Demo doctor account for testing."
+                )
             except Exception as _e:
                 db.rollback()
 
@@ -133,6 +167,10 @@ def seed_data():
                     password="Password123",
                     role="patient"
                 )
+                p_user.first_name = "Jane"
+                p_user.last_name = "Doe"
+                p_user.is_email_verified = True
+                db.commit()
                 pat_repo.create(user_id=p_user.id)
             except Exception as _e:
                 db.rollback()

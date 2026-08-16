@@ -63,7 +63,7 @@ export const DoctorRegisterPage = () => {
       await registerUser(doctorProfile.name, data.email, data.password, 'doctor');
       localStorage.setItem('medassist_doctor_profile', JSON.stringify(doctorProfile));
 
-      toast.success('Doctor credentials registered! Verification status: Pending Approval.', { icon: '🩺' });
+      toast.success('Doctor credentials registered! Please log in to access the clinical dashboard.', { icon: '🩺' });
       setTimeout(() => navigate('/doctor-dashboard'), 600);
     } catch (err) {
       const msg = err?.response?.data?.detail || err?.response?.data?.message || err.message || 'Registration failed. Please try again.';

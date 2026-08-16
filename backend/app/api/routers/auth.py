@@ -37,8 +37,18 @@ class VerifyEmailInput(BaseModel):
 @router.post("/register", response_model=Token, status_code=status.HTTP_201_CREATED)
 def register(payload: UserRegister, db: Session = Depends(get_db)):
     user_repo = UserRepository(db)
-    if user_repo.get_by_email(payload.email):
-        raise HTTPException(status_code=400, detail="Email address is already registered")
+    existing_user = user_repo.get_by_email(payload.email)
+    if existing_user:
+        if existing_user.role != payload.role:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="This email is already registered with another role."
+            )
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="This email is already registered. Please use another email or log in."
+            )
 
     name_parts = payload.full_name.strip().split(" ", 1)
     first_name = name_parts[0]
@@ -90,10 +100,45 @@ def register(payload: UserRegister, db: Session = Depends(get_db)):
 def login(payload: UserLogin, db: Session = Depends(get_db)):
     user_repo = UserRepository(db)
     user = user_repo.get_by_email(payload.email)
-    if not user or not verify_password(payload.password, user.hashed_password):
-        raise HTTPException(status_code=401, detail="Invalid email address or password")
+    
+    # 1. Check whether email exists
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Account not found. Please create an account first."
+        )
+
+    # 2. Check role mismatch
+    if payload.role and user.role != payload.role:
+        if user.role == "patient":
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="This account is registered as a Patient. Please use Patient Login."
+            )
+        elif user.role == "doctor":
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="This account is registered as a Doctor. Please use Doctor Login."
+            )
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Role mismatch. Please use the correct login portal."
+            )
+
+    # 3. Check password
+    if not verify_password(payload.password, user.hashed_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email or password."
+        )
+
+    # 4. Check active status
     if not user.is_active:
-        raise HTTPException(status_code=403, detail="Account is deactivated. Contact clinical support.")
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Account is deactivated. Contact clinical support."
+        )
 
     user.last_login_at = datetime.datetime.utcnow()
     db.commit()
@@ -126,6 +171,7 @@ def google_login(payload: dict, db: Session = Depends(get_db)):
     name = "Google User"
     picture = None
     google_id = payload.get("google_id", "")
+    role = payload.get("role", "patient")
 
     id_token_str = payload.get("id_token")
     if id_token_str:
@@ -188,12 +234,41 @@ def google_login(payload: dict, db: Session = Depends(get_db)):
             full_name=name,
             email=email,
             password="GoogleOAuth_" + (google_id[:16] if google_id else "NoID"),
-            role="patient"
+            role=role
         )
         user.first_name = first_name
         user.last_name = last_name
         user.is_email_verified = True
-        pat_repo.create(user_id=user.id)
+        if role == "patient":
+            pat_repo.create(user_id=user.id)
+        elif role == "doctor":
+            from app.repositories.doctor_repository import DoctorRepository
+            doc_repo = DoctorRepository(db)
+            doc_repo.create(
+                user_id=user.id,
+                specialty="General Physician",
+                experience=5,
+                phone=user.phone,
+                bio="Clinical practitioner registered via Google OAuth."
+            )
+    else:
+        # Check role mismatch
+        if user.role != role:
+            if user.role == "patient":
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="This account is registered as a Patient. Please use Patient Login."
+                )
+            elif user.role == "doctor":
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="This account is registered as a Doctor. Please use Doctor Login."
+                )
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Role mismatch. Please use the correct login portal."
+                )
 
     user.google_id = google_id or user.google_id
     user.login_provider = "google"
@@ -239,6 +314,7 @@ def microsoft_login(payload: dict, db: Session = Depends(get_db)):
     name = "Microsoft User"
     picture = None
     microsoft_id = payload.get("microsoft_id", "")
+    role = payload.get("role", "patient")
     access_token_str = payload.get("access_token") or payload.get("id_token")
 
     if access_token_str and not payload.get("email"):
@@ -275,12 +351,41 @@ def microsoft_login(payload: dict, db: Session = Depends(get_db)):
             full_name=name,
             email=email,
             password="MicrosoftOAuth_" + (microsoft_id[:16] if microsoft_id else "NoID"),
-            role="patient"
+            role=role
         )
         user.first_name = first_name
         user.last_name = last_name
         user.is_email_verified = True
-        pat_repo.create(user_id=user.id)
+        if role == "patient":
+            pat_repo.create(user_id=user.id)
+        elif role == "doctor":
+            from app.repositories.doctor_repository import DoctorRepository
+            doc_repo = DoctorRepository(db)
+            doc_repo.create(
+                user_id=user.id,
+                specialty="General Physician",
+                experience=5,
+                phone=user.phone,
+                bio="Clinical practitioner registered via Microsoft OAuth."
+            )
+    else:
+        # Check role mismatch
+        if user.role != role:
+            if user.role == "patient":
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="This account is registered as a Patient. Please use Patient Login."
+                )
+            elif user.role == "doctor":
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="This account is registered as a Doctor. Please use Doctor Login."
+                )
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Role mismatch. Please use the correct login portal."
+                )
 
     user.microsoft_id = microsoft_id or getattr(user, "microsoft_id", None)
     user.login_provider = "microsoft"

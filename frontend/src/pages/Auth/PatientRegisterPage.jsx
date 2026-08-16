@@ -64,7 +64,7 @@ export const PatientRegisterPage = () => {
       await registerUser(data.fullName, data.email, data.password, 'patient');
       localStorage.setItem('medassist_patient_profile', JSON.stringify(patientProfile));
       
-      toast.success('Patient account registered successfully!', { icon: '🏥' });
+      toast.success('Patient account registered successfully! Please log in to continue.', { icon: '🏥' });
       setTimeout(() => navigate('/patient-dashboard'), 600);
     } catch (err) {
       const msg = err?.response?.data?.detail || err?.response?.data?.message || err.message || 'Registration failed. Please try again.';
