@@ -17,7 +17,7 @@ httpx==0.28.1
 idna==3.18
 joblib==1.5.3
 lightgbm
-numpy==2.5.1
+numpy==2.4.6
 passlib==1.7.4
 psycopg2-binary==2.9.12
 pyasn1==0.6.3
