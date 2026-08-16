@@ -37,9 +37,13 @@ class VerifyEmailInput(BaseModel):
 @router.post("/register", response_model=Token, status_code=status.HTTP_201_CREATED)
 def register(payload: UserRegister, db: Session = Depends(get_db)):
     user_repo = UserRepository(db)
-    existing_user = user_repo.get_by_email(payload.email)
+    clean_email = (payload.email or "").strip().lower()
+    clean_role = (payload.role or "patient").strip().lower()
+
+    existing_user = user_repo.get_by_email(clean_email)
     if existing_user:
-        if existing_user.role != payload.role:
+        existing_role = (existing_user.role or "patient").strip().lower()
+        if existing_role != clean_role:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="This email is already registered with another role."
@@ -56,19 +60,30 @@ def register(payload: UserRegister, db: Session = Depends(get_db)):
 
     user = user_repo.create(
         full_name=payload.full_name,
-        email=payload.email,
+        email=clean_email,
         password=payload.password,
-        role=payload.role or "patient",
+        role=clean_role,
     )
     user.first_name = first_name
     user.last_name = last_name
-    user.is_email_verified = True  # Auto-verify in development / production workflow
+    user.is_email_verified = True
     user.last_login_at = datetime.datetime.utcnow()
     db.commit()
 
-    if user.role == "patient":
+    if clean_role == "patient":
         pat_repo = PatientRepository(db)
-        pat_repo.create(user_id=user.id)
+        if not user.patient:
+            pat_repo.create(user_id=user.id)
+    elif clean_role == "doctor":
+        from app.repositories.doctor_repository import DoctorRepository
+        doc_repo = DoctorRepository(db)
+        if not user.doctor:
+            doc_repo.create(
+                user_id=user.id,
+                specialty="General Physician",
+                experience=5,
+                bio="Registered Medical Practitioner"
+            )
 
     notif_repo = NotificationRepository(db)
     notif_repo.create(
@@ -99,7 +114,10 @@ def register(payload: UserRegister, db: Session = Depends(get_db)):
 @router.post("/login", response_model=Token)
 def login(payload: UserLogin, db: Session = Depends(get_db)):
     user_repo = UserRepository(db)
-    user = user_repo.get_by_email(payload.email)
+    clean_email = (payload.email or "").strip().lower()
+    clean_role = (payload.role or "").strip().lower() if payload.role else None
+
+    user = user_repo.get_by_email(clean_email)
     
     # 1. Check whether email exists
     if not user:
@@ -108,14 +126,16 @@ def login(payload: UserLogin, db: Session = Depends(get_db)):
             detail="Account not found. Please create an account first."
         )
 
+    user_role = (user.role or "patient").strip().lower()
+
     # 2. Check role mismatch
-    if payload.role and user.role != payload.role:
-        if user.role == "patient":
+    if clean_role and user_role != clean_role:
+        if user_role == "patient":
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="This account is registered as a Patient. Please use Patient Login."
             )
-        elif user.role == "doctor":
+        elif user_role == "doctor":
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="This account is registered as a Doctor. Please use Doctor Login."
@@ -138,6 +158,20 @@ def login(payload: UserLogin, db: Session = Depends(get_db)):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Account is deactivated. Contact clinical support."
+        )
+
+    # Ensure profile records exist
+    if user_role == "patient" and not user.patient:
+        pat_repo = PatientRepository(db)
+        pat_repo.create(user_id=user.id)
+    elif user_role == "doctor" and not user.doctor:
+        from app.repositories.doctor_repository import DoctorRepository
+        doc_repo = DoctorRepository(db)
+        doc_repo.create(
+            user_id=user.id,
+            specialty="General Physician",
+            experience=5,
+            bio="Registered Medical Practitioner"
         )
 
     user.last_login_at = datetime.datetime.utcnow()

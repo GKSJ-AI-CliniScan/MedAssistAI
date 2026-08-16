@@ -37,9 +37,12 @@ def get_my_doctor_profile(
     repo = DoctorRepository(db)
     doctor = repo.get_by_user_id(current_user.id)
     if not doctor:
-        raise HTTPException(
-            status_code=404,
-            detail="Doctor profile not found. Please complete your profile setup.",
+        doctor = repo.create(
+            user_id=current_user.id,
+            specialty="General Physician",
+            experience=5,
+            phone=current_user.phone or "",
+            bio="Registered Medical Practitioner"
         )
     return doctor
 
