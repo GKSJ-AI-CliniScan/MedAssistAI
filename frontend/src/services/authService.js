@@ -60,6 +60,9 @@ export const authService = {
     const cleanEmail = (email || '').trim();
     try {
       const { data } = await api.post("/auth/login", { email: cleanEmail, password, role: roleHint });
+      if (roleHint && data?.user) {
+        data.user.role = roleHint;
+      }
       authService._saveSession(data);
       return data;
     } catch (err) {

@@ -39,9 +39,12 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await authService.login(email, password, roleHint);
-      setUser(response.user);
+      const effectiveRole = roleHint || response.user?.role || 'patient';
+      const effectiveUser = { ...response.user, role: effectiveRole };
+      localStorage.setItem('medassist_user', JSON.stringify(effectiveUser));
+      setUser(effectiveUser);
       setIsAuthenticated(true);
-      return response.user;
+      return effectiveUser;
     } catch (error) {
       throw error;
     } finally {

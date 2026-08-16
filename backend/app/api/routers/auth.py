@@ -146,6 +146,8 @@ def login(payload: UserLogin, db: Session = Depends(get_db)):
     # Set role to the portal role requested during login (e.g. "doctor" from Doctor Login)
     if portal_role in ["doctor", "patient"]:
         user.role = portal_role
+        db.commit()
+        db.refresh(user)
 
     user_role = (user.role or "patient").strip().lower()
 
