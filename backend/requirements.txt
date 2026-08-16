@@ -38,3 +38,5 @@ uvicorn==0.50.2
 watchfiles==1.2.0
 websockets==16.0
 xgboost
+
+huggingface_hub>=0.36.0
