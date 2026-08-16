@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.database.session import get_db
+from app.database.session import get_db, SessionLocal
 from app.models.symptom import Symptom
 
 SYMPTOMS = [
@@ -78,8 +78,12 @@ SYMPTOMS = [
     ("Pelvic pain", "Pain in lower abdomen/pelvis", "Reproductive", 2),
 ]
 
-def seed_symptoms():
-    db = next(get_db())
+def seed_symptoms(db: Session = None):
+    should_close = False
+    if db is None:
+        db = SessionLocal()
+        should_close = True
+
     try:
         # Check if symptoms already exist
         existing_count = db.query(Symptom).count()
@@ -105,7 +109,8 @@ def seed_symptoms():
         db.rollback()
         print(f"Error seeding symptoms: {e}")
     finally:
-        db.close()
+        if should_close:
+            db.close()
 
 if __name__ == "__main__":
     seed_symptoms()

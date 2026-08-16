@@ -20,6 +20,20 @@ def init_db(reset: bool = False):
     Base.metadata.create_all(bind=engine)
     print("Database tables initialized successfully!")
 
+    # Auto-seed predefined doctor and admin accounts safely & idempotently
+    try:
+        from app.database.seed_users import seed_doctor_admin_accounts
+        seed_doctor_admin_accounts()
+    except Exception as e:
+        print(f"Warning: Failed to seed predefined doctor/admin accounts: {e}")
+
+    # Auto-seed standard symptoms safely & idempotently
+    try:
+        from app.database.seed_symptoms import seed_symptoms
+        seed_symptoms()
+    except Exception as e:
+        print(f"Warning: Failed to seed symptoms: {e}")
+
 
 if __name__ == "__main__":
     init_db()
