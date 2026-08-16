@@ -135,50 +135,35 @@ def login(payload: UserLogin, db: Session = Depends(get_db)):
             detail=detail
         )
 
-    user_role = (user.role or "patient").strip().lower()
-
-    # 2. Check role mismatch (prevent patient from logging in via doctor login or vice versa)
-    if portal_role and user_role != portal_role:
-        if portal_role == "doctor" and user_role == "patient":
-            detail = "This account is registered as a Patient. Please use Patient Login."
-        elif portal_role == "patient" and user_role == "doctor":
-            detail = "This account is registered as a Doctor. Please use Doctor Login."
-        else:
-            detail = f"Role mismatch. Portal requires {portal_role} role."
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=detail
-        )
-
-    # 3. Check password
+    # 2. Check password
     if not verify_password(payload.password, user.hashed_password):
-        if portal_role == "patient":
-            detail = "Invalid patient email or password."
-        elif portal_role == "doctor":
-            detail = "Invalid doctor email or password."
-        else:
-            detail = "Invalid email or password."
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=detail
+            detail="Invalid email or password."
         )
 
-    # 4. Check active status
+    # 3. Check active status
     if not user.is_active:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Account is deactivated. Contact clinical support."
         )
 
-    # Ensure profile records exist for user's assigned role
-    if user_role == "patient" and not user.patient:
+    # Set role to match the portal used for login (doctor portal → doctor role)
+    if portal_role in ["doctor", "patient"]:
+        user.role = portal_role
+
+    user_role = (user.role or "patient").strip().lower()
+
+    # Ensure profile records exist so dashboards render correctly
+    if not user.patient:
         try:
             pat_repo = PatientRepository(db)
             pat_repo.create(user_id=user.id)
         except Exception:
             pass
 
-    if user_role == "doctor" and not user.doctor:
+    if not user.doctor:
         try:
             from app.repositories.doctor_repository import DoctorRepository
             doc_repo = DoctorRepository(db)
