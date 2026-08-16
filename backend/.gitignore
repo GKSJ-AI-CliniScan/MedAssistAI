@@ -11,9 +11,10 @@ __pycache__/
 # Environment variables
 .env
 
-# ML artifacts (place locally; do not commit large binaries)
+# ML artifacts (keep 4.37GB ensemble out of git; allow 726KB LightGBM model)
 *.pkl
 !app/ml/.gitkeep
+!app/ml/lgb_model.pkl
 
 app/ml/clean_190k_dataset.csv
 app/ml/encoded__dataset.csv

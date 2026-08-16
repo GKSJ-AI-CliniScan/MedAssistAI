@@ -26,10 +26,19 @@ def home():
     summary="Service Health Check",
 )
 def health_check():
+    from app.ml.model_loader import is_model_available, get_model_info
+
+    model_info = get_model_info()
     return {
         "status": "healthy",
         "app": settings.APP_NAME,
         "version": settings.APP_VERSION,
+        "model": {
+            "available": is_model_available(),
+            "type": model_info.get("model_type", "LightGBM"),
+            "size_kb": model_info.get("disk_size_kb"),
+            "target_classes": model_info.get("target_classes"),
+        },
     }
 
 

@@ -1,0 +1,27 @@
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+app/**/__pycache__/
+
+# Virtual environments
+venv/
+.venv/
+.env
+.env*.local
+
+# ML artifacts & datasets (>100MB and >4GB binaries)
+app/ml/voting_classifier_rf_xgb_lgb.pkl
+*.csv
+app/ml/*.csv
+app/ml/clean_190k_dataset.csv
+app/ml/encoded__dataset.csv
+temporary_analysis/
+
+# Git & IDE files
+.git/
+.gitignore
+.vscode/
+.idea/
+*.zip
+*.tar.gz

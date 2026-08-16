@@ -6,7 +6,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config.settings import settings
 from app.database.init_db import init_db
 from app.ml.disease_mapping import load_disease_mapping
-from app.ml.model_loader import load_model
 from app.routers import (
     auth,
     home,
@@ -31,34 +30,27 @@ async def lifespan(app: FastAPI):
     # Startup
     # ---------------------------------------------------------
 
-    # Initialize database
+    # 1. Initialize database tables
     try:
         init_db()
         logger.info("Database initialized successfully.")
     except Exception as e:
         logger.warning("Database initialization deferred: %s", e)
 
-    # Preload disease name mappings
+    # 2. Preload disease name mappings into memory
     try:
         load_disease_mapping()
         logger.info("Preloaded disease name mappings into memory.")
     except Exception as e:
         logger.warning("Disease mapping preload warning: %s", e)
 
-    # Load the trained ML model BEFORE application startup completes.
-    #
-    # The model is stored on Hugging Face and downloaded by
-    # model_loader.py when it is not already available locally.
-    #
-    # This is intentionally synchronous so Render does not mark
-    # the service as ready before the ML model is available.
+    # 3. Preload production LightGBM model into memory (fast & lightweight, ~13 MB RAM)
     try:
-        logger.info("Loading ML voting classifier model during startup...")
+        from app.ml.model_loader import load_model
         load_model()
-        logger.info("ML voting classifier model loaded successfully.")
+        logger.info("Preloaded production LightGBM model into memory.")
     except Exception as e:
-        logger.exception("ML model startup error: %s", e)
-        raise
+        logger.warning("ML model preload warning: %s", e)
 
     # ---------------------------------------------------------
     # Application is ready

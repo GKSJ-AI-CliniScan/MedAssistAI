@@ -16,7 +16,7 @@ def predict_disease(
     features: np.ndarray,
 ) -> Tuple[str, Optional[float]]:
     """
-    Predict disease and calculate confidence from the trained voting_classifier_rf_xgb_lgb.pkl model.
+    Predict disease and calculate confidence from the trained LightGBM model.
     Translates predicted target class IDs directly into actual disease names using in-memory disease mapping.
 
     Returns:
