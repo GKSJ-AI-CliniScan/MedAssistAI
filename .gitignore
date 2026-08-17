@@ -12,3 +12,7 @@ backend/data/
 .idea/backend/models/xgb_tuned_lossguide.json
 backend/models/xgb_tuned_lossguide.json
 backend/models/xgb_tuned_lossguide.json
+
+# Environment secrets
+backend/.env
+
