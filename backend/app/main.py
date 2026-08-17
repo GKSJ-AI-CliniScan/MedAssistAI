@@ -24,7 +24,10 @@ app = FastAPI(
 # CORS middleware config
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure specifically for production
+    allow_origins=[
+        "https://medassist-ai-frontend.onrender.com",
+        "http://localhost:5173",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
