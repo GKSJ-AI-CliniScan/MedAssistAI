@@ -77,6 +77,13 @@ async def authenticate_user(email: str, password: str) -> Token:
             detail="Incorrect email or password"
         )
 
+    # Support legacy users that don't have an _id
+    if "_id" not in user:
+        user["_id"] = str(ObjectId())
+
+    if "role" not in user:
+        user["role"] = UserRole.PATIENT
+
     token = create_access_token(
         data={
             "sub": str(user["_id"]),
@@ -107,7 +114,6 @@ async def google_login(data: dict):
     user = await db.users.find_one({"email": email})
 
     if user is None:
-
         user_id = str(ObjectId())
 
         user = {
