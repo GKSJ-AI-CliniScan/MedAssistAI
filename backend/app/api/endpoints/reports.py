@@ -16,6 +16,10 @@ async def get_reports(current_user: dict = Depends(get_current_user)):
     async for report in db.consultations.find(
         {"user_email": current_user["email"]}
     ).sort("created_at", -1):
+
+        # MongoDB ObjectId cannot be returned directly as JSON
+        report.pop("_id", None)
+
         reports.append(report)
 
     return reports
