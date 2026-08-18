@@ -114,6 +114,7 @@ async def google_login(data: dict):
     user = await db.users.find_one({"email": email})
 
     if user is None:
+
         user_id = str(ObjectId())
 
         user = {
@@ -145,6 +146,13 @@ async def google_login(data: dict):
 
         await db.profiles.insert_one(profile)
 
+    if "_id" not in user:
+        user["_id"] = str(ObjectId())
+
+    if "role" not in user:
+        user["role"] = UserRole.PATIENT
+
+        # Ensure legacy/local users have an ID
     if "_id" not in user:
         user["_id"] = str(ObjectId())
 
