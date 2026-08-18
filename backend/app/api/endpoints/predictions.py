@@ -26,6 +26,8 @@ async def analyze(
 
     db = get_database()
     await db.consultations.insert_one(result)
+    # MongoDB adds an ObjectId `_id`; remove it before returning JSON
+    result.pop("_id", None)
 
     return result
 
