@@ -140,7 +140,6 @@ export default function SymptomChecker() {
 console.log(items);
 
         setSearchResults(items);
-        setSearchResults(items);
       })
       .catch(() => setSearchResults([]))
       .finally(() => setSearching(false));
@@ -167,9 +166,7 @@ const matchesSearch =
   searchText.includes(search.toLowerCase());
 
   const matchesCategory =
-    !activeCat ||
-    activeCat === "General" ||
-    s.category === activeCat;
+  !activeCat || s.category === activeCat;
 
   return matchesSearch && matchesCategory;
 });
