@@ -3,27 +3,28 @@ __pycache__/
 **/__pycache__/
 *.py[cod]
 *.pyo
-
-# Virtual environment
+*.pyc
+# Virtual environments
 venv/
+.venv/
 backend/venv/
-
-# Environment variables
+# Environment variables / secrets
 .env
-
+*.env
+backend/.env
 # IDE
 .vscode/
 .idea/
-
 # OS files
 .DS_Store
 Thumbs.db
-
 # Jupyter Notebook
 .ipynb_checkpoints/
 
-# Model artifacts (optional)
-# app/models/*.pkl
+# Node.js
+
+node_modules/
+dist/
 
 # Test cache
 .pytest_cache/
@@ -31,6 +32,15 @@ Thumbs.db
 # Coverage
 .coverage
 htmlcov/
-
-# Dataset
+# Datasets / data
+backend/data/
+backend/reports/
 backend/app/datasets/BRFSS2024.csv
+# Model artifacts
+
+backend/models/xgb_tuned_lossguide.json
+
+# Other generated files
+*.log
+# Large risk-assessment dataset
+risk module/app/datasets/BRFSS2024.csv

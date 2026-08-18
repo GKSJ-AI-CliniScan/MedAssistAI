@@ -1,39 +1,45 @@
-"""
-MedAssist AI - Main FastAPI Application Entry Point.
-
-Initializes FastAPI application instance, sets up Swagger documentation metadata,
-and mounts API routers.
-"""
-
 from fastapi import FastAPI
-from app.routes import health, risk_assessment
-from app.utils.logger import logger
+from fastapi.middleware.cors import CORSMiddleware
+from app.core.config import settings
+from app.core.database import connect_to_mongo, close_mongo_connection
+from app.api.router import api_router
+from contextlib import asynccontextmanager
 
-# Initialize logger startup message
-logger.info("Initializing MedAssist AI FastAPI Application")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await connect_to_mongo()
+    yield
+    await close_mongo_connection()
+
 
 app = FastAPI(
-    title="MedAssist AI API",
-    description=(
-        "Medical Symptom Analysis & Patient Risk Assessment System API. "
-        "Provides endpoints for health checking and patient risk assessment."
-    ),
-    version="1.0.0",
+    title=settings.PROJECT_NAME,
+    openapi_url="/openapi.json",
     docs_url="/docs",
     redoc_url="/redoc",
+    lifespan=lifespan
 )
 
-# Mount Routers
-app.include_router(health.router)
-app.include_router(risk_assessment.router)
-# app.include_router(predict.router)  # Reserved for Disease Prediction team
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://medassist-ai-frontend.onrender.com",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+app.include_router(api_router, prefix="/api")
 
 
 @app.get("/", tags=["Health"])
-def home():
-    """Root endpoint for API sanity check."""
+async def root():
     return {
-        "message": "Welcome to MedAssist AI Backend",
-        "status": "online",
-        "docs": "/docs",
+        "status": "healthy",
+        "project": settings.PROJECT_NAME,
+        "docs": "/docs"
     }
