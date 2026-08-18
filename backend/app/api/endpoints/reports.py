@@ -30,15 +30,13 @@ async def download_report(
 
     report = None
 
-    # Search manually
-    for item in db.consultations.data:
-
+    # Search MongoDB for the report
+    async for item in db.consultations.find(
+        {"user_email": current_user["email"]}
+    ):
         item_id = str(item.get("id") or item.get("_id"))
 
-        if (
-            item_id == report_id
-            and item.get("user_email") == current_user["email"]
-        ):
+        if item_id == report_id:
             report = item
             break
 
