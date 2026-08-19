@@ -17,41 +17,49 @@ class DiseasePredictor:
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         models_dir = os.path.join(base_dir, "..", "models")
         
+        compact_path = os.path.join(models_dir, "compact_disease_model.pkl")
         joblib_path = os.path.join(models_dir, "best_decision_tree_model.joblib")
         pkl_path = os.path.join(models_dir, "best_decision_tree_model.pkl")
         encoder_path = os.path.join(models_dir, "disease_label_encoder.pkl")
         features_path = os.path.join(models_dir, "feature_columns.pkl")
         
-        # Prefer compressed joblib model, fallback to pkl
-        model_path = joblib_path if os.path.exists(joblib_path) else pkl_path
+        self.compact_model = None
+        self.model = None
+        self.encoder = None
+        self.features = []
+        self.classes = []
         
         try:
+            # 1. Prefer Ultra-Compact Sparse Model (70KB, 0.12MB RAM)
+            if os.path.exists(compact_path):
+                print(f"Loading Lightweight Compact Model from: {compact_path}")
+                with open(compact_path, 'rb') as f:
+                    self.compact_model = pickle.load(f)
+                self.features = self.compact_model.get("features", [])
+                self.classes = self.compact_model.get("classes", [])
+                print(f"Compact Disease Model loaded successfully with {len(self.features)} features and {len(self.classes)} classes.")
+                return
+
+            # 2. Fallback to Joblib/Pickle Tree if available
+            model_path = joblib_path if os.path.exists(joblib_path) else pkl_path
             if os.path.exists(model_path):
-                print(f"Loading Disease Prediction model from: {model_path}")
+                print(f"Loading Tree Model from: {model_path}")
                 self.model = joblib.load(model_path)
-            else:
-                self.model = None
 
             if os.path.exists(encoder_path):
                 self.encoder = joblib.load(encoder_path)
-            else:
-                self.encoder = None
+                self.classes = list(self.encoder.classes_)
                 
             if os.path.exists(features_path):
                 with open(features_path, 'rb') as f:
                     self.features = pickle.load(f)
+                    
+            if self.model and self.features:
+                print(f"Disease Prediction model loaded successfully with {len(self.features)} features and {len(self.classes)} classes.")
             else:
-                self.features = []
-                
-            if self.model and self.encoder and self.features:
-                print(f"Disease Prediction model loaded successfully with {len(self.features)} features and {len(self.encoder.classes_)} classes.")
-            else:
-                print("Model files incomplete or missing, heuristic intelligence engine active.")
+                print("Using heuristic clinical intelligence engine.")
         except Exception as e:
-            print(f"Warning: Error loading primary model files: {e}. Fallback heuristics active.")
-            self.model = None
-            self.encoder = None
-            self.features = []
+            print(f"Warning: Error loading model files: {e}. Fallback heuristics active.")
 
     def predict(self, selected_symptoms, context=None):
         if not selected_symptoms or not isinstance(selected_symptoms, list):
@@ -260,8 +268,33 @@ class DiseasePredictor:
                         matched_symptom_count += 1
                         break
                         
-        # 4. Predict using model if available
-        if self.model and self.encoder and self.features and sum(input_vector) > 0:
+        # 4. Predict using compact sparse model or tree model if available
+        if getattr(self, 'compact_model', None) and sum(input_vector) > 0:
+            vec = np.array([input_vector], dtype=np.float32)
+            scores = np.asarray(vec @ self.compact_model["feature_class_probs"]).flatten()
+            if scores.sum() > 0:
+                probs = scores / scores.sum()
+            else:
+                probs = self.compact_model.get("class_priors", np.ones(len(self.classes)) / len(self.classes))
+            
+            top_indices = np.argsort(probs)[::-1][:5]
+            best_idx = top_indices[0]
+            disease = self.classes[best_idx]
+            confidence = float(probs[best_idx] * 100)
+            
+            top_diseases = []
+            for idx in top_indices:
+                d_name = self.classes[idx]
+                d_clean = d_name.title()
+                risk = self.get_risk_level(d_name)
+                prob_pct = float(probs[idx] * 100)
+                top_diseases.append({
+                    "name": d_clean,
+                    "confidence": round(prob_pct, 1),
+                    "risk": risk,
+                    "specialist": self.get_recommended_specialist(d_name)
+                })
+        elif self.model and self.encoder and self.features and sum(input_vector) > 0:
             df = pd.DataFrame([input_vector], columns=self.features)
             prediction_encoded = self.model.predict(df)
             disease = self.encoder.inverse_transform(prediction_encoded)[0]

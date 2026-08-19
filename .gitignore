@@ -40,7 +40,8 @@ __pycache__/
 models/best_decision_tree_model.pkl
 *.pkl
 
-# Explicitly track compressed model (4.3MB) and feature metadata for Render deploy
+# Explicitly track compressed model and feature metadata for Render deploy
+!models/compact_disease_model.pkl
 !models/best_decision_tree_model.joblib
 !models/disease_label_encoder.pkl
 !models/feature_columns.pkl
