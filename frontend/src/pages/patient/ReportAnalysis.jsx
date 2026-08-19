@@ -36,11 +36,9 @@ export default function ReportAnalysis() {
       formData.append("file", file);
       
       const token = localStorage.getItem("medico_token");
-      const API_BASE = window.location.origin.includes("localhost") 
-        ? "http://localhost:5000/api" 
-        : `${window.location.origin}/api`;
+      const API_ENDPOINT = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
-      const response = await fetch(`${API_BASE}/gemini/analyze_report`, {
+      const response = await fetch(`${API_ENDPOINT}/gemini/analyze_report`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`

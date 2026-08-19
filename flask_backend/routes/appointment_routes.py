@@ -13,27 +13,33 @@ ALL_SLOTS = [
     "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM"
 ]
 
+IN_MEMORY_APPOINTMENTS = [
+    {
+        "id": "appt-1",
+        "patientId": "patient-1",
+        "patientName": "Alice Cooper",
+        "patientPhone": "9876543210",
+        "doctorId": "doc-3",
+        "doctorName": "Dr. Alexander Smith",
+        "date": datetime.date.today().isoformat(),
+        "time": "09:30 AM",
+        "scheduledTime": "09:30 AM",
+        "reason": "General Checkup",
+        "status": "Waiting",
+        "consultantType": "doctor",
+        "tokenNumber": 1,
+        "priority": "normal",
+        "notes": "Regular checkup",
+        "createdAt": datetime.datetime.utcnow().isoformat()
+    }
+]
+
 def seed_appointments_if_empty():
-    if mongo.db.appointments.count_documents({}) == 0:
-        # Seed an initial appointment
-        initial_appt = {
-            "id": "appt-1",
-            "patientId": "patient-1",
-            "patientName": "Alice Cooper",
-            "patientPhone": "9876543210",
-            "doctorId": "doc-3",
-            "doctorName": "Dr. Alexander Smith",
-            "date": datetime.date.today().isoformat(),
-            "time": "09:30 AM",
-            "reason": "General Checkup",
-            "status": "Waiting",
-            "consultantType": "doctor",
-            "tokenNumber": 1,
-            "priority": "normal",
-            "notes": "Regular checkup",
-            "createdAt": datetime.datetime.utcnow().isoformat()
-        }
-        mongo.db.appointments.insert_one(initial_appt)
+    try:
+        if mongo.db.appointments.count_documents({}) == 0:
+            mongo.db.appointments.insert_one(dict(IN_MEMORY_APPOINTMENTS[0]))
+    except Exception:
+        pass
 
 @appointment_bp.route('', methods=['GET'])
 @token_required
@@ -52,19 +58,32 @@ def get_appointments(current_user):
     if date:
         query['date'] = date
         
-    appts = list(mongo.db.appointments.find(query).sort('time', 1))
-    for a in appts:
-        if '_id' in a:
-            a['_id'] = str(a['_id'])
-        a['scheduledTime'] = a.get('time', '')
-    return jsonify({'success': True, 'data': appts}), 200
+    try:
+        appts = list(mongo.db.appointments.find(query).sort('time', 1))
+        for a in appts:
+            if '_id' in a:
+                a['_id'] = str(a['_id'])
+            a['scheduledTime'] = a.get('time', '')
+        if appts:
+            return jsonify({'success': True, 'data': appts}), 200
+    except Exception:
+        pass
+
+    # In-memory filter
+    filtered = [
+        a for a in IN_MEMORY_APPOINTMENTS
+        if (not doctor_id or a.get('doctorId') == doctor_id) and
+           (not patient_id or a.get('patientId') == patient_id) and
+           (not date or a.get('date') == date)
+    ]
+    return jsonify({'success': True, 'data': filtered}), 200
 
 @appointment_bp.route('', methods=['POST'])
 @token_required
 def create_appointment(current_user):
     seed_appointments_if_empty()
     
-    data = request.get_json()
+    data = request.get_json() or {}
     patient_id = data.get('patientId')
     patient_name = data.get('patientName')
     patient_phone = data.get('patientPhone', '')
@@ -80,21 +99,30 @@ def create_appointment(current_user):
         return jsonify({'success': False, 'message': 'Missing required fields'}), 400
         
     # Check for double booking (excluding cancelled appointments)
-    existing_appt = mongo.db.appointments.find_one({
-        'doctorId': doctor_id,
-        'date': appt_date,
-        'time': appt_time,
-        'status': {'$nin': ['cancelled', 'Cancelled']}
-    })
+    existing_appt = None
+    try:
+        existing_appt = mongo.db.appointments.find_one({
+            'doctorId': doctor_id,
+            'date': appt_date,
+            'time': appt_time,
+            'status': {'$nin': ['cancelled', 'Cancelled']}
+        })
+    except Exception:
+        existing_appt = next((a for a in IN_MEMORY_APPOINTMENTS if a.get('doctorId') == doctor_id and a.get('date') == appt_date and a.get('time') == appt_time and a.get('status') not in ['cancelled', 'Cancelled']), None)
+
     if existing_appt:
         return jsonify({'success': False, 'message': 'This slot is already booked for this doctor'}), 409
         
     # Generate token number
-    today_count = mongo.db.appointments.count_documents({
-        'doctorId': doctor_id,
-        'date': appt_date
-    })
-    token_number = today_count + 1
+    token_number = 1
+    try:
+        today_count = mongo.db.appointments.count_documents({
+            'doctorId': doctor_id,
+            'date': appt_date
+        })
+        token_number = today_count + 1
+    except Exception:
+        token_number = len([a for a in IN_MEMORY_APPOINTMENTS if a.get('doctorId') == doctor_id and a.get('date') == appt_date]) + 1
     
     appt_id = f"appt-{int(datetime.datetime.utcnow().timestamp())}-{random.randint(1000, 9999)}"
     
@@ -117,9 +145,12 @@ def create_appointment(current_user):
         "createdAt": datetime.datetime.utcnow().isoformat()
     }
     
-    mongo.db.appointments.insert_one(new_appt)
-    if '_id' in new_appt:
-        new_appt['_id'] = str(new_appt['_id'])
+    try:
+        mongo.db.appointments.insert_one(dict(new_appt))
+        if '_id' in new_appt:
+            new_appt['_id'] = str(new_appt['_id'])
+    except Exception:
+        IN_MEMORY_APPOINTMENTS.append(new_appt)
         
     return jsonify({'success': True, 'data': new_appt}), 201
 
@@ -128,25 +159,31 @@ def create_appointment(current_user):
 def update_status(current_user, appt_id):
     seed_appointments_if_empty()
     
-    data = request.get_json()
+    data = request.get_json() or {}
     status = data.get('status')
     
     if not status:
         return jsonify({'success': False, 'message': 'Status is required'}), 400
         
-    result = mongo.db.appointments.update_one(
-        {'id': appt_id},
-        {'$set': {'status': status}}
-    )
-    
-    if result.matched_count == 0:
+    try:
+        mongo.db.appointments.update_one(
+            {'id': appt_id},
+            {'$set': {'status': status}}
+        )
+        updated = mongo.db.appointments.find_one({'id': appt_id})
+        if updated:
+            if '_id' in updated:
+                updated['_id'] = str(updated['_id'])
+            updated['scheduledTime'] = updated.get('time', '')
+            return jsonify({'success': True, 'data': updated}), 200
+    except Exception:
+        pass
+
+    appt = next((a for a in IN_MEMORY_APPOINTMENTS if a.get('id') == appt_id), None)
+    if not appt:
         return jsonify({'success': False, 'message': 'Appointment not found'}), 404
-        
-    updated = mongo.db.appointments.find_one({'id': appt_id})
-    if updated and '_id' in updated:
-        updated['_id'] = str(updated['_id'])
-        updated['scheduledTime'] = updated.get('time', '')
-    return jsonify({'success': True, 'data': updated}), 200
+    appt['status'] = status
+    return jsonify({'success': True, 'data': appt}), 200
 
 @appointment_bp.route('/slots', methods=['GET'])
 @token_required
@@ -159,14 +196,16 @@ def get_available_slots(current_user):
     if not doctor_id or not date:
         return jsonify({'success': False, 'message': 'Doctor ID and Date are required'}), 400
         
-    # Get all active bookings for this doctor on this day
-    booked_appts = list(mongo.db.appointments.find({
-        'doctorId': doctor_id,
-        'date': date,
-        'status': {'$nin': ['cancelled', 'Cancelled']}
-    }, {'time': 1, '_id': 0}))
-    
-    booked_times = {appt['time'] for appt in booked_appts}
+    booked_times = set()
+    try:
+        booked_appts = list(mongo.db.appointments.find({
+            'doctorId': doctor_id,
+            'date': date,
+            'status': {'$nin': ['cancelled', 'Cancelled']}
+        }, {'time': 1, '_id': 0}))
+        booked_times = {appt['time'] for appt in booked_appts}
+    except Exception:
+        booked_times = {a['time'] for a in IN_MEMORY_APPOINTMENTS if a.get('doctorId') == doctor_id and a.get('date') == date and a.get('status') not in ['cancelled', 'Cancelled']}
     
     available_slots = [slot for slot in ALL_SLOTS if slot not in booked_times]
     return jsonify({'success': True, 'data': available_slots}), 200
@@ -185,23 +224,27 @@ def get_queue(current_user):
     if not date:
         date = datetime.date.today().isoformat()
         
-    appts = list(mongo.db.appointments.find({
-        'doctorId': doctor_id,
-        'date': date,
-        'status': {'$in': ['Waiting', 'Scheduled', 'in-progress', 'waiting', 'scheduled']}
-    }, {'_id': 0}).sort('time', 1))
+    appts = []
+    try:
+        appts = list(mongo.db.appointments.find({
+            'doctorId': doctor_id,
+            'date': date,
+            'status': {'$in': ['Waiting', 'Scheduled', 'in-progress', 'waiting', 'scheduled']}
+        }, {'_id': 0}).sort('time', 1))
+    except Exception:
+        appts = [a for a in IN_MEMORY_APPOINTMENTS if a.get('doctorId') == doctor_id and a.get('date') == date and a.get('status') in ['Waiting', 'Scheduled', 'in-progress', 'waiting', 'scheduled']]
     
     queue_items = []
     for idx, appt in enumerate(appts):
-        status_lower = appt['status'].lower()
+        status_lower = appt.get('status', 'waiting').lower()
         queue_items.append({
-            "id": appt['id'],
-            "patientName": appt['patientName'],
-            "appointmentTime": appt['time'],
-            "time": appt['time'],
-            "reason": appt['reason'],
+            "id": appt.get('id'),
+            "patientName": appt.get('patientName'),
+            "appointmentTime": appt.get('time'),
+            "time": appt.get('time'),
+            "reason": appt.get('reason'),
             "status": 'in-progress' if status_lower == 'in-progress' else 'waiting',
-            "patient": {"name": appt['patientName'], "id": appt['patientId']},
+            "patient": {"name": appt.get('patientName'), "id": appt.get('patientId')},
             "queueNumber": idx + 1
         })
         
@@ -221,10 +264,14 @@ def get_queue_stats(current_user):
     if not date:
         date = datetime.date.today().isoformat()
         
-    appts = list(mongo.db.appointments.find({
-        'doctorId': doctor_id,
-        'date': date
-    }))
+    appts = []
+    try:
+        appts = list(mongo.db.appointments.find({
+            'doctorId': doctor_id,
+            'date': date
+        }))
+    except Exception:
+        appts = [a for a in IN_MEMORY_APPOINTMENTS if a.get('doctorId') == doctor_id and a.get('date') == date]
     
     waiting = len([a for a in appts if a.get('status') in ['Waiting', 'Scheduled', 'waiting', 'scheduled']])
     in_progress = len([a for a in appts if a.get('status') in ['in-progress', 'In Consultation']])

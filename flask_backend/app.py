@@ -52,9 +52,27 @@ app.register_blueprint(prediction_bp, url_prefix='/api')
 app.register_blueprint(analytics_bp, url_prefix='/api/analytics')
 
 
+@app.route('/', methods=['GET'])
+def index():
+    return jsonify({
+        "status": "healthy",
+        "service": "MedAssist AI Medical Intelligence Backend",
+        "version": "1.0.0",
+        "documentation": "/api/health",
+        "endpoints": {
+            "health": "/api/health",
+            "auth": "/api/auth",
+            "predict": "/api/predict-disease",
+            "risk": "/api/risk-assessment",
+            "recommendations": "/api/treatment-recommendations",
+            "analytics": "/api/analytics/overview",
+            "reports": "/api/reports"
+        }
+    }), 200
+
 @app.route('/api/health', methods=['GET'])
 def health_check():
-    return jsonify({"status": "healthy", "service": "MedAssistAI Flask Backend"})
+    return jsonify({"status": "healthy", "service": "MedAssistAI Flask Backend"}), 200
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))

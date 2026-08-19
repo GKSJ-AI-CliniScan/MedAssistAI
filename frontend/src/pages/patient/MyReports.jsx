@@ -171,7 +171,8 @@ export default function MyReports() {
   const handleDownload = (report) => {
     if (report.attachments && report.attachments.length > 0) {
       const path = report.attachments[0].path;
-      window.open(`http://localhost:5000${path}`, "_blank");
+      const apiHost = (import.meta.env.VITE_API_URL || "http://localhost:5000/api").replace(/\/api\/?$/, "");
+      window.open(`${apiHost}${path}`, "_blank");
     } else {
       generatePDFReport(report);
     }

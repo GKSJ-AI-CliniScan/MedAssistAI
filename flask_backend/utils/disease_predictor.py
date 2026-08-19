@@ -17,19 +17,36 @@ class DiseasePredictor:
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         models_dir = os.path.join(base_dir, "..", "models")
         
-        model_path = os.path.join(models_dir, "best_decision_tree_model.pkl")
+        joblib_path = os.path.join(models_dir, "best_decision_tree_model.joblib")
+        pkl_path = os.path.join(models_dir, "best_decision_tree_model.pkl")
         encoder_path = os.path.join(models_dir, "disease_label_encoder.pkl")
         features_path = os.path.join(models_dir, "feature_columns.pkl")
         
+        # Prefer compressed joblib model, fallback to pkl
+        model_path = joblib_path if os.path.exists(joblib_path) else pkl_path
+        
         try:
-            print(f"Loading Disease Prediction model from: {model_path}")
-            self.model = joblib.load(model_path)
-            self.encoder = joblib.load(encoder_path)
-            
-            with open(features_path, 'rb') as f:
-                self.features = pickle.load(f)
+            if os.path.exists(model_path):
+                print(f"Loading Disease Prediction model from: {model_path}")
+                self.model = joblib.load(model_path)
+            else:
+                self.model = None
+
+            if os.path.exists(encoder_path):
+                self.encoder = joblib.load(encoder_path)
+            else:
+                self.encoder = None
                 
-            print(f"Disease Prediction model loaded successfully with {len(self.features)} features and {len(self.encoder.classes_)} classes.")
+            if os.path.exists(features_path):
+                with open(features_path, 'rb') as f:
+                    self.features = pickle.load(f)
+            else:
+                self.features = []
+                
+            if self.model and self.encoder and self.features:
+                print(f"Disease Prediction model loaded successfully with {len(self.features)} features and {len(self.encoder.classes_)} classes.")
+            else:
+                print("Model files incomplete or missing, heuristic intelligence engine active.")
         except Exception as e:
             print(f"Warning: Error loading primary model files: {e}. Fallback heuristics active.")
             self.model = None

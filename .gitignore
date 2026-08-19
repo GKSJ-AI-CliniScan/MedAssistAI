@@ -37,5 +37,10 @@ __pycache__/
 .vite-temp/
 
 # Large ML binary models (exceeds GitHub 100MB limit)
+models/best_decision_tree_model.pkl
 *.pkl
-models/*.pkl
+
+# Explicitly track compressed model (4.3MB) and feature metadata for Render deploy
+!models/best_decision_tree_model.joblib
+!models/disease_label_encoder.pkl
+!models/feature_columns.pkl

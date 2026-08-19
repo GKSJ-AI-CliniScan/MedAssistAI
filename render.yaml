@@ -1,0 +1,50 @@
+services:
+  # Python Flask Backend & ML Processing Engine Web Service
+  - type: web
+    name: medassist-backend
+    runtime: python
+    rootDir: flask_backend
+    plan: free
+    region: oregon
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 app:app
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: SECRET_KEY
+        generateValue: true
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FLASK_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+        value: mongodb://localhost:27017/medassist_ai
+      - key: GROQ_API_KEY
+        sync: false
+
+  # React Frontend Static Site with Client-Side Routing
+  - type: web
+    name: medassist-frontend
+    runtime: static
+    rootDir: frontend
+    plan: free
+    region: oregon
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    autoDeploy: true
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: medassist-backend
+          property: host
+        transform: https://{{value}}/api

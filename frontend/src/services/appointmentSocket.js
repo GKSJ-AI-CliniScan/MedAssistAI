@@ -1,8 +1,10 @@
 import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:3000', {
+const WS_URL = import.meta.env.VITE_WS_URL || (import.meta.env.VITE_API_URL || "http://localhost:5000/api").replace(/\/api\/?$/, "");
+
+const socket = io(WS_URL, {
   autoConnect: false,
-  transports: ['websocket'],
+  transports: ['websocket', 'polling'],
 });
 
 export const connectSocket = () => {
