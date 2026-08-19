@@ -22,7 +22,6 @@ services:
       - key: FLASK_ENV
         value: production
       - key: MONGO_URI
-        sync: false
         value: mongodb://localhost:27017/medassist_ai
       - key: GROQ_API_KEY
         sync: false
@@ -33,7 +32,6 @@ services:
     runtime: static
     rootDir: frontend
     plan: free
-    region: oregon
     buildCommand: npm install && npm run build
     staticPublishPath: dist
     autoDeploy: true
