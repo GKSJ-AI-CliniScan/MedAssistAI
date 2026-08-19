@@ -1,0 +1,59 @@
+# Environment variable files (Keep secrets safe!)
+.env
+.env*.local
+frontend/.env
+backend/.env
+
+# Node.js dependencies & builds
+node_modules/
+dist/
+dist-ssr/
+frontend/dist/
+frontend/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python environments & cache
+venv/
+.venv/
+backend/venv/
+__pycache__/
+*.py[cod]
+*$py.class
+backend/__pycache__/
+backend/app/__pycache__/
+backend/app/**/__pycache__/
+
+# Local Database & SQLite files
+*.db
+*.sqlite
+*.sqlite3
+backend/*.db
+backend/*.sqlite
+backend/*.sqlite3
+
+# Large dataset CSV files (training artifacts >100MB)
+backend/app/ml/clean_190k_dataset.csv
+backend/app/ml/encoded__dataset.csv
+
+# ML Model pickle files (Keep 4.37GB reference out of git, allow ~726KB LightGBM model)
+*.pkl
+!backend/app/ml/.gitkeep
+!backend/app/ml/lgb_model.pkl
+
+# Temporary analysis directories
+temporary_analysis/
+
+# Large local zip & dump files
+*.zip
+*.tar.gz
+project_structure.txt
+test_model_memory.py
+extract_frontend.py
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
