@@ -1,10 +1,18 @@
 # MedAssist AI: Medical Symptom Analysis & Disease Prediction System
 
-[![Status: Production Ready](https://img.shields.io/badge/Status-Production%20Ready-emerald.svg)](#)
-[![Python: 3.11+](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](#)
-[![React: 19](https://img.shields.io/badge/React-19-61dafb.svg)](#)
-[![ML: Scikit--Learn](https://img.shields.io/badge/ML-Scikit--Learn%20%7C%20Entropy%20Tree-orange.svg)](#)
-[![Deployment: Render](https://img.shields.io/badge/Deploy-Render%20Blueprint-indigo.svg)](RENDER_DEPLOYMENT.md)
+[![Status: Live on Render](https://img.shields.io/badge/Render-Live%20Deployment-success?style=for-the-badge&logo=render)](https://medassist-frontend-u7tp.onrender.com)
+[![Frontend App](https://img.shields.io/badge/Frontend-Live%20Portal-61dafb?style=for-the-badge&logo=react)](https://medassist-frontend-u7tp.onrender.com)
+[![Backend API](https://img.shields.io/badge/Backend%20API-Active%20(Healthy)-emerald?style=for-the-badge&logo=fastapi)](https://medassist-backend-duk6.onrender.com)
+
+---
+
+## 🌐 Live Production Deployment on Render
+
+| Service | Environment | Status | Live Link |
+| :--- | :--- | :---: | :--- |
+| **Frontend Portal** | React 19 + Vite 6 + Tailwind | 🟢 **Live** | [https://medassist-frontend-u7tp.onrender.com](https://medassist-frontend-u7tp.onrender.com) |
+| **Backend ML Engine** | Python 3.11 + Flask + Gunicorn | 🟢 **Live** | [https://medassist-backend-duk6.onrender.com](https://medassist-backend-duk6.onrender.com) |
+| **API Health Probe** | JSON Health Probe Endpoint | 🟢 **200 OK** | [https://medassist-backend-duk6.onrender.com/api/health](https://medassist-backend-duk6.onrender.com/api/health) |
 
 ---
 
