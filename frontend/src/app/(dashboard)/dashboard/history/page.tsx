@@ -1,1 +1,0 @@
-export default function Page() { return <div className="p-8"><h1 className="text-3xl font-bold">Medical History</h1><p className="text-muted-foreground mt-2">Timeline of previous diseases, reports, and visits will be displayed here.</p></div>; }
