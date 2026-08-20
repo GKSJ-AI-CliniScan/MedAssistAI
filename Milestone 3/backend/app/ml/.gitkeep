@@ -1,0 +1,4 @@
+# Placeholder so the ml package directory is tracked in git.
+# Place the following artifacts in this folder when ready:
+#   - disease_model.pkl
+#   - symptom_features.pkl  (optional but recommended)
