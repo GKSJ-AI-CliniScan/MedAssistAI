@@ -15,14 +15,6 @@
 
 ---
 
-## 🌐 Live Application & API Links
-
-- **🌐 Live Web Application**: [https://medassistai-frontend.vercel.app](https://medassistai-frontend.vercel.app)
-- **📖 Interactive Swagger API Docs**: `http://127.0.0.1:8000/docs` (or deployed Render backend)
-- **📦 GitHub Repository**: [https://github.com/GKSJ-AI-CliniScan/MedAssistAI](https://github.com/GKSJ-AI-CliniScan/MedAssistAI)
-
----
-
 ## 📌 Project Overview
 
 **MedAssist AI** is an end-to-end, AI-powered healthcare platform designed to assist patients, doctors, and administrative staff through intelligent symptom screening, probabilistic disease prediction, clinical risk assessment, medical recommendations, appointments, and report management.
@@ -102,6 +94,16 @@ Random Forest         XGBoost             LightGBM
 
 ---
 
+## 🌐 Live Deployment
+
+MedAssist AI is fully deployed and accessible live:
+
+- **🚀 Live Web Application**: [https://medassistai-frontend.vercel.app](https://medassistai-frontend.vercel.app) *(Deployed on Vercel)*
+- **⚡ Backend REST API**: Configured via Render with automatic model fetching from Hugging Face.
+- **📖 Interactive API Docs**: Access Swagger docs at `http://127.0.0.1:8000/docs` locally or via the deployed API backend.
+
+---
+
 ## 🛠️ Technology Stack
 
 | Layer | Technology | Description |
@@ -142,7 +144,7 @@ MedAssistAI/
 │   ├── frontend/
 │   ├── README.md
 │   └── requirements.txt
-├── backend/                      # Production Backend Application
+├── backend/                      # Production Backend Application (Main Files)
 │   ├── app/
 │   │   ├── config/              # Application settings & environment variables
 │   │   ├── database/            # SQLAlchemy database connection & session setup
@@ -157,7 +159,7 @@ MedAssistAI/
 │   ├── docker-compose.yml
 │   ├── render.yaml
 │   └── requirements.txt
-├── frontend/                     # Production Frontend Application
+├── frontend/                     # Production Frontend Application (Main Files)
 │   ├── public/                  # Static assets & icons
 │   ├── src/
 │   │   ├── assets/              # Branding assets & images
@@ -230,12 +232,16 @@ MedAssistAI/
 
 ---
 
-### 1. Clone the Repository
+### 1. Clone the Branch
+
+Clone the `SanviSawant` branch to access the latest full-stack codebase:
 
 ```bash
-git clone https://github.com/GKSJ-AI-CliniScan/MedAssistAI.git
+git clone -b SanviSawant https://github.com/GKSJ-AI-CliniScan/MedAssistAI.git
 cd MedAssistAI
 ```
+
+> **Note**: For active development and execution, use the primary production directories (`backend/` and `frontend/`). The milestone directories (`Milestone 1/`, `Milestone 2/`, `Milestone 3/`) contain archived phase documentation and reports.
 
 ---
 
@@ -298,32 +304,15 @@ docker-compose up --build -d
 
 ## ⚙️ Environment Configuration
 
-Copy the example environment files to configure your local setup:
+Environment configuration is managed via `.env.example` templates committed in the repository.
 
-#### `backend/.env`
-```env
-APP_NAME="MedAssistAI Backend"
-APP_VERSION="1.0.0"
-DEBUG=True
-SECRET_KEY="your-super-secret-jwt-key"
-ALGORITHM="HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES=60
-DATABASE_URL="sqlite:///./medassistai.db"
-# For PostgreSQL in production:
-# DATABASE_URL="postgresql://user:password@localhost:5432/medassist_db"
-```
+To set up your local environment, copy the example files to create your local `.env` files:
 
-#### `frontend/.env`
-```env
-VITE_API_BASE_URL=http://localhost:8000
-```
+- **Root Monorepo Template**: `.env.example`
+- **Backend Environment**: Copy `backend/.env.example` ➔ `backend/.env`
+- **Frontend Environment**: Copy `frontend/.env.example` ➔ `frontend/.env`
 
----
-
-## ☁️ Deployment
-
-- **Frontend (Vercel)**: Deployed automatically from the main repository. Live at [https://medassistai-frontend.vercel.app](https://medassistai-frontend.vercel.app).
-- **Backend (Render)**: Configured via `render.yaml` with automatic Hugging Face model fetching on startup.
+*(Refer to `.env.example` in each folder for available environment key templates.)*
 
 ---
 
@@ -335,10 +324,7 @@ This project is licensed under the **MIT License**. See the [`LICENSE`](LICENSE)
 
 ## 👥 Contributors
 
-**Team 2 — MedAssist AI Engineers & Authors**
-- **Sanvi Sawant**
-- **Boya Sai Kiran**
-- **MedAssist AI Development Team**
+- **Sanvi Sawant** (Team 2)
 
 ---
 *For questions, issues, or contributions, please feel free to submit an issue or pull request on the [GitHub repository](https://github.com/GKSJ-AI-CliniScan/MedAssistAI).*
