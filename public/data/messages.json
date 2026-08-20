@@ -518,5 +518,526 @@
         "timestamp": "2026-07-24T05:36:55.543Z"
       }
     }
+  ],
+  "conv-1785424671223": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1785424671211",
+      "role": "user",
+      "content": "Generate PDF Report"
+    },
+    {
+      "id": "bot-1785424673416",
+      "role": "bot",
+      "content": "**I am an AI assistant, not a doctor. Always consult a healthcare professional for medical advice.**\n\nTo generate a PDF report, I'll need some information from you. Please provide the following details:\n\n* **Patient Name**: Your name or the name of the person the report is for\n* **Medical Condition**: A brief description of the condition or symptoms you're experiencing\n* **Lab Results**: Any relevant lab results or medical test data you'd like to include\n* **Medications**: A list of medications you're currently taking\n* **Health Metrics**: Your current height, weight, blood pressure, and any other relevant health metrics\n\nOnce I have this information, I can help you generate a comprehensive PDF report.\n\n**Please note that this report is for informational purposes only and should not be considered a substitute for professional medical advice.**\n\nYou can also upload your lab reports or medical documents to our platform for a more detailed analysis. To do this, navigate to the 'Reports' section in your dashboard and follow the instructions.\n\nFor more information on how to use our platform, visit the [CDC](https://www.cdc.gov/) or [NIH MedlinePlus](https://medlineplus.gov/) websites.\n\n\n\nLet's get started! Please provide the necessary information, and I'll help you generate your PDF report.",
+      "isStreaming": false,
+      "reasoning": "To generate an accurate PDF report, I will need to analyze the provided information, including medical condition, lab results, medications, and health metrics. I will then use this data to create a comprehensive report that includes an introduction, medical history, current symptoms, lab results, medications, and health metrics. The report will also include recommendations for further testing or treatment, if necessary.",
+      "showPdfCard": true,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-07-30T15:17:53.413Z"
+      }
+    }
+  ],
+  "conv-1785425745242": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1785425745219",
+      "role": "user",
+      "content": "Generate PDF Report"
+    },
+    {
+      "id": "bot-1785425747484",
+      "role": "bot",
+      "content": "**I am an AI assistant, not a doctor. Always consult a healthcare professional for medical advice.**\n\nTo generate a PDF report, I'll need some information from you. Please provide the following details:\n\n* **Patient Name**: Your name or the name of the patient\n* **Date of Birth**: The patient's date of birth\n* **Medical History**: A brief summary of the patient's medical history, including any previous illnesses, allergies, or surgeries\n* **Current Symptoms**: A description of the patient's current symptoms, including the duration and severity\n* **Lab Results**: Any relevant lab results, such as blood work or imaging studies\n* **Medications**: A list of the patient's current medications, including dosages and frequencies\n\nOnce I have this information, I can help generate a PDF report that summarizes the patient's medical history, current symptoms, and treatment plan.\n\n**Please note that this report is for informational purposes only and should not be considered a substitute for a professional medical evaluation.**\n\nYou can also upload your lab reports or medical documents to our platform by navigating to the 'Reports' section in your dashboard. For more information on how to upload documents, please refer to our [MedAssist Platform Features](https://www.medassist.ai/features).\n\nAdditionally, you can use our disease prediction module by navigating to 'Disease Prediction' and filling out your current health metrics. For more information on how to use this feature, please refer to our [Disease Prediction Guide](https://www.medassist.ai/disease-prediction).\n\nLet's get started! Please provide the necessary information, and I'll help generate a comprehensive PDF report. \n\n### Reference Links:\n[MedlinePlus: Health Topics](https://medlineplus.gov/)\n[WHO: Health Topics](https://www.who.int/health-topics)",
+      "isStreaming": false,
+      "showPdfCard": true,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-07-30T15:35:47.480Z"
+      }
+    },
+    {
+      "id": "usr-1785425775043",
+      "role": "user",
+      "content": "generate the amobia image"
+    },
+    {
+      "id": "bot-1785425776362",
+      "role": "bot",
+      "content": "**I am an AI assistant, not a doctor. Always consult a healthcare professional for medical advice.**\n\nSince you requested an image, I will provide a medical illustration of Amebiasis, a condition caused by the amoeba Entamoeba histolytica.\n\n![Medical Illustration: Amebiasis](/api/generate-medical-image?prompt=Amebiasis)\n\n**Please note that this image is for educational purposes only and should not be considered a substitute for a professional medical evaluation.**\n\nAmebiasis is a parasitic infection that can cause symptoms such as diarrhea, abdominal pain, and weight loss. If you are experiencing any of these symptoms, it is essential to consult a healthcare professional for proper diagnosis and treatment.\n\nFor more information on Amebiasis, please refer to the following resources:\n### Reference Links:\n[CDC: Amebiasis](https://www.cdc.gov/parasites/amebiasis/index.html)\n[WHO: Amebiasis](https://www.who.int/news-room/fact-sheets/detail/amebiasis)\n\nLet me know if you have any further questions or if there's anything else I can help you with!",
+      "isStreaming": false,
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-07-30T15:36:16.359Z"
+      }
+    }
+  ],
+  "conv-1785647445377": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1785647445364",
+      "role": "user",
+      "content": "Analyze Symptoms"
+    },
+    {
+      "id": "bot-1785647446953",
+      "role": "bot",
+      "content": "**Symptom Analysis**\nI can help you identify potential causes of your symptoms. Please provide me with more information about what you're experiencing.\n\n### Common Symptoms\nWe can start with some general questions. Are you experiencing any of the following:\n* **Headache**: pain or discomfort in the head or neck\n* **Fever**: elevated body temperature\n* **Fatigue**: feeling tired or lacking energy\n\n### Red Flags\nIt's essential to identify any red flags that may indicate a more serious condition. Have you noticed any of the following:\n* Sudden severe onset of symptoms\n* Severe pain or discomfort\n* Difficulty breathing or shortness of breath\n* Confusion or disorientation\n* Vision changes or blurred vision\n\n### Medical History\nTo better understand your symptoms, can you tell me about your medical history? Have you been diagnosed with any conditions or taken any medications recently?\n\n\n\nPlease provide me with more information about your symptoms, and I'll do my best to help you identify potential causes and recommend next steps.\n\nFor more information on symptoms and their potential causes, you can visit:\n* [CDC](https://www.cdc.gov/)\n* [NIH MedlinePlus](https://medlineplus.gov/)",
+      "isStreaming": false,
+      "reasoning": "To analyze the symptoms, I will consider the patient's medical history, current symptoms, and any potential red flags. I will use this information to provide a list of possible causes and recommend next steps.",
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-08-02T05:10:46.948Z"
+      }
+    }
+  ],
+  "conv-1785653000995": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1785653000987",
+      "role": "user",
+      "content": "Emergency Warning Signs"
+    },
+    {
+      "id": "bot-1785653002487",
+      "role": "bot",
+      "content": "**Emergency Warning Signs**\n==========================\n\nI am an AI assistant, not a doctor. Always consult a healthcare professional for medical advice.\n\nIf you or someone you know is experiencing any of the following emergency warning signs, please call emergency services immediately:\n\n* **Severe Chest Pain**: Pain or discomfort in the chest, arm, back, neck, jaw, or stomach that lasts for more than a few minutes or goes away and comes back.\n* **Sudden Numbness**: Sudden numbness or weakness in the face, arm, or leg.\n* **Severe Difficulty Breathing**: Shortness of breath, wheezing, or coughing up blood.\n* **Severe Bleeding**: Heavy bleeding that won't stop after 10-15 minutes of pressure.\n* **Sudden Confusion**: Sudden confusion, disorientation, or loss of consciousness.\n* **Seizure**: A seizure or convulsion that lasts for more than a few minutes.\n* **Severe Headache**: A severe headache that comes on suddenly, is extremely painful, and may be accompanied by vomiting, confusion, or stiff neck.\n\nFor more information on emergency warning signs, please visit:\n[CDC: Emergency Warning Signs](https://www.cdc.gov/)\n[NIH MedlinePlus: Emergency Warning Signs](https://medlineplus.gov/)\n\n\n\nPlease let me know if you have any further questions or concerns.",
+      "isStreaming": false,
+      "reasoning": "To analyze these emergency warning signs, we need to consider the severity and sudden onset of the symptoms. If you are experiencing any of these symptoms, it is crucial to seek immediate medical attention. As a MedAssist AI, I can provide general guidance, but it is essential to consult a healthcare professional for personalized advice.",
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-08-02T06:43:22.484Z"
+      }
+    },
+    {
+      "id": "usr-1785653003307",
+      "role": "user",
+      "content": "Expected Recovery Timeline"
+    },
+    {
+      "id": "bot-1785653004700",
+      "role": "bot",
+      "content": "**Expected Recovery Timeline**\n============================\n\nI am an AI assistant, not a doctor. Always consult a healthcare professional for medical advice.\n\nThe expected recovery timeline varies depending on the individual, the condition, and the treatment. Here are some general guidelines for common conditions:\n\n* **Common Cold**: 7-10 days\n* **Flu**: 5-7 days\n* **Bronchitis**: 7-10 days\n* **Pneumonia**: 1-3 weeks\n* **Surgery**: varies depending on the type of surgery, but generally:\n\t+ Minor surgery: 1-3 days\n\t+ Major surgery: 1-6 weeks\n* **Injuries**:\n\t+ Sprains: 2-6 weeks\n\t+ Strains: 2-6 weeks\n\t+ Fractures: 4-12 weeks\n\nPlease note that these are general estimates, and the actual recovery time may be shorter or longer depending on individual factors.\n\nFor more information on recovery timelines, please visit:\n[CDC: Recovery Timeline](https://www.cdc.gov/)\n[NIH MedlinePlus: Recovery Timeline](https://medlineplus.gov/)\n\n\n\n\nPlease let me know if you have any further questions or concerns.",
+      "isStreaming": false,
+      "reasoning": "To provide a more accurate recovery timeline, I would need to know the specific condition, treatment, and individual factors. It's essential to consult a healthcare professional for personalized advice and guidance.",
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-08-02T06:43:24.696Z"
+      }
+    }
+  ],
+  "conv-1786458192871": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1786458192861",
+      "role": "user",
+      "content": "Generate PDF Report"
+    },
+    {
+      "id": "bot-1786458194711",
+      "role": "bot",
+      "content": "**I am an AI and not a substitute for professional medical advice.**\n\nTo generate a PDF report, I'll need to know what type of report you're looking for. Here are some options:\n\n* **Medical Summary**: A summary of your medical history, including previous consultations, lab results, and medications.\n* **Symptom Analysis**: An analysis of your current symptoms, including possible causes and recommendations for next steps.\n* **Lab Report Summary**: A summary of your lab results, including any abnormal values and recommendations for follow-up tests.\n* **Medication List**: A list of your current medications, including dosages and potential interactions.\n\nPlease let me know which type of report you would like me to generate.\n\nAdditionally, I can include the following information in the report:\n\n* **Health Metrics**: Your current health metrics, such as blood pressure, BMI, and other vital signs.\n* **Medical History**: A brief summary of your medical history, including any previous illnesses or surgeries.\n* **Lifestyle Factors**: Information about your lifestyle, including diet, exercise, and stress levels.\n\nPlease provide me with the necessary information, and I'll generate a PDF report for you.\n\nYou can also visit the [CDC website](https://www.cdc.gov/) for more information on healthy living and disease prevention.\n\n\n\nPlease let me know how I can assist you further.",
+      "isStreaming": false,
+      "reasoning": "To generate a PDF report, I will need to access the user's medical history and current health metrics. I will then use this information to create a comprehensive report that includes an analysis of their symptoms, lab results, and medications. I will also provide recommendations for next steps and include any necessary warnings or precautions.",
+      "showPdfCard": true,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-08-11T14:23:14.706Z"
+      }
+    }
+  ],
+  "conv-1786714900110": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1786714900091",
+      "role": "user",
+      "content": "generate any drug image"
+    },
+    {
+      "id": "bot-1786714901679",
+      "role": "bot",
+      "content": "I am an AI and not a substitute for professional medical advice. As per your request, I can provide information on a specific drug, but I must emphasize that it's essential to consult a healthcare professional for personalized advice.\n\nSince you asked to generate a drug image, I will provide a general description of a common medication. Please note that I won't be able to display actual images.\n\n**Acetaminophen (Tylenol)** is a widely used over-the-counter medication for pain relief and fever reduction. The tablet or capsule typically has a rounded or oval shape, with a smooth surface and a color that varies depending on the manufacturer (e.g., white, blue, or red).\n\nIf you would like to visualize the packaging or shape of a specific medication, I recommend checking the official website of the pharmaceutical company or a reliable online pharmacy.\n\nFor more information on medications, you can visit:\n* [CDC: Medication Safety](https://www.cdc.gov/medicationsafety/index.html)\n* [NIH MedlinePlus: Drug Information](https://medlineplus.gov/druginfo/herb_All.html)\n\n\n\nPlease let me know if there's anything else I can help you with.",
+      "isStreaming": false,
+      "reasoning": "To provide a more accurate response, I considered the user's request to generate a drug image. However, as a text-based AI model, I don't have the capability to display actual images. Instead, I provided a descriptive description of a common medication, emphasizing the importance of consulting a healthcare professional for personalized advice.",
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-08-14T13:41:41.675Z"
+      }
+    },
+    {
+      "id": "usr-1786714931506",
+      "role": "user",
+      "content": "surgery image .."
+    },
+    {
+      "id": "bot-1786714932723",
+      "role": "bot",
+      "content": "I am an AI and not a substitute for professional medical advice. As per your request, I can provide general information on surgical procedures, but I must emphasize that it's essential to consult a healthcare professional for personalized advice.\n\nSince you asked for a surgery image, I will provide a brief description of a common surgical procedure. Please note that I won't be able to display actual images.\n\n**Laparoscopic Cholecystectomy (Gallbladder Removal)** is a minimally invasive surgical procedure to remove the gallbladder. The surgery involves making small incisions in the abdomen, inserting a laparoscope (a thin, lighted tube with a camera), and using specialized instruments to remove the gallbladder.\n\nIf you would like to visualize the procedure or anatomy, I recommend checking reputable online resources, such as:\n\n* [NIH MedlinePlus: Surgical Procedures](https://medlineplus.gov/surgery.html)\n* [American College of Surgeons: Patient Education](https://www.facs.org/education/patient-education)\n\nPlease let me know if there's anything else I can help you with.",
+      "isStreaming": false,
+      "reasoning": "To provide more accurate information, I would need to know the specific type of surgery you are interested in. Additionally, it's essential to consider the patient's medical history, current health status, and any potential risks or complications associated with the procedure.",
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-08-14T13:42:12.719Z"
+      }
+    }
+  ],
+  "conv-1786714973067": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1786714973055",
+      "role": "user",
+      "content": "generate the any image.."
+    },
+    {
+      "id": "bot-1786714974245",
+      "role": "bot",
+      "content": "I am an AI and not a substitute for professional medical advice. As per your request, I can generate a medical image for educational purposes only.\n\n![Medical Illustration: Human Body](/api/generate-medical-image?prompt=human body)\n\nPlease note that this image is for general information purposes and should not be used for diagnostic or treatment purposes. If you have any specific medical concerns, I recommend consulting a qualified healthcare professional.\n\n\n\nFor more information on human anatomy and health-related topics, you can visit the following resources:\n* [CDC](https://www.cdc.gov/)\n* [NIH MedlinePlus](https://medlineplus.gov/)",
+      "isStreaming": false,
+      "reasoning": "To generate this image, I considered various factors such as the context of the conversation, the user's request, and the medical dataset provided. I chose a general human body illustration to provide a broad overview of the human anatomy, which can be useful for educational purposes. However, for specific medical conditions or detailed illustrations, I would require more context or information from the user.",
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-08-14T13:42:54.242Z"
+      }
+    },
+    {
+      "id": "usr-1786714993239",
+      "role": "user",
+      "content": "give me image of surgery .."
+    },
+    {
+      "id": "bot-1786714994336",
+      "role": "bot",
+      "content": "I am an AI and not a substitute for professional medical advice. As per your request, I can generate a medical image for educational purposes only.\n\n![Medical Illustration: Surgery](/api/generate-medical-image?prompt=surgery)\n\nPlease note that this image is for general information purposes and should not be used for diagnostic or treatment purposes. If you have any specific medical concerns, I recommend consulting a qualified healthcare professional.\n\n\n\nFor more information on surgical procedures and health-related topics, you can visit the following resources:\n* [CDC](https://www.cdc.gov/)\n* [NIH MedlinePlus](https://medlineplus.gov/)",
+      "isStreaming": false,
+      "reasoning": "When considering surgery, it's essential to understand the procedure, potential risks, and benefits. A thorough discussion with a healthcare provider can help determine the best course of action for individual needs.",
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-08-14T13:43:14.331Z"
+      }
+    },
+    {
+      "id": "usr-1786715102390",
+      "role": "user",
+      "content": "generate the any pdf .."
+    },
+    {
+      "id": "bot-1786715103693",
+      "role": "bot",
+      "content": "I am an AI and not a substitute for professional medical advice. As per your request, I can provide a sample PDF report for educational purposes only.\n\n**Sample PDF Report**\n\n* **Patient Information:**\n\t+ Name: [Insert Name]\n\t+ Date of Birth: [Insert Date of Birth]\n\t+ Medical History: [Insert Medical History]\n* **Symptoms:**\n\t+ Chief Complaint: [Insert Chief Complaint]\n\t+ History of Present Illness: [Insert History of Present Illness]\n\t+ Review of Systems: [Insert Review of Systems]\n* **Physical Examination:**\n\t+ Vital Signs: [Insert Vital Signs]\n\t+ General Appearance: [Insert General Appearance]\n\t+ Head and Neck: [Insert Head and Neck Examination]\n* **Laboratory Results:**\n\t+ [Insert Laboratory Results]\n* **Assessment and Plan:**\n\t+ Diagnosis: [Insert Diagnosis]\n\t+ Treatment Plan: [Insert Treatment Plan]\n\nPlease note that this is a sample report and should not be used for actual medical purposes. If you need a real medical report, please consult a qualified healthcare professional.\n\nFor more information on medical reporting and health-related topics, you can visit the following resources:\n* [CDC](https://www.cdc.gov/)\n* [NIH MedlinePlus](https://medlineplus.gov/)",
+      "isStreaming": false,
+      "reasoning": "To generate a real PDF report, I would need access to the patient's actual medical information and history. This would involve integrating with electronic health records (EHRs) and ensuring compliance with healthcare regulations such as HIPAA. Additionally, the report would need to be reviewed and validated by a qualified healthcare professional to ensure accuracy and reliability.",
+      "showPdfCard": true,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-08-14T13:45:03.690Z"
+      }
+    },
+    {
+      "id": "usr-1786715132317",
+      "role": "user",
+      "content": "generate the image"
+    },
+    {
+      "id": "bot-1786715132860",
+      "role": "bot",
+      "content": "I am an AI and not a substitute for professional medical advice. As per your request, I can generate a medical image for educational purposes only.\n\n![Medical Illustration: Human Anatomy](/api/generate-medical-image?prompt=human anatomy)\n\nPlease note that this image is for general information purposes and should not be used for diagnostic or treatment purposes. If you have any specific medical concerns, I recommend consulting a qualified healthcare professional.\n\n\n\nFor more information on human anatomy and health-related topics, you can visit the following resources:\n* [CDC](https://www.cdc.gov/)\n* [NIH MedlinePlus](https://medlineplus.gov/)",
+      "isStreaming": false,
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-08-14T13:45:32.855Z"
+      }
+    }
+  ],
+  "conv-1786715030547": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1786715030515",
+      "role": "user",
+      "content": "generate the any image of surgery .."
+    },
+    {
+      "id": "bot-1786715031725",
+      "role": "bot",
+      "content": "I am an AI and not a substitute for professional medical advice. \n\nSince you requested an image of surgery, I can provide a general illustration. ![Medical Illustration: Surgery](/api/generate-medical-image?prompt=surgery)\n\nPlease note that this is a generic image and not specific to any individual or procedure. If you have any specific questions or concerns about surgery, I'd be happy to help answer them.\n\nFor more information on surgical procedures, you can visit the [American College of Surgeons](https://www.facs.org/) or the [National Institute of Health](https://www.nih.gov/).\n\n\n\nLet me know if you have any other questions or if there's anything else I can help you with.",
+      "isStreaming": false,
+      "reasoning": "To provide a more accurate response, I would need to know the type of surgery you are referring to. There are many different types of surgical procedures, each with its own unique characteristics and requirements. If you could provide more context or clarify which type of surgery you are interested in, I would be better able to assist you.",
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-08-14T13:43:51.721Z"
+      }
+    },
+    {
+      "id": "usr-1786715048998",
+      "role": "user",
+      "content": "image of surgery .."
+    },
+    {
+      "id": "bot-1786715049895",
+      "role": "bot",
+      "content": "I am an AI and not a substitute for professional medical advice. \n\nSince you requested an image of surgery, I can provide a general illustration. ![Medical Illustration: Surgery](/api/generate-medical-image?prompt=surgery)\n\nPlease note that this is a generic image and not specific to any individual or procedure. If you have any specific questions or concerns about surgery, I'd be happy to help answer them.\n\nFor more information on surgical procedures, you can visit the [American College of Surgeons](https://www.facs.org/) or the [National Institute of Health](https://www.nih.gov/).\n\n\n\nLet me know if you have any other questions or if there's anything else I can help you with.",
+      "isStreaming": false,
+      "reasoning": "To provide a more accurate response, I considered the user's request for an image of surgery. I provided a generic illustration while emphasizing that it's not specific to any individual or procedure. I also offered additional resources for further information on surgical procedures.",
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-08-14T13:44:09.891Z"
+      }
+    }
+  ],
+  "conv-1786770582029": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1786770582025",
+      "role": "user",
+      "content": "Drug Interactions"
+    },
+    {
+      "id": "bot-1786770583776",
+      "role": "bot",
+      "content": "**Drug Interactions**\nI am an AI assistant, not a doctor. Always consult a healthcare professional for medical advice.\n\nDrug interactions occur when two or more medications react with each other, potentially causing adverse effects. These interactions can be serious and even life-threatening.\n\n### Types of Drug Interactions\n\n* **Pharmacokinetic interactions**: One drug affects the absorption, distribution, metabolism, or excretion of another drug.\n* **Pharmacodynamic interactions**: Two drugs have additive or synergistic effects, increasing the risk of adverse reactions.\n* **Idiosyncratic interactions**: Unpredictable and rare interactions that can occur with certain drug combinations.\n\n### Common Drug Interactions\n\n* **Blood thinners and pain relievers**: Combining blood thinners (e.g., warfarin) with pain relievers (e.g., ibuprofen) can increase the risk of bleeding.\n* **Antibiotics and blood pressure medications**: Certain antibiotics (e.g., erythromycin) can interact with blood pressure medications (e.g., calcium channel blockers), leading to increased blood pressure.\n* **Sedatives and antidepressants**: Combining sedatives (e.g., benzodiazepines) with antidepressants (e.g., selective serotonin reuptake inhibitors) can increase the risk of drowsiness, dizziness, and impaired cognitive function.\n\n### How to Minimize Drug Interactions\n\n* **Inform your doctor about all medications**: Share a list of all prescription and over-the-counter medications, supplements, and herbal products you're taking.\n* **Use a medication calendar**: Keep track of your medications and dosages to avoid potential interactions.\n* **Monitor your body's response**: Report any changes or adverse effects to your doctor promptly.\n\nFor more information on drug interactions, you can visit:\n* [CDC: Medication Safety](https://www.cdc.gov/medicationsafety/index.html)\n* [NIH MedlinePlus: Drug Interactions](https://medlineplus.gov/ency/article/001661.htm)\n\n\n\nPlease feel free to share your medication list, and I'll do my best to assist you.",
+      "isStreaming": false,
+      "reasoning": "To analyze potential drug interactions, I would need to know the specific medications you're taking. Please provide me with a list of your current medications, including dosages and frequencies. This will help me identify potential interactions and provide personalized guidance.",
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "llama-3.3-70b-versatile",
+        "recovered": false,
+        "timestamp": "2026-08-15T05:09:43.773Z"
+      }
+    }
+  ],
+  "conv-1786980092907": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1786980092903",
+      "role": "user",
+      "content": "Expected Recovery Timeline"
+    },
+    {
+      "id": "bot-1786980093282",
+      "role": "bot",
+      "content": "MedAssist AI Auto-Recovery Warning: Our AI network is currently experiencing heavy load. Please try again shortly or check common symptom guidance below.",
+      "isStreaming": false,
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "local-dataset-fallback",
+        "recovered": true,
+        "timestamp": "2026-08-17T15:21:33.278Z"
+      }
+    },
+    {
+      "id": "usr-1786980104567",
+      "role": "user",
+      "content": "Home Care & Remedies"
+    },
+    {
+      "id": "bot-1786980105112",
+      "role": "bot",
+      "content": "MedAssist AI Auto-Recovery Warning: Our AI network is currently experiencing heavy load. Please try again shortly or check common symptom guidance below.",
+      "isStreaming": false,
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "local-dataset-fallback",
+        "recovered": true,
+        "timestamp": "2026-08-17T15:21:45.109Z"
+      }
+    }
+  ],
+  "conv-1787110614635": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "llama-3.3-70b",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1787110614631",
+      "role": "user",
+      "content": "Emergency Warning Signs"
+    },
+    {
+      "id": "bot-1787110615211",
+      "role": "bot",
+      "content": "MedAssist AI Auto-Recovery Warning: Our AI network is currently experiencing heavy load. Please try again shortly or check common symptom guidance below.",
+      "isStreaming": false,
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "local-dataset-fallback",
+        "recovered": true,
+        "timestamp": "2026-08-19T03:36:55.207Z"
+      }
+    }
+  ],
+  "conv-1787114236028": [
+    {
+      "id": "init-1",
+      "role": "bot",
+      "content": "Hello! I'm **MedAssist AI**, your intelligent medical companion. I can help you analyze symptoms, interpret lab reports, check drug interactions, and review medical documents.\n\n*How can I assist your health query today?*",
+      "meta": {
+        "modelUsed": "GPT-OSS 120B",
+        "latencyMs": 110
+      }
+    },
+    {
+      "id": "usr-1787114236024",
+      "role": "user",
+      "content": "Drug Interactions"
+    },
+    {
+      "id": "bot-1787114239076",
+      "role": "bot",
+      "content": "**MedAssist AI – Drug Interaction Overview**  \n\n---\n\n### \n\n---\n\n## 1️⃣ What Is a Drug Interaction?  \nA **drug interaction** occurs when the effect of one medication is altered by the presence of another substance—this can be another prescription, an over‑the‑counter (OTC) drug, a dietary supplement, food, or even alcohol.\n\n| Interaction Type | Typical Outcome |\n|------------------|-----------------|\n| **Pharmacokinetic** (absorption, distribution, metabolism, excretion) | One drug changes the blood level of another (e.g., increased toxicity or reduced efficacy). |\n| **Pharmacodynamic** (additive, synergistic, antagonistic) | Two drugs produce overlapping effects (e.g., both cause drowsiness) or opposite actions. |\n| **Food‑Drug** | Certain foods boost or block drug absorption (e.g., grapefruit juice with statins). |\n| **Herb‑Supplement‑Drug** | Herbal products like St. John’s wort can induce liver enzymes, lowering levels of many meds. |\n\n---\n\n## 2️⃣ Common Red‑Flag Scenarios  \n\n- **Sudden severe side effects** after starting a new medication (e.g., intense dizziness, bleeding, heart palpitations).  \n- **Unexpected loss of therapeutic effect** (e.g., blood pressure spikes despite taking antihypertensives).  \n- **Changes in lab values** (e.g., elevated liver enzymes, low potassium).  \n- **Symptoms that mimic an allergic reaction** (rash, swelling, difficulty breathing).  \n\nIf any of these occur, **seek medical attention promptly**.\n\n---\n\n## 3️⃣ How to Check for Interactions  \n\n1. **Gather a Complete List**  \n   - Prescription drugs (brand & generic).  \n   - OTC meds (pain relievers, antihistamines, antacids).  \n   - Supplements & herbal products.  \n   - Recent changes in diet or alcohol intake.  \n\n2. **Use Reliable Resources**  \n   - **MedAssist’s Medication Management** tool (upload your medication list for an automated interaction screen).  \n   - Trusted online databases:  \n     - **Drugs.com Interaction Checker**  \n     - **U.S. National Library of Medicine’s DailyMed**  \n   - **Pharmacy consultation** – pharmacists are medication‑interaction experts.  \n\n3. **Ask Your Provider**  \n   - Before starting any new drug or supplement, discuss it with your prescriber.  \n\n---\n\n## 4️⃣ Practical Tips to Minimize Risk  \n\n- **Take meds exactly as prescribed** (dose, timing, with/without food).  \n- **Avoid “starter packs”** of OTC meds without checking the label.  \n- **Separate certain drugs** by a few hours (e.g., iron supplements vs. thyroid medication).  \n- **Maintain a medication diary** or use a smartphone reminder app.  \n- **Report any new symptoms** to your healthcare team right away.  \n\n---\n\n## 5️⃣ When to Call Emergency Services  \n\nIf you experience any of the following after taking a medication, **call 911 or your local emergency number immediately**:\n\n- Severe breathing difficulty or throat swelling.  \n- Chest pain or irregular heartbeat.  \n- Sudden loss of consciousness or severe confusion.  \n- Uncontrolled bleeding or bruising.  \n\n---\n\n## 6️⃣ Trusted References  \n\n- **U.S. National Library of Medicine – Drug Interaction Basics**: [https://medlineplus.gov/druginformation.html](https://medlineplus.gov/druginformation.html)  \n- **World Health Organization – Medicines Safety**: [https://www.who.int/teams/health-product-and-policy-standards/medicine-safety](https://www.who.int/teams/",
+      "isStreaming": false,
+      "reasoning": "The user simply typed “Drug Interactions.”  \nGoal: Provide a clear, structured overview of what drug interactions are, common types, how to identify them, and practical steps the user can take.  \nInclude the mandatory disclaimer, use bullet points and headings, add 1‑2 authoritative reference links (CDC, NIH, WHO, PubMed). No image request, so no illustration tag needed.  \nReference the platform’s “Medication Management” feature for future personalized checks.  \nEnd with a prompt for any specific medication names the user wants to evaluate.",
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "openai/gpt-oss-120b",
+        "recovered": false,
+        "timestamp": "2026-08-19T04:37:19.073Z"
+      }
+    },
+    {
+      "id": "usr-1787114247678",
+      "role": "user",
+      "content": "Emergency Warning Signs"
+    },
+    {
+      "id": "bot-1787114250312",
+      "role": "bot",
+      "content": "**MedAssist AI – Emergency Warning Signs Cheat Sheet**  \n\n---\n\n\n\n---\n\n## 📢 When to Seek Immediate Care  \n\n| System | Red‑Flag Signs | Why It’s Urgent | What to Do |\n|--------|----------------|----------------|------------|\n| **Cardiovascular** | • Chest pain, pressure, or tightness that lasts > 2 min  <br>• New or worsening shortness of breath <br>• Palpitations with dizziness or fainting <br>• Sudden swelling in legs/feet (possible DVT) | May indicate heart attack, pulmonary embolism, or life‑threatening arrhythmia. | Call **911** (or your local emergency number) right away. |\n| **Neurologic** | • Sudden severe headache (“worst ever”) <br>• Slurred speech, facial droop, weakness on one side <br>• New confusion, seizures, or loss of consciousness <br>• Vision changes (double vision, loss of vision) | Possible stroke, subarachnoid hemorrhage, or severe meningitis. | Call **911** immediately. |\n| **Respiratory** | • Severe difficulty breathing or wheezing <br>• Blue lips or fingertips (cyanosis) <br>• Rapid, shallow breathing with chest tightness | Could be asthma attack, anaphylaxis, or severe pneumonia. | Call **911**; if you have an epinephrine auto‑injector, use it while waiting. |\n| **Gastrointestinal** | • Sudden, severe abdominal pain (especially with fever) <br>• Vomiting blood or material that looks like coffee grounds <br>• Black, tarry stools (melena) | May signal perforated ulcer, internal bleeding, or acute pancreatitis. | Go to the nearest emergency department or call **911**. |\n| **Dermatologic / Allergic** | • Rapid spreading rash with swelling of face/tongue <br>• Hives plus difficulty breathing <br>• Severe itching with swelling (possible anaphylaxis) | Anaphylactic reaction can cause airway closure. | Use epinephrine if prescribed and call **911**. |\n| **Endocrine / Metabolic** | • Very high fever > 103 °F (39.4 °C) with confusion <br>• Severe hypoglycemia (shakiness, seizures, loss of consciousness) <br>• Diabetic ketoacidosis signs: fruity breath, nausea, deep breathing | Life‑threatening infection or metabolic crisis. | Call **911** or go to the ER; treat hypoglycemia with glucose if you have it. |\n| **Trauma / Bleeding** | • Uncontrolled bleeding, spurting blood <br>• Severe head injury with loss of consciousness > 5 min <br>• Broken bones with deformity or inability to move limb | Risk of shock, internal bleeding, or spinal injury. | Call **911**; apply direct pressure to bleeding. |\n| **Psychiatric / Suicide Risk** | • Expressed intent to harm self or others <br>• Severe agitation, hallucinations, or inability to care for self | Immediate safety risk. | Call emergency services or a crisis line (e.g., 988 in the U.S.). |\n\n---\n\n## 📞 Quick Action Steps\n\n1. **Stay calm** – keep breathing slowly.\n2. **Call emergency services** (dial 911 in the U.S. or your local emergency number).  \n3. **Provide key info**: your name, location, age, main symptom(s), any known allergies, and current medications.  \n4. **If trained, begin first‑aid** (e.g., CPR, epinephrine auto‑injector) while help is on the way.  \n\n---\n\n## 🛑 General Disclaimer  \n\n> **I am an AI assistant, not a doctor.** This information is for educational purposes only and does **not** replace professional medical evaluation. If you think you",
+      "isStreaming": false,
+      "reasoning": "The user wants a concise, easy‑to‑read list of red‑flag symptoms that should prompt immediate medical attention. I’ll pull the disclaimer from the dataset, organize the signs by system (cardiovascular, neurologic, respiratory, etc.), and include a short “what to do” action step for each. I’ll also add two authoritative reference links (CDC and WHO) as required. No image request, so no illustration tag needed. The response will be clear, bullet‑pointed, and end with the standard AI disclaimer.",
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "openai/gpt-oss-120b",
+        "recovered": false,
+        "timestamp": "2026-08-19T04:37:30.309Z"
+      }
+    },
+    {
+      "id": "usr-1787114253222",
+      "role": "user",
+      "content": "Expected Recovery Timeline"
+    },
+    {
+      "id": "bot-1787114256492",
+      "role": "bot",
+      "content": "**MedAssist AI – Expected Recovery Timelines**  \n*(All timelines are approximate; individual recovery can vary based on severity, underlying health, and treatment adherence.)*  \n\n---\n\n### 1️⃣ Common Conditions & Typical Recovery Windows  \n\n| Condition | Typical Duration | Key Factors That May Speed or Slow Recovery |\n|-----------|------------------|--------------------------------------------|\n| **Common Cold (viral upper‑respiratory infection)** | 7–10 days | Age, immune status, smoking, hydration, rest |\n| **Seasonal Flu (influenza)** | 5–7 days (symptoms) | Antiviral treatment within 48 h, vaccination status, comorbidities |\n| **Mild Migraine Headache** | 24–48 h | Prompt medication, hydration, caffeine avoidance |\n| **Tension‑type Headache** | 24–48 h | Stress reduction, posture correction, OTC analgesics |\n| **Low‑grade Fever (viral)** | 2–5 days | Adequate fluids, rest, antipyretics if needed |\n| **High‑grade Fever (>103 °F)** | 3–7 days | Underlying infection (bacterial vs. viral), treatment, immune status |\n| **Fatigue from Viral Illness** | 5–14 days | Adequate sleep, balanced diet, gradual return to activity |\n| **Post‑Surgical Recovery (minor outpatient procedure)** | 3–7 days | Pain control, wound care, activity restrictions |\n| **Post‑Surgical Recovery (major inpatient procedure)** | 2–6 weeks (initial) | Hospital stay, physiotherapy, wound healing, complications |\n| **COVID‑19 (mild‑moderate)** | 10–14 days | Vaccination status, comorbidities, antiviral therapy |\n| **COVID‑19 (severe/critical)** | 3–6 weeks (hospital) | ICU stay, mechanical ventilation, rehabilitation |\n\n---\n\n### 2️⃣ How to Monitor Progress  \n\n- **Track symptoms daily** (e.g., pain level, fever, energy).  \n- **Use a symptom diary or MedAssist’s “Health Metrics”** to log changes.  \n- **Seek medical review** if:  \n  - Symptoms worsen after 48–72 h.  \n  - New red‑flag signs appear (see previous “Emergency Warning Signs”).  \n  - You have underlying chronic conditions (e.g., diabetes, heart disease).  \n\n---\n\n### 3️⃣ Tips to Promote Faster Recovery  \n\n- **Hydration** – 8–10 cups of water or electrolyte drinks.  \n- **Balanced nutrition** – protein, fruits, vegetables, whole grains.  \n- **Adequate rest** – 7–9 h sleep for adults; nap if needed.  \n- **Gentle movement** – light walking or stretching as tolerated.  \n- **Follow medication schedule** – complete prescribed courses.  \n- **Avoid smoking & alcohol** – they can delay healing.  \n\n---\n\n### 4️⃣ When to Re‑evaluate  \n\n| Symptom | When to Call Your Provider |\n|---------|----------------------------|\n| Fever > 103 °F lasting > 3 days | Yes |\n| Persistent headache > 48 h despite OTC meds | Yes |\n| New or worsening pain, swelling, or redness | Yes |\n| Fatigue that prevents normal daily activities | Yes |\n| Any red‑flag signs (see “Emergency Warning Signs”) | Yes |\n\n---\n\n### 5️⃣ References  \n\n- **CDC – Common Cold & Flu Recovery**: [https://www.cdc.gov/flu/about/season.html](https://www.cdc.gov/flu/about/season.html)  \n- **NIH MedlinePlus – Migraine**: [https://medlineplus.gov/migraine.html](https://medlineplus.gov/migraine.html)  \n\n---\n\n> **I am an AI assistant, not a medical professional.** If you’re unsure about your recovery timeline or notice any concerning changes, please consult a qualified healthcare provider.",
+      "isStreaming": false,
+      "showPdfCard": false,
+      "meta": {
+        "modelUsed": "openai/gpt-oss-20b",
+        "recovered": true,
+        "timestamp": "2026-08-19T04:37:36.490Z"
+      }
+    }
   ]
 }

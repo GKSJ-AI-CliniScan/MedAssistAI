@@ -1,0 +1,50 @@
+services:
+  # ─── SERVICE 1: Next.js Frontend ───
+  frontend:
+    image: medassist-frontend:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        NEXT_PUBLIC_FIREBASE_API_KEY: "AIzaSyCTuJ4MDwvHYKspTVie9LXWuNSrtgrGZvI"
+        NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: "medassistai-update-2-database.firebaseapp.com"
+        NEXT_PUBLIC_FIREBASE_PROJECT_ID: "medassistai-update-2-database"
+        NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: "medassistai-update-2-database.firebasestorage.app"
+        NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: "244066201845"
+        NEXT_PUBLIC_FIREBASE_APP_ID: "1:244066201845:web:1d937fda4ad8b8880fd5bc"
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - ML_BACKEND_URL=http://ml_backend:8000
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyCTuJ4MDwvHYKspTVie9LXWuNSrtgrGZvI
+      - NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=medassistai-update-2-database.firebaseapp.com
+      - NEXT_PUBLIC_FIREBASE_PROJECT_ID=medassistai-update-2-database
+      - NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=medassistai-update-2-database.firebasestorage.app
+      - NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=244066201845
+      - NEXT_PUBLIC_FIREBASE_APP_ID=1:244066201845:web:1d937fda4ad8b8880fd5bc
+      - FIREBASE_PROJECT_ID=medassistai-update-2-database
+      - FIREBASE_CLIENT_EMAIL=firebase-adminsdk-fbsvc@medassist-ai-f90a3.iam.gserviceaccount.com
+      - "FIREBASE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----\\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDD3vT/+YX+Mcwl\\nQmuwTwFmgFwhKXcCkvm4srzrToSG6hzJwg/jugUVxYGcg8qb85NCGR5XIQhvR8Lb\\nrvAVJVaLyMqoEeSIZDiRPyO4HSVk09evA/wOeZ3AQt20H0l3h/gsbJYazBYFx20x\\np9G41RjuVBT/881GqxD3CuddNqUrXOKS0H7amN8lX43ntiu8QfqQQs/fg/3vIqcP\\nsUXGXzSO+vKveK6qq1E8u6YAYVY6RdAAvkAp+kYzikmbJX4W3YsUhImIdHYUCuVa\\nUlHrPOMcql5PzTfGy5Kgz0W1XL5XKDTrYxnIEjmxOJoCtoDUmEjKMkN2nHdanKW1\\nLYtX5CWVAgMBAAECggEAMDFifLzrUBD2ltBR6M53nL3GbU5jftmk4eHwg8EM8JkX\\nvjimajSx3Zp7+oOezWJQADpn8a4qAh9Y/W58medW9QvReSr13O0z0eEEK9/X/If3\\nEJPdZ75apxyMqi3siKGG2X9aK3u9i2x3HHmbK2wbN0Cu7g8RmeqrQO2I4bF5UEKa\\n3VgDxLXezDf2waFasoWCcWcZUZeF6zaBg2rQMNdH03cMTSeGjzxmIjb2BKep5NKj\\ns4/Q+Zr3MYlRspa1+ay9OsioXXQBJ87Tjt0q/aQ2yBm+cs/zfEGNJllBaV6VFKun\\nZU0bmvRE7qTDLmOYbb9Z2w75CZpUuZYm0PwMlNFU4QKBgQDyjLSGw7XuFgBaq94j\\ndneUJTXlkRyoQnNHw1qKS7J8qzE7qd32t11sikNFNwLuX6hPZlkI76E7NwEpGjFT\\nUjNot8muVMVSriDrOa5CNVu0FvaT+AUf6VoB+rMPFA75h0NH8R6T+GmS9+YyT2dY\\nK0D7u4kwD5MehlHdbNTUtbtnSQKBgQDOu5bhCrchu/689thcSkvOP5bdsJVJmN12\\n7ECTYcogOw9l9LsgPlGiW4w8NubyOJ/P2k3GN1EDS2Y6VdwjRMW2WYZWEHMR378X\\nGybx9kDglwnYZnHVmG4hHyyFllVl4roz0SACa7CXT0qIi59yTf6DVKkK4kKK+5ZM\\nRfOPAlZP7QKBgQCrCTmMBppWB8G8LpH4o+Ny3kKBXbC9ng44vrMr7nEwpG+VSRWy\\nkl8Y2O7S8hXpDh9bzipeuMwTO5hf6Y562O5Tm7ZmbnSu9wdTmFsfaQz/k2nRsgW7\\nGQxVdPmrWlOs9gslwgv0ACpCbvku5PtVGzs5yGbXM0RlNAaqg8IZNQWvsQKBgGPS\\nhrchcm4SlZ1u3+goY9QyNknTgzJnYsCSsVe5B11qxzOm6VhXXxmzdNJ6fCeHmftG\\nYPmOKksZ9EHExaguA/3Z2pjiFn4R+PZSQQriqk8H/1QDm4HUuZC6ucfDYHby9JAi\\nsX8ZuspFGis2qAYMjRGjJoC/4fu0Ic2wlTt/mGe9AoGBAKUkppE3wIDJiHJ/nSUT\\nDz4DZx9YkFexadWLv4G72ZjbZZTKetS3p7YksmQ7E/Ggxi4YriV7+0S51yDBZ5fT\\nND1Ky8uudGkZ5+biMft+In7yEaEXwn4BhSMlyo7mPPlfDxlO9LsnrRbOG7hllDD4\\n+z71JONV5hUQwCoY1hyv8Ylw\\n-----END PRIVATE KEY-----\\n"
+      - GITHUB_CLIENT_ID=Ov23liaU8XU9RfgCDGYd
+      - GITHUB_CLIENT_SECRET=a44031e547feba3fb882eb7cf951790fe835ddd6
+      - EMAIL_USER=aleemqurammi006@gmail.com
+      - EMAIL_APP_PASSWORD=fmol fuvu niuj zbhz
+    depends_on:
+      - ml_backend
+    restart: always
+
+  # ─── SERVICE 2: Python FastAPI ML Backend ───
+  ml_backend:
+    image: medassist-ml-backend:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.ml_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - PYTHON_VERSION=3.11.9
+    restart: always
