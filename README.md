@@ -104,9 +104,29 @@ The selected Random Forest model will be used for integration into the MedAssist
 ### Remaining Work
 - Final testing and bug fixing.
 - Final documentation and deployment.
+---
+
+# Milestone 4 Submission
+
+## Deployment & Integration
+
+### Work Completed
+- Integrated the frontend with the FastAPI machine learning backend.
+- Implemented dynamic routing for disease and medication information.
+- Connected search functionality with dynamic medical-content pages.
+- Prepared the application for deployment using Docker.
+- Verified application build, API connectivity, routing, and service integration.
+
+### Deployment
+- Containerized the application using Docker.
+- Prepared the Next.js frontend and FastAPI backend for deployment.
+- Configured the required application services and dependencies.
+- Tested the application build and backend connectivity.
 
 ## Milestone Status
 
 - **Milestone 1:** Completed
 - **Milestone 2:** Completed
 - **Milestone 3:** Completed
+- **Milestone 4:** Completed
+
