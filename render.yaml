@@ -1,0 +1,76 @@
+# ============================================
+# MedAssist AI — Render.com Docker Blueprint
+# Deploys 2 Docker Web Services:
+#   1. Next.js Frontend (Docker)
+#   2. Python FastAPI ML Backend (Docker)
+# ============================================
+
+services:
+  # ─── SERVICE 1: Next.js Frontend ───
+  - type: web
+    name: medassist-frontend
+    env: docker
+    dockerfilePath: ./Dockerfile.frontend
+    dockerContext: .
+    region: oregon
+    plan: starter
+    envVars:
+      # Groq AI Assistant LLM Key
+      - key: GROQ_API_KEY
+        sync: false
+
+      # Firebase Client Keys
+      - key: NEXT_PUBLIC_FIREBASE_API_KEY
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_APP_ID
+        sync: false
+
+      # Firebase Admin SDK Keys
+      - key: FIREBASE_PROJECT_ID
+        sync: false
+      - key: FIREBASE_CLIENT_EMAIL
+        sync: false
+      - key: FIREBASE_PRIVATE_KEY
+        sync: false
+
+      # GitHub OAuth
+      - key: GITHUB_CLIENT_ID
+        sync: false
+      - key: GITHUB_CLIENT_SECRET
+        sync: false
+
+      # Email Notifications
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_APP_PASSWORD
+        sync: false
+
+      # Internal Private Network URL connecting to ML Backend
+      - key: ML_BACKEND_URL
+        fromService:
+          name: medassist-ml-backend
+          type: web
+          property: hostPort
+
+  # ─── SERVICE 2: Python FastAPI ML Backend ───
+  - type: web
+    name: medassist-ml-backend
+    env: docker
+    dockerfilePath: ./Dockerfile.ml_backend
+    dockerContext: .
+    region: oregon
+    plan: starter plus
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+      # Google Drive File ID for best_model.joblib (auto-downloaded on boot)
+      - key: MODEL_GDRIVE_FILE_ID
+        sync: false
