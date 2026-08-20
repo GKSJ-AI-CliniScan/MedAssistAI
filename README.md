@@ -123,6 +123,10 @@ The selected Random Forest model will be used for integration into the MedAssist
 - Configured the required application services and dependencies.
 - Tested the application build and backend connectivity.
 
+### Live Deployment
+
+🔗 **Live Demo:** https://medassist-ai-platform.onrender.com/
+
 ## Milestone Status
 
 - **Milestone 1:** Completed
