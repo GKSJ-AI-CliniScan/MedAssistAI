@@ -155,9 +155,9 @@ def get_patient_details(
     db: Session = Depends(get_db)
 ):
 
-    # ---------------------------------------------
+    # =================================================
     # Find Patient
-    # ---------------------------------------------
+    # =================================================
 
     patient = db.query(User).filter(
         User.patient_id == patient_id
@@ -170,9 +170,10 @@ def get_patient_details(
             detail="Patient not found."
         )
 
-    # ---------------------------------------------
+
+    # =================================================
     # Statistics
-    # ---------------------------------------------
+    # =================================================
 
     total_predictions = db.query(Prediction).filter(
         Prediction.patient_id == patient_id
@@ -188,48 +189,72 @@ def get_patient_details(
 
     high_risk_cases = db.query(MedicalHistory).filter(
         MedicalHistory.patient_id == patient_id,
-        MedicalHistory.risk_level.in_(["HIGH", "CRITICAL"])
+        MedicalHistory.risk_level.in_(
+            ["HIGH", "CRITICAL"]
+        )
     ).count()
 
-    # ---------------------------------------------
-    # Latest Prediction
-    # ---------------------------------------------
 
-    latest_prediction = db.query(Prediction).filter(
+    # =================================================
+    # ALL PREDICTIONS
+    # =================================================
+    #
+    # Previously:
+    # .first()
+    #
+    # That returned only the latest prediction.
+    #
+    # Now:
+    # .all()
+    #
+    # This returns every prediction belonging
+    # to this patient.
+    # =================================================
+
+    predictions = db.query(Prediction).filter(
         Prediction.patient_id == patient_id
     ).order_by(
         Prediction.prediction_date.desc()
-    ).first()
+    ).all()
 
-    latest_prediction_data = None
+    prediction_list = []
 
-    if latest_prediction:
+    for prediction in predictions:
 
-        latest_prediction_data = {
+        prediction_list.append({
 
-            "prediction_id": latest_prediction.prediction_id,
+            "prediction_id": prediction.prediction_id,
 
-            "disease": latest_prediction.disease,
+            "disease": prediction.disease,
 
-            "confidence": latest_prediction.confidence,
+            "symptoms": prediction.symptoms,
 
-            "risk_score": latest_prediction.risk_score,
+            "confidence": prediction.confidence,
 
-            "risk_level": latest_prediction.risk_level,
+            "risk_score": prediction.risk_score,
 
-            "prediction_date": latest_prediction.prediction_date
+            "risk_level": prediction.risk_level,
 
-        }
+            "prediction_date": prediction.prediction_date
 
-    # ---------------------------------------------
-    # Recent Reports
-    # ---------------------------------------------
+        })
+
+
+    # =================================================
+    # ALL REPORTS
+    # =================================================
+    #
+    # Previously:
+    # .limit(5)
+    #
+    # Now all reports are returned.
+    # =================================================
 
     reports = db.query(Report).filter(
         Report.patient_id == patient_id
     ).order_by(
         Report.generated_date.desc()
-    ).limit(5).all()
+    ).all()
 
     report_list = []
 
@@ -247,15 +272,22 @@ def get_patient_details(
 
         })
 
-    # ---------------------------------------------
-    # Medical History
-    # ---------------------------------------------
+
+    # =================================================
+    # ALL MEDICAL HISTORY
+    # =================================================
+    #
+    # Previously:
+    # .limit(5)
+    #
+    # Now all medical history records are returned.
+    # =================================================
 
     history = db.query(MedicalHistory).filter(
         MedicalHistory.patient_id == patient_id
     ).order_by(
         MedicalHistory.created_at.desc()
-    ).limit(5).all()
+    ).all()
 
     history_list = []
 
@@ -277,11 +309,16 @@ def get_patient_details(
 
         })
 
-    # ---------------------------------------------
+
+    # =================================================
     # Final Response
-    # ---------------------------------------------
+    # =================================================
 
     return {
+
+        # ---------------------------------------------
+        # Patient Information
+        # ---------------------------------------------
 
         "patient": {
 
@@ -309,6 +346,11 @@ def get_patient_details(
 
         },
 
+
+        # ---------------------------------------------
+        # Statistics
+        # ---------------------------------------------
+
         "statistics": {
 
             "total_predictions": total_predictions,
@@ -321,14 +363,30 @@ def get_patient_details(
 
         },
 
-        "latest_prediction": latest_prediction_data,
 
-        "recent_reports": report_list,
+        # ---------------------------------------------
+        # ALL PREDICTIONS
+        # ---------------------------------------------
+
+        "predictions": prediction_list,
+
+
+        # ---------------------------------------------
+        # ALL REPORTS
+        # ---------------------------------------------
+
+        "reports": report_list,
+
+
+        # ---------------------------------------------
+        # ALL MEDICAL HISTORY
+        # ---------------------------------------------
 
         "medical_history": history_list
 
     }
-    
+
+
 # =====================================================
 # Search Patient Records
 # =====================================================
@@ -396,7 +454,8 @@ def search_patient(
         "patients": patient_list
 
     }
-    
+
+
 # =====================================================
 # View All Reports
 # =====================================================
@@ -426,17 +485,17 @@ def view_all_reports(
 
     for report in reports:
 
-        # ------------------------------------------
+        # ---------------------------------------------
         # Patient Details
-        # ------------------------------------------
+        # ---------------------------------------------
 
         patient = db.query(User).filter(
             User.patient_id == report.patient_id
         ).first()
 
-        # ------------------------------------------
+        # ---------------------------------------------
         # Prediction Details
-        # ------------------------------------------
+        # ---------------------------------------------
 
         prediction = db.query(Prediction).filter(
             Prediction.prediction_id == report.prediction_id
@@ -448,17 +507,37 @@ def view_all_reports(
 
             "patient_id": report.patient_id,
 
-            "patient_name": patient.full_name if patient else None,
+            "patient_name": (
+                patient.full_name
+                if patient
+                else None
+            ),
 
             "prediction_id": report.prediction_id,
 
-            "disease": prediction.disease if prediction else None,
+            "disease": (
+                prediction.disease
+                if prediction
+                else None
+            ),
 
-            "confidence": prediction.confidence if prediction else None,
+            "confidence": (
+                prediction.confidence
+                if prediction
+                else None
+            ),
 
-            "risk_score": prediction.risk_score if prediction else None,
+            "risk_score": (
+                prediction.risk_score
+                if prediction
+                else None
+            ),
 
-            "risk_level": prediction.risk_level if prediction else None,
+            "risk_level": (
+                prediction.risk_level
+                if prediction
+                else None
+            ),
 
             "report_path": report.report_path,
 
@@ -473,7 +552,8 @@ def view_all_reports(
         "reports": report_list
 
     }
-    
+
+
 # =====================================================
 # View High Risk Patients
 # =====================================================
@@ -484,9 +564,15 @@ def get_high_risk_patients(
 ):
 
     predictions = db.query(Prediction).filter(
-        Prediction.risk_level.in_(["HIGH", "CRITICAL"])
+
+        Prediction.risk_level.in_(
+            ["HIGH", "CRITICAL"]
+        )
+
     ).order_by(
+
         Prediction.prediction_date.desc()
+
     ).all()
 
     if not predictions:
@@ -546,7 +632,8 @@ def get_high_risk_patients(
         "patients": patient_list
 
     }
-    
+
+
 # =====================================================
 # Dashboard Statistics
 # =====================================================
@@ -562,17 +649,24 @@ def dashboard_statistics(
 
     total_patients = db.query(User).count()
 
+
     # ---------------------------------------------
     # Total Predictions
     # ---------------------------------------------
 
-    total_predictions = db.query(Prediction).count()
+    total_predictions = db.query(
+        Prediction
+    ).count()
+
 
     # ---------------------------------------------
     # Total Reports
     # ---------------------------------------------
 
-    total_reports = db.query(Report).count()
+    total_reports = db.query(
+        Report
+    ).count()
+
 
     # ---------------------------------------------
     # Total Medical History Records
@@ -582,25 +676,28 @@ def dashboard_statistics(
         MedicalHistory
     ).count()
 
+
     # ---------------------------------------------
     # High Risk Patients
     # ---------------------------------------------
 
-    high_risk_patients = db.query(Prediction).filter(
-
+    high_risk_patients = db.query(
+        Prediction
+    ).filter(
         Prediction.risk_level == "HIGH"
-
     ).count()
+
 
     # ---------------------------------------------
     # Critical Patients
     # ---------------------------------------------
 
-    critical_patients = db.query(Prediction).filter(
-
+    critical_patients = db.query(
+        Prediction
+    ).filter(
         Prediction.risk_level == "CRITICAL"
-
     ).count()
+
 
     # ---------------------------------------------
     # Final Response
@@ -621,6 +718,8 @@ def dashboard_statistics(
         "critical_patients": critical_patients
 
     }
+
+
 # =====================================================
 # Disease Distribution
 # =====================================================
@@ -630,7 +729,9 @@ def disease_distribution(
     db: Session = Depends(get_db)
 ):
 
-    predictions = db.query(Prediction).all()
+    predictions = db.query(
+        Prediction
+    ).all()
 
     if not predictions:
 
@@ -682,7 +783,8 @@ def disease_distribution(
         "distribution": distribution
 
     }
-    
+
+
 # =====================================================
 # Risk Level Distribution
 # =====================================================
@@ -692,7 +794,9 @@ def risk_distribution(
     db: Session = Depends(get_db)
 ):
 
-    predictions = db.query(Prediction).all()
+    predictions = db.query(
+        Prediction
+    ).all()
 
     if not predictions:
 
@@ -741,7 +845,8 @@ def risk_distribution(
         "distribution": distribution
 
     }
-    
+
+
 # =====================================================
 # Monthly Prediction Trend
 # =====================================================
@@ -751,7 +856,9 @@ def monthly_prediction_trend(
     db: Session = Depends(get_db)
 ):
 
-    predictions = db.query(Prediction).all()
+    predictions = db.query(
+        Prediction
+    ).all()
 
     if not predictions:
 
@@ -767,7 +874,9 @@ def monthly_prediction_trend(
 
     for prediction in predictions:
 
-        month = prediction.prediction_date.strftime("%B %Y")
+        month = prediction.prediction_date.strftime(
+            "%B %Y"
+        )
 
         if month in monthly_data:
 
@@ -798,7 +907,8 @@ def monthly_prediction_trend(
         "trend": trend
 
     }
-    
+
+
 # =====================================================
 # Most Common Diseases
 # =====================================================
@@ -808,7 +918,9 @@ def most_common_diseases(
     db: Session = Depends(get_db)
 ):
 
-    predictions = db.query(Prediction).all()
+    predictions = db.query(
+        Prediction
+    ).all()
 
     if not predictions:
 
@@ -826,12 +938,18 @@ def most_common_diseases(
 
         disease = prediction.disease
 
-        disease_count[disease] = disease_count.get(disease, 0) + 1
+        disease_count[disease] = (
+            disease_count.get(disease, 0) + 1
+        )
 
     sorted_diseases = sorted(
+
         disease_count.items(),
+
         key=lambda x: x[1],
+
         reverse=True
+
     )
 
     top_diseases = []
@@ -857,7 +975,8 @@ def most_common_diseases(
         "top_diseases": top_diseases
 
     }
-    
+
+
 # =====================================================
 # Most Common Symptoms
 # =====================================================
@@ -867,7 +986,9 @@ def most_common_symptoms(
     db: Session = Depends(get_db)
 ):
 
-    predictions = db.query(Prediction).all()
+    predictions = db.query(
+        Prediction
+    ).all()
 
     if not predictions:
 
@@ -887,7 +1008,10 @@ def most_common_symptoms(
 
             continue
 
+        # ---------------------------------------------
         # Split comma-separated symptoms
+        # ---------------------------------------------
+
         symptoms = prediction.symptoms.split(",")
 
         for symptom in symptoms:
