@@ -54,6 +54,15 @@ app.register_blueprint(prediction_bp, url_prefix='/api')
 def health_check():
     return jsonify({"status": "healthy", "service": "MedAssistAI Flask Backend"})
 
+
+@app.route("/")
+def home():
+    return jsonify({
+        "success": True,
+        "message": "MedAssistAI Flask API is running"
+    })
+
+
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=True)

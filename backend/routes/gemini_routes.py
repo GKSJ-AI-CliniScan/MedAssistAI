@@ -1,5 +1,8 @@
 import os
+from dotenv import load_dotenv
 from flask import Blueprint, request, jsonify
+
+load_dotenv()
 from groq import Groq
 from utils.auth import token_required
 import json
@@ -11,7 +14,7 @@ api_key = os.getenv("GROQ_API_KEY")
 if api_key and api_key != "YOUR_GROQ_API_KEY_HERE":
     client = Groq(api_key=api_key)
     # Using Llama 3.1 8b as default fast model
-    model_name = "llama-3.1-8b-instant"
+    model_name = "openai/gpt-oss-20b"
 else:
     client = None
     model_name = None
@@ -112,6 +115,7 @@ def predict_disease(current_user):
             **result
         }), 200
     except Exception as e:
+        print("GROQ CHAT ERROR:", repr(e))
         return jsonify({'success': False, 'message': str(e)}), 500
 
 def extract_text_from_pdf(file_path):
