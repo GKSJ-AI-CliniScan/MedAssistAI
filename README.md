@@ -95,52 +95,40 @@ Description + Precautions + Medicines
 + Diet + Lifestyle + Specialist + Severity
   ↓
 Display Results
-## 🏗️ Tech Stack
 
-### **Frontend**
-
-- Next.js
-- React
-- Tailwind CSS
-- JavaScript
-
-### **Backend**
-
-- Python
-- FastAPI
-- Uvicorn
-- REST API
-
-### **Machine Learning**
-
-- Python
-- Pandas
-- NumPy
-- Scikit-learn
-- CatBoost
-- Joblib
-- Matplotlib
-- Jupyter Notebook
-
-### **Development Tools**
-
-- Google Colab
-- Visual Studio Code
-- Git
-- GitHub
-
-### **Deployment**
-
-- **Vercel** – Frontend
-- **Render** – Backend and Machine Learning Model
-
----
-
-## 🌐 Deployment
+🏗️ Tech Stack
+Frontend
+Next.js
+React
+Tailwind CSS
+JavaScript
+Backend
+Python
+FastAPI
+Uvicorn
+REST API
+Machine Learning
+Python
+Pandas
+NumPy
+Scikit-learn
+CatBoost
+Joblib
+Matplotlib
+Jupyter Notebook
+Development Tools
+Google Colab
+Visual Studio Code
+Git
+GitHub
+Deployment
+Vercel – Frontend
+Render – Backend and Machine Learning Model
+🌐 Deployment
 
 The final MedAssistAI application was deployed using separate platforms for the frontend and backend.
 
-### **Frontend – Vercel**
+Frontend – Vercel
 
 The Next.js frontend is deployed on Vercel.
 
@@ -148,53 +136,49 @@ Vercel was selected because it provides convenient hosting and deployment suppor
 
 The frontend communicates with the deployed FastAPI backend through REST API requests.
 
-### **Backend – Render**
+Backend – Render
 
 The FastAPI backend and trained CatBoost model are deployed on Render.
 
 The backend deployment includes:
 
-- FastAPI application
-- Trained CatBoost model
-- Feature-column configuration
-- Label encoder
-- Disease information dataset
-- Required Python dependencies
+FastAPI application
+Trained CatBoost model
+Feature-column configuration
+Label encoder
+Disease information dataset
+Required Python dependencies
 
 The backend receives the symptoms submitted by the user, processes the input features, passes them to the CatBoost model, and returns the predicted disease and related information.
 
-### **Deployment Architecture**
-
-```text
-                    User
-                      ↓
-              Vercel Frontend
-                Next.js App
-                      ↓
-              REST API Request
-                      ↓
-              Render Backend
-               FastAPI Server
-                      ↓
-              Feature Processing
-                      ↓
-               CatBoost Model
-                      ↓
-              Disease Prediction
-                      ↓
-             Disease Information
-                      ↓
-                API Response
-                      ↓
-              Vercel Frontend
-                      ↓
-                Display Results
+Deployment Architecture
+User
+  ↓
+Vercel Frontend
+Next.js Application
+  ↓
+REST API Request
+  ↓
+Render Backend
+FastAPI Server
+  ↓
+Feature Processing
+  ↓
+CatBoost Model
+  ↓
+Disease Prediction
+  ↓
+Disease Information
+  ↓
+API Response
+  ↓
+Vercel Frontend
+  ↓
+Display Results
 🌐 Live Application
 MedAssistAI / HealthAssistAI
 
 🔗 https://healthassistai-one.vercel.app/
-
-
 📊 Project Status
 ✅ Dataset preparation completed
 ✅ EDA completed
@@ -208,7 +192,6 @@ MedAssistAI / HealthAssistAI
 ✅ Application deployed
 ✅ End-to-end testing completed
 ✅ Final project demonstration completed
-
 ⚕️ Medical Disclaimer
 
 This application is developed for educational, research, and project demonstration purposes only.
