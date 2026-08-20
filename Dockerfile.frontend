@@ -1,0 +1,56 @@
+# ─── FRONTEND DOCKERFILE (Production Multi-Stage for Render & Cloud) ───
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Build arguments for Next.js public environment variables
+ARG NEXT_PUBLIC_FIREBASE_API_KEY
+ARG NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+ARG NEXT_PUBLIC_FIREBASE_PROJECT_ID
+ARG NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+ARG NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+ARG NEXT_PUBLIC_FIREBASE_APP_ID
+
+ENV NEXT_PUBLIC_FIREBASE_API_KEY=$NEXT_PUBLIC_FIREBASE_API_KEY
+ENV NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=$NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+ENV NEXT_PUBLIC_FIREBASE_PROJECT_ID=$NEXT_PUBLIC_FIREBASE_PROJECT_ID
+ENV NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=$NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+ENV NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=$NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+ENV NEXT_PUBLIC_FIREBASE_APP_ID=$NEXT_PUBLIC_FIREBASE_APP_ID
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+
+# Copy root workspace package manifests
+COPY package.json package-lock.json ./
+COPY frontend/package.json ./frontend/
+
+# Install all dependencies for build
+RUN npm ci --workspace=frontend
+
+# Copy frontend source code
+COPY frontend/ ./frontend/
+
+# Build optimized production bundle
+RUN npm run build --workspace=frontend
+
+# ─── RUNNER STAGE ───
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV PORT=3000
+
+# Copy workspace metadata
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/package-lock.json ./
+COPY --from=builder /app/frontend/package.json ./frontend/
+
+# Copy public assets and built bundle
+COPY --from=builder /app/frontend/public ./frontend/public
+COPY --from=builder /app/frontend/.next ./frontend/.next
+COPY --from=builder /app/node_modules ./node_modules
+
+EXPOSE 3000
+
+CMD ["npm", "run", "start", "--workspace=frontend"]
