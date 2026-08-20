@@ -20,6 +20,13 @@ learning models, and deep learning models.
 
 ---
 
+## 🌐 Live Demo
+
+🔗 **MedAssist AI:** https://med-assist-ai-d2yh.vercel.app/
+
+---
+
+
 ## ✨ Features
 
 - 🔐 User Authentication
