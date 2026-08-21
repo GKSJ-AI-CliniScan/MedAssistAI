@@ -35,6 +35,36 @@ This repository contains the **backend and machine learning implementation compl
 - Docker support
 
 ---
+# 🚀 Deployment
+
+MedAssist AI has been successfully deployed and is available as a live web application for demonstration and evaluation.
+
+🌐 **Live Website:** https://medassistai-frontend.vercel.app
+
+### Deployment Platforms
+
+| Component | Platform |
+|---|---|
+| 🎨 **Frontend** | Vercel |
+| ⚙️ **Backend** | Render |
+| 🤖 **Machine Learning / AI Support** | Hugging Face |
+
+### Deployment Status
+
+✅ Frontend deployment completed successfully on Vercel.  
+✅ Backend deployment completed successfully on Render.  
+✅ Machine Learning components and model-related resources were integrated with the deployed application.  
+✅ The complete application was tested after deployment for the major healthcare workflows.
+
+The deployed application provides access to the implemented MedAssist AI features, including patient registration and login, symptom analysis, disease prediction, risk and severity assessment, health reports, appointments, doctor workflows, and administrative functionality.
+
+### Internship Evaluation Deployment
+
+The deployed version and corresponding project updates have also been completed in the **internship project branch for evaluation and milestone purposes**.
+
+This version is being maintained in the internship repository until the project evaluation and marks are completed.
+
+---
 
 # 🚀 Key Features
 
