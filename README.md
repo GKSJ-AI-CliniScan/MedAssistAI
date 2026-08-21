@@ -145,89 +145,46 @@ The disease prediction system follows a complete machine learning and healthcare
 
 ---
 
-# 📂 Backend Architecture
+# 📂 Project Structure
 
 ```text
-backend/
+MedAssistAI/
 │
-├── app/
+├── backend/
+│   ├── app/
+│   │   ├── config/
+│   │   ├── database/
+│   │   ├── ml/
+│   │   ├── models/
+│   │   ├── routers/
+│   │   ├── schemas/
+│   │   ├── services/
+│   │   ├── utils/
+│   │   └── main.py
 │   │
-│   ├── ml/
-│   │   ├── __init__.py
-│   │   ├── disease_mapping.py
-│   │   ├── extracted_features.py
-│   │   ├── model_loader.py
-│   │   ├── predictor.py
-│   │   ├── preprocessing.py
-│   │   ├── risk_assessment.py
-│   │   └── severity_analysis.py
-│   │
-│   ├── models/
-│   │   ├── __init__.py
-│   │   ├── user.py
-│   │   ├── patient.py
-│   │   ├── doctor.py
-│   │   ├── appointment.py
-│   │   ├── report.py
-│   │   └── symptom.py
-│   │
-│   ├── routers/
-│   │   ├── __init__.py
-│   │   ├── auth.py
-│   │   ├── home.py
-│   │   ├── patient.py
-│   │   ├── doctor.py
-│   │   ├── appointment.py
-│   │   ├── symptom.py
-│   │   ├── prediction_router.py
-│   │   ├── report_router.py
-│   │   └── analytics_router.py
-│   │
-│   ├── schemas/
-│   │   ├── __init__.py
-│   │   ├── user_schema.py
-│   │   ├── patient_schema.py
-│   │   ├── doctor_schema.py
-│   │   ├── appointment_schema.py
-│   │   ├── symptom_schema.py
-│   │   ├── prediction_schema.py
-│   │   └── report_schema.py
-│   │
-│   ├── services/
-│   │   ├── __init__.py
-│   │   ├── user_service.py
-│   │   ├── patient_service.py
-│   │   ├── doctor_service.py
-│   │   ├── appointment_service.py
-│   │   ├── symptom_service.py
-│   │   ├── prediction_service.py
-│   │   ├── report_service.py
-│   │   ├── analytics_service.py
-│   │   ├── health_risk_service.py
-│   │   └── recommendation_service.py
-│   │
-│   ├── utils/
-│   │   ├── __init__.py
-│   │   ├── auth_handler.py
-│   │   ├── jwt_handler.py
-│   │   ├── role_checker.py
-│   │   └── logger.py
-│   │
-│   ├── config/
-│   │   └── settings.py
-│   │
-│   ├── database/
-│   │   ├── database.py
-│   │   ├── init_db.py
-│   │   └── session.py
-│   │
-│   └── main.py
+│   ├── Dockerfile
+│   ├── docker-compose.yml
+│   ├── render.yaml
+│   ├── requirements.txt
+│   └── tests
 │
-├── Dockerfile
-├── docker-compose.yml
-├── requirements.txt
-├── .gitignore
-└── README.md
+└── frontend/
+    ├── public/
+    ├── src/
+    │   ├── assets/
+    │   ├── components/
+    │   ├── constants/
+    │   ├── context/
+    │   ├── hooks/
+    │   ├── pages/
+    │   ├── routes/
+    │   ├── services/
+    │   └── styles/
+    │
+    ├── package.json
+    ├── vite.config.js
+    ├── vercel.json
+    └── README.md
 ```
 
 ---
